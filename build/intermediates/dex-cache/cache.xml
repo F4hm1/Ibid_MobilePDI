@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\logging-interceptor\3.8.0\f765f004f3e201bd6ad0904266e605d7fb776d5\logging-interceptor-3.8.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0f765f004f3e201bd6ad0904266e605d7fb776d5">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\logging-interceptor-3.8.0_4b06f0fa49685ce8ae4eee810df747be032648a2\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup\javapoet\1.9.0\ecc5cf9c221d55481163e773b24336db149e51\javapoet-1.9.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="00ecc5cf9c221d55481163e773b24336db149e51">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\javapoet-1.9.0_74b2ca22a1b4e6f533ecdc5e158b82742d4202c5.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.13.0\a9283170b7305c8d92d25aff02a6ab7e45d06cbe\okio-1.13.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a9283170b7305c8d92d25aff02a6ab7e45d06cbe">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.13.0_79a430ee6af9b6b2ac20b248d8d553f1c38f855f\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.13.0\a9283170b7305c8d92d25aff02a6ab7e45d06cbe\okio-1.13.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a9283170b7305c8d92d25aff02a6ab7e45d06cbe">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\okio-1.13.0_79a430ee6af9b6b2ac20b248d8d553f1c38f855f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\logging-interceptor\3.8.0\f765f004f3e201bd6ad0904266e605d7fb776d5\logging-interceptor-3.8.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0f765f004f3e201bd6ad0904266e605d7fb776d5">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\logging-interceptor-3.8.0_4b06f0fa49685ce8ae4eee810df747be032648a2.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-compiler\8.8.0\c12246b027ec055d6641b5ee7819811507f5016d\butterknife-compiler-8.8.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c12246b027ec055d6641b5ee7819811507f5016d">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\butterknife-compiler-8.8.0_0320a77f1bc3b06103b16fe648db4466ac5dbf4f\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-compiler\8.8.0\c12246b027ec055d6641b5ee7819811507f5016d\butterknife-compiler-8.8.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c12246b027ec055d6641b5ee7819811507f5016d">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\butterknife-compiler-8.8.0_0320a77f1bc3b06103b16fe648db4466ac5dbf4f.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup\javapoet\1.9.0\ecc5cf9c221d55481163e773b24336db149e51\javapoet-1.9.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="00ecc5cf9c221d55481163e773b24336db149e51">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\javapoet-1.9.0_74b2ca22a1b4e6f533ecdc5e158b82742d4202c5\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\19.0\6ce200f6b23222af3d8abb6b6459e6c44f4bb0e9\guava-19.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6ce200f6b23222af3d8abb6b6459e6c44f4bb0e9">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\guava-19.0_241dd3b9c32d079d7f45c94eecdef40adb277998.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.google.auto\auto-common\0.8\c6f7af0e57b9d69d81b05434ef9f3c5610d498c4\auto-common-0.8.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c6f7af0e57b9d69d81b05434ef9f3c5610d498c4">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\auto-common-0.8_f8366eb6a8449bbeef45e8da2e06eea59b5e64d2.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\19.0\6ce200f6b23222af3d8abb6b6459e6c44f4bb0e9\guava-19.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6ce200f6b23222af3d8abb6b6459e6c44f4bb0e9">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\guava-19.0_241dd3b9c32d079d7f45c94eecdef40adb277998\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.android\build-cache\b25a4dd6fe034374f79b34820021923f628a7593\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="83546b0a7a55c89fcaa55ff282812a4e052e81fe">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_17ab1f629aabe5b5319ee715ba25b104776f29bf\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.android\build-cache\906a5b93dc68cccbf4e55c9cc1bc5f3a8bfb5e9c\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6a2bcb61342d09fe9acf55c9daf63961c8866cc0">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_846f0f2ff200a9204dd537d470cd80fec4244e12\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.android\build-cache\b25a4dd6fe034374f79b34820021923f628a7593\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="83546b0a7a55c89fcaa55ff282812a4e052e81fe">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\classes_17ab1f629aabe5b5319ee715ba25b104776f29bf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.android\build-cache\906a5b93dc68cccbf4e55c9cc1bc5f3a8bfb5e9c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6a2bcb61342d09fe9acf55c9daf63961c8866cc0">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\classes_846f0f2ff200a9204dd537d470cd80fec4244e12.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.8.1\4d060ca3190df0eda4dc13415532a12e15ca5f11\okhttp-3.8.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4d060ca3190df0eda4dc13415532a12e15ca5f11">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\okhttp-3.8.1_7f751df1b178e307c8d283c813a30a72badb2b9d.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.8.1\4d060ca3190df0eda4dc13415532a12e15ca5f11\okhttp-3.8.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4d060ca3190df0eda4dc13415532a12e15ca5f11">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-3.8.1_7f751df1b178e307c8d283c813a30a72badb2b9d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_2902c071ded90be5fd5f97c1a940611df0eeb442\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.8.0\b258209549457d03e912ec4641735fc88048df99\butterknife-annotations-8.8.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b258209549457d03e912ec4641735fc88048df99">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\butterknife-annotations-8.8.0_2cdfa698feb5e1d86ec054a9e79367286dda6b97\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.3.0\bcacde6a8ccedcc56c127403d26b76072fe6214d\retrofit-2.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bcacde6a8ccedcc56c127403d26b76072fe6214d">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\retrofit-2.3.0_cba4b848ca9a823acc94f124bb4e2b3d7971839f\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.8.0\b258209549457d03e912ec4641735fc88048df99\butterknife-annotations-8.8.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b258209549457d03e912ec4641735fc88048df99">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\butterknife-annotations-8.8.0_2cdfa698feb5e1d86ec054a9e79367286dda6b97.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.google.auto\auto-common\0.8\c6f7af0e57b9d69d81b05434ef9f3c5610d498c4\auto-common-0.8.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c6f7af0e57b9d69d81b05434ef9f3c5610d498c4">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\auto-common-0.8_f8366eb6a8449bbeef45e8da2e06eea59b5e64d2\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.3.0\bcacde6a8ccedcc56c127403d26b76072fe6214d\retrofit-2.3.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bcacde6a8ccedcc56c127403d26b76072fe6214d">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\retrofit-2.3.0_cba4b848ca9a823acc94f124bb4e2b3d7971839f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-gson\2.3.0\9e09011e9767bb76b5e27c9b8223476b93b14631\converter-gson-2.3.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9e09011e9767bb76b5e27c9b8223476b93b14631">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\converter-gson-2.3.0_7b6f549dfe3c030189c58c4b7168703c5e0aa561.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-gson\2.3.0\9e09011e9767bb76b5e27c9b8223476b93b14631\converter-gson-2.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9e09011e9767bb76b5e27c9b8223476b93b14631">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10\converter-gson-2.3.0_7b6f549dfe3c030189c58c4b7168703c5e0aa561\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e2c545e665e4bfb6ca5a21456ee1d351c2062334">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_113c7ec8c82bad5b483a7e32cbf55b0844ce0eb3\classes.dex" />
+    </item>
+
+</items>

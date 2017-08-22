@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.android.ibidsera.view.activity.MainActivity">
+
+        <ScrollView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pendaftaran Unit"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_margin="16dp"
+                    android:textSize="24sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height= "1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:baselineAligned="false">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="NO POLISI"/>
+
+                        <EditText
+                            android:id="@+id/no_polisi"
+                            style="@style/SpinnerEditForm"
+                            android:text="b3434"
+                            android:background="@drawable/edittext_style" />
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="STNK AN"/>
+
+                        <EditText
+                            android:id="@+id/stnk_an"
+                            style="@style/SpinnerEditForm"
+                            android:text="d23423"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="KOTA"/>
+
+                        <EditText
+                            android:id="@+id/kota"
+                            style="@style/SpinnerEditForm"
+                            android:text="depok"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="MERK"/>
+
+                        <Spinner
+                            android:id="@+id/merk"
+                            style="@style/SpinnerEditForm"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="SERI"/>
+
+                        <Spinner
+                            android:id="@+id/seri"
+                            style="@style/SpinnerEditForm"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="SILINDER"/>
+
+                        <Spinner
+                            android:id="@+id/silinder"
+                            style="@style/SpinnerEditForm"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="GRADE"/>
+
+                        <Spinner
+                            android:id="@+id/grade"
+                            style="@style/SpinnerEditForm"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="SUB GRADE"/>
+
+                        <Spinner
+                            android:id="@+id/sub_grade"
+                            style="@style/SpinnerEditForm"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="PLAT DASAR"/>
+
+                        <Spinner
+                            android:id="@+id/plat_dasar"
+                            style="@style/SpinnerEditForm"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="TRANSMISI"/>
+
+                        <EditText
+                            android:id="@+id/transmisi"
+                            style="@style/SpinnerEditForm"
+                            android:text="Manual"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="TAHUN"/>
+
+                        <EditText
+                            android:id="@+id/tahun"
+                            style="@style/SpinnerEditForm"
+                            android:text="2017"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="SUMBER"/>
+
+                        <Spinner
+                            android:id="@+id/sumber"
+                            style="@style/SpinnerEditForm"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="WARNA DOC"/>
+
+                        <EditText
+                            android:id="@+id/warna_doc"
+                            style="@style/SpinnerEditForm"
+                            android:text="biru"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="LINTAS"/>
+
+                        <CheckBox
+                            android:id="@+id/lintas"
+                            style="@style/SpinnerEditForm"
+                            android:text="YA"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="TAKSASI APPRAISER"/>
+
+                        <Spinner
+                            android:id="@+id/taksasi_appraiser"
+                            style="@style/SpinnerEditForm"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="NO RANGKA"/>
+
+                        <EditText
+                            android:id="@+id/no_rangka"
+                            style="@style/SpinnerEditForm"
+                            android:text="asdas"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="NO MESIN"/>
+
+                        <EditText
+                            android:id="@+id/no_mesin"
+                            android:text="sdfds"
+                            style="@style/SpinnerEditForm"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="NO BPKB"/>
+
+                        <EditText
+                            android:id="@+id/no_bpkb"
+                            android:text="sdfsdf"
+                            style="@style/SpinnerEditForm"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="NO FAKTUR"/>
+
+                        <EditText
+                            android:id="@+id/no_faktur"
+                            style="@style/SpinnerEditForm"
+                            android:text="werewrw"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="NO STNK"/>
+
+                        <EditText
+                            android:id="@+id/no_stnk"
+                            style="@style/SpinnerEditForm"
+                            android:text="ds123"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="STNK SD"/>
+
+                        <EditText
+                            android:id="@+id/stnk_sd"
+                            android:text="werwe34234"
+                            style="@style/SpinnerEditForm"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="NO KEUR"/>
+
+                        <EditText
+                            android:id="@+id/no_keur"
+                            style="@style/SpinnerEditForm"
+                            android:text="sd2342"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="TGL KEUR"/>
+
+                        <DatePicker
+                            android:id="@+id/tgl_keur"
+                            style="@style/SpinnerEditForm"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="MODEL"/>
+
+                        <EditText
+                            android:id="@+id/model"
+                            style="@style/SpinnerEditForm"
+                            android:text="avanza"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="PENGGERAK"/>
+
+                        <EditText
+                            android:id="@+id/penggerak"
+                            style="@style/SpinnerEditForm"
+                            android:text="4x5"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="BAHAN BAKAR"/>
+
+                        <EditText
+                            android:id="@+id/bahan_bakar"
+                            style="@style/SpinnerEditForm"
+                            android:text="premium"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="KM"/>
+
+                        <EditText
+                            android:id="@+id/km"
+                            style="@style/SpinnerEditForm"
+                            android:text="1000"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="WARNA"/>
+
+                        <EditText
+                            android:id="@+id/warna"
+                            style="@style/SpinnerEditForm"
+                            android:text="white"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="KUNCI TAMBAHAN"/>
+
+                        <EditText
+                            android:id="@+id/kunci_tambahan"
+                            style="@style/SpinnerEditForm"
+                            android:text="asdas"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="BIAYA ADMINISTRASI"/>
+
+                        <EditText
+                            android:id="@+id/biaya_administrasi"
+                            style="@style/SpinnerEditForm"
+                            android:text="10000"
+                            android:background="@drawable/edittext_style"/>
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="BIAYA PARKIR"/>
+
+                        <EditText
+                            android:id="@+id/biaya_parkir"
+                            style="@style/SpinnerEditForm"
+                            android:text="10000"
+                            android:background="@drawable/edittext_style"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Data Penitip"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_margin="16dp"
+                    android:textSize="24sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height= "1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:baselineAligned="false">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="NAMA"/>
+
+                        <EditText
+                            android:id="@+id/nama"
+                            style="@style/SpinnerEditForm"
+                            android:text="yosef"
+                            android:background="@drawable/edittext_style" />
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="No Identitas"/>
+
+                        <EditText
+                            android:id="@+id/no_identitas"
+                            android:text="123aeaa"
+                            style="@style/SpinnerEditForm"
+                            android:background="@drawable/edittext_style"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="Sebagai Perusahaan"/>
+
+                        <CheckBox
+                            android:id="@+id/perusahaan"
+                            style="@style/SpinnerEditForm"
+                            android:text="YA"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Data PIC"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_margin="16dp"
+                    android:textSize="24sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height= "1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:baselineAligned="false">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="NAMA"/>
+
+                        <EditText
+                            android:id="@+id/nama_pic"
+                            style="@style/SpinnerEditForm"
+                            android:text="asdsa"
+                            android:background="@drawable/edittext_style" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="Ponsel" />
+
+                        <EditText
+                            android:id="@+id/ponsel"
+                            android:text="019732982"
+                            style="@style/SpinnerEditForm"
+                            android:background="@drawable/edittext_style"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Koordinator Unit"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_margin="16dp"
+                    android:textSize="24sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height= "1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:baselineAligned="false">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="Lokasi Asal Unit"/>
+
+                        <EditText
+                            android:id="@+id/lokasi_asal_unit"
+                            android:text="cibinong"
+                            style="@style/SpinnerEditForm"
+                            android:background="@drawable/edittext_style" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="Nama PIC Display" />
+
+                        <EditText
+                            android:id="@+id/nama_pic_display"
+                            android:text="qweqw"
+                            style="@style/SpinnerEditForm"
+                            android:background="@drawable/edittext_style"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="16dp"
+                        android:id="@+id/btn_save"
+                        android:text="Save"
+                        android:background="@drawable/button_style"
+                        android:textColor="@color/colorPrimary"/>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="16dp"
+                        android:id="@+id/btn_cancel"
+                        android:background="@drawable/button2_style"
+                        android:text="Cancel" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+</RelativeLayout>

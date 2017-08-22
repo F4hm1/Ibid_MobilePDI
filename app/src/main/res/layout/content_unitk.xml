@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.android.ibidsera.view.activity.MainActivity">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refreshContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unit Keluar"
+                    android:textSize="32sp"
+                    android:layout_margin="@dimen/activity_vertical_margin"
+                    android:textColor="@color/colorAccent"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_vertical_margin">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Polisi     "
+                        android:textSize="20sp"
+                        android:textColor="@color/colorAccent"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/et_unitk"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/edittext_style"/>
+
+                        <Button
+                            android:id="@+id/Unitk_search"
+                            android:layout_height="wrap_content"
+                            android:layout_width="150dp"
+                            android:text="Search"
+                            android:background="@drawable/button2_style"
+                            android:layout_marginTop="8dp"
+                            android:onClick="ClickHandler"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/Addk_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="16dp"
+                    android:text="Add Item"
+                    android:background="@drawable/button_style"
+                    android:textColor="@android:color/white"
+                    android:onClick="ClickHandler"/>
+
+                <TableLayout
+                    android:id="@+id/table_unitk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:stretchColumns="0">
+
+                    <TableRow
+                        android:background="@drawable/cell_shape_th"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            style="@style/FontTableHead"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            style="@style/FontTableHead"
+                            android:text="No Polisi" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            style="@style/FontTableHead"
+                            android:text="Tgl Doc" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            style="@style/FontTableHead"
+                            android:text="Pengemudi" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            style="@style/FontTableHead"
+                            android:text="Merk" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            style="@style/FontTableHead"
+                            android:text="Type" />
+
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <RelativeLayout
+        android:id="@+id/background_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background ="@color/transparent">
+        <com.github.rahatarmanahmed.cpv.CircularProgressView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/progress_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:cpv_thickness="10dp"
+            android:layout_centerInParent="true"
+            app:cpv_animAutostart="true"
+            app:cpv_indeterminate="true" />
+    </RelativeLayout>
+</RelativeLayout>
