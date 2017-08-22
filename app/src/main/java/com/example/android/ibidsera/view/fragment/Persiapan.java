@@ -175,7 +175,6 @@ public class Persiapan extends BaseFragment {
         ColorStateList list = new ColorStateList(states, colors);
         textView.setLayoutParams(param);
         textView.setClickable(true);
-        textView.setFocusableInTouchMode(true);
         textView.setTextColor(list);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
