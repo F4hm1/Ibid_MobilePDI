@@ -1,6 +1,7 @@
 package com.example.android.ibidsera.view.fragment;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -73,7 +74,6 @@ public class AddMasuk extends BaseFragment{
     private int size = 0;
     private int id_pemeriksaan = 0;
     private int id_auction = 0;
-    private int WEBID_LOGGED_IN = 0;
     HashMap<String, CheckBox> h = new HashMap<>();
 
     @Override
@@ -81,9 +81,6 @@ public class AddMasuk extends BaseFragment{
                              Bundle savedInstanceState) {
         View myFragment = inflater.inflate(R.layout.content_addm, container, false);
         ButterKnife.bind(this, myFragment);
-
-        AuctionService auctionService = RetrofitUtil.getAuctionService();
-        List<String> ls = new ArrayList<>();
 
         hideKeyboard();
         setAllCaps();
@@ -100,11 +97,14 @@ public class AddMasuk extends BaseFragment{
         if(id!=-1){
             getAddm(StaticUnit.getLu(), id);
         }
-
-        datePicker(tgl_pemeriksaan);
-        getTimeSpinner();
-        getKomponen(auctionService);
         cpvStop(cpv, bp);
+
+        checkAllListener(checkBoxB, "b", size, h);
+        checkAllListener(checkBoxR, "r", size, h);
+        checkAllListener(checkBoxT, "t", size, h);
+
+        List<String> ls = new ArrayList<>();
+        AuctionService auctionService = RetrofitUtil.getAuctionService();
 
         nopol.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {}
@@ -128,14 +128,14 @@ public class AddMasuk extends BaseFragment{
 
             HashMap<String, EditText> h = new HashMap<>();
             h.put("NO POLISI", nopol);
-            h.put("Nama Pengemudi", nama_pengemudi);
-            h.put("Alamat Pengemudi", alamat_pengemudi);
-            h.put("Kota", kota);
-            h.put("Telp", telepon);
+            h.put("nama pengemudi", nama_pengemudi);
 
             List<String> ls2 = required(h);
             if(ls2.size() <= 0) {
-                auctionService.createInsertUnit(setInsertUnit()).enqueue(new Callback<String>() {
+
+                String post = RetrofitUtil.toJson(setInsertUnit());
+                Log.i("isi", post);
+                auctionService.createInsertUnit(post).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
@@ -152,8 +152,8 @@ public class AddMasuk extends BaseFragment{
 
             }else {
                 String required = "";
-                for (int i = ls2.size()-1; i >= 0; i--) {
-                    if (i == 0) {
+                for (int i = 0; i <= ls2.size() - 1; i++) {
+                    if (i == ls2.size() - 1) {
                         required = required + ls2.get(i);
                     } else
                         required = required + ls2.get(i) + ", ";
@@ -167,9 +167,11 @@ public class AddMasuk extends BaseFragment{
     }
 
     public void getAddm(List<Unit> lu, int id) {
+        Calendar c = Calendar.getInstance();
 
         id_pemeriksaan = lu.get(id).getAuction().getId_pemeriksaanitem();
         id_auction = lu.get(id).getAuction().getId_auctionitem();
+        size = lu.get(id).getKomponen().size();
         nopol.setText(lu.get(id).getAuction().getNo_polisi());
         merk.setAdapter(getAdapterList(lu.get(id).getNama_merk()));
         seri.setAdapter(getAdapterList(lu.get(id).getTipe().get(0)));
@@ -184,6 +186,18 @@ public class AddMasuk extends BaseFragment{
         fuel.setAdapter(setDropdown(R.array.fuel));
         cat.setAdapter(setDropdown(R.array.cat));
 
+        datePicker(tgl_pemeriksaan);
+
+        jam.setAdapter(setDropdown(R.array.jam));
+
+        int jam_now = c.get(Calendar.HOUR_OF_DAY);
+        jam.setSelection(jam_now);
+
+        menit.setAdapter(setDropdown(R.array.menit));
+
+        int menit_now = c.get(Calendar.MINUTE);
+        menit.setSelection(menit_now);
+
         nama_pengemudi.setText(lu.get(id).getAuction().getNama_pengemudi_msk());
         alamat_pengemudi.setText(lu.get(id).getAuction().getAlamat_pengemudi_msk());
         kota.setText(lu.get(id).getAuction().getKota_msk());
@@ -191,6 +205,33 @@ public class AddMasuk extends BaseFragment{
         catatan.setText(lu.get(id).getAuction().getCatatan());
         pool.setText(lu.get(id).getAuction().getPoolkota());
         cases.setText(lu.get(id).getAuction().getCases());
+
+        for (int i = 0; i < size; i++) {
+            TableRow row = tableRow();
+            TableLayout tl2 = tableLayout();
+            TableRow row2 = tableRow();
+            TextView no = textView();
+            TextView nama = textView();
+            CheckBox b = checkBox();
+            CheckBox r = checkBox();
+            CheckBox t = checkBox();
+
+            TableRow.LayoutParams param_25 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, .25f);
+            TableRow.LayoutParams param7 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 7f);
+            TableRow.LayoutParams param3 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 3f);
+            TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+
+            rowColor(row, i);
+            textStyle(no, row, param_25, String.valueOf(i+1));
+            textStyle(nama, row2, param7, lu.get(id).getKomponen().get(i).getNama());
+            checkboxStyle(b, row2, param1, i, "b", h);
+            checkboxStyle(r, row2, param1, i, "r", h);
+            checkboxStyle(t, row2, param1, i, "t", h);
+            tl2.addView(row2);
+            tl2.setLayoutParams(param3);
+            row.addView(tl2);
+            tl.addView(row);
+        }
     }
 
     public ArrayAdapter<String> getAdapterList(String value){
@@ -205,13 +246,6 @@ public class AddMasuk extends BaseFragment{
         insertUnit.setIdauctionitem(id_auction);
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
-        insertUnit.setMERK(String.valueOf(merk.getSelectedItem()));
-        insertUnit.setSERI(String.valueOf(seri.getSelectedItem()));
-        insertUnit.setSILINDER(String.valueOf(silinder.getSelectedItem()));
-        insertUnit.setGRADE(String.valueOf(grade.getSelectedItem()));
-        insertUnit.setSUB_GRADE(String.valueOf(sub_grade.getSelectedItem()));
-        insertUnit.setTRANSMISI(String.valueOf(transmisi.getText()));
-        insertUnit.setKM(String.valueOf(km.getText()));
         insertUnit.setFuel(fuel.getSelectedItem().toString());
         insertUnit.setCatbody(cat.getSelectedItem().toString());
         insertUnit.setTglpemeriksaan(String.valueOf(tgl_pemeriksaan.getText()));
@@ -239,9 +273,6 @@ public class AddMasuk extends BaseFragment{
         insertUnit.setCektampilkantidakada(lt);
         insertUnit.setIdkomponenpemeriksaan(lidKomponen);
         insertUnit.setCatatan(String.valueOf(catatan.getText()));
-        insertUnit.setCases(String.valueOf(cases.getText()));
-        insertUnit.setPoolkota(String.valueOf(pool.getText()));
-        insertUnit.setWEBID_LOGGED_IN(WEBID_LOGGED_IN);
         return insertUnit;
     }
 
@@ -291,67 +322,5 @@ public class AddMasuk extends BaseFragment{
                 }
             });
         }
-    }
-
-    private void getTimeSpinner(){
-        Calendar c = Calendar.getInstance();
-        jam.setAdapter(setDropdown(R.array.jam));
-
-        int jam_now = c.get(Calendar.HOUR_OF_DAY);
-        jam.setSelection(jam_now);
-
-        menit.setAdapter(setDropdown(R.array.menit));
-
-        int menit_now = c.get(Calendar.MINUTE);
-        menit.setSelection(menit_now);
-    }
-
-    private void getKomponen(AuctionService auctionService){
-        auctionService.getPersiapan().enqueue(new Callback<List<Unit>>() {
-            @Override
-            public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
-                List<Unit> lu = response.body();
-                getKomponenList(lu);
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Unit>> call, Throwable t) {
-                errorRetrofit(call, t);
-            }
-        });
-    }
-
-    private void getKomponenList(List<Unit> lu){
-        size = lu.get(0).getKomponen().size();
-        for (int i = 0; i < size; i++) {
-            TableRow row = tableRow();
-            TableLayout tl2 = tableLayout();
-            TableRow row2 = tableRow();
-            TextView no = textView();
-            TextView nama = textView();
-            CheckBox b = checkBox();
-            CheckBox r = checkBox();
-            CheckBox t = checkBox();
-
-            TableRow.LayoutParams param_25 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, .25f);
-            TableRow.LayoutParams param7 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 7f);
-            TableRow.LayoutParams param3 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 3f);
-            TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-
-            rowColor(row, i);
-            textStyle(no, row, param_25, String.valueOf(i+1));
-            textStyle(nama, row2, param7, lu.get(0).getKomponen().get(i).getNama());
-            checkboxStyle(b, row2, param1, i, "b", h);
-            checkboxStyle(r, row2, param1, i, "r", h);
-            checkboxStyle(t, row2, param1, i, "t", h);
-            tl2.addView(row2);
-            tl2.setLayoutParams(param3);
-            row.addView(tl2);
-            tl.addView(row);
-        }
-        checkAllListener(checkBoxB, "b", size, h);
-        checkAllListener(checkBoxR, "r", size, h);
-        checkAllListener(checkBoxT, "t", size, h);
     }
 }

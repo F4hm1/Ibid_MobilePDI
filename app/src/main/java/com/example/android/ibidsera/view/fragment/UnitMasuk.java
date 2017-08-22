@@ -122,7 +122,7 @@ public class UnitMasuk extends BaseFragment{
             paramImg.gravity = Gravity.CENTER;
 
             rowColor(row, i);
-            imgStyle(id, row, paramImg, i);
+            imgStyle(id, row, paramImg, i+1);
             textStyle(no_pol, row, param1, lu.get(i).getAuction().getNo_polisi());
             textStyle(tgl_doc, row, param1, lu.get(i).getAuction().getTgl_serah_msk());
             textStyle(pengemudi, row, param1, lu.get(i).getAuction().getNama_pengemudi_msk());
@@ -143,7 +143,7 @@ public class UnitMasuk extends BaseFragment{
     public void imgStyle(ImageButton imageButton, TableRow row, TableRow.LayoutParams imgParam, int id){
         imageButton.setLayoutParams(imgParam);
         Bitmap bmp= BitmapFactory.decodeResource(getResources(), R.drawable.search);
-        Bitmap resizedbitmap=Bitmap.createScaledBitmap(bmp, 30, imgParam.height, true);
+        Bitmap resizedbitmap=Bitmap.createScaledBitmap(bmp, 50, imgParam.height, true);
         imageButton.setImageBitmap(resizedbitmap);
         imageButton.setBackgroundDrawable(null);
         imageButton.setOnClickListener(v -> {

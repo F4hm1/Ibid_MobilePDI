@@ -1,7 +1,7 @@
 package com.example.android.ibidsera.model.api;
 
+import com.example.android.ibidsera.model.Attribute;
 import com.example.android.ibidsera.model.HomeModel;
-import com.example.android.ibidsera.model.Login;
 import com.example.android.ibidsera.model.PersiapanPost;
 import com.example.android.ibidsera.model.PersiapanValue;
 import com.example.android.ibidsera.model.Unit;
@@ -28,12 +28,13 @@ public interface AuctionService {
     @GET("index.php/persiapan/search/{nopol}") Call<List<Unit>> getSearchPersiapan(@Path("nopol") String nopol);
     @GET("index.php/unitmasuk/search/{nopol}") Call<List<Unit>> getSearchUnitm(@Path("nopol") String nopol);
     @GET("index.php/unitkeluar/search/{nopol}") Call<List<Unit>> getSearchUnitk(@Path("nopol") String nopol);
-//      @Headers({
-//        "ClientService : frontend-client",
-//        "Auth-Key : simplerestapi",
-//        "Content-Type : application/json"
+
+//    @Headers({
+//            "ClientService : frontend-client",
+//            "Auth-Key : simplerestapi",
+//            "Content-Type : application/json"
 //    })
     @POST("index.php/unitmasuk/insert") Call<String> createInsertUnit(@Body String insertUnit);
     @POST("index.php/persiapan/insert") Call<String> insertUnit(@Body PersiapanPost persiapanPost);
-    @POST("index.php/auth/login") Call<Login> getLogin(@Body Login login);
+    @POST("index.php/masteritem/search") Call<List<Attribute>> getMasterItem(@Body Attribute item);
 }

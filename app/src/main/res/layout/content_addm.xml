@@ -107,7 +107,6 @@
                             android:text="KM"/>
                         <EditText
                             android:id="@+id/km"
-                            android:inputType="number"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                         <TextView
@@ -267,16 +266,13 @@
                             <TableRow>
                                 <CheckBox
                                     android:id="@+id/checkboxB"
-                                    android:text="B   "
-                                    android:theme="@style/WhiteCheck"/>
+                                    android:text="B   " android:theme="@style/WhiteCheck"/>
                                 <CheckBox
                                     android:id="@+id/checkboxR"
-                                    android:text="R   "
-                                    android:theme="@style/WhiteCheck"/>
+                                    android:text="R   " android:theme="@style/WhiteCheck"/>
                                 <CheckBox
                                     android:id="@+id/checkboxT"
-                                    android:text="T   "
-                                    android:theme="@style/WhiteCheck"/>
+                                    android:text="T   " android:theme="@style/WhiteCheck"/>
                             </TableRow>
                         </TableLayout>
                     </TableRow>

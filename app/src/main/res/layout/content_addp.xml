@@ -471,7 +471,7 @@
                             android:text="Ponsel" />
 
                         <EditText
-                            android:id="@+id/ponsel"
+                            android:id="@+id/ponsel_pic"
                             android:text="019732982"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>

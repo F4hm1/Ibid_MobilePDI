@@ -8,6 +8,9 @@ import java.util.List;
 
 public class PersiapanValue {
     private List<Attribute> merk;
+    private List<Attribute> seri;
+    private List<Attribute> silinder;
+    private List<Attribute> grade;
     private List<Attribute> subgr;
     private List<Attribute> plat;
     private List<Attribute> sumber;
@@ -15,6 +18,33 @@ public class PersiapanValue {
 
     public List<Attribute> getMerk() {
         return merk;
+    }
+
+    public List<Attribute> getSeri() {
+        return seri;
+    }
+
+    public PersiapanValue setSeri(List<Attribute> seri) {
+        this.seri = seri;
+        return this;
+    }
+
+    public List<Attribute> getSilinder() {
+        return silinder;
+    }
+
+    public PersiapanValue setSilinder(List<Attribute> silinder) {
+        this.silinder = silinder;
+        return this;
+    }
+
+    public List<Attribute> getGrade() {
+        return grade;
+    }
+
+    public PersiapanValue setGrade(List<Attribute> grade) {
+        this.grade = grade;
+        return this;
     }
 
     public List<Attribute> getSubgr() {

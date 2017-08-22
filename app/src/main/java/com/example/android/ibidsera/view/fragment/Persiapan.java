@@ -65,11 +65,8 @@ public class Persiapan extends BaseFragment {
         }
 
         cpvStart(cpv, bp);
-
         getItemList(psearch);
-
         cpvStop(cpv, bp);
-
         swipeRefresh(refreshLayout, R.id.nav_persiapan);
 
         return myFragment;

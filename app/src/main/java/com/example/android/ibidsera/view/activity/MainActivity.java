@@ -1,8 +1,6 @@
 package com.example.android.ibidsera.view.activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.android.ibidsera.R;
-import com.example.android.ibidsera.base.BaseActivity;
 import com.example.android.ibidsera.view.fragment.AddKeluar;
 import com.example.android.ibidsera.view.fragment.AddMasuk;
 import com.example.android.ibidsera.view.fragment.AddPersiapan;
@@ -37,7 +35,7 @@ import static com.example.android.ibidsera.R.id.Persiapan_search;
 import static com.example.android.ibidsera.R.id.Unitk_search;
 import static com.example.android.ibidsera.R.id.Unitm_search;
 
-public class MainActivity extends BaseActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -124,9 +122,7 @@ public class MainActivity extends BaseActivity
                 fragment = new Report();
                 break;
             case R.id.nav_signout:
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-                editor.clear().apply();
-                openNewActivity(LoginActivity.class);
+
                 break;
         }
 

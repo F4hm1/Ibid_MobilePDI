@@ -68,7 +68,7 @@ public class DetailMasuk extends BaseFragment{
         }
 
         if(id!=-1) {
-            getDetailm(StaticUnit.getLu(), id);
+            getDetailk(StaticUnit.getLu(), id);
         }
 
         cancelListener(close);
@@ -76,7 +76,7 @@ public class DetailMasuk extends BaseFragment{
         return myFragment;
     }
 
-    public void getDetailm(List<Unit> lu, int id) {
+    public void getDetailk(List<Unit> lu, int id) {
         nopol.setText(lu.get(id).getAuction().getNo_polisi());
         merk.setText(lu.get(id).getNama_merk());
         seri.setText(lu.get(id).getTipe().get(0));
@@ -141,7 +141,7 @@ public class DetailMasuk extends BaseFragment{
         }else {
             bmp = BitmapFactory.decodeResource(getResources(), R.drawable.delete);
         }
-        Bitmap resizedbitmap = Bitmap.createScaledBitmap(bmp, 25, 25, true);
+        Bitmap resizedbitmap = Bitmap.createScaledBitmap(bmp, 35, 35, true);
         imageView.setImageBitmap(resizedbitmap);
         imageView.setBackgroundDrawable(null);
         row.addView(imageView);

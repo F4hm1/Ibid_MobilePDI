@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -63,6 +64,7 @@ public class AddPersiapan extends BaseFragment {
     @BindView(R.id.no_faktur) protected EditText nofaktur;
     @BindView(R.id.no_stnk) protected EditText noStnk;
     @BindView(R.id.stnk_sd) protected EditText stnkSd;
+    @BindView(R.id.no_keur) protected EditText noKeur;
     @BindView(R.id.tgl_keur) protected DatePicker tglKeur;
     @BindView(R.id.model) protected EditText model;
     @BindView(R.id.penggerak) protected EditText penggerak;
@@ -76,14 +78,16 @@ public class AddPersiapan extends BaseFragment {
     @BindView(R.id.no_identitas) protected EditText noIdentitas;
     @BindView(R.id.perusahaan) protected CheckBox perusahaan;
     @BindView(R.id.nama_pic) protected EditText namaPic;
-    @BindView(R.id.ponsel) protected EditText ponsel;
+    @BindView(R.id.ponsel_pic) protected EditText ponselPic;
     @BindView(R.id.lokasi_asal_unit) protected EditText lokasiAsalUnit;
+    @BindView(R.id.nama_pic_display) protected  EditText namaPicDisplay;
     @BindView(R.id.btn_save) protected Button save;
     @BindView(R.id.btn_cancel) protected Button cancel;
     private ProgressDialog pDialog;
     private AuctionService auctionService;
     private PersiapanPost persiapanPost;
     private HashMap<String, String> map;
+    private PersiapanValue pv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,7 +102,7 @@ public class AddPersiapan extends BaseFragment {
 
             @Override
             public void onResponse(Call<PersiapanValue> call, Response<PersiapanValue> response) {
-                PersiapanValue pv = response.body();
+                pv = response.body();
                 addList(pv.getMerk(), merk);
                 addList(pv.getPlat(), platDasar);
                 addList(pv.getSubgr(), subGrade);
@@ -109,6 +113,92 @@ public class AddPersiapan extends BaseFragment {
             @Override
             public void onFailure(Call<PersiapanValue> call, Throwable t) {
                 errorRetrofit(call, t);
+            }
+
+        });
+        cancelListener(cancel);
+
+        return myFragment;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        merk.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                auctionService.getMasterItem(pv.getMerk().get(i)).enqueue(new Callback<List<Attribute>>() {
+                    @Override
+                    public void onResponse(Call<List<Attribute>> call, Response<List<Attribute>> response) {
+                        List<Attribute> attr = response.body();
+
+                        addList(attr, seri);
+                        pv.setSeri(attr);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Attribute>> call, Throwable t) {
+                        errorRetrofit(call, t);
+                        Log.e("Test", String.valueOf(pv.getMerk().get(i).getId_attrdetail()));
+                    }
+
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+
+        });
+
+        seri.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                auctionService.getMasterItem(pv.getSeri().get(i)).enqueue(new Callback<List<Attribute>>() {
+                    @Override
+                    public void onResponse(Call<List<Attribute>> call, Response<List<Attribute>> response) {
+                        List<Attribute> attr = response.body();
+
+                        addList(attr, silinder);
+                        pv.setSilinder(attr);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Attribute>> call, Throwable t) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        silinder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                auctionService.getMasterItem(pv.getSilinder().get(i)).enqueue(new Callback<List<Attribute>>() {
+                    @Override
+                    public void onResponse(Call<List<Attribute>> call, Response<List<Attribute>> response) {
+                        List<Attribute> attr = response.body();
+
+                        addList(attr, grade);
+                        pv.setGrade(attr);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Attribute>> call, Throwable t) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
@@ -121,7 +211,7 @@ public class AddPersiapan extends BaseFragment {
             h.put("Transmisi", transmisi);
             h.put("Tahun", tahun);
             h.put("Nama", nama);
-            h.put("Ponsel", ponsel);
+            h.put("Ponsel", ponselPic);
 
             HashMap<String, Spinner> hs = new HashMap<>();
             hs.put("Merk", merk);
@@ -136,27 +226,27 @@ public class AddPersiapan extends BaseFragment {
             if(ls2.size() <= 0 || lsSpinner.size() <= 0) {
 
                 persiapanPost = getDataView();
-                auctionService.insertUnit(persiapanPost).enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        String log = response.body();
-                        Log.d("POST", log);
+                final Handler handler = new Handler();
+                handler.postDelayed(() -> {
 
-                        final Handler handler = new Handler();
-                        handler.postDelayed(() -> {
+                    auctionService.insertUnit(persiapanPost).enqueue(new Callback<String>() {
+
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            String log = response.body();
+
                             pDialog.hide();
-                            Toast.makeText(getContext(), "Successfull Send Data", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), log, Toast.LENGTH_LONG).show();
                             getActivity().getSupportFragmentManager().popBackStack();
-                        }, 5000);
+                        }
 
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Log.e("GAGAL POST", t.getMessage());
-                        pDialog.hide();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            errorRetrofit(call,t);
+                            pDialog.hide();
+                        }
+                    });
+                }, 3000);
 
             }else{
                 pDialog.hide();
@@ -165,26 +255,57 @@ public class AddPersiapan extends BaseFragment {
             }
 
         });
-        cancelListener(cancel);
 
-        return myFragment;
     }
 
     private PersiapanPost getDataView() {
 
         PersiapanPost persiapan = persiapan()
-                .setCabangtaksasi(spinnerItem(taksasiAppraiser))
+                .setNo_polisi(stringVal(noPolisi))
+                .setSTNK_AN(stringVal(stnkAn))
+                .setKOTA(stringVal(kota))
+                .setMERK(spinnerItem(merk))
+                .setSERI(spinnerItem(seri))
+                .setSILINDER(spinnerItem(silinder))
+                .setGRADE(spinnerItem(grade))
+                .setSUB_GRADE(spinnerItem(subGrade))
+                .setPLAT_DASAR(spinnerItem(platDasar))
+                .setTRANSMISI(stringVal(transmisi))
+                .setTAHUN(stringVal(tahun))
+                .setSUMBER(spinnerItem(sumber))
                 .setWARNA_DOC(stringVal(warnaDoc))
+                .setCabangtaksasi(spinnerItem(taksasiAppraiser))
+
+                .setNo_rangka(stringVal(noRangka))
+                .setNO_MESIN(stringVal(noMesin))
+                .setNO_BPKB(stringVal(noBpkb))
+                .setNO_FAKTUR(stringVal(nofaktur))
+                .setNO_STNK(stringVal(noStnk))
+                .setSTNK_SD(stringVal(stnkSd))
+                .setNO_KEUR(stringVal(noKeur))
+                .setTGL_KEUR(intToDate(tglKeur))
+                .setMODEL(stringVal(model))
+                .setPENGGERAK(stringVal(penggerak))
+                .setBAHAN_BAKAR(stringVal(bahanBakar))
+                .setKM(stringVal(km))
                 .setWARNA(stringVal(warna))
+                .setKUNCI_TAMBAHAN(stringVal(kunciTambahan))
                 .setBiayadmin(stringToInt(biayaAdministrasi))
                 .setBiayaparkir(stringToInt(biayaParkir))
+
                 .setNamapenitip(stringVal(nama))
-                .setNmridpenitip("")
+                .setNmridpenitip(stringVal(noIdentitas))
+                .setSebagaiperusahaan(perusahaan.isChecked())
+
+                .setNamapic(stringVal(namaPic))
+                .setPonselpic(stringVal(ponselPic))
+                .setLokasibrglelang(stringVal(lokasiAsalUnit))
+                .setNamapicdisplay(stringVal(namaPicDisplay))
+
                 .setNonpwp("")
                 .setGroupbiodata("")
                 .setStatuspeserta(false)
                 .setJenisusaha("")
-                .setSebagaiperusahaan(perusahaan.isChecked())
                 .setTeleponpenitip("")
                 .setPonselpenitip("")
                 .setAlamatpenitip("")
@@ -196,50 +317,22 @@ public class AddPersiapan extends BaseFragment {
                 .setCabanglelang("")
                 .setLokasilelang("")
                 .setIkutseselelang(false)
-                .setLokasibrglelang("")
                 .setAlamatbrglelang("")
                 .setKotabrglelang("")
                 .setNamapicdisplay("")
                 .setLokasidisplay("")
                 .setAlamatdisplay("")
-                .setKotadisplay("")
+                .setKotadisplay(stringVal(kota))
                 .setTelppicdisplay("")
-                .setNamapic("")
                 .setJabatanpic("")
                 .setAlamatpic("")
                 .setKotapic("")
                 .setTelppic("")
-                .setPonselpic("0918326")
                 .setFaxpic("")
                 .setMailpi("")
                 .setCatatan("")
-                .setSTNK_SD("")
-                .setTGL_KEUR(intToDate(tglKeur))
                 .setLotnumb("")
-                .setNo_polisi(stringVal(noPolisi))
-                .setNo_rangka(stringVal(noRangka))
-                .setSTNK_AN(stringVal(stnkAn))
-                .setNO_MESIN(stringVal(noMesin))
                 .setALAMAT("")
-                .setNO_BPKB(stringVal(noBpkb))
-                .setKOTA(stringVal(kota))
-                .setNO_FAKTUR(stringVal(nofaktur))
-                .setMERK(spinnerItem(merk))
-                .setNO_STNK(stringVal(noStnk))
-                .setSERI("")
-                .setSILINDER("")
-                .setNO_KEUR("")
-                .setGRADE("")
-                .setSUB_GRADE(spinnerItem(subGrade))
-                .setMODEL(stringVal(model))
-                .setPLAT_DASAR(spinnerItem(platDasar))
-                .setPENGGERAK(stringVal(penggerak))
-                .setTRANSMISI("manual")
-                .setBAHAN_BAKAR(stringVal(bahanBakar))
-                .setTAHUN(stringVal(tahun))
-                .setKM(stringVal(km))
-                .setSUMBER(spinnerItem(sumber))
-                .setKUNCI_TAMBAHAN(stringVal(kunciTambahan))
                 .setId_user(6)
                 .build();
 
@@ -260,7 +353,6 @@ public class AddPersiapan extends BaseFragment {
     }
 
     private Date intToDate(DatePicker value) {
-
         int day = value.getDayOfMonth();
         int month = value.getMonth();
         int year =  value.getYear();
