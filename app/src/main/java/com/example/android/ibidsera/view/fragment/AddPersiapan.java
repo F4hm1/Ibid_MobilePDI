@@ -264,7 +264,7 @@ public class AddPersiapan extends BaseFragment {
                 .setNo_polisi(stringVal(noPolisi))
                 .setSTNK_AN(stringVal(stnkAn))
                 .setKOTA(stringVal(kota))
-                .setMERK(spinnerItem(merk))
+                .setMERK(String.valueOf(pv.getMerk().get(merk.getSelectedItemPosition()).getId_attrdetail()))
                 .setSERI(spinnerItem(seri))
                 .setSILINDER(spinnerItem(silinder))
                 .setGRADE(spinnerItem(grade))
