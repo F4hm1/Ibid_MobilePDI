@@ -2,6 +2,7 @@ package com.example.android.ibidsera.model.api;
 
 import com.example.android.ibidsera.model.Attribute;
 import com.example.android.ibidsera.model.HomeModel;
+import com.example.android.ibidsera.model.Login;
 import com.example.android.ibidsera.model.PersiapanPost;
 import com.example.android.ibidsera.model.PersiapanValue;
 import com.example.android.ibidsera.model.Unit;
@@ -37,4 +38,5 @@ public interface AuctionService {
     @POST("index.php/unitmasuk/insert") Call<String> createInsertUnit(@Body String insertUnit);
     @POST("index.php/persiapan/insert") Call<String> insertUnit(@Body PersiapanPost persiapanPost);
     @POST("index.php/masteritem/search") Call<List<Attribute>> getMasterItem(@Body Attribute item);
+    @POST("index.php/auth/login") Call<Login> getLogin(@Body Login login);
 }
