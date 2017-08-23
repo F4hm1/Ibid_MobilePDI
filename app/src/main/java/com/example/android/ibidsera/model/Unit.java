@@ -9,6 +9,7 @@ import java.util.List;
 public class Unit {
 
     private Auction auction;
+    private String id_merk;
     private String nama_merk;
     private List<String> tipe;
     private String model;
@@ -108,4 +109,11 @@ public class Unit {
         this.km = km;
     }
 
+    public String getId_merk() {
+        return id_merk;
+    }
+
+    public void setId_merk(String id_merk) {
+        this.id_merk = id_merk;
+    }
 }

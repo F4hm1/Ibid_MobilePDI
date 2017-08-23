@@ -130,10 +130,12 @@ public class Persiapan extends BaseFragment {
             textStyle(merk, row, param1, lu.get(i).getNama_merk());
             String tipe = "";
             for (String t : lu.get(i).getTipe()) {
-                if(tipe == ""){
-                    tipe = t;
-                }else{
-                    tipe = tipe + " " + t;
+                if(t != null){
+                    if(tipe.equals("")){
+                        tipe = t;
+                    }else {
+                        tipe = tipe + " " + t;
+                    }
                 }
             }
             textStyle(type, row, param2, tipe.concat(" " + lu.get(i).getTransmisi()));

@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "URI", "\"http://192.168.238.2/ibid-ims-api/\"")
+        buildConfigField("String", "URI", "\"http://192.168.56.1/ibid-ims-api/\"")
     }
     compileOptions{
         sourceCompatibility JavaVersion.VERSION_1_8

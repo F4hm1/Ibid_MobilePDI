@@ -9,7 +9,7 @@ public class Login {
     private String password;
     private String status;
     private String message;
-    private String nama;
+    private String name;
 
     public String getEmail() {
         return email;
@@ -43,11 +43,11 @@ public class Login {
         this.message = message;
     }
 
-    public String getNama() {
-        return nama;
+    public String getName() {
+        return name;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setName(String name) {
+        this.name = name;
     }
 }
