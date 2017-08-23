@@ -13,10 +13,20 @@ public class InsertUnit {
     private String fuel;
     private String catbody;
     private String catatan;
+    private String cases;
+    private String poolkota;
+    private int WEBID_LOGGED_IN;
     private String tglpemeriksaan;
     private String jampemeriksaan;
     private String menitpemeriksaan;
     private String nopolisi;
+    private String MERK;
+    private String SERI;
+    private String SILINDER;
+    private String GRADE;
+    private String SUB_GRADE;
+    private String TRANSMISI;
+    private String KM;
     private String namapengemudi;
     private String alamatpengemudi;
     private String kotapengemudi;
@@ -26,6 +36,7 @@ public class InsertUnit {
     private List<Boolean> cektampilkanrusak;
     private List<Boolean> cektampilkantidakada;
     private List<Integer> idkomponenpemeriksaan;
+
 
     public int getIdpemeriksaanitem() {
         return idpemeriksaanitem;
@@ -99,14 +110,6 @@ public class InsertUnit {
         this.menitpemeriksaan = menitpemeriksaan;
     }
 
-    public String getNopolisi() {
-        return nopolisi;
-    }
-
-    public void setNopolisi(String nopolisi) {
-        this.nopolisi = nopolisi;
-    }
-
     public String getNamapengemudi() {
         return namapengemudi;
     }
@@ -177,5 +180,93 @@ public class InsertUnit {
 
     public void setIdkomponenpemeriksaan(List<Integer> idkomponenpemeriksaan) {
         this.idkomponenpemeriksaan = idkomponenpemeriksaan;
+    }
+
+    public int getWEBID_LOGGED_IN() {
+        return WEBID_LOGGED_IN;
+    }
+
+    public void setWEBID_LOGGED_IN(int WEBID_LOGGED_IN) {
+        this.WEBID_LOGGED_IN = WEBID_LOGGED_IN;
+    }
+
+    public String getCases() {
+        return cases;
+    }
+
+    public void setCases(String cases) {
+        this.cases = cases;
+    }
+
+    public String getPoolkota() {
+        return poolkota;
+    }
+
+    public void setPoolkota(String poolkota) {
+        this.poolkota = poolkota;
+    }
+
+    public String getMERK() {
+        return MERK;
+    }
+
+    public void setMERK(String MERK) {
+        this.MERK = MERK;
+    }
+
+    public String getSERI() {
+        return SERI;
+    }
+
+    public void setSERI(String SERI) {
+        this.SERI = SERI;
+    }
+
+    public String getSILINDER() {
+        return SILINDER;
+    }
+
+    public void setSILINDER(String SILINDER) {
+        this.SILINDER = SILINDER;
+    }
+
+    public String getGRADE() {
+        return GRADE;
+    }
+
+    public void setGRADE(String GRADE) {
+        this.GRADE = GRADE;
+    }
+
+    public String getSUB_GRADE() {
+        return SUB_GRADE;
+    }
+
+    public void setSUB_GRADE(String SUB_GRADE) {
+        this.SUB_GRADE = SUB_GRADE;
+    }
+
+    public String getTRANSMISI() {
+        return TRANSMISI;
+    }
+
+    public void setTRANSMISI(String TRANSMISI) {
+        this.TRANSMISI = TRANSMISI;
+    }
+
+    public String getKM() {
+        return KM;
+    }
+
+    public void setKM(String KM) {
+        this.KM = KM;
+    }
+
+    public String getNopolisi() {
+        return nopolisi;
+    }
+
+    public void setNopolisi(String nopolisi) {
+        this.nopolisi = nopolisi;
     }
 }

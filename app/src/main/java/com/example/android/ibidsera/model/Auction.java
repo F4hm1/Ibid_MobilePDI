@@ -6,6 +6,7 @@ package com.example.android.ibidsera.model;
 
 public class Auction {
     private int id_pemeriksaanitem;
+    private int idauction_item;
     private int id_auctionitem;
     private String no_polisi;
     private String tgl_serah_msk;
@@ -193,5 +194,13 @@ public class Auction {
 
     public void setId_auctionitem(int id_auctionitem) {
         this.id_auctionitem = id_auctionitem;
+    }
+
+    public int getIdauction_item() {
+        return idauction_item;
+    }
+
+    public void setIdauction_item(int idauction_item) {
+        this.idauction_item = idauction_item;
     }
 }

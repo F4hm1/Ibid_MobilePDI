@@ -14,7 +14,7 @@ public class Unit {
     private String model;
     private String transmisi;
     private String tahun;
-    //private Long km;
+    private String km;
     private String penggerak;
     private Pntp pntp;
     private List<Komponen> komponen;
@@ -100,12 +100,12 @@ public class Unit {
         this.count_checklist = count_checklist;
     }
 
-//    public Long getKm() {
-//        return km;
-//    }
-//
-//    public void setKm(Long km) {
-//        this.km = km;
-//    }
+    public String getKm() {
+        return km;
+    }
+
+    public void setKm(String km) {
+        this.km = km;
+    }
 
 }

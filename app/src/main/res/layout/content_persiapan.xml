@@ -48,7 +48,9 @@
                             android:id="@+id/et_persiapan"
                             android:layout_width="150dp"
                             android:layout_height="30dp"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:maxLines="1"
+                            android:inputType="text"/>
 
                         <Button
                             android:id="@+id/Persiapan_search"

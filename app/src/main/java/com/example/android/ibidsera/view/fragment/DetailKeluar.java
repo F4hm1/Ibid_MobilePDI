@@ -83,7 +83,7 @@ public class DetailKeluar extends BaseFragment {
         sub_grade.setText(lu.get(id).getTipe().get(3));
         transmisi.setText(lu.get(id).getTransmisi());
         tahun.setText(lu.get(id).getTahun());
-//        km.setText(String.valueOf(lu.get(id).getKm()));
+        km.setText(String.valueOf(lu.get(id).getKm()));
         nama_pemilik.setText(lu.get(id).getPntp().getName_pntp());
         fuel.setText(lu.get(id).getAuction().getFuel());
         cat.setText(lu.get(id).getAuction().getCat_body());
