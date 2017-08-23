@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseActivity;
@@ -57,6 +58,12 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        View hView =  navigationView.getHeaderView(0);
+        TextView emailUser = (TextView) hView.findViewById(R.id.emailUser);
+        TextView namaUser = (TextView) hView.findViewById(R.id.namaUser);
+        emailUser.setText(prefs.getString("email", ""));
+        namaUser.setText(prefs.getString("nama", ""));
 
         displaySelectedScreen(R.id.nav_home);
     }

@@ -52,9 +52,10 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onResponse(Call<Login> call, Response<Login> response) {
                         Log.i("message", response.body().getMessage());
+                        Login login = response.body();
                         if(response.body().getStatus().equals("200")){
-                            editor.putString("email", strEmail);
-                            editor.putString("password", strPassword);
+                            editor.putString("email", login.getEmail());
+                            editor.putString("nama", login.getName());
                             editor.putBoolean("login", true);
                             editor.apply();
                             openNewActivity(MainActivity.class);
@@ -88,8 +89,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void incorrectLogin(){
-        email.setText("");
         password.setText("");
-        email.requestFocus();
+        password.requestFocus();
     }
 }

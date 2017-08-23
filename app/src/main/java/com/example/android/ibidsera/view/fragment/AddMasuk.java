@@ -71,9 +71,9 @@ public class AddMasuk extends BaseFragment{
     @BindView(R.id.checkboxR) CheckBox checkBoxR;
     @BindView(R.id.checkboxT) CheckBox checkBoxT;
     private int size = 0;
-    private int id_pemeriksaan = 0;
-    private int id_auction = 0;
     private int WEBID_LOGGED_IN = 0;
+    private List<Unit> lUnit = new ArrayList<>();
+    private int position = -1;
     HashMap<String, CheckBox> h = new HashMap<>();
 
     @Override
@@ -84,6 +84,7 @@ public class AddMasuk extends BaseFragment{
 
         AuctionService auctionService = RetrofitUtil.getAuctionService();
         List<String> ls = new ArrayList<>();
+
 
         hideKeyboard();
         setAllCaps();
@@ -165,9 +166,8 @@ public class AddMasuk extends BaseFragment{
     }
 
     public void getAddm(List<Unit> lu, int id) {
-
-        id_pemeriksaan = lu.get(id).getAuction().getId_pemeriksaanitem();
-        id_auction = lu.get(id).getAuction().getIdauction_item();
+        lUnit = lu;
+        position = id;
         nopol.setText(lu.get(id).getAuction().getNo_polisi());
         merk.setAdapter(getAdapterList(lu.get(id).getNama_merk()));
         seri.setAdapter(getAdapterList(lu.get(id).getTipe().get(0)));
@@ -199,11 +199,11 @@ public class AddMasuk extends BaseFragment{
 
     public InsertUnit setInsertUnit(){
         InsertUnit insertUnit = new InsertUnit();
-        insertUnit.setIdpemeriksaanitem(id_pemeriksaan);
-        insertUnit.setIdauctionitem(id_auction);
+        insertUnit.setIdpemeriksaanitem(lUnit.get(position).getAuction().getId_pemeriksaanitem());
+        insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getIdauction_item());
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
-        insertUnit.setMERK(String.valueOf(merk.getSelectedItem()));
+        insertUnit.setMERK(lUnit.get(position).getId_merk());
         insertUnit.setSERI(String.valueOf(seri.getSelectedItem()));
         insertUnit.setSILINDER(String.valueOf(silinder.getSelectedItem()));
         insertUnit.setGRADE(String.valueOf(grade.getSelectedItem()));
