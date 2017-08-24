@@ -1,6 +1,8 @@
 package com.example.android.ibidsera.view.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -71,7 +73,6 @@ public class AddMasuk extends BaseFragment{
     @BindView(R.id.checkboxR) CheckBox checkBoxR;
     @BindView(R.id.checkboxT) CheckBox checkBoxT;
     private int size = 0;
-    private int WEBID_LOGGED_IN = 0;
     private List<Unit> lUnit = new ArrayList<>();
     private int position = -1;
     HashMap<String, CheckBox> h = new HashMap<>();
@@ -85,21 +86,18 @@ public class AddMasuk extends BaseFragment{
         AuctionService auctionService = RetrofitUtil.getAuctionService();
         List<String> ls = new ArrayList<>();
 
-
         hideKeyboard();
         setAllCaps();
         setAllDisabled();
 
-        int id = -1;
-
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            id = bundle.getInt("id");
+            position = bundle.getInt("id");
         }
 
         cpvStart(cpv, bp);
-        if(id!=-1){
-            getAddm(StaticUnit.getLu(), id);
+        if(position!=-1){
+            getAddm(StaticUnit.getLu(), position);
         }
 
         datePicker(tgl_pemeriksaan);
@@ -136,19 +134,18 @@ public class AddMasuk extends BaseFragment{
 
             List<String> ls2 = required(h);
             if(ls2.size() <= 0) {
-                auctionService.createInsertUnit(setInsertUnit()).enqueue(new Callback<String>() {
+                auctionService.insertUnitMasuk(setInsertUnit()).enqueue(new Callback<InsertUnit>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<InsertUnit> call, Response<InsertUnit> response) {
                         Log.i("info", "post submitted to API." + response.body());
-                        alertDialog("Proses Penambahan Pemeriksaan Item Masuk Berhasil", 1);
+                        alertDialog("Proses Penambahan Pemeriksaan Unit Masuk Berhasil", 1);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<InsertUnit> call, Throwable t) {
                         errorRetrofit(call, t);
                     }
                 });
-
             }else {
                 String required = "";
                 for (int i = ls2.size()-1; i >= 0; i--) {
@@ -170,10 +167,10 @@ public class AddMasuk extends BaseFragment{
         position = id;
         nopol.setText(lu.get(id).getAuction().getNo_polisi());
         merk.setAdapter(getAdapterList(lu.get(id).getNama_merk()));
-        seri.setAdapter(getAdapterList(lu.get(id).getTipe().get(0)));
-        silinder.setAdapter(getAdapterList(lu.get(id).getTipe().get(1)));
-        grade.setAdapter(getAdapterList(lu.get(id).getTipe().get(2)));
-        sub_grade.setAdapter(getAdapterList(lu.get(id).getTipe().get(3)));
+        seri.setAdapter(getAdapterList(lu.get(id).getTipe().get(0).getAttributedetail()));
+        silinder.setAdapter(getAdapterList(lu.get(id).getTipe().get(1).getAttributedetail()));
+        grade.setAdapter(getAdapterList(lu.get(id).getTipe().get(2).getAttributedetail()));
+        sub_grade.setAdapter(getAdapterList(lu.get(id).getTipe().get(3).getAttributedetail()));
         transmisi.setText(lu.get(id).getTransmisi());
         tahun.setText(lu.get(id).getTahun());
         km.setText(String.valueOf(lu.get(id).getKm()));
@@ -204,10 +201,10 @@ public class AddMasuk extends BaseFragment{
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
         insertUnit.setMERK(lUnit.get(position).getId_merk());
-        insertUnit.setSERI(String.valueOf(seri.getSelectedItem()));
-        insertUnit.setSILINDER(String.valueOf(silinder.getSelectedItem()));
-        insertUnit.setGRADE(String.valueOf(grade.getSelectedItem()));
-        insertUnit.setSUB_GRADE(String.valueOf(sub_grade.getSelectedItem()));
+        insertUnit.setSERI(String.valueOf(lUnit.get(position).getTipe().get(0).getId_attrdetail()));
+        insertUnit.setSILINDER(String.valueOf(lUnit.get(position).getTipe().get(1).getId_attrdetail()));
+        insertUnit.setGRADE(String.valueOf(lUnit.get(position).getTipe().get(2).getId_attrdetail()));
+        insertUnit.setSUB_GRADE(String.valueOf(lUnit.get(position).getTipe().get(3).getId_attrdetail()));
         insertUnit.setTRANSMISI(String.valueOf(transmisi.getText()));
         insertUnit.setKM(String.valueOf(km.getText()));
         insertUnit.setFuel(fuel.getSelectedItem().toString());
@@ -219,17 +216,17 @@ public class AddMasuk extends BaseFragment{
         insertUnit.setAlamatpengemudi(String.valueOf(alamat_pengemudi.getText()));
         insertUnit.setKotapengemudi(String.valueOf(kota.getText()));
         insertUnit.setTeleponpengemudi(String.valueOf(telepon.getText()));
-        List<Boolean> lb = new ArrayList<>();
-        List<Boolean> lr = new ArrayList<>();
-        List<Boolean> lt = new ArrayList<>();
+        List<Integer> lb = new ArrayList<>();
+        List<Integer> lr = new ArrayList<>();
+        List<Integer> lt = new ArrayList<>();
         List<Integer> lidKomponen = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             CheckBox b = h.get("b"+i);
             CheckBox r = h.get("r"+i);
             CheckBox t = h.get("t"+i);
-            lb.add(b.isChecked());
-            lr.add(r.isChecked());
-            lt.add(t.isChecked());
+            lb.add(isChecked(b));
+            lr.add(isChecked(r));
+            lt.add(isChecked(t));
             lidKomponen.add(i+1);
         }
         insertUnit.setCektampilkanbaik(lb);
@@ -239,8 +236,17 @@ public class AddMasuk extends BaseFragment{
         insertUnit.setCatatan(String.valueOf(catatan.getText()));
         insertUnit.setCases(String.valueOf(cases.getText()));
         insertUnit.setPoolkota(String.valueOf(pool.getText()));
-        insertUnit.setWEBID_LOGGED_IN(WEBID_LOGGED_IN);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        insertUnit.setWEBID_LOGGED_IN(prefs.getInt("userId", 0));
         return insertUnit;
+    }
+
+    private int isChecked(CheckBox checkBox){
+        if(checkBox.isChecked()){
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     private void setAllDisabled(){
@@ -310,7 +316,6 @@ public class AddMasuk extends BaseFragment{
             public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                 List<Unit> lu = response.body();
                 getKomponenList(lu);
-
             }
 
             @Override

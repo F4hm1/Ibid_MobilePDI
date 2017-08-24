@@ -47,44 +47,40 @@
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="NO POLISI"/>
-                        <EditText
+                        <AutoCompleteTextView
+                            android:id="@+id/nopol"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="MERK"/>
                         <Spinner
-                            style="@style/SpinnerEditForm">
-
-                        </Spinner>
+                            android:id="@+id/merk"
+                            style="@style/SpinnerEditForm"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="SERI"/>
                         <Spinner
-                            style="@style/SpinnerEditForm">
-
-                        </Spinner>
+                            android:id="@+id/seri"
+                            style="@style/SpinnerEditForm"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="SILINDER"/>
                         <Spinner
-                            style="@style/SpinnerEditForm">
-
-                        </Spinner>
+                            android:id="@+id/silinder"
+                            style="@style/SpinnerEditForm"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="GRADE"/>
                         <Spinner
-                            style="@style/SpinnerEditForm">
-
-                        </Spinner>
+                            android:id="@+id/grade"
+                            style="@style/SpinnerEditForm"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="SUB GRADE"/>
                         <Spinner
-                            style="@style/SpinnerEditForm">
-
-                        </Spinner>
+                            android:id="@+id/sub_grade"
+                            style="@style/SpinnerEditForm"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
@@ -96,40 +92,42 @@
                             style="@style/FontTextViewForm"
                             android:text="TRANSMISI"/>
                         <EditText
+                            android:id="@+id/transmisi"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="TAHUN"/>
                         <EditText
+                            android:id="@+id/tahun"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="KM"/>
                         <EditText
+                            android:id="@+id/km"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="NAMA PEMILIK"/>
                         <EditText
+                            android:id="@+id/nama_pemilik"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="FUEL DIPERIKSA"/>
                         <Spinner
-                            style="@style/SpinnerEditForm">
-
-                        </Spinner>
+                            android:id="@+id/fuel"
+                            style="@style/SpinnerEditForm"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="KONDISI CAT BODY"/>
                         <Spinner
-                            style="@style/SpinnerEditForm">
-
-                        </Spinner>
+                            android:id="@+id/cat"
+                            style="@style/SpinnerEditForm"/>
                     </LinearLayout>
                 </LinearLayout>
                 <TextView
@@ -159,6 +157,7 @@
                             style="@style/FontTextViewForm"
                             android:text="Tanggal Pemeriksaan"/>
                         <EditText
+                            android:id="@+id/tgl_pemeriksaan"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                         <TextView
@@ -168,28 +167,27 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <Spinner
+                                android:id="@+id/jam"
                                 android:layout_width="0dp"
                                 android:layout_height="30dp"
                                 android:layout_weight="1"
-                                android:layout_marginLeft="20dp">
-
-                            </Spinner>
+                                android:layout_marginLeft="20dp"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=":"/>
                             <Spinner
+                                android:id="@+id/menit"
                                 android:layout_width="0dp"
                                 android:layout_height="30dp"
                                 android:layout_weight="1"
-                                android:layout_marginRight="16dp">
-
-                            </Spinner>
+                                android:layout_marginRight="16dp"/>
                         </LinearLayout>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="Nama Pengemudi"/>
                         <EditText
+                            android:id="@+id/nama_pengemudi"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                     </LinearLayout>
@@ -203,18 +201,21 @@
                             style="@style/FontTextViewForm"
                             android:text="Alamat Pengemudi"/>
                         <EditText
+                            android:id="@+id/alamat_pengemudi"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="Kota"/>
                         <EditText
+                            android:id="@+id/kota"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="Telepon"/>
                         <EditText
+                            android:id="@+id/telepon"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                     </LinearLayout>
@@ -233,6 +234,7 @@
                     android:layout_marginRight="16dp"
                     android:background="@android:color/darker_gray" />
                 <TableLayout
+                    android:id="@+id/table_addm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/activity_horizontal_margin"
@@ -248,22 +250,11 @@
                             style="@style/FontTableHead"
                             android:text="No" />
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height= "match_parent"
-                            android:background="@color/colorPrimary" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_weight="8"
                             style="@style/FontTableHead"
                             android:text="Nama Komponen" />
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height= "match_parent"
-                            android:background="@color/colorPrimary" />
-
                         <TableLayout>
                             <TableRow>
                                 <TextView
@@ -276,65 +267,12 @@
                                 <CheckBox
                                     android:id="@+id/checkboxB"
                                     android:text="B   " android:theme="@style/WhiteCheck"/>
-                                <View
-                                    android:layout_width="1dp"
-                                    android:layout_height= "match_parent"
-                                    android:background="@color/colorPrimary" />
                                 <CheckBox
                                     android:id="@+id/checkboxR"
                                     android:text="R   " android:theme="@style/WhiteCheck"/>
-                                <View
-                                    android:layout_width="1dp"
-                                    android:layout_height= "match_parent"
-                                    android:background="@color/colorPrimary" />
                                 <CheckBox
                                     android:id="@+id/checkboxT"
                                     android:text="T   " android:theme="@style/WhiteCheck"/>
-                            </TableRow>
-                        </TableLayout>
-                    </TableRow>
-                    <TableRow
-                    android:background="@drawable/cell_shape_tr_odd"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/no"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            style="@style/FontTable"
-                            android:text="1" />
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height= "match_parent"
-                            android:background="@color/colorPrimary" />
-
-                        <TextView
-                            android:id="@+id/nama_komponen"
-                            android:layout_width="0dp"
-                            android:layout_weight="8"
-                            style="@style/FontTable"
-                            android:text="STARTER / IGNITION SYSTEM" />
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height= "match_parent"
-                            android:background="@color/colorPrimary" />
-
-                        <TableLayout>
-                            <TableRow>
-                                <CheckBox
-                                    android:text="B   "/>
-                                <View
-                                    android:layout_width="1dp"
-                                    android:layout_height= "match_parent"
-                                    android:background="@color/colorPrimary" />
-                                <CheckBox android:text="R   "/>
-                                <View
-                                    android:layout_width="1dp"
-                                    android:layout_height= "match_parent"
-                                    android:background="@color/colorPrimary" />
-                                <CheckBox android:text="T   "/>
                             </TableRow>
                         </TableLayout>
                     </TableRow>
@@ -364,6 +302,7 @@
                             style="@style/FontTextViewForm"
                             android:text="Catatan"/>
                         <EditText
+                            android:id="@+id/catatan"
                             style="@style/SpinnerEditForm"
                             android:background="@drawable/edittext_style"/>
                     </LinearLayout>
@@ -371,8 +310,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
-                    </LinearLayout>
+                        android:orientation="vertical"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

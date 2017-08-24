@@ -32,9 +32,9 @@ public class InsertUnit {
     private String kotapengemudi;
     private String teleponpengemudi;
     private int iduser;
-    private List<Boolean> cektampilkanbaik;
-    private List<Boolean> cektampilkanrusak;
-    private List<Boolean> cektampilkantidakada;
+    private List<Integer> cektampilkanbaik;
+    private List<Integer> cektampilkanrusak;
+    private List<Integer> cektampilkantidakada;
     private List<Integer> idkomponenpemeriksaan;
 
 
@@ -150,30 +150,6 @@ public class InsertUnit {
         this.iduser = iduser;
     }
 
-    public List<Boolean> getCektampilkanbaik() {
-        return cektampilkanbaik;
-    }
-
-    public void setCektampilkanbaik(List<Boolean> cektampilkanbaik) {
-        this.cektampilkanbaik = cektampilkanbaik;
-    }
-
-    public List<Boolean> getCektampilkanrusak() {
-        return cektampilkanrusak;
-    }
-
-    public void setCektampilkanrusak(List<Boolean> cektampilkanrusak) {
-        this.cektampilkanrusak = cektampilkanrusak;
-    }
-
-    public List<Boolean> getCektampilkantidakada() {
-        return cektampilkantidakada;
-    }
-
-    public void setCektampilkantidakada(List<Boolean> cektampilkantidakada) {
-        this.cektampilkantidakada = cektampilkantidakada;
-    }
-
     public List<Integer> getIdkomponenpemeriksaan() {
         return idkomponenpemeriksaan;
     }
@@ -268,5 +244,29 @@ public class InsertUnit {
 
     public void setNopolisi(String nopolisi) {
         this.nopolisi = nopolisi;
+    }
+
+    public List<Integer> getCektampilkanbaik() {
+        return cektampilkanbaik;
+    }
+
+    public void setCektampilkanbaik(List<Integer> cektampilkanbaik) {
+        this.cektampilkanbaik = cektampilkanbaik;
+    }
+
+    public List<Integer> getCektampilkanrusak() {
+        return cektampilkanrusak;
+    }
+
+    public void setCektampilkanrusak(List<Integer> cektampilkanrusak) {
+        this.cektampilkanrusak = cektampilkanrusak;
+    }
+
+    public List<Integer> getCektampilkantidakada() {
+        return cektampilkantidakada;
+    }
+
+    public void setCektampilkantidakada(List<Integer> cektampilkantidakada) {
+        this.cektampilkantidakada = cektampilkantidakada;
     }
 }

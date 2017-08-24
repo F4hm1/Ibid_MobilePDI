@@ -36,7 +36,8 @@ public interface AuctionService {
 //            "Auth-Key : simplerestapi",
 //            "Content-Type : application/json"
 //    })
-    @POST("index.php/unitmasuk/insert") Call<String> createInsertUnit(@Body InsertUnit insertUnit);
+    @POST("index.php/unitmasuk/insert") Call<InsertUnit> insertUnitMasuk(@Body InsertUnit insertUnit);
+    @POST("index.php/unitkeluar/insert") Call<String> insertUnitKeluar(@Body InsertUnit insertUnit);
     @POST("index.php/persiapan/insert") Call<String> insertUnit(@Body PersiapanPost persiapanPost);
     @POST("index.php/masteritem/search") Call<List<Attribute>> getMasterItem(@Body Attribute item);
     @POST("index.php/auth/login") Call<Login> getLogin(@Body Login login);

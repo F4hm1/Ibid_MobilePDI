@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
+import com.example.android.ibidsera.model.Attribute;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.api.AuctionService;
@@ -129,12 +130,12 @@ public class Persiapan extends BaseFragment {
             textStyle(no_pol, row, param1, lu.get(i).getAuction().getNo_polisi());
             textStyle(merk, row, param1, lu.get(i).getNama_merk());
             String tipe = "";
-            for (String t : lu.get(i).getTipe()) {
-                if(t != null){
+            for (Attribute t : lu.get(i).getTipe()) {
+                if(t.getAttributedetail() != null){
                     if(tipe.equals("")){
-                        tipe = t;
+                        tipe = t.getAttributedetail();
                     }else {
-                        tipe = tipe + " " + t;
+                        tipe = tipe + " " + t.getAttributedetail();
                     }
                 }
             }

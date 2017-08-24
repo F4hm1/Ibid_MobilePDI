@@ -276,33 +276,6 @@
                             </TableRow>
                         </TableLayout>
                     </TableRow>
-
-                    <TableRow
-                        android:background="@drawable/cell_shape_tr_odd"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/no"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            style="@style/FontTable"
-                            android:text="1" />
-
-                        <TextView
-                            android:id="@+id/nama_komponen"
-                            android:layout_width="0dp"
-                            android:layout_weight="8"
-                            style="@style/FontTable"
-                            android:text="STARTER / IGNITION SYSTEM" />
-
-                        <TableLayout>
-                            <TableRow>
-                                <CheckBox android:text="B   "/>
-                                <CheckBox android:text="R   "/>
-                                <CheckBox android:text="T   "/>
-                            </TableRow>
-                        </TableLayout>
-                    </TableRow>
                 </TableLayout>
                 <TextView
                     android:layout_width="match_parent"
