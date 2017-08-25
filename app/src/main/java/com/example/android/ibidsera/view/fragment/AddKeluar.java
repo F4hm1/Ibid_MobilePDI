@@ -101,7 +101,7 @@ public class AddKeluar extends BaseFragment{
             getAddk(StaticUnit.getLu(), position);
         }
 
-        datePicker(tgl_pemeriksaan);
+        datePicker(tgl_pemeriksaan, 0);
         getTimeSpinner();
         getKomponen(auctionService);
         cpvStop(cpv, bp);
@@ -135,15 +135,15 @@ public class AddKeluar extends BaseFragment{
 
             List<String> ls2 = required(h);
             if(ls2.size() <= 0) {
-                auctionService.insertUnitKeluar(setInsertUnit()).enqueue(new Callback<String>() {
+                auctionService.insertUnitKeluar(setInsertUnit()).enqueue(new Callback<InsertUnit>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<InsertUnit> call, Response<InsertUnit> response) {
                         Log.i("info", "post submitted to API." + response.body());
                         alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<InsertUnit> call, Throwable t) {
                         errorRetrofit(call, t);
                     }
                 });
@@ -196,7 +196,7 @@ public class AddKeluar extends BaseFragment{
     public InsertUnit setInsertUnit(){
         InsertUnit insertUnit = new InsertUnit();
         insertUnit.setIdpemeriksaanitem(lUnit.get(position).getAuction().getId_pemeriksaanitem());
-        insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getIdauction_item());
+        insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getId_auctionitem());
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
         insertUnit.setMERK(lUnit.get(position).getId_merk());
@@ -259,7 +259,6 @@ public class AddKeluar extends BaseFragment{
         setCaps(alamat_pengemudi);
         setCaps(nama_pengemudi);
         setCaps(kota);
-        setCaps(telepon);
         setCaps(catatan);
     }
 

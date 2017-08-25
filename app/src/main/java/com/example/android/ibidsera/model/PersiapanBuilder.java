@@ -1,7 +1,5 @@
 package com.example.android.ibidsera.model;
 
-import java.util.Date;
-
 /**
  * Created by harfi on 04/08/2017.
  */
@@ -30,8 +28,8 @@ public class PersiapanBuilder {
     String kotapenitip;
     String kodepospenitip;
     String idbiodata;
-    Date jadwalelang;
-    Date tglelang;
+    String jadwalelang;
+    String tglelang;
     String cabanglelang;
     String lokasilelang;
     String alamatbrglelang;
@@ -53,7 +51,7 @@ public class PersiapanBuilder {
     String mailpi;
     String catatan;
     String STNK_SD;
-    Date TGL_KEUR;
+    String TGL_KEUR;
     String lotnumb;
     String no_polisi;
     String no_rangka;
@@ -311,12 +309,12 @@ public class PersiapanBuilder {
         return this;
     }
 
-    public PersiapanBuilder setJadwalelang(Date jadwalelang) {
+    public PersiapanBuilder setJadwalelang(String jadwalelang) {
         this.jadwalelang = jadwalelang;
         return this;
     }
 
-    public PersiapanBuilder setTglelang(Date tglelang) {
+    public PersiapanBuilder setTglelang(String tglelang) {
         this.tglelang = tglelang;
         return this;
     }
@@ -426,7 +424,7 @@ public class PersiapanBuilder {
         return this;
     }
 
-    public PersiapanBuilder setTGL_KEUR(Date TGL_KEUR) {
+    public PersiapanBuilder setTGL_KEUR(String TGL_KEUR) {
         this.TGL_KEUR = TGL_KEUR;
         return this;
     }

@@ -142,7 +142,8 @@
                             android:id="@+id/tahun"
                             style="@style/SpinnerEditForm"
                             android:text="2017"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:inputType="number"/>
 
                         <TextView
                             style="@style/FontTextViewForm"
@@ -156,10 +157,9 @@
                             style="@style/FontTextViewForm"
                             android:text="WARNA DOC"/>
 
-                        <EditText
+                        <AutoCompleteTextView
                             android:id="@+id/warna_doc"
                             style="@style/SpinnerEditForm"
-                            android:text="biru"
                             android:background="@drawable/edittext_style"/>
 
                         <TextView
@@ -169,7 +169,8 @@
                         <CheckBox
                             android:id="@+id/lintas"
                             style="@style/SpinnerEditForm"
-                            android:text="YA"/>
+                            android:text="YA"
+                            android:checked="true"/>
 
                         <TextView
                             style="@style/FontTextViewForm"
@@ -246,7 +247,11 @@
                             android:id="@+id/stnk_sd"
                             android:text="werwe34234"
                             style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"/>
 
                         <TextView
                             style="@style/FontTextViewForm"
@@ -262,10 +267,14 @@
                             style="@style/FontTextViewForm"
                             android:text="TGL KEUR"/>
 
-                        <DatePicker
+                        <EditText
                             android:id="@+id/tgl_keur"
                             style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"/>
 
                         <TextView
                             style="@style/FontTextViewForm"
@@ -305,16 +314,16 @@
                             android:id="@+id/km"
                             style="@style/SpinnerEditForm"
                             android:text="1000"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:inputType="number"/>
 
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="WARNA"/>
 
-                        <EditText
+                        <AutoCompleteTextView
                             android:id="@+id/warna"
                             style="@style/SpinnerEditForm"
-                            android:text="white"
                             android:background="@drawable/edittext_style"/>
 
                         <TextView
@@ -335,17 +344,21 @@
                             android:id="@+id/biaya_administrasi"
                             style="@style/SpinnerEditForm"
                             android:text="10000"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:inputType="number"/>
 
                         <TextView
                             style="@style/FontTextViewForm"
-                            android:text="BIAYA PARKIR"/>
+                            android:text="BIAYA PARKIR"
+                            android:hint="0"/>
 
                         <EditText
                             android:id="@+id/biaya_parkir"
                             style="@style/SpinnerEditForm"
                             android:text="10000"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:inputType="number"
+                            android:hint="0"/>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -474,7 +487,8 @@
                             android:id="@+id/ponsel_pic"
                             android:text="019732982"
                             style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:inputType="number"/>
 
                     </LinearLayout>
                 </LinearLayout>

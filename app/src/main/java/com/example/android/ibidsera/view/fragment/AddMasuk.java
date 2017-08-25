@@ -100,7 +100,7 @@ public class AddMasuk extends BaseFragment{
             getAddm(StaticUnit.getLu(), position);
         }
 
-        datePicker(tgl_pemeriksaan);
+        datePicker(tgl_pemeriksaan, 0);
         getTimeSpinner();
         getKomponen(auctionService);
         cpvStop(cpv, bp);
@@ -265,7 +265,6 @@ public class AddMasuk extends BaseFragment{
         setCaps(alamat_pengemudi);
         setCaps(nama_pengemudi);
         setCaps(kota);
-        setCaps(telepon);
         setCaps(catatan);
         setCaps(pool);
         setCaps(cases);

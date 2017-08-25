@@ -101,14 +101,16 @@
                         <EditText
                             android:id="@+id/tahun"
                             style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:inputType="number"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="KM"/>
                         <EditText
                             android:id="@+id/km"
                             style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:inputType="number"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="NAMA PEMILIK"/>
@@ -159,7 +161,11 @@
                         <EditText
                             android:id="@+id/tgl_pemeriksaan"
                             style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="Jam"/>
@@ -217,7 +223,8 @@
                         <EditText
                             android:id="@+id/telepon"
                             style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:inputType="number"/>
                     </LinearLayout>
                 </LinearLayout>
                 <TextView
