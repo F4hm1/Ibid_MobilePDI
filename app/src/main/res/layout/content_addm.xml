@@ -101,7 +101,8 @@
                         <EditText
                             android:id="@+id/tahun"
                             style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:inputType="number"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="KM"/>
@@ -159,7 +160,11 @@
                         <EditText
                             android:id="@+id/tgl_pemeriksaan"
                             style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"/>
                         <TextView
                             style="@style/FontTextViewForm"
                             android:text="Jam"/>
@@ -217,7 +222,8 @@
                         <EditText
                             android:id="@+id/telepon"
                             style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
+                            android:background="@drawable/edittext_style"
+                            android:inputType="number"/>
                     </LinearLayout>
                 </LinearLayout>
                 <TextView
@@ -273,33 +279,6 @@
                                 <CheckBox
                                     android:id="@+id/checkboxT"
                                     android:text="T   " android:theme="@style/WhiteCheck"/>
-                            </TableRow>
-                        </TableLayout>
-                    </TableRow>
-
-                    <TableRow
-                        android:background="@drawable/cell_shape_tr_odd"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/no"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            style="@style/FontTable"
-                            android:text="1" />
-
-                        <TextView
-                            android:id="@+id/nama_komponen"
-                            android:layout_width="0dp"
-                            android:layout_weight="8"
-                            style="@style/FontTable"
-                            android:text="STARTER / IGNITION SYSTEM" />
-
-                        <TableLayout>
-                            <TableRow>
-                                <CheckBox android:text="B   "/>
-                                <CheckBox android:text="R   "/>
-                                <CheckBox android:text="T   "/>
                             </TableRow>
                         </TableLayout>
                     </TableRow>

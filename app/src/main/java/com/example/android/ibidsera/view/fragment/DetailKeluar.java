@@ -77,10 +77,10 @@ public class DetailKeluar extends BaseFragment {
     public void getDetailk(List<Unit> lu, int id) {
         nopol.setText(lu.get(id).getAuction().getNo_polisi());
         merk.setText(lu.get(id).getNama_merk());
-        seri.setText(lu.get(id).getTipe().get(0));
-        silinder.setText(lu.get(id).getTipe().get(1));
-        grade.setText(lu.get(id).getTipe().get(2));
-        sub_grade.setText(lu.get(id).getTipe().get(3));
+        seri.setText(lu.get(id).getTipe().get(0).getAttributedetail());
+        silinder.setText(lu.get(id).getTipe().get(1).getAttributedetail());
+        grade.setText(lu.get(id).getTipe().get(2).getAttributedetail());
+        sub_grade.setText(lu.get(id).getTipe().get(3).getAttributedetail());
         transmisi.setText(lu.get(id).getTransmisi());
         tahun.setText(lu.get(id).getTahun());
         km.setText(String.valueOf(lu.get(id).getKm()));
@@ -119,12 +119,12 @@ public class DetailKeluar extends BaseFragment {
             rowColor(row, i);
             textStyle(no, row, param_5, String.valueOf(i+1));
             textStyle(nama, row2, param6, lu.get(id).getKomponen().get(i).getNama());
-            imgStyle(b_out, row2, paramCheck, lu.get(id).getKomponen().get(i).isTampil_b_klr());
-            imgStyle(r_out, row2, paramCheck, lu.get(id).getKomponen().get(i).isTampil_r_klr());
-            imgStyle(t_out, row2, paramCheck, lu.get(id).getKomponen().get(i).isTampil_t_klr());
-            imgStyle(b_in, row2, paramCheck, lu.get(id).getKomponen().get(i).isTampil_b());
-            imgStyle(r_in, row2, paramCheck, lu.get(id).getKomponen().get(i).isTampil_r());
-            imgStyle(t_in, row2, paramCheck, lu.get(id).getKomponen().get(i).isTampil_t());
+            imgStyle(b_out, row2, paramCheck, lu.get(id).getKomponen().get(i).getTampil_b_klr());
+            imgStyle(r_out, row2, paramCheck, lu.get(id).getKomponen().get(i).getTampil_r_klr());
+            imgStyle(t_out, row2, paramCheck, lu.get(id).getKomponen().get(i).getTampil_t_klr());
+            imgStyle(b_in, row2, paramCheck, lu.get(id).getKomponen().get(i).getTampil_b());
+            imgStyle(r_in, row2, paramCheck, lu.get(id).getKomponen().get(i).getTampil_r());
+            imgStyle(t_in, row2, paramCheck, lu.get(id).getKomponen().get(i).getTampil_t());
 
             tl2.addView(row2);
             tl2.setLayoutParams(param6);
@@ -133,10 +133,10 @@ public class DetailKeluar extends BaseFragment {
         }
     }
 
-    public void imgStyle(ImageView imageView, TableRow row, TableRow.LayoutParams imgParam, boolean bool) {
+    public void imgStyle(ImageView imageView, TableRow row, TableRow.LayoutParams imgParam, String check) {
         imageView.setLayoutParams(imgParam);
         Bitmap bmp;
-        if(bool){
+        if(check.equals("true")){
             bmp = BitmapFactory.decodeResource(getResources(), R.drawable.checklist);
         }else {
             bmp = BitmapFactory.decodeResource(getResources(), R.drawable.delete);

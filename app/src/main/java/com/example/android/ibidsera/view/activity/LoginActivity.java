@@ -56,6 +56,7 @@ public class LoginActivity extends BaseActivity {
                         if(response.body().getStatus().equals("200")){
                             editor.putString("email", login.getEmail());
                             editor.putString("nama", login.getName());
+                            editor.putInt("userId", login.getUser_id());
                             editor.putBoolean("login", true);
                             editor.apply();
                             openNewActivity(MainActivity.class);

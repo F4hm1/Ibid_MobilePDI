@@ -3,14 +3,17 @@ package com.example.android.ibidsera.view.fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,8 +27,6 @@ import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.util.RetrofitUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class AddPersiapan extends BaseFragment {
     @BindView(R.id.transmisi) protected EditText transmisi;
     @BindView(R.id.tahun) protected EditText tahun;
     @BindView(R.id.sumber) protected Spinner sumber;
-    @BindView(R.id.warna_doc) protected EditText warnaDoc;
+    @BindView(R.id.warna_doc) protected AutoCompleteTextView warnaDoc;
     @BindView(R.id.lintas) protected CheckBox lintas;
     @BindView(R.id.taksasi_appraiser) protected Spinner taksasiAppraiser;
     @BindView(R.id.no_rangka) protected EditText noRangka;
@@ -65,12 +66,12 @@ public class AddPersiapan extends BaseFragment {
     @BindView(R.id.no_stnk) protected EditText noStnk;
     @BindView(R.id.stnk_sd) protected EditText stnkSd;
     @BindView(R.id.no_keur) protected EditText noKeur;
-    @BindView(R.id.tgl_keur) protected DatePicker tglKeur;
+    @BindView(R.id.tgl_keur) protected EditText tglKeur;
     @BindView(R.id.model) protected EditText model;
     @BindView(R.id.penggerak) protected EditText penggerak;
     @BindView(R.id.bahan_bakar) protected EditText bahanBakar;
     @BindView(R.id.km) protected EditText km;
-    @BindView(R.id.warna) protected EditText warna;
+    @BindView(R.id.warna) protected AutoCompleteTextView warna;
     @BindView(R.id.kunci_tambahan) protected EditText kunciTambahan;
     @BindView(R.id.biaya_administrasi) protected EditText biayaAdministrasi;
     @BindView(R.id.biaya_parkir) protected EditText biayaParkir;
@@ -84,7 +85,7 @@ public class AddPersiapan extends BaseFragment {
     @BindView(R.id.btn_save) protected Button save;
     @BindView(R.id.btn_cancel) protected Button cancel;
     private ProgressDialog pDialog;
-    private AuctionService auctionService;
+    private AuctionService auctionService = RetrofitUtil.getAuctionService();
     private PersiapanPost persiapanPost;
     private HashMap<String, String> map;
     private PersiapanValue pv;
@@ -95,9 +96,14 @@ public class AddPersiapan extends BaseFragment {
 
         View myFragment = inflater.inflate(R.layout.content_addp, container, false);
         ButterKnife.bind(this, myFragment);
+
+        hideKeyboard();
+        setAllCaps();
+        datePicker(tglKeur, 1);
+        datePicker(stnkSd, 1);
+
         pDialog = new ProgressDialog(getContext());
 
-        auctionService = RetrofitUtil.getAuctionService();
         auctionService.getAddPersiapan().enqueue(new Callback<PersiapanValue>() {
 
             @Override
@@ -124,6 +130,8 @@ public class AddPersiapan extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        List<String> ls = new ArrayList<>();
 
         merk.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -202,6 +210,30 @@ public class AddPersiapan extends BaseFragment {
             }
         });
 
+        warna.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {}
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                warna.dismissDropDown();
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                getDropdownList(auctionService, ls, warna);
+            }
+        });
+
+        warnaDoc.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {}
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                warnaDoc.dismissDropDown();
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                getDropdownList(auctionService, ls, warnaDoc);
+            }
+        });
+
         save.setOnClickListener(view -> {
             pDialog.setMessage("Sending Data..");
             pDialog.show();
@@ -265,10 +297,10 @@ public class AddPersiapan extends BaseFragment {
                 .setSTNK_AN(stringVal(stnkAn))
                 .setKOTA(stringVal(kota))
                 .setMERK(String.valueOf(pv.getMerk().get(merk.getSelectedItemPosition()).getId_attrdetail()))
-                .setSERI(spinnerItem(seri))
-                .setSILINDER(spinnerItem(silinder))
-                .setGRADE(spinnerItem(grade))
-                .setSUB_GRADE(spinnerItem(subGrade))
+                .setSERI(String.valueOf(pv.getSeri().get(seri.getSelectedItemPosition()).getId_attrdetail()))
+                .setSILINDER(String.valueOf(pv.getSilinder().get(silinder.getSelectedItemPosition()).getId_attrdetail()))
+                .setGRADE(String.valueOf(pv.getGrade().get(grade.getSelectedItemPosition()).getId_attrdetail()))
+                .setSUB_GRADE(String.valueOf(pv.getSubgr().get(subGrade.getSelectedItemPosition()).getId_attrdetail()))
                 .setPLAT_DASAR(spinnerItem(platDasar))
                 .setTRANSMISI(stringVal(transmisi))
                 .setTAHUN(stringVal(tahun))
@@ -283,7 +315,7 @@ public class AddPersiapan extends BaseFragment {
                 .setNO_STNK(stringVal(noStnk))
                 .setSTNK_SD(stringVal(stnkSd))
                 .setNO_KEUR(stringVal(noKeur))
-                .setTGL_KEUR(intToDate(tglKeur))
+                .setTGL_KEUR(stringVal(tglKeur))
                 .setMODEL(stringVal(model))
                 .setPENGGERAK(stringVal(penggerak))
                 .setBAHAN_BAKAR(stringVal(bahanBakar))
@@ -312,8 +344,8 @@ public class AddPersiapan extends BaseFragment {
                 .setKotapenitip("")
                 .setKodepospenitip("")
                 .setIdbiodata("")
-                .setJadwalelang(intToDate(tglKeur))
-                .setTglelang(intToDate(tglKeur))
+                .setJadwalelang(tglKeur.getText().toString())
+                .setTglelang(tglKeur.getText().toString())
                 .setCabanglelang("")
                 .setLokasilelang("")
                 .setIkutseselelang(false)
@@ -352,15 +384,54 @@ public class AddPersiapan extends BaseFragment {
         spinner.setAdapter(getAdapter(list));
     }
 
-    private Date intToDate(DatePicker value) {
-        int day = value.getDayOfMonth();
-        int month = value.getMonth();
-        int year =  value.getYear();
+    private void setAllCaps(){
+        setCaps(noPolisi);
+        setCaps(stnkAn);
+        setCaps(kota);
+        setCaps(transmisi);
+        setCaps(tahun);
+        setCaps(warnaDoc);
+        setCaps(noRangka);
+        setCaps(noMesin);
+        setCaps(noBpkb);
+        setCaps(nofaktur);
+        setCaps(noStnk);
+        setCaps(noKeur);
+        setCaps(model);
+        setCaps(penggerak);
+        setCaps(bahanBakar);
+        setCaps(warna);
+        setCaps(kunciTambahan);
+        setCaps(nama);
+        setCaps(noIdentitas);
+        setCaps(namaPic);
+        setCaps(lokasiAsalUnit);
+        setCaps(namaPicDisplay);
+    }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
+    private void getDropdownList(AuctionService auctionService, List<String> ls, AutoCompleteTextView autoComplete){
+        if (!autoComplete.getText().toString().equals("")){
+            auctionService.getMasterItemWarna(autoComplete.getText().toString()).enqueue(new Callback<List<Attribute>>() {
+                @Override
+                public void onResponse(Call<List<Attribute>> call, Response<List<Attribute>> response) {
+                    List<Attribute> la = response.body();
+                    ls.clear();
+                    for (int i = 0; i < la.size(); i++) {
+                        ls.add(la.get(i).getAttributedetail());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                            android.R.layout.simple_dropdown_item_1line, ls);
+                    autoComplete.setAdapter(adapter);
+                    autoComplete.setThreshold(1);
+                    autoComplete.showDropDown();
+                }
 
-        return calendar.getTime();
+                @Override
+                public void onFailure(Call<List<Attribute>> call, Throwable t) {
+                    errorRetrofit(call, t);
+                }
+            });
+        }
     }
 
     private String stringVal(EditText item) { // delete unknown symbol

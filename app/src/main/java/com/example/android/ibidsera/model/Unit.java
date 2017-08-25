@@ -11,7 +11,7 @@ public class Unit {
     private Auction auction;
     private String id_merk;
     private String nama_merk;
-    private List<String> tipe;
+    private List<Attribute> tipe;
     private String model;
     private String transmisi;
     private String tahun;
@@ -37,11 +37,11 @@ public class Unit {
         this.nama_merk = nama_merk;
     }
 
-    public List<String> getTipe() {
+    public List<Attribute> getTipe() {
         return tipe;
     }
 
-    public void setTipe(List<String> tipe) {
+    public void setTipe(List<Attribute> tipe) {
         this.tipe = tipe;
     }
 

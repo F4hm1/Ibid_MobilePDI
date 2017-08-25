@@ -157,26 +157,22 @@ public class BaseFragment<T> extends Fragment {
         }, 1000);
     }
 
-    protected void datePicker(EditText editText){
+    protected void datePicker(EditText editText, int temp){
         Calendar myCalendar = Calendar.getInstance();
-        updateLabel(myCalendar, editText);
+        if(temp != 1){
+            updateLabel(myCalendar, editText);
+        }
         DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
-            // TODO Auto-generated method stub
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             updateLabel(myCalendar, editText);
         };
 
-        editText.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(getContext(), date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
+        editText.setOnClickListener(v -> {
+            new DatePickerDialog(getContext(), date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
         });
     }
 

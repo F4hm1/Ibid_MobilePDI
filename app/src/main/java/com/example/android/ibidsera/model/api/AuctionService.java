@@ -1,9 +1,11 @@
 package com.example.android.ibidsera.model.api;
 
+import com.example.android.ibidsera.BuildConfig;
 import com.example.android.ibidsera.model.Attribute;
 import com.example.android.ibidsera.model.HomeModel;
 import com.example.android.ibidsera.model.InsertUnit;
 import com.example.android.ibidsera.model.Login;
+import com.example.android.ibidsera.model.Penitip;
 import com.example.android.ibidsera.model.PersiapanPost;
 import com.example.android.ibidsera.model.PersiapanValue;
 import com.example.android.ibidsera.model.Unit;
@@ -21,23 +23,25 @@ import retrofit2.http.Path;
  */
 
 public interface AuctionService {
-    @GET("index.php/home") Call<HomeModel> getHome();
-    @GET("index.php/persiapan/add_data") Call<PersiapanValue> getAddPersiapan();
-    @GET("index.php/persiapan") Call<List<Unit>> getPersiapan();
-    @GET("index.php/unitmasuk") Call<List<Unit>> getUnitM();
-    @GET("index.php/unitkeluar") Call<List<Unit>> getUnitK();
-    @GET("index.php/stockmanagement") Call<List<Unit>> getReport();
-    @GET("index.php/persiapan/search/{nopol}") Call<List<Unit>> getSearchPersiapan(@Path("nopol") String nopol);
-    @GET("index.php/unitmasuk/search/{nopol}") Call<List<Unit>> getSearchUnitm(@Path("nopol") String nopol);
-    @GET("index.php/unitkeluar/search/{nopol}") Call<List<Unit>> getSearchUnitk(@Path("nopol") String nopol);
-
+    @GET("index.php/home?api_key=" + BuildConfig.API_KEY) Call<HomeModel> getHome();
+    @GET("index.php/persiapan/add_data?api_key=" + BuildConfig.API_KEY) Call<PersiapanValue> getAddPersiapan();
+    @GET("index.php/persiapan?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getPersiapan();
+    @GET("index.php/unitmasuk?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitM();
+    @GET("index.php/unitkeluar?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitK();
+    @GET("index.php/stockmanagement?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getReport();
+    @GET("index.php/persiapan/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchPersiapan(@Path("nopol") String nopol);
+    @GET("index.php/unitmasuk/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitm(@Path("nopol") String nopol);
+    @GET("index.php/unitkeluar/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitk(@Path("nopol") String nopol);
+    @GET("index.php/masteritem/warna/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItemWarna(@Path("key") String key);
+    @GET("index.php/masteritem/penitip/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Penitip>> getMasterItemPenitip(@Path("key") String key);
 //    @Headers({
 //            "ClientService : frontend-client",
 //            "Auth-Key : simplerestapi",
 //            "Content-Type : application/json"
 //    })
-    @POST("index.php/unitmasuk/insert") Call<String> createInsertUnit(@Body InsertUnit insertUnit);
-    @POST("index.php/persiapan/insert") Call<String> insertUnit(@Body PersiapanPost persiapanPost);
-    @POST("index.php/masteritem/search") Call<List<Attribute>> getMasterItem(@Body Attribute item);
-    @POST("index.php/auth/login") Call<Login> getLogin(@Body Login login);
+    @POST("index.php/unitmasuk/insert?api_key=" + BuildConfig.API_KEY) Call<InsertUnit> insertUnitMasuk(@Body InsertUnit insertUnit);
+    @POST("index.php/unitkeluar/insert?api_key=" + BuildConfig.API_KEY) Call<InsertUnit> insertUnitKeluar(@Body InsertUnit insertUnit);
+    @POST("index.php/persiapan/insert?api_key=" + BuildConfig.API_KEY) Call<String> insertUnit(@Body PersiapanPost persiapanPost);
+    @POST("index.php/masteritem/search?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItem(@Body Attribute item);
+    @POST("index.php/auth/login?api_key=" + BuildConfig.API_KEY) Call<Login> getLogin(@Body Login login);
 }
