@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "URI", "\"http://192.168.56.1/ibid-ims-api/\"")
+        buildConfigField("String", "URI", "\"http://192.168.1.104/ibid-ims-api/\"")
         buildTypes.each {
             it.buildConfigField 'String', 'API_KEY', IbidImsApiKey
         }
@@ -35,15 +35,12 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
-    compile 'de.codecrafters.tableview:tableview:2.6.0'
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.jakewharton:butterknife:8.8.0'
     compile 'com.jakewharton:butterknife-compiler:8.8.0'
     compile 'com.github.rahatarmanahmed:circularprogressview:2.5.0'

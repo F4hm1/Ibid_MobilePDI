@@ -13,15 +13,15 @@ public class PersiapanBuilder {
     String WARNA;
     int biayadmin;
     int biayaparkir;
-    int kodepenitip;
+    String kodepenitip;
     String namapenitip;
     String nmridpenitip;
     int tipeidpenitip;
     String nonpwp;
     String groupbiodata;
-    boolean statuspeserta;
+    int statuspeserta;
     String jenisusaha;
-    boolean sebagaiperusahaan;
+    int sebagaiperusahaan;
     String teleponpenitip;
     String ponselpenitip;
     String alamatpenitip;
@@ -234,7 +234,7 @@ public class PersiapanBuilder {
         return this;
     }
 
-    public PersiapanBuilder setKodepenitip(int kodepenitip) {
+    public PersiapanBuilder setKodepenitip(String kodepenitip) {
         this.kodepenitip = kodepenitip;
         return this;
     }
@@ -264,7 +264,7 @@ public class PersiapanBuilder {
         return this;
     }
 
-    public PersiapanBuilder setStatuspeserta(boolean statuspeserta) {
+    public PersiapanBuilder setStatuspeserta(int statuspeserta) {
         this.statuspeserta = statuspeserta;
         return this;
     }
@@ -274,7 +274,7 @@ public class PersiapanBuilder {
         return this;
     }
 
-    public PersiapanBuilder setSebagaiperusahaan(boolean sebagaiperusahaan) {
+    public PersiapanBuilder setSebagaiperusahaan(int sebagaiperusahaan) {
         this.sebagaiperusahaan = sebagaiperusahaan;
         return this;
     }

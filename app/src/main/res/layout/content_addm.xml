@@ -333,6 +333,56 @@
                             android:background="@drawable/edittext_style"/>
                     </LinearLayout>
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tanda Tangan"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_margin="16dp"
+                    android:textSize="24sp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height= "1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@android:color/darker_gray" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="Pihak Ibid"
+                            style="@style/FontTextViewForm"/>
+                        <ImageView
+                            android:id="@+id/signature1"
+                            android:layout_width="220dp"
+                            android:layout_height="120dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/canvas_style"
+                            android:clickable="true"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="Pihak Customer"
+                            style="@style/FontTextViewForm"/>
+                        <ImageView
+                            android:id="@+id/signature2"
+                            android:layout_width="220dp"
+                            android:layout_height="120dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/canvas_style"
+                            android:clickable="true"/>
+                    </LinearLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
