@@ -103,6 +103,7 @@ public class BaseFragment<T> extends Fragment {
     protected void checkboxStyle(CheckBox checkBox, TableRow row, TableRow.LayoutParams param, int i, String id, HashMap<String, CheckBox> h){
         h.put(id+i, checkBox);
         int style = Resources.getSystem().getIdentifier("btn_check_holo_light", "drawable", "android");
+
         checkBox.setButtonDrawable(style);
         checkBox.setLayoutParams(param);
         row.addView(checkBox);
@@ -223,6 +224,14 @@ public class BaseFragment<T> extends Fragment {
 
     protected void setDisabled(View v){
         v.setEnabled(false);
+    }
+
+    protected void setVisible(View view){
+        view.setVisibility(View.VISIBLE);
+    }
+
+    protected void setGone(View view){
+        view.setVisibility(View.GONE);
     }
 
     protected TextView textView(){ return new TextView(getContext()); }

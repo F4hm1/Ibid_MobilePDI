@@ -13,15 +13,15 @@ public class PersiapanPost {
     private final String WARNA;
     private final int biayadmin;
     private final int biayaparkir;
-    private final int kodepenitip;
+    private final String kodepenitip;
     private final String namapenitip;
     private final String nmridpenitip;
     private final int tipeidpenitip;
     private final String nonpwp;
     private final String groupbiodata;
-    private final boolean statuspeserta;
+    private final int statuspeserta;
     private final String jenisusaha;
-    private final boolean sebagaiperusahaan;
+    private final int sebagaiperusahaan;
     private final String teleponpenitip;
     private final String ponselpenitip;
     private final String alamatpenitip;
@@ -228,7 +228,7 @@ public class PersiapanPost {
         return biayaparkir;
     }
 
-    public int getKodepenitip() {
+    public String getKodepenitip() {
         return kodepenitip;
     }
 
@@ -252,15 +252,9 @@ public class PersiapanPost {
         return groupbiodata;
     }
 
-    public boolean isStatuspeserta() {
-        return statuspeserta;
-    }
-
     public String getJenisusaha() {
         return jenisusaha;
     }
-
-    public boolean getSebagaiperusahaan() { return sebagaiperusahaan; }
 
     public String getTeleponpenitip() {
         return teleponpenitip;
@@ -284,6 +278,14 @@ public class PersiapanPost {
 
     public String getIdbiodata() {
         return idbiodata;
+    }
+
+    public int getStatuspeserta() {
+        return statuspeserta;
+    }
+
+    public int getSebagaiperusahaan() {
+        return sebagaiperusahaan;
     }
 
     public String getJadwalelang() {
@@ -385,8 +387,6 @@ public class PersiapanPost {
     public String getNo_polisi() {
         return no_polisi;
     }
-
-    public boolean isSebagaiperusahaan() { return sebagaiperusahaan;}
 
     public int getId_user() {
         return id_user;

@@ -1,8 +1,10 @@
 package com.example.android.ibidsera.view.fragment;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,16 +17,20 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.Attribute;
+import com.example.android.ibidsera.model.Penitip;
 import com.example.android.ibidsera.model.PersiapanPost;
 import com.example.android.ibidsera.model.PersiapanValue;
 import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.util.RetrofitUtil;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +49,8 @@ import static com.example.android.ibidsera.model.PersiapanBuilder.persiapan;
  */
 
 public class AddPersiapan extends BaseFragment {
-
+    @BindView(R.id.progress_view) CircularProgressView cpv;
+    @BindView(R.id.background_progress) RelativeLayout bp;
     @BindView(R.id.no_polisi) protected EditText noPolisi;
     @BindView(R.id.stnk_an) protected EditText stnkAn;
     @BindView(R.id.kota) protected EditText kota;
@@ -75,9 +82,31 @@ public class AddPersiapan extends BaseFragment {
     @BindView(R.id.kunci_tambahan) protected EditText kunciTambahan;
     @BindView(R.id.biaya_administrasi) protected EditText biayaAdministrasi;
     @BindView(R.id.biaya_parkir) protected EditText biayaParkir;
-    @BindView(R.id.nama) protected EditText nama;
+
+    @BindView(R.id.nama) protected AutoCompleteTextView nama;
+    @BindView(R.id.kode_anggota) protected TextView kode_anggota;
+    @BindView(R.id.kode_anggotahead) protected TextView kode_anggotahead;
+    @BindView(R.id.no_npwp) protected TextView no_npwp;
+    @BindView(R.id.no_npwphead) protected TextView no_npwphead;
+    @BindView(R.id.no_identitashead) protected TextView no_identitashead;
+    @BindView(R.id.tipe) protected TextView tipe;
+    @BindView(R.id.tipehead) protected TextView tipehead;
+    @BindView(R.id.group) protected TextView group;
+    @BindView(R.id.grouphead) protected TextView grouphead;
+    @BindView(R.id.sebagai) protected TextView sebagai;
+    @BindView(R.id.sebagaihead) protected TextView sebagaihead;
+    @BindView(R.id.perusahaanhead) protected TextView perusahaanhead;
+    @BindView(R.id.telepon) protected TextView telepon;
+    @BindView(R.id.teleponhead) protected TextView teleponhead;
+    @BindView(R.id.alamat) protected TextView alamat;
+    @BindView(R.id.alamathead) protected TextView alamathead;
+    @BindView(R.id.kota_penitip) protected TextView kota_penitip;
+    @BindView(R.id.kota_penitiphead) protected TextView kota_penitiphead;
+    @BindView(R.id.kode_pos) protected TextView kode_pos;
+    @BindView(R.id.kode_poshead) protected TextView kode_poshead;
     @BindView(R.id.no_identitas) protected EditText noIdentitas;
     @BindView(R.id.perusahaan) protected CheckBox perusahaan;
+
     @BindView(R.id.nama_pic) protected EditText namaPic;
     @BindView(R.id.ponsel_pic) protected EditText ponselPic;
     @BindView(R.id.lokasi_asal_unit) protected EditText lokasiAsalUnit;
@@ -89,6 +118,10 @@ public class AddPersiapan extends BaseFragment {
     private PersiapanPost persiapanPost;
     private HashMap<String, String> map;
     private PersiapanValue pv;
+    private List<Penitip> lp = new ArrayList<>();
+    private int position;
+    private String ponselStr = "";
+    private String teleponStr = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,6 +130,7 @@ public class AddPersiapan extends BaseFragment {
         View myFragment = inflater.inflate(R.layout.content_addp, container, false);
         ButterKnife.bind(this, myFragment);
 
+        cpvStop(cpv, bp);
         hideKeyboard();
         setAllCaps();
         datePicker(tglKeur, 1);
@@ -218,8 +252,12 @@ public class AddPersiapan extends BaseFragment {
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                getDropdownList(auctionService, ls, warna);
+                getDropdownListWarna(auctionService, ls, warna);
             }
+        });
+
+        warna.setOnItemClickListener((parent, view, position1, id1) -> {
+            hideKeyboard();
         });
 
         warnaDoc.addTextChangedListener(new TextWatcher() {
@@ -230,13 +268,48 @@ public class AddPersiapan extends BaseFragment {
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                getDropdownList(auctionService, ls, warnaDoc);
+                getDropdownListWarna(auctionService, ls, warnaDoc);
             }
+        });
+
+        warnaDoc.setOnItemClickListener((parent, view, position1, id1) -> {
+            hideKeyboard();
+        });
+
+        nama.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {}
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                warna.dismissDropDown();
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                getDropdownListPenitip(auctionService, ls);
+            }
+        });
+
+        nama.setOnItemClickListener((parent, view, position1, id1) -> {
+            AddPersiapan.this.position = position1;
+            AddPersiapan.this.hideKeyboard();
+            AddPersiapan.this.cpvStart(cpv, bp);
+            AddPersiapan.this.getPenitip();
+            AddPersiapan.this.cpvStop(cpv, bp);
+        });
+
+        perusahaan.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            setSebagai();
         });
 
         save.setOnClickListener(view -> {
             pDialog.setMessage("Sending Data..");
             pDialog.show();
+
+            if(perusahaan.isChecked()) {
+                lp.get(position).setStatus_biodata(1);
+            }else {
+                lp.get(position).setStatus_biodata(0);
+            }
+            lp.get(position).setNo_identitas(noIdentitas.getText().toString());
 
             HashMap<String, EditText> h = new HashMap<>();
             h.put("NO POLISI", noPolisi);
@@ -278,7 +351,7 @@ public class AddPersiapan extends BaseFragment {
                             pDialog.hide();
                         }
                     });
-                }, 3000);
+                }, 2000);
 
             }else{
                 pDialog.hide();
@@ -291,7 +364,7 @@ public class AddPersiapan extends BaseFragment {
     }
 
     private PersiapanPost getDataView() {
-
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         PersiapanPost persiapan = persiapan()
                 .setNo_polisi(stringVal(noPolisi))
                 .setSTNK_AN(stringVal(stnkAn))
@@ -325,25 +398,27 @@ public class AddPersiapan extends BaseFragment {
                 .setBiayadmin(stringToInt(biayaAdministrasi))
                 .setBiayaparkir(stringToInt(biayaParkir))
 
+                .setKodepenitip(String.valueOf(kode_anggota.getText()))
+                .setTipeidpenitip(lp.get(position).getId())
                 .setNamapenitip(stringVal(nama))
                 .setNmridpenitip(stringVal(noIdentitas))
-                .setSebagaiperusahaan(perusahaan.isChecked())
+                .setSebagaiperusahaan(lp.get(position).getStatus_biodata())
+                .setNonpwp(String.valueOf(no_npwp.getText()))
+                .setGroupbiodata(String.valueOf(group.getText()))
+                .setStatuspeserta(lp.get(position).getStatus_peserta())
+                .setJenisusaha("")
+                .setTeleponpenitip(teleponStr)
+                .setPonselpenitip(ponselStr)
+                .setAlamatpenitip(String.valueOf(alamat.getText()))
+                .setKotapenitip(String.valueOf(kota_penitip.getText()))
+                .setKodepospenitip(String.valueOf(kode_pos.getText()))
+                .setIdbiodata(String.valueOf(lp.get(position).getId()))
 
                 .setNamapic(stringVal(namaPic))
                 .setPonselpic(stringVal(ponselPic))
                 .setLokasibrglelang(stringVal(lokasiAsalUnit))
                 .setNamapicdisplay(stringVal(namaPicDisplay))
 
-                .setNonpwp("")
-                .setGroupbiodata("")
-                .setStatuspeserta(false)
-                .setJenisusaha("")
-                .setTeleponpenitip("")
-                .setPonselpenitip("")
-                .setAlamatpenitip("")
-                .setKotapenitip("")
-                .setKodepospenitip("")
-                .setIdbiodata("")
                 .setJadwalelang(tglKeur.getText().toString())
                 .setTglelang(tglKeur.getText().toString())
                 .setCabanglelang("")
@@ -365,7 +440,7 @@ public class AddPersiapan extends BaseFragment {
                 .setCatatan("")
                 .setLotnumb("")
                 .setALAMAT("")
-                .setId_user(6)
+                .setId_user(prefs.getInt("userId", 0))
                 .build();
 
         return persiapan;
@@ -409,7 +484,7 @@ public class AddPersiapan extends BaseFragment {
         setCaps(namaPicDisplay);
     }
 
-    private void getDropdownList(AuctionService auctionService, List<String> ls, AutoCompleteTextView autoComplete){
+    private void getDropdownListWarna(AuctionService auctionService, List<String> ls, AutoCompleteTextView autoComplete){
         if (!autoComplete.getText().toString().equals("")){
             auctionService.getMasterItemWarna(autoComplete.getText().toString()).enqueue(new Callback<List<Attribute>>() {
                 @Override
@@ -431,6 +506,100 @@ public class AddPersiapan extends BaseFragment {
                     errorRetrofit(call, t);
                 }
             });
+        }
+    }
+
+    private void getDropdownListPenitip(AuctionService auctionService, List<String> ls){
+        if (!nama.getText().toString().equals("")){
+            auctionService.getMasterItemPenitip(nama.getText().toString()).enqueue(new Callback<List<Penitip>>() {
+                @Override
+                public void onResponse(Call<List<Penitip>> call, Response<List<Penitip>> response) {
+                    if(!response.body().toString().equals("[]")) {
+                        lp = response.body();
+                    }
+                    ls.clear();
+                    try {
+                        for (int i = 0; i < lp.size(); i++) {
+                            ls.add(lp.get(i).getNama_penitip());
+                        }
+                    }catch (Exception e){};
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                            android.R.layout.simple_dropdown_item_1line, ls);
+                    nama.setAdapter(adapter);
+                    nama.setThreshold(1);
+                    nama.showDropDown();
+                }
+
+                @Override
+                public void onFailure(Call<List<Penitip>> call, Throwable t) {
+                    errorRetrofit(call, t);
+                }
+            });
+        }
+    }
+
+    private void getPenitip(){
+        setVisible(kode_anggotahead);
+        setVisible(kode_anggota);
+        setVisible(grouphead);
+        setVisible(group);
+        setVisible(sebagaihead);
+        setVisible(sebagai);
+        setVisible(perusahaanhead);
+        setVisible(perusahaan);
+        setVisible(teleponhead);
+        setVisible(telepon);
+        setVisible(alamathead);
+        setVisible(alamat);
+        setVisible(kota_penitiphead);
+        setVisible(kota_penitip);
+        setVisible(kode_poshead);
+        setVisible(kode_pos);
+        kode_anggota.setText(lp.get(position).getKode_anggota());
+        no_npwp.setText(lp.get(position).getNo_npwp());
+        noIdentitas.setText(lp.get(position).getNo_identitas());
+        tipe.setText(lp.get(position).getTipe_identitas());
+        group.setText(lp.get(position).getGroupBiodata());
+        if(lp.get(position).getStatus_peserta() == 1){
+            sebagai.setText("PENITIP");
+        }else {
+            sebagai.setText("PESERTA");
+        }
+        if(lp.get(position).getStatus_biodata() == 1){
+            perusahaan.setChecked(true);
+        }else {
+            perusahaan.setChecked(false);
+        }
+        teleponStr = lp.get(position).getTelepon();
+        ponselStr = lp.get(position).getPonsel();
+        if(teleponStr == null){
+            teleponStr = "-";
+        }
+        if(ponselStr == null){
+            ponselStr = "-";
+        }
+        this.telepon.setText(teleponStr+" / "+ponselStr);
+        alamat.setText(lp.get(position).getAlamat());
+        kota_penitip.setText(lp.get(position).getKota());
+        kode_pos.setText(lp.get(position).getKode_pos());
+        setSebagai();
+    }
+
+    private void setSebagai(){
+        if(perusahaan.isChecked()){
+            setVisible(no_npwphead);
+            setVisible(no_npwp);
+            setGone(no_identitashead);
+            setGone(noIdentitas);
+            setGone(tipehead);
+            setGone(tipe);
+        }else {
+            setVisible(no_identitashead);
+            setVisible(noIdentitas);
+            setVisible(tipehead);
+            setVisible(tipe);
+            setGone(no_npwphead);
+            setGone(no_npwp);
         }
     }
 

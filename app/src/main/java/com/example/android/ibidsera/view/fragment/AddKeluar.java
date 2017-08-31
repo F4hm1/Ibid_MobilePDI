@@ -1,8 +1,12 @@
 package com.example.android.ibidsera.view.fragment;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,6 +18,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -73,10 +79,14 @@ public class AddKeluar extends BaseFragment{
     @BindView(R.id.checkboxB) CheckBox checkBoxB;
     @BindView(R.id.checkboxR) CheckBox checkBoxR;
     @BindView(R.id.checkboxT) CheckBox checkBoxT;
+    @BindView(R.id.signature1) ImageView signature1;
+    @BindView(R.id.signature2) ImageView signature2;
     private int size = 0;
     private List<Unit> lUnit = new ArrayList<>();
     private int position = -1;
     HashMap<String, CheckBox> h = new HashMap<>();
+    private Bitmap bitmap1;
+    private Bitmap bitmap2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,6 +96,7 @@ public class AddKeluar extends BaseFragment{
 
         AuctionService auctionService = RetrofitUtil.getAuctionService();
         List<String> ls = new ArrayList<>();
+        ProgressDialog pDialog = new ProgressDialog(getContext());
 
         hideKeyboard();
         setAllCaps();
@@ -119,13 +130,18 @@ public class AddKeluar extends BaseFragment{
         });
 
         nopol.setOnItemClickListener((parent, view, position, id1) -> {
+            hideKeyboard();
             cpvStart(cpv, bp);
             getAddk(StaticUnit.getLu(), position);
             cpvStop(cpv, bp);
         });
 
-        save.setOnClickListener(v -> {
+        signatureClick(signature1, 1);
+        signatureClick(signature2, 2);
 
+        save.setOnClickListener(v -> {
+            pDialog.setMessage("Sending Data..");
+            pDialog.show();
             HashMap<String, EditText> h = new HashMap<>();
             h.put("NO POLISI", nopol);
             h.put("Nama Pengemudi", nama_pengemudi);
@@ -139,15 +155,18 @@ public class AddKeluar extends BaseFragment{
                     @Override
                     public void onResponse(Call<InsertUnit> call, Response<InsertUnit> response) {
                         Log.i("info", "post submitted to API." + response.body());
+                        pDialog.hide();
                         alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
                     }
 
                     @Override
                     public void onFailure(Call<InsertUnit> call, Throwable t) {
+                        pDialog.hide();
                         errorRetrofit(call, t);
                     }
                 });
             }else {
+                pDialog.hide();
                 String required = "";
                 for (int i = ls2.size()-1; i >= 0; i--) {
                     if (i == 0) {
@@ -185,6 +204,13 @@ public class AddKeluar extends BaseFragment{
         kota.setText(lu.get(id).getAuction().getKota_klr());
         telepon.setText(lu.get(id).getAuction().getTelepon_klr());
         catatan.setText(lu.get(id).getAuction().getCatatan_klr());
+        try {
+            if(bitmap1 != null){
+                signature1.setImageBitmap(bitmap1);
+            } else if(bitmap2 != null){
+                signature2.setImageBitmap(bitmap2);
+            }
+        }catch (Exception e){}
     }
 
     public ArrayAdapter<String> getAdapterList(String value){
@@ -347,5 +373,38 @@ public class AddKeluar extends BaseFragment{
         checkAllListener(checkBoxB, "b", size, h);
         checkAllListener(checkBoxR, "r", size, h);
         checkAllListener(checkBoxT, "t", size, h);
+    }
+
+    private void signatureClick(ImageView imageView, int id){
+        imageView.setOnClickListener(v -> signatureDialog(id));
+    }
+
+    private void signatureDialog(int id){
+        AlertDialog.Builder alertDialog  = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Signature Here");
+        alertDialog.setCancelable(true);
+
+        FrameLayout container = new FrameLayout(getContext());
+        container.setBackgroundDrawable(getResources().getDrawable(R.drawable.canvas_style));
+        SignatureView mSignature = new SignatureView(getContext(), null, container);
+        container.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, 400);
+        alertDialog.setView(container);
+
+        // Set up the buttons
+        alertDialog.setPositiveButton("Save Signature", (dialog, which) -> {
+            container.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(container.getWidth(), container.getHeight(), Bitmap.Config.RGB_565);
+            Canvas canvas = new Canvas(bitmap);
+            container.draw(canvas);
+            if(id == 1){
+                signature1.setImageBitmap(bitmap);
+                bitmap1 = bitmap;
+            }else{
+                signature2.setImageBitmap(bitmap);
+                bitmap2 = bitmap;
+            }
+        });
+        alertDialog.setNegativeButton("Clear Canvas", (dialog, which) -> mSignature.clear());
+        alertDialog.create().show();
     }
 }

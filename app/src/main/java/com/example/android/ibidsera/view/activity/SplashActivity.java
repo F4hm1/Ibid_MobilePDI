@@ -25,6 +25,6 @@ public class SplashActivity extends BaseActivity {
     public void waitSplash(Class activity) {
         new Handler().postDelayed(() -> {
             openNewActivity(activity);
-        }, 3000);
+        }, 2000);
     }
 }
