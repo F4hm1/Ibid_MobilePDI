@@ -57,6 +57,7 @@ public class Persiapan extends BaseFragment {
         ButterKnife.bind(this, myFragment);
 
         hideKeyboard();
+        setCaps(searchPersiapan);
 
         String psearch = "";
 

@@ -12,6 +12,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.8.0\b258209549457d03e912ec4641735fc88048df99\butterknife-annotations-8.8.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b258209549457d03e912ec4641735fc88048df99">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\butterknife-annotations-8.8.0_2cdfa698feb5e1d86ec054a9e79367286dda6b97.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.13.0\a9283170b7305c8d92d25aff02a6ab7e45d06cbe\okio-1.13.0.jar"
         jumboMode="false"
         optimize="true"
@@ -45,6 +54,24 @@
         revision="25.0.2"
         sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
         <dex dex="F:\Ricaro\AndroidStudio\Android\ibidsera2\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_3fac79eae58613ccb65e52c9344ce0a07ddb3c2b\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.3.0\bcacde6a8ccedcc56c127403d26b76072fe6214d\retrofit-2.3.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bcacde6a8ccedcc56c127403d26b76072fe6214d">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\retrofit-2.3.0_cba4b848ca9a823acc94f124bb4e2b3d7971839f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-gson\2.3.0\9e09011e9767bb76b5e27c9b8223476b93b14631\converter-gson-2.3.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9e09011e9767bb76b5e27c9b8223476b93b14631">
+        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\converter-gson-2.3.0_7b6f549dfe3c030189c58c4b7168703c5e0aa561.jar" />
     </item>
     <item
         is-multidex="false"
@@ -90,33 +117,6 @@
         revision="25.0.2"
         sha1="4d060ca3190df0eda4dc13415532a12e15ca5f11">
         <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\okhttp-3.8.1_7f751df1b178e307c8d283c813a30a72badb2b9d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.8.0\b258209549457d03e912ec4641735fc88048df99\butterknife-annotations-8.8.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b258209549457d03e912ec4641735fc88048df99">
-        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\butterknife-annotations-8.8.0_2cdfa698feb5e1d86ec054a9e79367286dda6b97.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.3.0\bcacde6a8ccedcc56c127403d26b76072fe6214d\retrofit-2.3.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="bcacde6a8ccedcc56c127403d26b76072fe6214d">
-        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\retrofit-2.3.0_cba4b848ca9a823acc94f124bb4e2b3d7971839f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Yosefricaro\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-gson\2.3.0\9e09011e9767bb76b5e27c9b8223476b93b14631\converter-gson-2.3.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="9e09011e9767bb76b5e27c9b8223476b93b14631">
-        <dex dex="F:\Ricaro\AndroidStudio\Android\IbidSera\app\build\intermediates\pre-dexed\debug\converter-gson-2.3.0_7b6f549dfe3c030189c58c4b7168703c5e0aa561.jar" />
     </item>
     <item
         is-multidex="true"

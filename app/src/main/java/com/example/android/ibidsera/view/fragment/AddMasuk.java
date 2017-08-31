@@ -1,7 +1,6 @@
 package com.example.android.ibidsera.view.fragment;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -133,6 +132,7 @@ public class AddMasuk extends BaseFragment{
         });
 
         nopol.setOnItemClickListener((parent, view, position, id1) -> {
+            hideKeyboard();
             cpvStart(cpv, bp);
             getAddm(StaticUnit.getLu(), position);
             cpvStop(cpv, bp);
@@ -171,6 +171,7 @@ public class AddMasuk extends BaseFragment{
                     });
                 }, 2000);
             }else {
+                pDialog.hide();
                 String required = "";
                 for (int i = ls2.size()-1; i >= 0; i--) {
                     if (i == 0) {
@@ -280,11 +281,8 @@ public class AddMasuk extends BaseFragment{
     }
 
     private int isChecked(CheckBox checkBox){
-        if(checkBox.isChecked()){
-            return 1;
-        } else {
-            return 0;
-        }
+        if(checkBox.isChecked())return 1;
+        else return 0;
     }
 
     private void setAllDisabled(){
@@ -396,12 +394,7 @@ public class AddMasuk extends BaseFragment{
     }
 
     private void signatureClick(ImageView imageView, int id){
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signatureDialog(id);
-            }
-        });
+        imageView.setOnClickListener(v -> signatureDialog(id));
     }
 
     private void signatureDialog(int id){
@@ -412,30 +405,24 @@ public class AddMasuk extends BaseFragment{
         FrameLayout container = new FrameLayout(getContext());
         container.setBackgroundDrawable(getResources().getDrawable(R.drawable.canvas_style));
         SignatureView mSignature = new SignatureView(getContext(), null, container);
-        container.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, 300);
+        container.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, 400);
         alertDialog.setView(container);
 
         // Set up the buttons
-        alertDialog.setPositiveButton("Save Signature", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                container.setDrawingCacheEnabled(true);
-                Bitmap bitmap = Bitmap.createBitmap(container.getWidth(), container.getHeight(), Bitmap.Config.RGB_565);
-                Canvas canvas = new Canvas(bitmap);
-                container.draw(canvas);
-                if(id == 1){
-                    signature1.setImageBitmap(bitmap);
-                }else{
-                    signature2.setImageBitmap(bitmap);
-                }
+        alertDialog.setPositiveButton("Save Signature", (dialog, which) -> {
+            container.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(container.getWidth(), container.getHeight(), Bitmap.Config.RGB_565);
+            Canvas canvas = new Canvas(bitmap);
+            container.draw(canvas);
+            if(id == 1){
+                signature1.setImageBitmap(bitmap);
+                bitmap1 = bitmap;
+            }else{
+                signature2.setImageBitmap(bitmap);
+                bitmap2 = bitmap;
             }
         });
-        alertDialog.setNegativeButton("Clear Canvas", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mSignature.clear();
-            }
-        });
+        alertDialog.setNegativeButton("Clear Canvas", (dialog, which) -> mSignature.clear());
         alertDialog.create().show();
     }
 }

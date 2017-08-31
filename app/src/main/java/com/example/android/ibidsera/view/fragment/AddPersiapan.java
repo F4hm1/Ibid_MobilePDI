@@ -256,6 +256,10 @@ public class AddPersiapan extends BaseFragment {
             }
         });
 
+        warna.setOnItemClickListener((parent, view, position1, id1) -> {
+            hideKeyboard();
+        });
+
         warnaDoc.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {}
 
@@ -266,6 +270,10 @@ public class AddPersiapan extends BaseFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 getDropdownListWarna(auctionService, ls, warnaDoc);
             }
+        });
+
+        warnaDoc.setOnItemClickListener((parent, view, position1, id1) -> {
+            hideKeyboard();
         });
 
         nama.addTextChangedListener(new TextWatcher() {
@@ -280,11 +288,12 @@ public class AddPersiapan extends BaseFragment {
             }
         });
 
-        nama.setOnItemClickListener((parent, view, position, id1) -> {
-            this.position = position;
-            cpvStart(cpv, bp);
-            getPenitip();
-            cpvStop(cpv, bp);
+        nama.setOnItemClickListener((parent, view, position1, id1) -> {
+            AddPersiapan.this.position = position1;
+            AddPersiapan.this.hideKeyboard();
+            AddPersiapan.this.cpvStart(cpv, bp);
+            AddPersiapan.this.getPenitip();
+            AddPersiapan.this.cpvStop(cpv, bp);
         });
 
         perusahaan.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -403,7 +412,7 @@ public class AddPersiapan extends BaseFragment {
                 .setAlamatpenitip(String.valueOf(alamat.getText()))
                 .setKotapenitip(String.valueOf(kota_penitip.getText()))
                 .setKodepospenitip(String.valueOf(kode_pos.getText()))
-                .setIdbiodata("")
+                .setIdbiodata(String.valueOf(lp.get(position).getId()))
 
                 .setNamapic(stringVal(namaPic))
                 .setPonselpic(stringVal(ponselPic))

@@ -141,7 +141,7 @@ public class DetailKeluar extends BaseFragment {
         }else {
             bmp = BitmapFactory.decodeResource(getResources(), R.drawable.delete);
         }
-        Bitmap resizedbitmap = Bitmap.createScaledBitmap(bmp, 25, 25, true);
+        Bitmap resizedbitmap = Bitmap.createScaledBitmap(bmp, 20, 20, true);
         imageView.setImageBitmap(resizedbitmap);
         imageView.setBackgroundDrawable(null);
         row.addView(imageView);

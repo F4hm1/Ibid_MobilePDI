@@ -9,340 +9,335 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.android.ibidsera.view.activity.MainActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refreshContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ScrollView
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pemeriksaan Unit Keluar"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height= "1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Pemeriksaan Unit Masuk"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_margin="16dp"
-                    android:textSize="24sp"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height= "1dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@android:color/darker_gray" />
+                android:layout_margin="8dp"
+                android:baselineAligned="false">
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:layout_margin="8dp"
-                    android:baselineAligned="false">
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="NO POLISI"/>
-                        <AutoCompleteTextView
-                            android:id="@+id/nopol"
-                            style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="MERK"/>
-                        <Spinner
-                            android:id="@+id/merk"
-                            style="@style/SpinnerEditForm"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="SERI"/>
-                        <Spinner
-                            android:id="@+id/seri"
-                            style="@style/SpinnerEditForm"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="SILINDER"/>
-                        <Spinner
-                            android:id="@+id/silinder"
-                            style="@style/SpinnerEditForm"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="GRADE"/>
-                        <Spinner
-                            android:id="@+id/grade"
-                            style="@style/SpinnerEditForm"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="SUB GRADE"/>
-                        <Spinner
-                            android:id="@+id/sub_grade"
-                            style="@style/SpinnerEditForm"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="TRANSMISI"/>
-                        <EditText
-                            android:id="@+id/transmisi"
-                            style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="TAHUN"/>
-                        <EditText
-                            android:id="@+id/tahun"
-                            style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"
-                            android:inputType="number"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="KM"/>
-                        <EditText
-                            android:id="@+id/km"
-                            style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"
-                            android:inputType="number"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="NAMA PEMILIK"/>
-                        <EditText
-                            android:id="@+id/nama_pemilik"
-                            style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="FUEL DIPERIKSA"/>
-                        <Spinner
-                            android:id="@+id/fuel"
-                            style="@style/SpinnerEditForm"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="KONDISI CAT BODY"/>
-                        <Spinner
-                            android:id="@+id/cat"
-                            style="@style/SpinnerEditForm"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Bukti Serah Terima"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_margin="16dp"
-                    android:textSize="24sp"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height= "1dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@android:color/darker_gray" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp">
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="Tanggal Pemeriksaan"/>
-                        <EditText
-                            android:id="@+id/tgl_pemeriksaan"
-                            style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"
-                            android:clickable="true"
-                            android:cursorVisible="false"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="Jam"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <Spinner
-                                android:id="@+id/jam"
-                                android:layout_width="0dp"
-                                android:layout_height="30dp"
-                                android:layout_weight="1"
-                                android:layout_marginLeft="20dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=":"/>
-                            <Spinner
-                                android:id="@+id/menit"
-                                android:layout_width="0dp"
-                                android:layout_height="30dp"
-                                android:layout_weight="1"
-                                android:layout_marginRight="16dp"/>
-                        </LinearLayout>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="Nama Pengemudi"/>
-                        <EditText
-                            android:id="@+id/nama_pengemudi"
-                            style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_margin="8dp"
-                        android:orientation="vertical">
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="Alamat Pengemudi"/>
-                        <EditText
-                            android:id="@+id/alamat_pengemudi"
-                            style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="Kota"/>
-                        <EditText
-                            android:id="@+id/kota"
-                            style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="Telepon"/>
-                        <EditText
-                            android:id="@+id/telepon"
-                            style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"
-                            android:inputType="number"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Kelengkapan Kondisi Komponen"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_margin="16dp"
-                    android:textSize="24sp"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height= "1dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@android:color/darker_gray" />
-                <TableLayout
-                    android:id="@+id/table_addm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:stretchColumns="0">
-
-                    <TableRow
-                        android:background="@drawable/cell_shape_th"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            style="@style/FontTableHead"
-                            android:text="No" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="8"
-                            style="@style/FontTableHead"
-                            android:text="Nama Komponen" />
-                        <TableLayout>
-                            <TableRow>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    style="@style/FontTableHead"
-                                    android:layout_span="3"
-                                    android:text="Kondisi" />
-                            </TableRow>
-                            <TableRow>
-                                <CheckBox
-                                    android:id="@+id/checkboxB"
-                                    android:text="B   " android:theme="@style/WhiteCheck"/>
-                                <CheckBox
-                                    android:id="@+id/checkboxR"
-                                    android:text="R   " android:theme="@style/WhiteCheck"/>
-                                <CheckBox
-                                    android:id="@+id/checkboxT"
-                                    android:text="T   " android:theme="@style/WhiteCheck"/>
-                            </TableRow>
-                        </TableLayout>
-                    </TableRow>
-                </TableLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Keterangan"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_margin="16dp"
-                    android:textSize="24sp"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height= "1dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@android:color/darker_gray" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-                        <TextView
-                            style="@style/FontTextViewForm"
-                            android:text="Catatan"/>
-                        <EditText
-                            android:id="@+id/catatan"
-                            style="@style/SpinnerEditForm"
-                            android:background="@drawable/edittext_style"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"/>
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="NO POLISI"/>
+                    <AutoCompleteTextView
+                        android:id="@+id/nopol"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="MERK"/>
+                    <Spinner
+                        android:id="@+id/merk"
+                        style="@style/SpinnerEditForm"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="SERI"/>
+                    <Spinner
+                        android:id="@+id/seri"
+                        style="@style/SpinnerEditForm"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="SILINDER"/>
+                    <Spinner
+                        android:id="@+id/silinder"
+                        style="@style/SpinnerEditForm"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="GRADE"/>
+                    <Spinner
+                        android:id="@+id/grade"
+                        style="@style/SpinnerEditForm"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="SUB GRADE"/>
+                    <Spinner
+                        android:id="@+id/sub_grade"
+                        style="@style/SpinnerEditForm"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <Button
-                        android:id="@+id/save"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_margin="16dp"
-                        android:text="Save"
-                        android:background="@drawable/button_style"
-                        android:textColor="@color/colorPrimary"/>
-                    <Button
-                        android:id="@+id/cancel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_margin="16dp"
-                        android:background="@drawable/button2_style"
-                        android:text="Cancel" />
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="TRANSMISI"/>
+                    <EditText
+                        android:id="@+id/transmisi"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="TAHUN"/>
+                    <EditText
+                        android:id="@+id/tahun"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"
+                        android:inputType="number"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="KM"/>
+                    <EditText
+                        android:id="@+id/km"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"
+                        android:inputType="number"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="NAMA PEMILIK"/>
+                    <EditText
+                        android:id="@+id/nama_pemilik"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="FUEL DIPERIKSA"/>
+                    <Spinner
+                        android:id="@+id/fuel"
+                        style="@style/SpinnerEditForm"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="KONDISI CAT BODY"/>
+                    <Spinner
+                        android:id="@+id/cat"
+                        style="@style/SpinnerEditForm"/>
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bukti Serah Terima"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height= "1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Tanggal Pemeriksaan"/>
+                    <EditText
+                        android:id="@+id/tgl_pemeriksaan"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Jam"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Spinner
+                            android:id="@+id/jam"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="20dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+                        <Spinner
+                            android:id="@+id/menit"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:layout_marginRight="16dp"/>
+                    </LinearLayout>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Nama Pengemudi"/>
+                    <EditText
+                        android:id="@+id/nama_pengemudi"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Alamat Pengemudi"/>
+                    <EditText
+                        android:id="@+id/alamat_pengemudi"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Kota"/>
+                    <EditText
+                        android:id="@+id/kota"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Telepon"/>
+                    <EditText
+                        android:id="@+id/telepon"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"
+                        android:inputType="number"/>
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kelengkapan Kondisi Komponen"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height= "1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+            <TableLayout
+                android:id="@+id/table_addm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:stretchColumns="0">
+
+                <TableRow
+                    android:background="@drawable/cell_shape_th"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        style="@style/FontTableHead"
+                        android:text="No" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
+                        style="@style/FontTableHead"
+                        android:text="Nama Komponen" />
+                    <TableLayout>
+                        <TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/FontTableHead"
+                                android:layout_span="3"
+                                android:text="Kondisi" />
+                        </TableRow>
+                        <TableRow>
+                            <CheckBox
+                                android:id="@+id/checkboxB"
+                                android:text="B   " android:theme="@style/WhiteCheck"/>
+                            <CheckBox
+                                android:id="@+id/checkboxR"
+                                android:text="R   " android:theme="@style/WhiteCheck"/>
+                            <CheckBox
+                                android:id="@+id/checkboxT"
+                                android:text="T   " android:theme="@style/WhiteCheck"/>
+                        </TableRow>
+                    </TableLayout>
+                </TableRow>
+            </TableLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Keterangan"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height= "1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Catatan"/>
+                    <EditText
+                        android:id="@+id/catatan"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="16dp"
+                    android:text="Save"
+                    android:background="@drawable/button_style"
+                    android:textColor="@color/colorPrimary"/>
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/button2_style"
+                    android:text="Cancel" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
     <RelativeLayout
         android:id="@+id/background_progress"
         android:layout_width="match_parent"
