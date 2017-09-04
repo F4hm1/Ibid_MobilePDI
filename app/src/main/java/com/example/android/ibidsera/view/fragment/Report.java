@@ -105,9 +105,9 @@ public class Report extends BaseFragment{
             textStyle(type, row, param2, tipe);
             textStyle(tahun, row, param1, lu.get(i).getTahun());
             textStyle(penggerak, row, param1, lu.get(i).getPenggerak());
-            textStyle(pemilik, row, param2, lu.get(i).getPntp().getName_pntp());
-            textStyle(tgl_in, row, param1, lu.get(i).getAuction().getTgl_serah_msk());
-            textStyle(tgl_sold, row, param1, lu.get(i).getAuction().getTgl_serah_klr());
+            textStyle(pemilik, row, param2, lu.get(i).getPemilik());
+            textStyle(tgl_in, row, param1, lu.get(i).getTgl_serah_msk());
+            textStyle(tgl_sold, row, param1, lu.get(i).gettgl_sold());
             tl.addView(row);
         }
     }

@@ -4,10 +4,13 @@ import com.example.android.ibidsera.BuildConfig;
 import com.example.android.ibidsera.model.Attribute;
 import com.example.android.ibidsera.model.HomeModel;
 import com.example.android.ibidsera.model.InsertUnit;
+import com.example.android.ibidsera.model.Lampiran;
 import com.example.android.ibidsera.model.Login;
 import com.example.android.ibidsera.model.Penitip;
 import com.example.android.ibidsera.model.PersiapanPost;
 import com.example.android.ibidsera.model.PersiapanValue;
+import com.example.android.ibidsera.model.SignPost;
+import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StockManagement;
 import com.example.android.ibidsera.model.Unit;
 
@@ -35,7 +38,10 @@ public interface AuctionService {
     @GET("index.php/unitkeluar/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitk(@Path("nopol") String nopol);
     @GET("index.php/masteritem/warna/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItemWarna(@Path("key") String key);
     @GET("index.php/masteritem/penitip/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Penitip>> getMasterItemPenitip(@Path("key") String key);
-//    @Headers({
+    @GET("index.php/masteritem/get_lampiran/{key}?api_key=" + BuildConfig.API_KEY)
+    Call<List<Lampiran>> getLampiran(@Path("key") int key);
+
+    //    @Headers({
 //            "ClientService : frontend-client",
 //            "Auth-Key : simplerestapi",
 //            "Content-Type : application/json"
@@ -45,4 +51,8 @@ public interface AuctionService {
     @POST("index.php/persiapan/insert?api_key=" + BuildConfig.API_KEY) Call<String> insertUnit(@Body PersiapanPost persiapanPost);
     @POST("index.php/masteritem/search?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItem(@Body Attribute item);
     @POST("index.php/auth/login?api_key=" + BuildConfig.API_KEY) Call<Login> getLogin(@Body Login login);
+    @POST("index.php/masteritem/get_sign_masuk?api_key=" + BuildConfig.API_KEY) Call<SignValue> getSignMasuk(@Body SignPost item);
+    @POST("index.php/masteritem/get_sign_keluar?api_key=" + BuildConfig.API_KEY) Call<SignValue> getSignKeluar(@Body SignPost item);
+    @POST("index.php/masteritem/post_lampiran?api_key=" + BuildConfig.API_KEY) Call<Lampiran> postLampiran(@Body Lampiran item);
+
 }

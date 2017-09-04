@@ -317,17 +317,17 @@ public class AddMasuk extends BaseFragment{
 //
 //        insertUnit.setLampiran(ll);
 
-        insertUnit.setSignibidmsk("asda");
-        insertUnit.setSigncustmsk("asdf");
-        List<Lampiran> ll = new ArrayList<>();
-        Lampiran lampiran = new Lampiran();
-        lampiran.setNama_lampiran("mobil1");
-        lampiran.setBase64img("asd");
-        ll.add(lampiran);
-        lampiran.setNama_lampiran("mobil2");
-        lampiran.setBase64img("asda");
-        ll.add(lampiran);
-        insertUnit.setLampiran(ll);
+//        insertUnit.setSignibidmsk("asda");
+//        insertUnit.setSigncustmsk("asdf");
+//        List<Lampiran> ll = new ArrayList<>();
+//        Lampiran lampiran = new Lampiran();
+//        lampiran.setNama_lampiran("mobil1");
+//        lampiran.setBase64img("asd");
+//        ll.add(lampiran);
+//        lampiran.setNama_lampiran("mobil2");
+//        lampiran.setBase64img("asda");
+//        ll.add(lampiran);
+//        insertUnit.setLampiran(ll);
 
         return insertUnit;
     }
