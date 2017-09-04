@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 
 import java.io.FileOutputStream;
 
-public class SignatureView extends View {
+public class Signature extends View {
     private static final float STROKE_WIDTH = 5f;
     private static final float HALF_STROKE_WIDTH = STROKE_WIDTH / 2;
     private Paint paint = new Paint();
@@ -28,7 +28,7 @@ public class SignatureView extends View {
     private Bitmap bitmap;
     private FrameLayout mContainer;
 
-    public SignatureView(Context context, AttributeSet attrs, FrameLayout container) {
+    public Signature(Context context, AttributeSet attrs, FrameLayout container) {
         super(context, attrs);
         this.mContainer = container;
 

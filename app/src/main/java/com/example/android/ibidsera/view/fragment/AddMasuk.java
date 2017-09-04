@@ -4,15 +4,16 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.InsertUnit;
+import com.example.android.ibidsera.model.Lampiran;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.api.AuctionService;
@@ -83,12 +85,16 @@ public class AddMasuk extends BaseFragment{
     @BindView(R.id.checkboxT) CheckBox checkBoxT;
     @BindView(R.id.signature1) ImageView signature1;
     @BindView(R.id.signature2) ImageView signature2;
+    @BindView(R.id.ibid_sedan) ImageView ibid_sedan;
+    @BindView(R.id.ibid_niaga) ImageView ibid_niaga;
     private int size = 0;
     private List<Unit> lUnit = new ArrayList<>();
     private int position = -1;
     private HashMap<String, CheckBox> h = new HashMap<>();
     private Bitmap bitmap1;
     private Bitmap bitmap2;
+    private Bitmap bitmap3;
+    private Bitmap bitmap4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -138,8 +144,10 @@ public class AddMasuk extends BaseFragment{
             cpvStop(cpv, bp);
         });
 
-        signatureClick(signature1, 1);
-        signatureClick(signature2, 2);
+        imageClick(ibid_sedan, 1, 1);
+        imageClick(ibid_niaga, 1, 2);
+        imageClick(signature1, 2, 1);
+        imageClick(signature2, 2, 2);
 
         save.setOnClickListener(v -> {
             pDialog.setMessage("Sending Data..");
@@ -215,6 +223,13 @@ public class AddMasuk extends BaseFragment{
         pool.setText(lu.get(id).getAuction().getPoolkota());
         cases.setText(lu.get(id).getAuction().getCases());
         try {
+            if(bitmap3 != null){
+                ibid_sedan.setImageBitmap(bitmap3);
+            } else if(bitmap4 != null){
+                ibid_niaga.setImageBitmap(bitmap4);
+            }
+        }catch (Exception e){}
+        try {
             if(bitmap1 != null){
                 signature1.setImageBitmap(bitmap1);
             } else if(bitmap2 != null){
@@ -273,10 +288,47 @@ public class AddMasuk extends BaseFragment{
         insertUnit.setPoolkota(String.valueOf(pool.getText()));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         insertUnit.setWEBID_LOGGED_IN(prefs.getInt("userId", 0));
+
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap1.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
-        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        byte[] byteArray;
+
+//        bitmap1.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+//        byteArray = byteArrayOutputStream.toByteArray();
+//        insertUnit.setSignibidmsk(Base64.encodeToString(byteArray, Base64.DEFAULT));
+//
+//        bitmap2.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+//        byteArray = byteArrayOutputStream.toByteArray();
+//        insertUnit.setSigncustmsk(Base64.encodeToString(byteArray, Base64.DEFAULT));
+//
+//        List<Lampiran> ll = new ArrayList<>();
+//        Lampiran lampiran = new Lampiran();
+//
+//        bitmap3.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+//        byteArray = byteArrayOutputStream.toByteArray();
+//        lampiran.setNama_lampiran("mobil1");
+//        lampiran.setBase64img(Base64.encodeToString(byteArray, Base64.DEFAULT));
+//        ll.add(lampiran);
+//
+//        bitmap4.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+//        byteArray = byteArrayOutputStream.toByteArray();
+//        lampiran.setNama_lampiran("mobil2");
+//        lampiran.setBase64img(Base64.encodeToString(byteArray, Base64.DEFAULT));
+//        ll.add(lampiran);
+//
+//        insertUnit.setLampiran(ll);
+
+        insertUnit.setSignibidmsk("asda");
+        insertUnit.setSigncustmsk("asdf");
+        List<Lampiran> ll = new ArrayList<>();
+        Lampiran lampiran = new Lampiran();
+        lampiran.setNama_lampiran("mobil1");
+        lampiran.setBase64img("asd");
+        ll.add(lampiran);
+        lampiran.setNama_lampiran("mobil2");
+        lampiran.setBase64img("asda");
+        ll.add(lampiran);
+        insertUnit.setLampiran(ll);
+
         return insertUnit;
     }
 
@@ -393,8 +445,46 @@ public class AddMasuk extends BaseFragment{
         checkAllListener(checkBoxT, "t", size, h);
     }
 
-    private void signatureClick(ImageView imageView, int id){
-        imageView.setOnClickListener(v -> signatureDialog(id));
+    private void imageClick(ImageView imageView, int id, int position){
+        if(id == 1) {
+            imageView.setOnClickListener(v -> catatanDialog(position));
+        }else {
+            imageView.setOnClickListener(v -> signatureDialog(position));
+        }
+    }
+
+    private void catatanDialog(int id){
+        AlertDialog.Builder alertDialog  = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Catatan");
+        alertDialog.setCancelable(false);
+
+        FrameLayout container = new FrameLayout(getContext());
+        onTouch(container);
+        ImageView imageView = new ImageView(getContext());
+        if(id == 1){
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
+        }else {
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
+        }
+        container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, 450);
+        alertDialog.setView(container);
+
+        // Set up the buttons
+        alertDialog.setPositiveButton("Save Notes", (dialog, which) -> {
+            container.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(container.getWidth(), 450, Bitmap.Config.RGB_565);
+            Canvas canvas = new Canvas(bitmap);
+            container.draw(canvas);
+            if(id == 1){
+                ibid_sedan.setImageBitmap(bitmap);
+                bitmap3 = bitmap;
+            }else{
+                ibid_niaga.setImageBitmap(bitmap);
+                bitmap4 = bitmap;
+            }
+        });
+        alertDialog.setNegativeButton("Cancel", (dialog, which) -> {});
+        alertDialog.create().show();
     }
 
     private void signatureDialog(int id){
@@ -404,7 +494,7 @@ public class AddMasuk extends BaseFragment{
 
         FrameLayout container = new FrameLayout(getContext());
         container.setBackgroundDrawable(getResources().getDrawable(R.drawable.canvas_style));
-        SignatureView mSignature = new SignatureView(getContext(), null, container);
+        Signature mSignature = new Signature(getContext(), null, container);
         container.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, 400);
         alertDialog.setView(container);
 
@@ -422,7 +512,51 @@ public class AddMasuk extends BaseFragment{
                 bitmap2 = bitmap;
             }
         });
-        alertDialog.setNegativeButton("Clear Canvas", (dialog, which) -> mSignature.clear());
+        alertDialog.setNegativeButton("Cancel", (dialog, which) -> mSignature.clear());
         alertDialog.create().show();
+    }
+
+    private void onTouch(FrameLayout frameLayout){
+        frameLayout.setOnTouchListener((view, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddMasuk.this.getContext());
+                alertDialog.setTitle("Masukan catatan kerusakan : ");
+                alertDialog.setCancelable(true);
+
+                final EditText input = new EditText(AddMasuk.this.getContext());
+
+                FrameLayout container = new FrameLayout(AddMasuk.this.getContext());
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.leftMargin = 40; // remember to scale correctly
+                params.rightMargin = 40;
+                input.setLayoutParams(params);
+                container.addView(input);
+                alertDialog.setView(container);
+
+                int[] location = new int[2];
+                view.getLocationOnScreen(location);
+                float screenX = event.getRawX();
+                float screenY = event.getRawY();
+                final float viewX = screenX - location[0];
+                final float viewY = screenY - location[1];
+
+                // Set up the buttons
+                alertDialog.setPositiveButton("OK", (dialog, which) -> {
+
+                    TextView dynamicTextView = new TextView(AddMasuk.this.getContext());
+                    dynamicTextView.setText(input.getText().toString());
+                    dynamicTextView.setX(viewX);
+                    dynamicTextView.setY(viewY);
+                    dynamicTextView.setPadding(10, 10, 10, 10);
+                    dynamicTextView.setTypeface(null, Typeface.BOLD);
+                    dynamicTextView.setTextColor(getResources().getColor(R.color.colorAccent));
+                    frameLayout.addView(dynamicTextView);
+                });
+                alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+                alertDialog.create().show();
+            }
+            return true;
+        });
     }
 }

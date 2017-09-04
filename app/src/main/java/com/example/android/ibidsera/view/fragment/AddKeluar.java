@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.util.RetrofitUtil;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -261,6 +263,16 @@ public class AddKeluar extends BaseFragment{
         insertUnit.setCatatan(String.valueOf(catatan.getText()));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         insertUnit.setWEBID_LOGGED_IN(prefs.getInt("userId", 0));
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+        bitmap1.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        insertUnit.setSignibidklr(Base64.encodeToString(byteArray, Base64.DEFAULT));
+
+        bitmap2.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        insertUnit.setSigncustklr(Base64.encodeToString(byteArray, Base64.DEFAULT));
+
         return insertUnit;
     }
 
@@ -386,7 +398,7 @@ public class AddKeluar extends BaseFragment{
 
         FrameLayout container = new FrameLayout(getContext());
         container.setBackgroundDrawable(getResources().getDrawable(R.drawable.canvas_style));
-        SignatureView mSignature = new SignatureView(getContext(), null, container);
+        Signature mSignature = new Signature(getContext(), null, container);
         container.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, 400);
         alertDialog.setView(container);
 
