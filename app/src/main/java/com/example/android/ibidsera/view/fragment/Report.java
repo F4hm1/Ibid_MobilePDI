@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.Attribute;
+import com.example.android.ibidsera.model.StockManagement;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.util.RetrofitUtil;
@@ -57,50 +58,51 @@ public class Report extends BaseFragment{
     public void getItemList(){
         AuctionService auctionService = RetrofitUtil.getAuctionService();
 
-        auctionService.getReport().enqueue(new Callback<List<Unit>>() {
+        auctionService.getReport().enqueue(new Callback<List<StockManagement>>() {
             @Override
-            public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
-                List<Unit> lu = response.body();
+            public void onResponse(Call<List<StockManagement>> call, Response<List<StockManagement>> response) {
+                List<StockManagement> lu = response.body();
                 getReport(lu);
             }
 
             @Override
-            public void onFailure(Call<List<Unit>> call, Throwable t) {
+            public void onFailure(Call<List<StockManagement>> call, Throwable t) {
                 errorRetrofit(call, t);
             }
         });
-
     }
 
-    public void getReport(List<Unit> lu){
+    public void getReport(List<StockManagement> lu){
         for (int i = 0; i < lu.size(); i++) {
             TableRow row = tableRow();
+            TextView unit = textView();
+            TextView cabang = textView();
             TextView no_pol = textView();
             TextView merk = textView();
             TextView type = textView();
             TextView tahun = textView();
             TextView penggerak = textView();
             TextView pemilik = textView();
+            TextView expedisi = textView();
             TextView tgl_in = textView();
+            TextView lama_in = textView();
             TextView tgl_sold = textView();
+            TextView tgl_out = textView();
+            TextView ikut_lelang = textView();
+            TextView cases = textView();
 
             TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
             TableRow.LayoutParams param2 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
 
             rowColor(row, i);
-            textStyle(no_pol, row, param1, lu.get(i).getAuction().getNo_polisi());
+
+            textStyle(unit, row, param1, "1");
+            textStyle(cabang, row, param1, lu.get(i).getCabang());
+            textStyle(no_pol, row, param1, lu.get(i).getNopol());
             textStyle(merk, row, param1, lu.get(i).getNama_merk());
-            String tipe = "";
-            for (Attribute t : lu.get(i).getTipe()) {
-                if(t.getAttributedetail() != null){
-                    if(tipe.equals("")){
-                        tipe = t.getAttributedetail();
-                    }else {
-                        tipe = tipe + " " + t.getAttributedetail();
-                    }
-                }
-            }
-            textStyle(type, row, param2, tipe.concat(" " + lu.get(i).getModel()).concat(" " + lu.get(i).getTransmisi()));
+            String tipe = lu.get(i).getNama_merk()+" "+lu.get(i).getCode_b()+" "+
+                    lu.get(i).getModel()+" "+lu.get(i).getTransmisi();
+            textStyle(type, row, param2, tipe);
             textStyle(tahun, row, param1, lu.get(i).getTahun());
             textStyle(penggerak, row, param1, lu.get(i).getPenggerak());
             textStyle(pemilik, row, param2, lu.get(i).getPntp().getName_pntp());

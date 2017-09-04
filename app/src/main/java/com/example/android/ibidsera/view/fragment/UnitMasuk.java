@@ -123,7 +123,7 @@ public class UnitMasuk extends BaseFragment{
             paramImg.gravity = Gravity.CENTER;
 
             rowColor(row, i);
-            imgStyle(id, row, paramImg, i+1);
+            imgStyle(id, row, paramImg, i);
             textStyle(no_pol, row, param1, lu.get(i).getAuction().getNo_polisi());
             textStyle(tgl_doc, row, param1, lu.get(i).getAuction().getTgl_serah_msk());
             textStyle(pengemudi, row, param1, lu.get(i).getAuction().getNama_pengemudi_msk());

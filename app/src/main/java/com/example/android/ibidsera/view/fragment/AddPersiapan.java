@@ -300,65 +300,68 @@ public class AddPersiapan extends BaseFragment {
             setSebagai();
         });
 
-        save.setOnClickListener(view -> {
-            pDialog.setMessage("Sending Data..");
-            pDialog.show();
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pDialog.setMessage("Sending Data..");
+                pDialog.show();
 
-            if(perusahaan.isChecked()) {
-                lp.get(position).setStatus_biodata(1);
-            }else {
-                lp.get(position).setStatus_biodata(0);
+                if (perusahaan.isChecked()) {
+                    lp.get(position).setStatus_biodata(1);
+                } else {
+                    lp.get(position).setStatus_biodata(0);
+                }
+                lp.get(position).setNo_identitas(noIdentitas.getText().toString());
+
+                HashMap<String, EditText> h = new HashMap<>();
+                h.put("NO POLISI", noPolisi);
+                h.put("Transmisi", transmisi);
+                h.put("Tahun", tahun);
+                h.put("Nama", nama);
+                h.put("Ponsel", ponselPic);
+
+                HashMap<String, Spinner> hs = new HashMap<>();
+                hs.put("Merk", merk);
+                hs.put("Seri", seri);
+                hs.put("Silinder", silinder);
+                hs.put("Grade", grade);
+                hs.put("Sub Grade", subGrade);
+
+                List<String> ls2 = AddPersiapan.this.required(h);
+                List<String> lsSpinner = AddPersiapan.this.requiredSpinner(hs);
+
+                if (ls2.size() <= 0 || lsSpinner.size() <= 0) {
+
+                    persiapanPost = AddPersiapan.this.getDataView();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(() -> {
+
+                        auctionService.insertUnit(persiapanPost).enqueue(new Callback<String>() {
+
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                String log = response.body();
+
+                                pDialog.hide();
+                                Toast.makeText(getContext(), log, Toast.LENGTH_LONG).show();
+                                getActivity().getSupportFragmentManager().popBackStack();
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                                errorRetrofit(call, t);
+                                pDialog.hide();
+                            }
+                        });
+                    }, 2000);
+
+                } else {
+                    pDialog.hide();
+                    AddPersiapan.this.alertLogic(ls2);
+                    AddPersiapan.this.alertLogic(lsSpinner);
+                }
+
             }
-            lp.get(position).setNo_identitas(noIdentitas.getText().toString());
-
-            HashMap<String, EditText> h = new HashMap<>();
-            h.put("NO POLISI", noPolisi);
-            h.put("Transmisi", transmisi);
-            h.put("Tahun", tahun);
-            h.put("Nama", nama);
-            h.put("Ponsel", ponselPic);
-
-            HashMap<String, Spinner> hs = new HashMap<>();
-            hs.put("Merk", merk);
-            hs.put("Seri", seri);
-            hs.put("Silinder", silinder);
-            hs.put("Grade", grade);
-            hs.put("Sub Grade", subGrade);
-
-            List<String> ls2 = required(h);
-            List<String> lsSpinner = requiredSpinner(hs);
-
-            if(ls2.size() <= 0 || lsSpinner.size() <= 0) {
-
-                persiapanPost = getDataView();
-                final Handler handler = new Handler();
-                handler.postDelayed(() -> {
-
-                    auctionService.insertUnit(persiapanPost).enqueue(new Callback<String>() {
-
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            String log = response.body();
-
-                            pDialog.hide();
-                            Toast.makeText(getContext(), log, Toast.LENGTH_LONG).show();
-                            getActivity().getSupportFragmentManager().popBackStack();
-                        }
-
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            errorRetrofit(call,t);
-                            pDialog.hide();
-                        }
-                    });
-                }, 2000);
-
-            }else{
-                pDialog.hide();
-                alertLogic(ls2);
-                alertLogic(lsSpinner);
-            }
-
         });
 
     }
