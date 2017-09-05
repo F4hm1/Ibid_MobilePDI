@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "URI", "\"http://192.168.0.105/ibid-ims-api/\"")
+        buildConfigField("String", "URI", "\"http://192.168.1.103/ibid-ims-api/\"")
         buildTypes.each {
             it.buildConfigField 'String', 'API_KEY', IbidImsApiKey
         }

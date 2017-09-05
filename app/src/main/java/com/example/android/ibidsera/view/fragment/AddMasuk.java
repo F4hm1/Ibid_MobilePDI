@@ -32,7 +32,6 @@ import android.widget.TextView;
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.InsertUnit;
-import com.example.android.ibidsera.model.Lampiran;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.api.AuctionService;
@@ -201,7 +200,7 @@ public class AddMasuk extends BaseFragment{
     public void getAddm(List<Unit> lu, int id) {
         lUnit = lu;
         position = id;
-        nopol.setText(lu.get(id).getAuction().getNo_polisi());
+        nopol.setText(lu.get(id).getAuction_auto().getValue());
         merk.setAdapter(getAdapterList(lu.get(id).getNama_merk()));
         seri.setAdapter(getAdapterList(lu.get(id).getTipe().get(0).getAttributedetail()));
         silinder.setAdapter(getAdapterList(lu.get(id).getTipe().get(1).getAttributedetail()));
@@ -246,8 +245,8 @@ public class AddMasuk extends BaseFragment{
 
     public InsertUnit setInsertUnit(){
         InsertUnit insertUnit = new InsertUnit();
-        insertUnit.setIdpemeriksaanitem(lUnit.get(position).getAuction().getId_pemeriksaanitem());
-        insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getIdauction_item());
+        insertUnit.setIdpemeriksaanitem(0);
+        insertUnit.setIdauctionitem(lUnit.get(position).getAuction_auto().getId_auctionitem());
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
         insertUnit.setMERK(lUnit.get(position).getId_merk());
@@ -360,14 +359,14 @@ public class AddMasuk extends BaseFragment{
 
     private void getDropdownList(AuctionService auctionService, List<String> ls){
         if (!nopol.getText().toString().equals("")){
-            auctionService.getSearchPersiapan(nopol.getText().toString()).enqueue(new Callback<List<Unit>>() {
+            auctionService.getAutoUnitm(nopol.getText().toString()).enqueue(new Callback<List<Unit>>() {
                 @Override
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     List<Unit> lu = response.body();
-                    StaticUnit.setLu(lu);
+
                     ls.clear();
                     for (int i = 0; i < lu.size(); i++) {
-                        ls.add(lu.get(i).getAuction().getNo_polisi());
+                        ls.add(lu.get(i).getAuction_auto().getValue());
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                             android.R.layout.simple_dropdown_item_1line, ls);

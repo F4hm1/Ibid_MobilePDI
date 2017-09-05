@@ -40,6 +40,9 @@ public interface AuctionService {
     @GET("index.php/masteritem/penitip/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Penitip>> getMasterItemPenitip(@Path("key") String key);
     @GET("index.php/masteritem/get_lampiran/{key}?api_key=" + BuildConfig.API_KEY)
     Call<List<Lampiran>> getLampiran(@Path("key") int key);
+    @GET("index.php/unitmasuk/auto/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getAutoUnitm(@Path("nopol") String nopol);
+    @GET("index.php/unitkeluar/auto/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getAutoUnitk(@Path("nopol") String nopol);
+
 
     //    @Headers({
 //            "ClientService : frontend-client",
