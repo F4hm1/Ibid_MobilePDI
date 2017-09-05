@@ -102,15 +102,9 @@ public class Report extends BaseFragment{
             textStyle(type, row, param2, tipe);
             textStyle(tahun, row, param1, lu.get(i).getTahun());
             textStyle(penggerak, row, param1, lu.get(i).getPenggerak());
-<<<<<<< HEAD
-            textStyle(tgl_in, row, param1, lu.get(i).getTgl_serah_msk());
-            textStyle(tgl_sold, row, param1, lu.get(i).getTglsold());
-            textStyle(tgl_out, row, param1, lu.get(i).getTgl_out());
-=======
-            textStyle(pemilik, row, param2, lu.get(i).getPemilik());
             textStyle(tgl_in, row, param1, lu.get(i).getTgl_serah_msk());
             textStyle(tgl_sold, row, param1, lu.get(i).gettgl_sold());
->>>>>>> fixingharfi
+            textStyle(tgl_out, row, param1, lu.get(i).getTgl_out());
             tl.addView(row);
         }
     }
