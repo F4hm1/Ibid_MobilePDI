@@ -9,7 +9,7 @@ import com.example.android.ibidsera.model.Penitip;
 import com.example.android.ibidsera.model.PersiapanPost;
 import com.example.android.ibidsera.model.PersiapanValue;
 import com.example.android.ibidsera.model.Sign;
-import com.example.android.ibidsera.model.StockManagement;
+import com.example.android.ibidsera.model.ReportModel;
 import com.example.android.ibidsera.model.Unit;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public interface AuctionService {
     @GET("index.php/persiapan?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getPersiapan();
     @GET("index.php/unitmasuk?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitM();
     @GET("index.php/unitkeluar?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitK();
-    @GET("index.php/stockmanagement?api_key=" + BuildConfig.API_KEY) Call<List<StockManagement>> getReport();
+    @GET("index.php/stockmanagement?api_key=" + BuildConfig.API_KEY) Call<List<ReportModel>> getReport();
     @GET("index.php/persiapan/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchPersiapan(@Path("nopol") String nopol);
     @GET("index.php/unitmasuk/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitm(@Path("nopol") String nopol);
     @GET("index.php/unitkeluar/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitk(@Path("nopol") String nopol);

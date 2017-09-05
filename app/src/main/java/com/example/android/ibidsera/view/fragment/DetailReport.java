@@ -1,12 +1,10 @@
 package com.example.android.ibidsera.view.fragment;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -15,65 +13,32 @@ import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.ReportModel;
 import com.example.android.ibidsera.model.StaticReport;
-import com.example.android.ibidsera.model.api.AuctionService;
-import com.example.android.ibidsera.util.RetrofitUtil;
-import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
- * Created by Yosefricaro on 24/07/2017.
+ * Created by Yosefricaro on 05/09/2017.
  */
 
-public class Report extends BaseFragment{
-    @BindView(R.id.table_report) TableLayout tl;
-    @BindView(R.id.progress_view) CircularProgressView cpv;
-    @BindView(R.id.background_progress) RelativeLayout bp;
-    @BindView(R.id.refreshContainer) SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.view_detail) Button view_detail;
+public class DetailReport extends BaseFragment {
+    @BindView(R.id.table_detailr) TableLayout tl;
+    @BindView(R.id.back) Button back;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View myFragment = inflater.inflate(R.layout.content_report, container, false);
+        View myFragment = inflater.inflate(R.layout.content_detailr, container, false);
         ButterKnife.bind(this, myFragment);
 
-        cpvStart(cpv, bp);
+        getReport(StaticReport.getLr());
 
-        try {
-            getItemList();
-        }catch (Exception e){}
-
-        cpvStop(cpv, bp);
-
-        swipeRefresh(refreshLayout, R.id.nav_report);
+        cancelListener(back);
 
         return myFragment;
-    }
-
-    public void getItemList(){
-        AuctionService auctionService = RetrofitUtil.getAuctionService();
-
-        auctionService.getReport().enqueue(new Callback<List<ReportModel>>() {
-            @Override
-            public void onResponse(Call<List<ReportModel>> call, Response<List<ReportModel>> response) {
-                List<ReportModel> lu = response.body();
-                StaticReport.setLr(lu);
-                getReport(lu);
-            }
-
-            @Override
-            public void onFailure(Call<List<ReportModel>> call, Throwable t) {
-                errorRetrofit(call, t);
-            }
-        });
     }
 
     public void getReport(List<ReportModel> lu){
@@ -82,12 +47,18 @@ public class Report extends BaseFragment{
             TextView unit = textView();
             TextView cabang = textView();
             TextView no_pol = textView();
+            TextView merk = textView();
             TextView type = textView();
             TextView tahun = textView();
             TextView penggerak = textView();
+            TextView pemilik = textView();
+            TextView expedisi = textView();
             TextView tgl_in = textView();
+            TextView lama_in = textView();
             TextView tgl_sold = textView();
             TextView tgl_out = textView();
+            TextView ikut_lelang = textView();
+            TextView cases = textView();
 
             TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
             TableRow.LayoutParams param2 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
@@ -97,14 +68,20 @@ public class Report extends BaseFragment{
             textStyle(unit, row, param1, "1");
             textStyle(cabang, row, param1, lu.get(i).getCabang());
             textStyle(no_pol, row, param1, lu.get(i).getNopol());
+            textStyle(merk, row, param1, lu.get(i).getNama_merk());
             String tipe = lu.get(i).getNama_merk()+" "+lu.get(i).getCode_b()+" "+
                     lu.get(i).getModel()+" "+lu.get(i).getTransmisi();
             textStyle(type, row, param2, tipe);
             textStyle(tahun, row, param1, lu.get(i).getTahun());
             textStyle(penggerak, row, param1, lu.get(i).getPenggerak());
+            textStyle(pemilik, row, param2, lu.get(i).getPemilik());
+            textStyle(expedisi, row, param1, lu.get(i).getNama_exps());
             textStyle(tgl_in, row, param1, lu.get(i).getTgl_serah_msk());
+            textStyle(lama_in, row, param1, lu.get(i).getNama_exps());
             textStyle(tgl_sold, row, param1, lu.get(i).getTglsold());
             textStyle(tgl_out, row, param1, lu.get(i).getTgl_out());
+            textStyle(ikut_lelang, row, param1, lu.get(i).getIkutlelang());
+            textStyle(cases, row, param1, lu.get(i).getCases());
             tl.addView(row);
         }
     }

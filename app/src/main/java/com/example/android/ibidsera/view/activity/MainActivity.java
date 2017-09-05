@@ -21,6 +21,7 @@ import com.example.android.ibidsera.base.BaseActivity;
 import com.example.android.ibidsera.view.fragment.AddKeluar;
 import com.example.android.ibidsera.view.fragment.AddMasuk;
 import com.example.android.ibidsera.view.fragment.AddPersiapan;
+import com.example.android.ibidsera.view.fragment.DetailReport;
 import com.example.android.ibidsera.view.fragment.Home;
 import com.example.android.ibidsera.view.fragment.Persiapan;
 import com.example.android.ibidsera.view.fragment.Report;
@@ -36,6 +37,7 @@ import static com.example.android.ibidsera.R.id.Addp_button;
 import static com.example.android.ibidsera.R.id.Persiapan_search;
 import static com.example.android.ibidsera.R.id.Unitk_search;
 import static com.example.android.ibidsera.R.id.Unitm_search;
+import static com.example.android.ibidsera.R.id.view_detail;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -165,6 +167,10 @@ public class MainActivity extends BaseActivity
                 break;
             case Addp_button:
                 fragment = new AddPersiapan();
+                ft.addToBackStack("1");
+                break;
+            case view_detail:
+                fragment = new DetailReport();
                 ft.addToBackStack("1");
                 break;
             case Unitk_search:
