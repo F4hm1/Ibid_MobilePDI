@@ -78,7 +78,7 @@ public class DetailReport extends BaseFragment {
             textStyle(expedisi, row, param1, lu.get(i).getNama_exps());
             textStyle(tgl_in, row, param1, lu.get(i).getTgl_serah_msk());
             textStyle(lama_in, row, param1, lu.get(i).getNama_exps());
-            textStyle(tgl_sold, row, param1, lu.get(i).getTglsold());
+            textStyle(tgl_sold, row, param1, lu.get(i).gettgl_sold());
             textStyle(tgl_out, row, param1, lu.get(i).getTgl_out());
             textStyle(ikut_lelang, row, param1, lu.get(i).getIkutlelang());
             textStyle(cases, row, param1, lu.get(i).getCases());

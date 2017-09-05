@@ -103,7 +103,7 @@ public class Report extends BaseFragment{
             textStyle(tahun, row, param1, lu.get(i).getTahun());
             textStyle(penggerak, row, param1, lu.get(i).getPenggerak());
             textStyle(tgl_in, row, param1, lu.get(i).getTgl_serah_msk());
-            textStyle(tgl_sold, row, param1, lu.get(i).getTglsold());
+            textStyle(tgl_sold, row, param1, lu.get(i).gettgl_sold());
             textStyle(tgl_out, row, param1, lu.get(i).getTgl_out());
             tl.addView(row);
         }

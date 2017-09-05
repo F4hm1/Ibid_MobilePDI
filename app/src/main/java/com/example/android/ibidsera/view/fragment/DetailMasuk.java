@@ -3,6 +3,8 @@ package com.example.android.ibidsera.view.fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +17,23 @@ import android.widget.TextView;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
+import com.example.android.ibidsera.model.Lampiran;
+import com.example.android.ibidsera.model.SignPost;
+import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
+import com.example.android.ibidsera.model.api.AuctionService;
+import com.example.android.ibidsera.util.RetrofitUtil;
+import com.squareup.picasso.Downloader;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Yosefricaro on 24/07/2017.
@@ -50,7 +62,12 @@ public class DetailMasuk extends BaseFragment{
     @BindView(R.id.catatan) TextView catatan;
     @BindView(R.id.pool) TextView pool;
     @BindView(R.id.cases) TextView cases;
+    @BindView(R.id.imgLampiranMiniBus) ImageView imgMiniBus;
+    @BindView(R.id.imgLampiranSedan) ImageView imgSedan;
+    @BindView(R.id.imgSignCust) ImageView imgSignCust;
+    @BindView(R.id.imgSignIbid) ImageView imgSignIbid;
     @BindView(R.id.close) Button close;
+    private Lampiran lamp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -131,6 +148,53 @@ public class DetailMasuk extends BaseFragment{
             row.addView(tl2);
             tl.addView(row);
         }
+
+        AuctionService auctionService = RetrofitUtil.getAuctionService();
+        auctionService.getLampiran(lu.get(id).getAuction().getId_pemeriksaanitem()).enqueue(new Callback<List<Lampiran>>() {
+            @Override
+            public void onResponse(Call<List<Lampiran>> call, Response<List<Lampiran>> response) {
+                List<Lampiran> ls = response.body();
+
+                if (!ls.isEmpty()) {
+                    for (int i = 0; i < ls.size() && i < 2; i++) {
+
+                        if (ls.get(i).getNama_lampiran().equals("SEDAN")) {
+                            imgSedan.setImageBitmap(decodeImg(ls.get(i).getBase64img()));
+                        } else if (ls.get(i).getNama_lampiran().equals("MINIBUS")) {
+                            imgMiniBus.setImageBitmap(decodeImg(ls.get(i).getBase64img()));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Lampiran>> call, Throwable t) {
+                errorRetrofit(call, t);
+            }
+        });
+
+        SignPost sp = new SignPost();
+        sp.setId_auctionitem(lu.get(id).getAuction().getId_auctionitem());
+        sp.setId_pemeriksaanitem(lu.get(id).getAuction().getId_pemeriksaanitem());
+
+        auctionService.getSignMasuk(sp).enqueue(new Callback<SignValue>() {
+            @Override
+            public void onResponse(Call<SignValue> call, Response<SignValue> response) {
+                SignValue sv = response.body();
+
+                if (sv != null) {
+                    imgSignCust.setImageBitmap(decodeImg(sv.getSign_cust_msk()));
+                    imgSignIbid.setImageBitmap(decodeImg(sv.getSign_ibid_msk()));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SignValue> call, Throwable t) {
+                errorRetrofit(call, t);
+            }
+        });
+
     }
 
     public void imgStyle(ImageView imageView, TableRow row, TableRow.LayoutParams imgParam, String check) {
@@ -145,5 +209,12 @@ public class DetailMasuk extends BaseFragment{
         imageView.setImageBitmap(resizedbitmap);
         imageView.setBackgroundDrawable(null);
         row.addView(imageView);
+    }
+
+    private Bitmap decodeImg(String encode){
+        byte[] decodedString = Base64.decode(encode, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        return decodedByte;
     }
 }

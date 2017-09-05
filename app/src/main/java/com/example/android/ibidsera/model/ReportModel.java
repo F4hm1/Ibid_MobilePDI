@@ -17,7 +17,7 @@ public class ReportModel {
     private String pemilik;
     private String nama_exps;
     private String tgl_serah_msk;
-    private String tglsold;
+    private String tgl_sold;
     private String tgl_out;
     private String selisih_hari;
     private String ikutlelang;
@@ -111,12 +111,12 @@ public class ReportModel {
         this.nama_exps = nama_exps;
     }
 
-    public String getTglsold() {
-        return tglsold;
+    public String gettgl_sold() {
+        return tgl_sold;
     }
 
-    public void setTglsold(String tglsold) {
-        this.tglsold = tglsold;
+    public void settgl_sold(String tgl_sold) {
+        this.tgl_sold = tgl_sold;
     }
 
     public String getTgl_out() {
