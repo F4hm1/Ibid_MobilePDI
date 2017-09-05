@@ -44,7 +44,9 @@ public class Home extends BaseFragment{
 
         cpvStart(cpv, bp);
 
-        getItemList();
+        try{
+            getItemList();
+        }catch (Exception e){}
 
         cpvStop(cpv, bp);
 

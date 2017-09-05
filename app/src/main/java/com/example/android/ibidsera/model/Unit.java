@@ -9,6 +9,7 @@ import java.util.List;
 public class Unit {
 
     private Auction auction;
+    private AuctionAuto auction_auto;
     private String id_merk;
     private String nama_merk;
     private List<Attribute> tipe;
@@ -27,6 +28,15 @@ public class Unit {
 
     public void setAuction(Auction auction) {
         this.auction = auction;
+    }
+
+    public AuctionAuto getAuction_auto() {
+        return auction_auto;
+    }
+
+    public Unit setAuction_auto(AuctionAuto auction_auto) {
+        this.auction_auto = auction_auto;
+        return this;
     }
 
     public String getNama_merk() {
