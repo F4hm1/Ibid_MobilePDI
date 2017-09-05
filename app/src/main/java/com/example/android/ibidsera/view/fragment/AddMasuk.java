@@ -528,8 +528,8 @@ public class AddMasuk extends BaseFragment{
 
                 FrameLayout container = new FrameLayout(AddMasuk.this.getContext());
                 FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.leftMargin = 40; // remember to scale correctly
-                params.rightMargin = 40;
+                params.leftMargin = 30; // remember to scale correctly
+                params.rightMargin = 30;
                 input.setLayoutParams(params);
                 container.addView(input);
                 alertDialog.setView(container);

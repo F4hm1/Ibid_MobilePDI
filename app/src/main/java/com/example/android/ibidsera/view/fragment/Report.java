@@ -12,9 +12,7 @@ import android.widget.TextView;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
-import com.example.android.ibidsera.model.Attribute;
 import com.example.android.ibidsera.model.StockManagement;
-import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.util.RetrofitUtil;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
@@ -105,9 +103,14 @@ public class Report extends BaseFragment{
             textStyle(type, row, param2, tipe);
             textStyle(tahun, row, param1, lu.get(i).getTahun());
             textStyle(penggerak, row, param1, lu.get(i).getPenggerak());
-            textStyle(pemilik, row, param2, lu.get(i).getPntp().getName_pntp());
-            textStyle(tgl_in, row, param1, lu.get(i).getAuction().getTgl_serah_msk());
-            textStyle(tgl_sold, row, param1, lu.get(i).getAuction().getTgl_serah_klr());
+            textStyle(pemilik, row, param2, lu.get(i).getPemilik());
+            textStyle(expedisi, row, param1, lu.get(i).getNama_exps());
+            textStyle(tgl_in, row, param1, lu.get(i).getTgl_serah_msk());
+            textStyle(lama_in, row, param1, lu.get(i).getNama_exps());
+            textStyle(tgl_sold, row, param1, lu.get(i).getTglsold());
+            textStyle(tgl_out, row, param1, lu.get(i).getTgl_out());
+            textStyle(ikut_lelang, row, param1, lu.get(i).getIkutlelang());
+            textStyle(cases, row, param1, lu.get(i).getCases());
             tl.addView(row);
         }
     }

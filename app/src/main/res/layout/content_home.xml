@@ -191,4 +191,28 @@
             app:cpv_animAutostart="true"
             app:cpv_indeterminate="true" />
     </RelativeLayout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorTableOdd">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height= "1dp"
+            android:background="@color/colorPrimaryDark" />
+        <TextView
+            android:id="@+id/footer_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:layout_margin="16dp"
+            android:text="Ibid Management System"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/footer_title"
+            android:text="Copyright @ 2017 SERA GROUP"/>
+    </RelativeLayout>
 </RelativeLayout>

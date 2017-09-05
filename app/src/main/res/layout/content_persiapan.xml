@@ -50,7 +50,8 @@
                             android:layout_height="30dp"
                             android:background="@drawable/edittext_style"
                             android:maxLines="1"
-                            android:inputType="text"/>
+                            android:inputType="text"
+                            android:padding="3dp"/>
 
                         <Button
                             android:id="@+id/Persiapan_search"

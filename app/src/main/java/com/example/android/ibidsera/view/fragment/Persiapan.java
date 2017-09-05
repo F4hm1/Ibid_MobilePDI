@@ -122,7 +122,7 @@ public class Persiapan extends BaseFragment {
 
             TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
             TableRow.LayoutParams param2 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
-            TableRow.LayoutParams paramImg = tableRowLP(0, 25, 1f);
+            TableRow.LayoutParams paramImg = tableRowLP(0, 20, 1f);
 
             paramImg.gravity = Gravity.CENTER;
 
@@ -156,7 +156,7 @@ public class Persiapan extends BaseFragment {
     public void imgStyle(ImageView imageView, TableRow row, TableRow.LayoutParams imgParam){
         imageView.setLayoutParams(imgParam);
         Bitmap bmp= BitmapFactory.decodeResource(getResources(), R.drawable.checklist);
-        Bitmap resizedbitmap=Bitmap.createScaledBitmap(bmp, 25, imgParam.height, true);
+        Bitmap resizedbitmap=Bitmap.createScaledBitmap(bmp, 20, imgParam.height, true);
         imageView.setImageBitmap(resizedbitmap);
         imageView.setBackgroundDrawable(null);
         row.addView(imageView);
