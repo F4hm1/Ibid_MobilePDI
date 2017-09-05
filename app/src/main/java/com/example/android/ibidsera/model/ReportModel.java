@@ -4,7 +4,7 @@ package com.example.android.ibidsera.model;
  * Created by Yosefricaro on 04/09/2017.
  */
 
-public class StockManagement {
+public class ReportModel {
     private String cabang;
     private String nopol;
     private String id_merk;

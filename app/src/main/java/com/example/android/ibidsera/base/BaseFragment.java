@@ -45,8 +45,10 @@ import retrofit2.Call;
 public class BaseFragment<T> extends Fragment {
 
     protected void errorRetrofit(Call<T> pv, Throwable t){
-        Toast.makeText(getContext(), "Tidak ada internet", Toast.LENGTH_SHORT).show();
-        Log.e("error", t.getMessage());
+        try {
+            Toast.makeText(getContext(), "Tidak ada internet", Toast.LENGTH_SHORT).show();
+            Log.e("error", t.getMessage());
+        }catch (Exception e){}
     }
 
     protected ArrayAdapter<String> getAdapter(List<String> list){

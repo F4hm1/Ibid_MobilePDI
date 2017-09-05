@@ -65,7 +65,9 @@ public class UnitKeluar extends BaseFragment{
 
         cpvStart(cpv, bp);
 
-        getItemList(psearch);
+        try{
+            getItemList(psearch);
+        }catch (Exception e){}
 
         cpvStop(cpv, bp);
 

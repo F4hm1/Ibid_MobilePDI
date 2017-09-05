@@ -23,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -191,9 +192,7 @@ public class AddMasuk extends BaseFragment{
             }
         });
 
-        cancel.setOnClickListener(v -> {
-            getActivity().getSupportFragmentManager().popBackStack();
-        });
+        cancelListener(cancel);
 
         return myFragment;
     }
@@ -458,16 +457,45 @@ public class AddMasuk extends BaseFragment{
         alertDialog.setTitle("Catatan");
         alertDialog.setCancelable(false);
 
+        LinearLayout linearLayout = new LinearLayout(getContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
         FrameLayout container = new FrameLayout(getContext());
         onTouch(container);
         ImageView imageView = new ImageView(getContext());
         if(id == 1){
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
+            if(bitmap3 == null) {
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
+            }else {
+                imageView.setImageBitmap(bitmap3);
+            }
         }else {
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
+            if(bitmap4 == null) {
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
+            }else {
+                imageView.setImageBitmap(bitmap4);
+            }
         }
         container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, 450);
-        alertDialog.setView(container);
+        linearLayout.addView(container);
+        Button reset = new Button(getContext());
+        reset.setText("Clear Notes");
+        reset.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_style));
+        reset.setTextColor(getResources().getColor(R.color.colorPrimary));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(16,16,16,16);
+        reset.setLayoutParams(params);
+        reset.setOnClickListener(v -> {
+            container.destroyDrawingCache();
+            container.removeAllViews();
+            if(id == 1) {
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
+            }else {
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
+            }
+            container.addView(imageView);
+        });
+        linearLayout.addView(reset);
+        alertDialog.setView(linearLayout);
 
         // Set up the buttons
         alertDialog.setPositiveButton("Save Notes", (dialog, which) -> {
@@ -492,12 +520,25 @@ public class AddMasuk extends BaseFragment{
         alertDialog.setTitle("Signature Here");
         alertDialog.setCancelable(true);
 
+        LinearLayout linearLayout = new LinearLayout(getContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
         FrameLayout container = new FrameLayout(getContext());
         container.setBackgroundDrawable(getResources().getDrawable(R.drawable.canvas_style));
         Signature mSignature = new Signature(getContext(), null, container);
-        container.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, 400);
-        alertDialog.setView(container);
-
+        container.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, 300);
+        linearLayout.addView(container);
+        Button reset = new Button(getContext());
+        reset.setText("Clear Canvas");
+        reset.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_style));
+        reset.setTextColor(getResources().getColor(R.color.colorPrimary));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(16,16,16,16);
+        reset.setLayoutParams(params);
+        reset.setOnClickListener(v -> {
+            mSignature.clear();
+        });
+        linearLayout.addView(reset);
+        alertDialog.setView(linearLayout);
         // Set up the buttons
         alertDialog.setPositiveButton("Save Signature", (dialog, which) -> {
             container.setDrawingCacheEnabled(true);
@@ -528,8 +569,8 @@ public class AddMasuk extends BaseFragment{
 
                 FrameLayout container = new FrameLayout(AddMasuk.this.getContext());
                 FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.leftMargin = 30; // remember to scale correctly
-                params.rightMargin = 30;
+                params.leftMargin = 20; // remember to scale correctly
+                params.rightMargin = 20;
                 input.setLayoutParams(params);
                 container.addView(input);
                 alertDialog.setView(container);
