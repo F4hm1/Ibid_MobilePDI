@@ -44,9 +44,7 @@ public class Home extends BaseFragment{
 
         cpvStart(cpv, bp);
 
-        try{
-            getItemList();
-        }catch (Exception e){}
+        getItemList();
 
         cpvStop(cpv, bp);
 
@@ -73,10 +71,12 @@ public class Home extends BaseFragment{
     }
 
     private void getHome(HomeModel lh) {
-        terdaftar.setText(intToString(lh.getCount_daftar()));
-        terjual.setText(intToString(lh.getCount_jual()));
-        cek_unit_masuk.setText(intToString(lh.getCount_masuk()));
-        cek_unit_keluar.setText(intToString(lh.getCount_keluar()));
+        try{
+            terdaftar.setText(intToString(lh.getCount_daftar()));
+            terjual.setText(intToString(lh.getCount_jual()));
+            cek_unit_masuk.setText(intToString(lh.getCount_masuk()));
+            cek_unit_keluar.setText(intToString(lh.getCount_keluar()));
+        }catch (Exception e){}
     }
 
     private String intToString(int item){ return String.valueOf(item); }

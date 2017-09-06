@@ -2,6 +2,7 @@ package com.example.android.ibidsera.model.api;
 
 import com.example.android.ibidsera.BuildConfig;
 import com.example.android.ibidsera.model.Attribute;
+import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.HomeModel;
 import com.example.android.ibidsera.model.InsertUnit;
 import com.example.android.ibidsera.model.Lampiran;
@@ -10,6 +11,7 @@ import com.example.android.ibidsera.model.Penitip;
 import com.example.android.ibidsera.model.PersiapanPost;
 import com.example.android.ibidsera.model.PersiapanValue;
 import com.example.android.ibidsera.model.ReportModel;
+import com.example.android.ibidsera.model.Sign;
 import com.example.android.ibidsera.model.SignPost;
 import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.Unit;
@@ -47,14 +49,15 @@ public interface AuctionService {
 //            "Auth-Key : simplerestapi",
 //            "Content-Type : application/json"
 //    })
-    @POST("index.php/unitmasuk/insert?api_key=" + BuildConfig.API_KEY) Call<InsertUnit> insertUnitMasuk(@Body InsertUnit insertUnit);
-    @POST("index.php/unitkeluar/insert?api_key=" + BuildConfig.API_KEY) Call<InsertUnit> insertUnitKeluar(@Body InsertUnit insertUnit);
-    @POST("index.php/persiapan/insert?api_key=" + BuildConfig.API_KEY) Call<String> insertUnit(@Body PersiapanPost persiapanPost);
+    @POST("index.php/unitmasuk/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnitMasuk(@Body InsertUnit insertUnit);
+    @POST("index.php/unitkeluar/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnitKeluar(@Body InsertUnit insertUnit);
+    @POST("index.php/persiapan/insert?api_key=" + BuildConfig.API_KEY) Call<PersiapanPost> insertUnit(@Body PersiapanPost persiapanPost);
     @POST("index.php/masteritem/search?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItem(@Body Attribute item);
     @POST("index.php/auth/login?api_key=" + BuildConfig.API_KEY) Call<Login> getLogin(@Body Login login);
     @POST("index.php/masteritem/get_sign_masuk?api_key=" + BuildConfig.API_KEY) Call<SignValue> getSignMasuk(@Body SignPost item);
     @POST("index.php/masteritem/get_sign_keluar?api_key=" + BuildConfig.API_KEY) Call<SignValue> getSignKeluar(@Body SignPost item);
-    @POST("index.php/masteritem/post_sign_masuk?api_key=" + BuildConfig.API_KEY) Call<SignValue> postSignMasuk(@Body SignPost item);
-    @POST("index.php/masteritem/post_sign_keluar?api_key=" + BuildConfig.API_KEY) Call<SignValue> postSignKeluar(@Body SignPost item);
-    @POST("index.php/masteritem/post_lampiran?api_key=" + BuildConfig.API_KEY) Call<Lampiran> postLampiran(@Body Lampiran item);
+    @POST("index.php/masteritem/post_sign_masuk?api_key=" + BuildConfig.API_KEY) Call<SignValue> postSignMasuk(@Body Sign item);
+    @POST("index.php/masteritem/post_sign_keluar?api_key=" + BuildConfig.API_KEY) Call<SignValue> postSignKeluar(@Body Sign item);
+    @POST("index.php/masteritem/post_lampiran?api_key=" + BuildConfig.API_KEY) Call<GetStatus> postLampiran(@Body List<Lampiran> item);
+
 }

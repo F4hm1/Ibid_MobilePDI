@@ -5,28 +5,12 @@ package com.example.android.ibidsera.model;
  */
 
 public class Sign {
-    private String id_pemeriksaan;
-    private String id_auctionitem;
+    private int id_pemeriksaanitem;
+    private int id_auctionitem;
     private String sign_ibid_msk;
     private String sign_cust_msk;
     private String sign_ibid_klr;
     private String sign_cust_klr;
-
-    public String getId_pemeriksaan() {
-        return id_pemeriksaan;
-    }
-
-    public void setId_pemeriksaan(String id_pemeriksaan) {
-        this.id_pemeriksaan = id_pemeriksaan;
-    }
-
-    public String getId_auctionitem() {
-        return id_auctionitem;
-    }
-
-    public void setId_auctionitem(String id_auctionitem) {
-        this.id_auctionitem = id_auctionitem;
-    }
 
     public String getSign_ibid_msk() {
         return sign_ibid_msk;
@@ -58,5 +42,21 @@ public class Sign {
 
     public void setSign_cust_klr(String sign_cust_klr) {
         this.sign_cust_klr = sign_cust_klr;
+    }
+
+    public int getId_auctionitem() {
+        return id_auctionitem;
+    }
+
+    public void setId_auctionitem(int id_auctionitem) {
+        this.id_auctionitem = id_auctionitem;
+    }
+
+    public int getId_pemeriksaanitem() {
+        return id_pemeriksaanitem;
+    }
+
+    public void setId_pemeriksaanitem(int id_pemeriksaanitem) {
+        this.id_pemeriksaanitem = id_pemeriksaanitem;
     }
 }

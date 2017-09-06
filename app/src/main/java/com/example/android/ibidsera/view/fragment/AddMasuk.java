@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -32,6 +33,7 @@ import android.widget.TextView;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
+import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.InsertUnit;
 import com.example.android.ibidsera.model.Lampiran;
 import com.example.android.ibidsera.model.Sign;
@@ -91,7 +93,6 @@ public class AddMasuk extends BaseFragment{
     @BindView(R.id.ibid_sedan) ImageView ibid_sedan;
     @BindView(R.id.ibid_niaga) ImageView ibid_niaga;
     private int size = 0;
-    private List<Unit> lUnit = new ArrayList<>();
     private int position = -1;
     private HashMap<String, CheckBox> h = new HashMap<>();
     private Bitmap bitmap1;
@@ -168,42 +169,25 @@ public class AddMasuk extends BaseFragment{
             if(ls2.size() <= 0) {
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {
-                    auctionService.insertUnitMasuk(setInsertUnit()).enqueue(new Callback<InsertUnit>() {
+                    auctionService.insertUnitMasuk(setInsertUnit(StaticUnit.getLu())).enqueue(new Callback<GetStatus>() {
                         @Override
-                        public void onResponse(Call<InsertUnit> call, Response<InsertUnit> response) {
+                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                            GetStatus getStatus = response.body();
                             Log.i("info", "post submitted to API." + response.body());
-                            pDialog.hide();
-                            alertDialog("Proses Penambahan Pemeriksaan Unit Masuk Berhasil", 1);
+                            try {
+                                if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
+                                    postSignature(getStatus, auctionService, pDialog);
+                                    postLampiran(getStatus, auctionService, pDialog);
+                                }
+                            }catch (Exception e){}
                         }
 
                         @Override
-                        public void onFailure(Call<InsertUnit> call, Throwable t) {
+                        public void onFailure(Call<GetStatus> call, Throwable t) {
                             pDialog.hide();
                             errorRetrofit(call, t);
                         }
                     });
-//                    auctionService.postSignMasuk(sign).enqueue(new Callback<SignValue>() {
-//                        @Override
-//                        public void onResponse(Call<SignValue> call, Response<SignValue> response) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<SignValue> call, Throwable t) {
-//
-//                        }
-//                    });
-//                    auctionService.postLampiran(lamp).enqueue(new Callback<Lampiran>() {
-//                        @Override
-//                        public void onResponse(Call<Lampiran> call, Response<Lampiran> response) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<Lampiran> call, Throwable t) {
-//
-//                        }
-//                    });
                 }, 2000);
             }else {
                 pDialog.hide();
@@ -224,7 +208,6 @@ public class AddMasuk extends BaseFragment{
     }
 
     public void getAddm(List<Unit> lu, int id) {
-        lUnit = lu;
         position = id;
         if (lu.get(id).getAuction().getValue() != null) {
             nopol.setText(lu.get(id).getAuction().getValue());
@@ -251,20 +234,16 @@ public class AddMasuk extends BaseFragment{
         catatan.setText(lu.get(id).getAuction().getCatatan());
         pool.setText(lu.get(id).getAuction().getPoolkota());
         cases.setText(lu.get(id).getAuction().getCases());
-        try {
-            if(bitmap3 != null){
-                ibid_sedan.setImageBitmap(bitmap3);
-            } else if(bitmap4 != null){
-                ibid_niaga.setImageBitmap(bitmap4);
-            }
-        }catch (Exception e){}
-        try {
-            if(bitmap1 != null){
-                signature1.setImageBitmap(bitmap1);
-            } else if(bitmap2 != null){
-                signature2.setImageBitmap(bitmap2);
-            }
-        }catch (Exception e){}
+        if(bitmap3 != null){
+            ibid_sedan.setImageBitmap(bitmap3);
+        } else if(bitmap4 != null){
+            ibid_niaga.setImageBitmap(bitmap4);
+        }
+        if(bitmap1 != null){
+            signature1.setImageBitmap(bitmap1);
+        } else if(bitmap2 != null){
+            signature2.setImageBitmap(bitmap2);
+        }
     }
 
     public ArrayAdapter<String> getAdapterList(String value){
@@ -273,10 +252,14 @@ public class AddMasuk extends BaseFragment{
         return getAdapter(list);
     }
 
-    public InsertUnit setInsertUnit(){
+    public InsertUnit setInsertUnit(List<Unit> lUnit){
         InsertUnit insertUnit = new InsertUnit();
-        insertUnit.setIdpemeriksaanitem(0);
-        insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getId_auctionitem());
+        insertUnit.setIdpemeriksaanitem(lUnit.get(position).getAuction().getId_pemeriksaanitem());
+        if(lUnit.get(position).getAuction().getId_auctionitem() != 0){
+            insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getId_auctionitem());
+        }else{
+            insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getIdauction_item());
+        }
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
         insertUnit.setMERK(lUnit.get(position).getId_merk());
@@ -318,47 +301,66 @@ public class AddMasuk extends BaseFragment{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         insertUnit.setWEBID_LOGGED_IN(prefs.getInt("userId", 0));
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        byte[] byteArray;
-
-//        bitmap1.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-//        byteArray = byteArrayOutputStream.toByteArray();
-//        insertUnit.setSignibidmsk(Base64.encodeToString(byteArray, Base64.DEFAULT));
-//
-//        bitmap2.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-//        byteArray = byteArrayOutputStream.toByteArray();
-//        insertUnit.setSigncustmsk(Base64.encodeToString(byteArray, Base64.DEFAULT));
-//
-//        List<Lampiran> ll = new ArrayList<>();
-//        Lampiran lampiran = new Lampiran();
-//
-//        bitmap3.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-//        byteArray = byteArrayOutputStream.toByteArray();
-//        lampiran.setNama_lampiran("mobil1");
-//        lampiran.setBase64img(Base64.encodeToString(byteArray, Base64.DEFAULT));
-//        ll.add(lampiran);
-//
-//        bitmap4.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-//        byteArray = byteArrayOutputStream.toByteArray();
-//        lampiran.setNama_lampiran("mobil2");
-//        lampiran.setBase64img(Base64.encodeToString(byteArray, Base64.DEFAULT));
-//        ll.add(lampiran);
-//
-//        insertUnit.setLampiran(ll);
-
-//        insertUnit.setSignibidmsk("asda");
-//        insertUnit.setSigncustmsk("asdf");
-//        List<Lampiran> ll = new ArrayList<>();
-//        Lampiran lampiran = new Lampiran();
-//        lampiran.setNama_lampiran("mobil1");
-//        lampiran.setBase64img("asd");
-//        ll.add(lampiran);
-//        lampiran.setNama_lampiran("mobil2");
-//        lampiran.setBase64img("asda");
-//        ll.add(lampiran);
-//        insertUnit.setLampiran(ll);
-
         return insertUnit;
+    }
+
+    private Sign setSignature(List<Unit> lu, GetStatus gs){
+        signature1.buildDrawingCache();
+        bitmap1 = signature1.getDrawingCache();
+        signature2.buildDrawingCache();
+        bitmap2 = signature2.getDrawingCache();
+
+
+        byte[] byteArray;
+        Sign sign = new Sign();
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap1.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byteArray = byteArrayOutputStream.toByteArray();
+        sign.setSign_ibid_msk(Base64.encodeToString(byteArray, Base64.DEFAULT));
+
+        ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
+        bitmap2.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream2);
+        byteArray = byteArrayOutputStream2.toByteArray();
+        sign.setSign_cust_msk(Base64.encodeToString(byteArray, Base64.DEFAULT));
+
+        sign.setId_pemeriksaanitem(gs.getId_pemeriksaan_item());
+        if(lu.get(position).getAuction().getId_auctionitem() != 0){
+            sign.setId_auctionitem(lu.get(position).getAuction().getId_auctionitem());
+        }else{
+            sign.setId_auctionitem(lu.get(position).getAuction().getIdauction_item());
+        }
+        return sign;
+    }
+
+    private List<Lampiran> setLampiran(GetStatus gs){
+        ibid_sedan.buildDrawingCache();
+        bitmap3 = ibid_sedan.getDrawingCache();
+        ibid_niaga.buildDrawingCache();
+        bitmap4 = ibid_niaga.getDrawingCache();
+
+        byte[] byteArray;
+        List<Lampiran> ll = new ArrayList<>();
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        Lampiran lampiran = new Lampiran();
+        bitmap3.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byteArray = byteArrayOutputStream.toByteArray();
+        lampiran.setIdpemeriksaan_item(gs.getId_pemeriksaan_item());
+        lampiran.setNama_lampiran("mobil1");
+        lampiran.setBase64img(Base64.encodeToString(byteArray, Base64.DEFAULT));
+        ll.add(lampiran);
+
+        ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
+        Lampiran lampiran2 = new Lampiran();
+        bitmap4.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream2);
+        byteArray = byteArrayOutputStream2.toByteArray();
+        lampiran2.setIdpemeriksaan_item(gs.getId_pemeriksaan_item());
+        lampiran2.setNama_lampiran("mobil2");
+        lampiran2.setBase64img(Base64.encodeToString(byteArray, Base64.DEFAULT));
+        ll.add(lampiran2);
+
+        return ll;
     }
 
     private int isChecked(CheckBox checkBox){
@@ -629,6 +631,38 @@ public class AddMasuk extends BaseFragment{
                 alertDialog.create().show();
             }
             return true;
+        });
+    }
+
+    private void postSignature(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog){
+        auctionService.postSignMasuk(setSignature(StaticUnit.getLu(), gs)).enqueue(new Callback<SignValue>() {
+            @Override
+            public void onResponse(Call<SignValue> call, Response<SignValue> response) {
+                Log.i("info", "post submitted to API." + response.body());
+            }
+
+            @Override
+            public void onFailure(Call<SignValue> call, Throwable t) {
+                pDialog.hide();
+                errorRetrofit(call, t);
+            }
+        });
+    }
+
+    private void postLampiran(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog){
+        auctionService.postLampiran(setLampiran(gs)).enqueue(new Callback<GetStatus>() {
+            @Override
+            public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                Log.i("info", "post submitted to API." + response.body().toString());
+                pDialog.hide();
+                alertDialog("Proses Penambahan Pemeriksaan Unit Masuk Berhasil", 1);
+            }
+
+            @Override
+            public void onFailure(Call<GetStatus> call, Throwable t) {
+                pDialog.hide();
+                errorRetrofit(call, t);
+            }
         });
     }
 }

@@ -65,9 +65,7 @@ public class UnitKeluar extends BaseFragment{
 
         cpvStart(cpv, bp);
 
-        try{
-            getItemList(psearch);
-        }catch (Exception e){}
+        getItemList(psearch);
 
         cpvStop(cpv, bp);
 
@@ -112,39 +110,41 @@ public class UnitKeluar extends BaseFragment{
     }
 
     public void getUnitk(List<Unit> lu){
-        for (int i = 0; i < lu.size(); i++) {
-            TableRow row = tableRow();
-            ImageButton id = imageButton();
-            TextView no_pol = textView();
-            TextView tgl_doc = textView();
-            TextView pengemudi = textView();
-            TextView merk = textView();
-            TextView type = textView();
+        try{
+            for (int i = 0; i < lu.size(); i++) {
+                TableRow row = tableRow();
+                ImageButton id = imageButton();
+                TextView no_pol = textView();
+                TextView tgl_doc = textView();
+                TextView pengemudi = textView();
+                TextView merk = textView();
+                TextView type = textView();
 
-            TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-            TableRow.LayoutParams param2 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
-            TableRow.LayoutParams paramImg = tableRowLP(0, 30, .5f);
-            paramImg.gravity = Gravity.CENTER;
+                TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+                TableRow.LayoutParams param2 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
+                TableRow.LayoutParams paramImg = tableRowLP(0, 30, .5f);
+                paramImg.gravity = Gravity.CENTER;
 
-            rowColor(row, i);
-            imgStyle(id, row, paramImg, i);
-            textStyle(no_pol, row, param1, lu.get(i).getAuction().getNo_polisi());
-            textStyle(tgl_doc, row, param1, lu.get(i).getAuction().getTgl_serah_klr());
-            textStyle(pengemudi, row, param1, lu.get(i).getAuction().getNama_pengemudi_klr());
-            textStyle(merk, row, param1, lu.get(i).getNama_merk());
-            String tipe = "";
-            for (Attribute t : lu.get(i).getTipe()) {
-                if(t.getAttributedetail() != null){
-                    if(tipe.equals("")){
-                        tipe = t.getAttributedetail();
-                    }else {
-                        tipe = tipe + " " + t.getAttributedetail();
+                rowColor(row, i);
+                imgStyle(id, row, paramImg, i);
+                textStyle(no_pol, row, param1, lu.get(i).getAuction().getNo_polisi());
+                textStyle(tgl_doc, row, param1, lu.get(i).getAuction().getTgl_serah_klr());
+                textStyle(pengemudi, row, param1, lu.get(i).getAuction().getNama_pengemudi_klr());
+                textStyle(merk, row, param1, lu.get(i).getNama_merk());
+                String tipe = "";
+                for (Attribute t : lu.get(i).getTipe()) {
+                    if(t.getAttributedetail() != null){
+                        if(tipe.equals("")){
+                            tipe = t.getAttributedetail();
+                        }else {
+                            tipe = tipe + " " + t.getAttributedetail();
+                        }
                     }
                 }
+                textStyle(type, row, param2, tipe.concat(" " + lu.get(i).getModel()).concat(" " + lu.get(i).getTransmisi()).concat(" " + lu.get(i).getTahun()));
+                tl.addView(row);
             }
-            textStyle(type, row, param2, tipe.concat(" " + lu.get(i).getModel()).concat(" " + lu.get(i).getTransmisi()).concat(" " + lu.get(i).getTahun()));
-            tl.addView(row);
-        }
+        }catch (Exception e){}
     }
 
     public void imgStyle(ImageButton imageButton, TableRow row, TableRow.LayoutParams imgParam, int id){
