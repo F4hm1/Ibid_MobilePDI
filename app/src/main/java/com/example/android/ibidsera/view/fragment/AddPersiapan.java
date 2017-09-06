@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
@@ -130,7 +129,7 @@ public class AddPersiapan extends BaseFragment {
         View myFragment = inflater.inflate(R.layout.content_addp, container, false);
         ButterKnife.bind(this, myFragment);
 
-        cpvStop(cpv, bp);
+        cpvStart(cpv, bp);
         hideKeyboard();
         setAllCaps();
         datePicker(tglKeur, 1);
@@ -336,19 +335,17 @@ public class AddPersiapan extends BaseFragment {
                     final Handler handler = new Handler();
                     handler.postDelayed(() -> {
 
-                        auctionService.insertUnit(persiapanPost).enqueue(new Callback<String>() {
+                        auctionService.insertUnit(persiapanPost).enqueue(new Callback<PersiapanPost>() {
 
                             @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
-                                String log = response.body();
-
+                            public void onResponse(Call<PersiapanPost> call, Response<PersiapanPost> response) {
+                                Log.i("info", "post submitted to API." + response.body());
                                 pDialog.hide();
-                                Toast.makeText(getContext(), log, Toast.LENGTH_LONG).show();
-                                getActivity().getSupportFragmentManager().popBackStack();
+                                alertDialog("Proses Penambahan Item Berhasil", 1);
                             }
 
                             @Override
-                            public void onFailure(Call<String> call, Throwable t) {
+                            public void onFailure(Call<PersiapanPost> call, Throwable t) {
                                 errorRetrofit(call, t);
                                 pDialog.hide();
                             }
@@ -363,7 +360,7 @@ public class AddPersiapan extends BaseFragment {
 
             }
         });
-
+        cpvStop(cpv, bp);
     }
 
     private PersiapanPost getDataView() {
@@ -517,20 +514,24 @@ public class AddPersiapan extends BaseFragment {
             auctionService.getMasterItemPenitip(nama.getText().toString()).enqueue(new Callback<List<Penitip>>() {
                 @Override
                 public void onResponse(Call<List<Penitip>> call, Response<List<Penitip>> response) {
-                    if(!response.body().toString().equals("[]")) {
-                        lp = response.body();
-                    }
-                    ls.clear();
                     try {
-                        for (int i = 0; i < lp.size(); i++) {
-                            ls.add(lp.get(i).getNama_penitip());
+                        if (!response.body().toString().equals("[]")) {
+                            lp = response.body();
                         }
-                    }catch (Exception e){};
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                            android.R.layout.simple_dropdown_item_1line, ls);
-                    nama.setAdapter(adapter);
-                    nama.setThreshold(1);
-                    nama.showDropDown();
+                        ls.clear();
+                        try {
+                            for (int i = 0; i < lp.size(); i++) {
+                                ls.add(lp.get(i).getNama_penitip());
+                            }
+                        } catch (Exception e) {
+                        }
+                        ;
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                                android.R.layout.simple_dropdown_item_1line, ls);
+                        nama.setAdapter(adapter);
+                        nama.setThreshold(1);
+                        nama.showDropDown();
+                    }catch (Exception e){}
                 }
 
                 @Override

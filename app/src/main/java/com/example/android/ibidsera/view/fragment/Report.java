@@ -47,9 +47,7 @@ public class Report extends BaseFragment{
 
         cpvStart(cpv, bp);
 
-        try {
-            getItemList();
-        }catch (Exception e){}
+        getItemList();
 
         cpvStop(cpv, bp);
 
@@ -77,35 +75,37 @@ public class Report extends BaseFragment{
     }
 
     public void getReport(List<ReportModel> lu){
-        for (int i = 0; i < lu.size(); i++) {
-            TableRow row = tableRow();
-            TextView unit = textView();
-            TextView cabang = textView();
-            TextView no_pol = textView();
-            TextView type = textView();
-            TextView tahun = textView();
-            TextView penggerak = textView();
-            TextView tgl_in = textView();
-            TextView tgl_sold = textView();
-            TextView tgl_out = textView();
+        try{
+            for (int i = 0; i < lu.size(); i++) {
+                TableRow row = tableRow();
+                TextView unit = textView();
+                TextView cabang = textView();
+                TextView no_pol = textView();
+                TextView type = textView();
+                TextView tahun = textView();
+                TextView penggerak = textView();
+                TextView tgl_in = textView();
+                TextView tgl_sold = textView();
+                TextView tgl_out = textView();
 
-            TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-            TableRow.LayoutParams param2 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
+                TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+                TableRow.LayoutParams param2 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
 
-            rowColor(row, i);
+                rowColor(row, i);
 
-            textStyle(unit, row, param1, "1");
-            textStyle(cabang, row, param1, lu.get(i).getCabang());
-            textStyle(no_pol, row, param1, lu.get(i).getNopol());
-            String tipe = lu.get(i).getNama_merk()+" "+lu.get(i).getCode_b()+" "+
-                    lu.get(i).getModel()+" "+lu.get(i).getTransmisi();
-            textStyle(type, row, param2, tipe);
-            textStyle(tahun, row, param1, lu.get(i).getTahun());
-            textStyle(penggerak, row, param1, lu.get(i).getPenggerak());
-            textStyle(tgl_in, row, param1, lu.get(i).getTgl_serah_msk());
-            textStyle(tgl_sold, row, param1, lu.get(i).gettgl_sold());
-            textStyle(tgl_out, row, param1, lu.get(i).getTgl_out());
-            tl.addView(row);
-        }
+                textStyle(unit, row, param1, "1");
+                textStyle(cabang, row, param1, lu.get(i).getCabang());
+                textStyle(no_pol, row, param1, lu.get(i).getNopol());
+                String tipe = lu.get(i).getNama_merk()+" "+lu.get(i).getCode_b()+" "+
+                        lu.get(i).getModel()+" "+lu.get(i).getTransmisi();
+                textStyle(type, row, param2, tipe);
+                textStyle(tahun, row, param1, lu.get(i).getTahun());
+                textStyle(penggerak, row, param1, lu.get(i).getPenggerak());
+                textStyle(tgl_in, row, param1, lu.get(i).getTgl_serah_msk());
+                textStyle(tgl_sold, row, param1, lu.get(i).gettgl_sold());
+                textStyle(tgl_out, row, param1, lu.get(i).getTgl_out());
+                tl.addView(row);
+            }
+        }catch (Exception e){}
     }
 }

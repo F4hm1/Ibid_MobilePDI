@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +23,6 @@ import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.util.RetrofitUtil;
-import com.squareup.picasso.Downloader;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -158,9 +155,9 @@ public class DetailMasuk extends BaseFragment{
                 if (!ls.isEmpty()) {
                     for (int i = 0; i < ls.size() && i < 2; i++) {
 
-                        if (ls.get(i).getNama_lampiran().equals("SEDAN")) {
+                        if (ls.get(i).getNama_lampiran().equals("mobil1")) {
                             imgSedan.setImageBitmap(decodeImg(ls.get(i).getBase64img()));
-                        } else if (ls.get(i).getNama_lampiran().equals("MINIBUS")) {
+                        } else if (ls.get(i).getNama_lampiran().equals("mobil2")) {
                             imgMiniBus.setImageBitmap(decodeImg(ls.get(i).getBase64img()));
                         }
                     }
@@ -212,7 +209,7 @@ public class DetailMasuk extends BaseFragment{
     }
 
     private Bitmap decodeImg(String encode){
-        byte[] decodedString = Base64.decode(encode, Base64.DEFAULT);
+        byte[] decodedString = Base64.decode(encode.replaceAll("\n", ""), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
         return decodedByte;

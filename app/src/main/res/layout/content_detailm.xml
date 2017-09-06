@@ -281,46 +281,6 @@
                         </TableRow>
                     </TableLayout>
                 </TableRow>
-                <TableRow
-                    android:background="@drawable/cell_shape_tr_odd"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/no"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        style="@style/FontTable"
-                        android:text="1" />
-
-                    <TextView
-                        android:id="@+id/nama_komponen"
-                        android:layout_width="0dp"
-                        android:layout_weight="8"
-                        style="@style/FontTable"
-                        android:text="STARTER / IGNITION SYSTEM" />
-
-                    <TableLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="3">
-                        <TableRow>
-                            <ImageView
-                                android:src="@drawable/checklist"
-                                android:layout_width="47dp"
-                                android:layout_height="25dp"
-                                android:layout_gravity="center"/>
-                            <ImageView
-                                android:src="@drawable/checklist"
-                                android:layout_width="47dp"
-                                android:layout_height="25dp"
-                                android:layout_gravity="center"/>
-                            <ImageView
-                                android:src="@drawable/delete"
-                                android:layout_gravity="center"
-                                android:layout_width="47dp"
-                                android:layout_height="25dp"/>
-                        </TableRow>
-                    </TableLayout>
-                </TableRow>
             </TableLayout>
             <TextView
                 android:layout_width="match_parent"
@@ -411,13 +371,13 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:src="@mipmap/ic_launcher"
-                    android:id="@+id/imgSignCust"/>
+                    android:id="@+id/imgSignIbid"/>
                 <ImageView
                     android:layout_height="wrap_content"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:src="@mipmap/ic_launcher"
-                    android:id="@+id/imgSignIbid"/>
+                    android:id="@+id/imgSignCust"/>
             </LinearLayout>
             <Button
                 android:id="@+id/close"
