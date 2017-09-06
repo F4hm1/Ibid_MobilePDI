@@ -33,6 +33,9 @@ import android.widget.TextView;
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.InsertUnit;
+import com.example.android.ibidsera.model.Lampiran;
+import com.example.android.ibidsera.model.Sign;
+import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.api.AuctionService;
@@ -160,6 +163,8 @@ public class AddMasuk extends BaseFragment{
             h.put("Telp", telepon);
 
             List<String> ls2 = required(h);
+            List<Sign> sign;
+            List<Lampiran> lamp;
             if(ls2.size() <= 0) {
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {
@@ -177,6 +182,28 @@ public class AddMasuk extends BaseFragment{
                             errorRetrofit(call, t);
                         }
                     });
+//                    auctionService.postSignMasuk(sign).enqueue(new Callback<SignValue>() {
+//                        @Override
+//                        public void onResponse(Call<SignValue> call, Response<SignValue> response) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<SignValue> call, Throwable t) {
+//
+//                        }
+//                    });
+//                    auctionService.postLampiran(lamp).enqueue(new Callback<Lampiran>() {
+//                        @Override
+//                        public void onResponse(Call<Lampiran> call, Response<Lampiran> response) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<Lampiran> call, Throwable t) {
+//
+//                        }
+//                    });
                 }, 2000);
             }else {
                 pDialog.hide();
@@ -199,7 +226,11 @@ public class AddMasuk extends BaseFragment{
     public void getAddm(List<Unit> lu, int id) {
         lUnit = lu;
         position = id;
-        nopol.setText(lu.get(id).getAuction_auto().getValue());
+        if (lu.get(id).getAuction().getValue() != null) {
+            nopol.setText(lu.get(id).getAuction().getValue());
+        }else{
+            nopol.setText(lu.get(id).getAuction().getNo_polisi());
+        }
         merk.setAdapter(getAdapterList(lu.get(id).getNama_merk()));
         seri.setAdapter(getAdapterList(lu.get(id).getTipe().get(0).getAttributedetail()));
         silinder.setAdapter(getAdapterList(lu.get(id).getTipe().get(1).getAttributedetail()));
@@ -245,7 +276,7 @@ public class AddMasuk extends BaseFragment{
     public InsertUnit setInsertUnit(){
         InsertUnit insertUnit = new InsertUnit();
         insertUnit.setIdpemeriksaanitem(0);
-        insertUnit.setIdauctionitem(lUnit.get(position).getAuction_auto().getId_auctionitem());
+        insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getId_auctionitem());
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
         insertUnit.setMERK(lUnit.get(position).getId_merk());
@@ -362,10 +393,11 @@ public class AddMasuk extends BaseFragment{
                 @Override
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     List<Unit> lu = response.body();
+                    StaticUnit.setLu(lu);
 
                     ls.clear();
                     for (int i = 0; i < lu.size(); i++) {
-                        ls.add(lu.get(i).getAuction_auto().getValue());
+                        ls.add(lu.get(i).getAuction().getValue());
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                             android.R.layout.simple_dropdown_item_1line, ls);

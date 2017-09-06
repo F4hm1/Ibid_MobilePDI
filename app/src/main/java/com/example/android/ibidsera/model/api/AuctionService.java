@@ -54,5 +54,7 @@ public interface AuctionService {
     @POST("index.php/auth/login?api_key=" + BuildConfig.API_KEY) Call<Login> getLogin(@Body Login login);
     @POST("index.php/masteritem/get_sign_masuk?api_key=" + BuildConfig.API_KEY) Call<SignValue> getSignMasuk(@Body SignPost item);
     @POST("index.php/masteritem/get_sign_keluar?api_key=" + BuildConfig.API_KEY) Call<SignValue> getSignKeluar(@Body SignPost item);
+    @POST("index.php/masteritem/post_sign_masuk?api_key=" + BuildConfig.API_KEY) Call<SignValue> postSignMasuk(@Body SignPost item);
+    @POST("index.php/masteritem/post_sign_keluar?api_key=" + BuildConfig.API_KEY) Call<SignValue> postSignKeluar(@Body SignPost item);
     @POST("index.php/masteritem/post_lampiran?api_key=" + BuildConfig.API_KEY) Call<Lampiran> postLampiran(@Body Lampiran item);
 }

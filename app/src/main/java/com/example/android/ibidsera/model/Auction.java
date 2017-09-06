@@ -5,6 +5,13 @@ package com.example.android.ibidsera.model;
  */
 
 public class Auction {
+
+    private int idauction_detail;
+    private int id_attribute;
+    private String value;
+    private int sts_remove;
+    private char sold;
+
     private int id_pemeriksaanitem;
     private int idauction_item;
     private int id_auctionitem;
@@ -27,6 +34,51 @@ public class Auction {
     private String cases;
     private String poolkota;
     private String catatan_klr;
+
+    public int getIdauction_detail() {
+        return idauction_detail;
+    }
+
+    public Auction setIdauction_detail(int idauction_detail) {
+        this.idauction_detail = idauction_detail;
+        return this;
+    }
+
+    public int getId_attribute() {
+        return id_attribute;
+    }
+
+    public Auction setId_attribute(int id_attribute) {
+        this.id_attribute = id_attribute;
+        return this;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public Auction setValue(String value) {
+        this.value = value;
+        return this;
+    }
+
+    public int getSts_remove() {
+        return sts_remove;
+    }
+
+    public Auction setSts_remove(int sts_remove) {
+        this.sts_remove = sts_remove;
+        return this;
+    }
+
+    public char getSold() {
+        return sold;
+    }
+
+    public Auction setSold(char sold) {
+        this.sold = sold;
+        return this;
+    }
 
     public String getNo_polisi() {
         return no_polisi;
