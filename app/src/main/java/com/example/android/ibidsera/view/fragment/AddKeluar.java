@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
+import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.InsertUnit;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
@@ -84,7 +85,6 @@ public class AddKeluar extends BaseFragment{
     @BindView(R.id.signature1) ImageView signature1;
     @BindView(R.id.signature2) ImageView signature2;
     private int size = 0;
-    private List<Unit> lUnit = new ArrayList<>();
     private int position = -1;
     HashMap<String, CheckBox> h = new HashMap<>();
     private Bitmap bitmap1;
@@ -153,16 +153,16 @@ public class AddKeluar extends BaseFragment{
 
             List<String> ls2 = required(h);
             if(ls2.size() <= 0) {
-                auctionService.insertUnitKeluar(setInsertUnit()).enqueue(new Callback<InsertUnit>() {
+                auctionService.insertUnitKeluar(setInsertUnit(StaticUnit.getLu())).enqueue(new Callback<GetStatus>() {
                     @Override
-                    public void onResponse(Call<InsertUnit> call, Response<InsertUnit> response) {
+                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                         Log.i("info", "post submitted to API." + response.body());
                         pDialog.hide();
                         alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
                     }
 
                     @Override
-                    public void onFailure(Call<InsertUnit> call, Throwable t) {
+                    public void onFailure(Call<GetStatus> call, Throwable t) {
                         pDialog.hide();
                         errorRetrofit(call, t);
                     }
@@ -185,7 +185,6 @@ public class AddKeluar extends BaseFragment{
     }
 
     public void getAddk(List<Unit> lu, int id) {
-        lUnit = lu;
         position = id;
         nopol.setText(lu.get(id).getAuction().getNo_polisi());
         merk.setAdapter(getAdapterList(lu.get(id).getNama_merk()));
@@ -206,13 +205,11 @@ public class AddKeluar extends BaseFragment{
         kota.setText(lu.get(id).getAuction().getKota_klr());
         telepon.setText(lu.get(id).getAuction().getTelepon_klr());
         catatan.setText(lu.get(id).getAuction().getCatatan_klr());
-        try {
-            if(bitmap1 != null){
-                signature1.setImageBitmap(bitmap1);
-            } else if(bitmap2 != null){
-                signature2.setImageBitmap(bitmap2);
-            }
-        }catch (Exception e){}
+        if(bitmap1 != null){
+            signature1.setImageBitmap(bitmap1);
+        } else if(bitmap2 != null){
+            signature2.setImageBitmap(bitmap2);
+        }
     }
 
     public ArrayAdapter<String> getAdapterList(String value){
@@ -221,17 +218,17 @@ public class AddKeluar extends BaseFragment{
         return getAdapter(list);
     }
 
-    public InsertUnit setInsertUnit(){
+    public InsertUnit setInsertUnit(List<Unit> lUnit){
         InsertUnit insertUnit = new InsertUnit();
         insertUnit.setIdpemeriksaanitem(lUnit.get(position).getAuction().getId_pemeriksaanitem());
         insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getId_auctionitem());
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
         insertUnit.setMERK(lUnit.get(position).getId_merk());
-        insertUnit.setSERI(String.valueOf(seri.getSelectedItem()));
-        insertUnit.setSILINDER(String.valueOf(silinder.getSelectedItem()));
-        insertUnit.setGRADE(String.valueOf(grade.getSelectedItem()));
-        insertUnit.setSUB_GRADE(String.valueOf(sub_grade.getSelectedItem()));
+        insertUnit.setSERI(String.valueOf(lUnit.get(position).getTipe().get(0).getId_attrdetail()));
+        insertUnit.setSILINDER(String.valueOf(lUnit.get(position).getTipe().get(1).getId_attrdetail()));
+        insertUnit.setGRADE(String.valueOf(lUnit.get(position).getTipe().get(2).getId_attrdetail()));
+        insertUnit.setSUB_GRADE(String.valueOf(lUnit.get(position).getTipe().get(3).getId_attrdetail()));
         insertUnit.setTRANSMISI(String.valueOf(transmisi.getText()));
         insertUnit.setKM(String.valueOf(km.getText()));
         insertUnit.setFuel(fuel.getSelectedItem().toString());
@@ -264,13 +261,20 @@ public class AddKeluar extends BaseFragment{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         insertUnit.setWEBID_LOGGED_IN(prefs.getInt("userId", 0));
 
+        signature1.buildDrawingCache();
+        bitmap1 = signature1.getDrawingCache();
+        signature2.buildDrawingCache();
+        bitmap2 = signature2.getDrawingCache();
+
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        byte[] byteArray;
 
         bitmap1.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byteArray = byteArrayOutputStream.toByteArray();
         insertUnit.setSignibidklr(Base64.encodeToString(byteArray, Base64.DEFAULT));
 
         bitmap2.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byteArray = byteArrayOutputStream.toByteArray();
         insertUnit.setSigncustklr(Base64.encodeToString(byteArray, Base64.DEFAULT));
 
         return insertUnit;

@@ -67,9 +67,9 @@ public class Persiapan extends BaseFragment {
         }
 
         cpvStart(cpv, bp);
-        try {
-            getItemList(psearch);
-        }catch (Exception e){}
+
+        getItemList(psearch);
+
         cpvStop(cpv, bp);
         swipeRefresh(refreshLayout, R.id.nav_persiapan);
 
@@ -111,48 +111,50 @@ public class Persiapan extends BaseFragment {
     }
 
     public void getPersiapan(List<Unit> lu){
-        for (int i = 0; i < lu.size(); i++) {
-            TableRow row = tableRow();
-            TextView no = textView();
-            TextView no_pol = textView();
-            TextView merk = textView();
-            TextView type = textView();
-            TextView model = textView();
-            TextView tahun = textView();
-            TextView unit_in1 = textView();
-            ImageView unit_in2 = imageView();
+        try{
+            for (int i = 0; i < lu.size(); i++) {
+                TableRow row = tableRow();
+                TextView no = textView();
+                TextView no_pol = textView();
+                TextView merk = textView();
+                TextView type = textView();
+                TextView model = textView();
+                TextView tahun = textView();
+                TextView unit_in1 = textView();
+                ImageView unit_in2 = imageView();
 
-            TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-            TableRow.LayoutParams param2 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
-            TableRow.LayoutParams paramImg = tableRowLP(0, 20, 1f);
+                TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+                TableRow.LayoutParams param2 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
+                TableRow.LayoutParams paramImg = tableRowLP(0, 20, 1f);
 
-            paramImg.gravity = Gravity.CENTER;
+                paramImg.gravity = Gravity.CENTER;
 
-            rowColor(row, i);
-            textStyle(no, row, param1, String.valueOf(i + 1));
-            textStyle(no_pol, row, param1, lu.get(i).getAuction().getNo_polisi());
-            textStyle(merk, row, param1, lu.get(i).getNama_merk());
-            String tipe = "";
-            for (Attribute t : lu.get(i).getTipe()) {
-                if(t.getAttributedetail() != null){
-                    if(tipe.equals("")){
-                        tipe = t.getAttributedetail();
-                    }else {
-                        tipe = tipe + " " + t.getAttributedetail();
+                rowColor(row, i);
+                textStyle(no, row, param1, String.valueOf(i + 1));
+                textStyle(no_pol, row, param1, lu.get(i).getAuction().getNo_polisi());
+                textStyle(merk, row, param1, lu.get(i).getNama_merk());
+                String tipe = "";
+                for (Attribute t : lu.get(i).getTipe()) {
+                    if(t.getAttributedetail() != null){
+                        if(tipe.equals("")){
+                            tipe = t.getAttributedetail();
+                        }else {
+                            tipe = tipe + " " + t.getAttributedetail();
+                        }
                     }
                 }
-            }
-            textStyle(type, row, param2, tipe.concat(" " + lu.get(i).getTransmisi()));
-            textStyle(model, row, param1, lu.get(i).getModel());
-            textStyle(tahun, row, param1, lu.get(i).getTahun());
+                textStyle(type, row, param2, tipe.concat(" " + lu.get(i).getTransmisi()));
+                textStyle(model, row, param1, lu.get(i).getModel());
+                textStyle(tahun, row, param1, lu.get(i).getTahun());
 
-            if(lu.get(i).getCount_checklist() == 1){
-                imgStyle(unit_in2, row, paramImg);
-            }else {
-                checklist(unit_in1, row, param1, i);
+                if(lu.get(i).getCount_checklist() == 1){
+                    imgStyle(unit_in2, row, paramImg);
+                }else {
+                    checklist(unit_in1, row, param1, i);
+                }
+                tl.addView(row);
             }
-            tl.addView(row);
-        }
+        }catch (Exception e){}
     }
     
     public void imgStyle(ImageView imageView, TableRow row, TableRow.LayoutParams imgParam){

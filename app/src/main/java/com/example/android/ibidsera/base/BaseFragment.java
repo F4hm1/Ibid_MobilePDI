@@ -214,13 +214,12 @@ public class BaseFragment<T> extends Fragment {
     protected void alertDialog(String title, int id){
         AlertDialog.Builder alertDialog  = new AlertDialog.Builder(getContext());
         alertDialog.setTitle(title);
-        alertDialog.setCancelable(true);
+        alertDialog.setCancelable(false);
         if(id == 1){
             alertDialog.setPositiveButton("OK", (dialog, which) ->
                     getActivity().getSupportFragmentManager().popBackStack()).show();
         }else {
-            alertDialog.setPositiveButton("OK", (dialog, which) -> {
-            }).show();
+            alertDialog.setPositiveButton("OK", (dialog, which) -> {}).show();
         }
     }
 
