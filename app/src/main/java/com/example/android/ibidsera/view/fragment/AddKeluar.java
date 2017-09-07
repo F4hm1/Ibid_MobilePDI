@@ -306,7 +306,7 @@ public class AddKeluar extends BaseFragment{
 
     private void getDropdownList(AuctionService auctionService, List<String> ls){
         if (!nopol.getText().toString().equals("")){
-            auctionService.getSearchUnitm(nopol.getText().toString()).enqueue(new Callback<List<Unit>>() {
+            auctionService.getAutoUnitk(nopol.getText().toString()).enqueue(new Callback<List<Unit>>() {
                 @Override
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     List<Unit> lu = response.body();

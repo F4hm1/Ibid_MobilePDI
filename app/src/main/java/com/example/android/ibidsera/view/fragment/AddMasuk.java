@@ -164,8 +164,7 @@ public class AddMasuk extends BaseFragment{
             h.put("Telp", telepon);
 
             List<String> ls2 = required(h);
-            List<Sign> sign;
-            List<Lampiran> lamp;
+
             if(ls2.size() <= 0) {
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {

@@ -48,7 +48,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="NO POLISI"/>
+                        android:text="NO POLISI *"/>
 
                     <EditText
                         android:id="@+id/no_polisi"
@@ -78,7 +78,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="MERK"/>
+                        android:text="MERK *"/>
 
                     <Spinner
                         android:id="@+id/merk"
@@ -86,7 +86,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="SERI"/>
+                        android:text="SERI *"/>
 
                     <Spinner
                         android:id="@+id/seri"
@@ -94,7 +94,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="SILINDER"/>
+                        android:text="SILINDER *"/>
 
                     <Spinner
                         android:id="@+id/silinder"
@@ -102,7 +102,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="GRADE"/>
+                        android:text="GRADE *"/>
 
                     <Spinner
                         android:id="@+id/grade"
@@ -110,7 +110,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="SUB GRADE"/>
+                        android:text="SUB GRADE *"/>
 
                     <Spinner
                         android:id="@+id/sub_grade"
@@ -126,7 +126,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="TRANSMISI"/>
+                        android:text="TRANSMISI *"/>
 
                     <EditText
                         android:id="@+id/transmisi"
@@ -136,7 +136,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="TAHUN"/>
+                        android:text="TAHUN *"/>
 
                     <EditText
                         android:id="@+id/tahun"
@@ -393,7 +393,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="NAMA"/>
+                        android:text="NAMA *"/>
 
                     <AutoCompleteTextView
                         android:id="@+id/nama"
@@ -584,7 +584,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="Ponsel" />
+                        android:text="Ponsel *" />
 
                     <EditText
                         android:id="@+id/ponsel_pic"
