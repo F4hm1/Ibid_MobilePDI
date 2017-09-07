@@ -235,8 +235,11 @@ public class BaseFragment<T> extends Fragment {
     }
 
     protected Bitmap decodeImg(String encode){
-        byte[] decodedString = Base64.decode(encode.replaceAll("\n", ""), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        Bitmap decodedByte = null;
+        try {
+            byte[] decodedString = Base64.decode(encode.replaceAll("\n", ""), Base64.DEFAULT);
+            decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        }catch (Exception e){}
 
         return decodedByte;
     }

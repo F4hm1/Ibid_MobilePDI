@@ -3,11 +3,13 @@ package com.example.android.ibidsera.view.fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -61,6 +63,10 @@ public class DetailKeluar extends BaseFragment {
     @BindView(R.id.imgSignCust) ImageView imgSignCust;
     @BindView(R.id.imgSignIbid) ImageView imgSignIbid;
     @BindView(R.id.close) Button close;
+    private Bitmap bitmap1;
+    private Bitmap bitmap2;
+    private Bitmap bitmap3;
+    private Bitmap bitmap4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,6 +86,11 @@ public class DetailKeluar extends BaseFragment {
         if(id!=-1) {
             getDetailk(StaticUnit.getLu(), id);
         }
+
+        imageClick(imgSedan, 1, 1);
+        imageClick(imgMiniBus, 1, 2);
+        imageClick(imgSignIbid, 2, 1);
+        imageClick(imgSignCust, 2, 2);
 
         cancelListener(close);
 
@@ -153,9 +164,11 @@ public class DetailKeluar extends BaseFragment {
                     for (int i = 0; i < ls.size() && i < 2; i++) {
 
                         if (ls.get(i).getNama_lampiran().equals("SEDAN")) {
-                            imgSedan.setImageBitmap(decodeImg(ls.get(i).getBase64img()));
+                            bitmap3 = decodeImg(ls.get(i).getBase64img());
+                            imgSedan.setImageBitmap(bitmap3);
                         } else if (ls.get(i).getNama_lampiran().equals("MINIBUS")) {
-                            imgMiniBus.setImageBitmap(decodeImg(ls.get(i).getBase64img()));
+                            bitmap4 = decodeImg(ls.get(i).getBase64img());
+                            imgMiniBus.setImageBitmap(bitmap4);
                         }
                     }
                 }
@@ -177,6 +190,8 @@ public class DetailKeluar extends BaseFragment {
                 SignValue sv = response.body();
 
                 if (sv != null) {
+                    bitmap1 = decodeImg(sv.getSign_ibid_klr());
+                    bitmap2 = decodeImg(sv.getSign_cust_klr());
                     imgSignCust.setImageBitmap(decodeImg(sv.getSign_cust_klr()));
                     imgSignIbid.setImageBitmap(decodeImg(sv.getSign_ibid_klr()));
                 }
@@ -203,5 +218,69 @@ public class DetailKeluar extends BaseFragment {
         imageView.setImageBitmap(resizedbitmap);
         imageView.setBackgroundDrawable(null);
         row.addView(imageView);
+    }
+
+    private void imageClick(ImageView imageView, int id, int position){
+        if(id == 1) {
+            imageView.setOnClickListener(v -> lampiranDialog(position));
+        }else {
+            imageView.setOnClickListener(v -> signatureDialog(position));
+        }
+    }
+
+    private void lampiranDialog(int id){
+        AlertDialog.Builder alertDialog  = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Lampiran");
+        alertDialog.setCancelable(false);
+
+        FrameLayout container = new FrameLayout(getContext());
+        ImageView imageView = new ImageView(getContext());
+        if(id == 1){
+            if(bitmap3 == null) {
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
+            }else {
+                imageView.setImageBitmap(bitmap3);
+            }
+        }else {
+            if(bitmap4 == null) {
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
+            }else {
+                imageView.setImageBitmap(bitmap4);
+            }
+        }
+        container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, 450);
+        alertDialog.setView(container);
+
+        // Set up the buttons
+        alertDialog.setPositiveButton("Back", (dialog, which) -> {});
+        alertDialog.create().show();
+    }
+
+    private void signatureDialog(int id){
+        AlertDialog.Builder alertDialog  = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Signature Here");
+        alertDialog.setCancelable(true);
+
+        FrameLayout container = new FrameLayout(getContext());
+        ImageView imageView = new ImageView(getContext());
+        if(id == 1){
+            if(bitmap1 == null) {
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
+            }else {
+                imageView.setImageBitmap(bitmap1);
+            }
+        }else {
+            if(bitmap2 == null) {
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
+            }else {
+                imageView.setImageBitmap(bitmap2);
+            }
+        }
+        container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, 450);
+        alertDialog.setView(container);
+
+        // Set up the buttons
+        alertDialog.setPositiveButton("Back", (dialog, which) -> {});
+        alertDialog.create().show();
     }
 }

@@ -97,6 +97,7 @@ public class AddMasuk extends BaseFragment{
     private Bitmap bitmap2;
     private Bitmap bitmap3;
     private Bitmap bitmap4;
+    private boolean onClickSpinner = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -128,18 +129,26 @@ public class AddMasuk extends BaseFragment{
         cpvStop(cpv, bp);
 
         nopol.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+                if(onClickSpinner) {
+                    nopol.dismissDropDown();
+                    onClickSpinner = false;
+                }
+            }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 nopol.dismissDropDown();
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                getDropdownList(auctionService, ls);
+                if(!onClickSpinner) {
+                    getDropdownList(auctionService, ls);
+                }
             }
         });
 
         nopol.setOnItemClickListener((parent, view, position, id1) -> {
+            onClickSpinner = true;
             hideKeyboard();
             cpvStart(cpv, bp);
             getAddm(StaticUnit.getLu(), position);
@@ -467,7 +476,7 @@ public class AddMasuk extends BaseFragment{
 
     private void lampiranDialog(int id){
         AlertDialog.Builder alertDialog  = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("Catatan");
+        alertDialog.setTitle("Lampiran");
         alertDialog.setCancelable(false);
 
         LinearLayout linearLayout = new LinearLayout(getContext());

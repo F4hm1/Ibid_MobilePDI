@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +40,6 @@ import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.util.RetrofitUtil;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -197,7 +195,12 @@ public class AddKeluar extends BaseFragment{
 
     public void getAddk(List<Unit> lu, int id) {
         position = id;
-        nopol.setText(lu.get(id).getAuction().getNo_polisi());
+        if (lu.get(id).getAuction().getValue() != null) {
+            nopol.setText(lu.get(id).getAuction().getValue());
+        }else{
+            nopol.setText(lu.get(id).getAuction().getNo_polisi());
+        }
+        nopol.setText(lu.get(id).getAuction().getValue());
         merk.setAdapter(getAdapterList(lu.get(id).getNama_merk()));
         seri.setAdapter(getAdapterList(lu.get(id).getTipe().get(0).getAttributedetail()));
         silinder.setAdapter(getAdapterList(lu.get(id).getTipe().get(1).getAttributedetail()));
@@ -232,7 +235,11 @@ public class AddKeluar extends BaseFragment{
     public InsertUnit setInsertUnit(List<Unit> lUnit){
         InsertUnit insertUnit = new InsertUnit();
         insertUnit.setIdpemeriksaanitem(lUnit.get(position).getAuction().getId_pemeriksaanitem());
-        insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getId_auctionitem());
+        if(lUnit.get(position).getAuction().getId_auctionitem() != 0){
+            insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getId_auctionitem());
+        }else{
+            insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getIdauction_item());
+        }
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
         insertUnit.setMERK(lUnit.get(position).getId_merk());
@@ -272,22 +279,6 @@ public class AddKeluar extends BaseFragment{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         insertUnit.setWEBID_LOGGED_IN(prefs.getInt("userId", 0));
 
-        signature1.buildDrawingCache();
-        bitmap1 = signature1.getDrawingCache();
-        signature2.buildDrawingCache();
-        bitmap2 = signature2.getDrawingCache();
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        byte[] byteArray;
-
-        bitmap1.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byteArray = byteArrayOutputStream.toByteArray();
-        insertUnit.setSignibidklr(Base64.encodeToString(byteArray, Base64.DEFAULT));
-
-        bitmap2.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byteArray = byteArrayOutputStream.toByteArray();
-        insertUnit.setSigncustklr(Base64.encodeToString(byteArray, Base64.DEFAULT));
-
         return insertUnit;
     }
 
@@ -324,7 +315,7 @@ public class AddKeluar extends BaseFragment{
                     StaticUnit.setLu(lu);
                     ls.clear();
                     for (int i = 0; i < lu.size(); i++) {
-                        ls.add(lu.get(i).getAuction().getNo_polisi());
+                        ls.add(lu.get(i).getAuction().getValue());
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                             android.R.layout.simple_dropdown_item_1line, ls);
