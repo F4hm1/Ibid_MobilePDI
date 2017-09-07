@@ -313,7 +313,7 @@ public class AddKeluar extends BaseFragment{
                     StaticUnit.setLu(lu);
                     ls.clear();
                     for (int i = 0; i < lu.size(); i++) {
-                        ls.add(lu.get(i).getAuction().getNo_polisi());
+                        ls.add(lu.get(i).getAuction().getValue());
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                             android.R.layout.simple_dropdown_item_1line, ls);
