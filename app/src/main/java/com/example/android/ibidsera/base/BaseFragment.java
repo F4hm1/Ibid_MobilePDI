@@ -3,11 +3,14 @@ package com.example.android.ibidsera.base;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -29,6 +32,7 @@ import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.view.activity.MainActivity;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -221,6 +225,20 @@ public class BaseFragment<T> extends Fragment {
         }else {
             alertDialog.setPositiveButton("OK", (dialog, which) -> {}).show();
         }
+    }
+
+    protected String base64Encode(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream2);
+        byte[] byteArray = byteArrayOutputStream2.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+
+    protected Bitmap decodeImg(String encode){
+        byte[] decodedString = Base64.decode(encode.replaceAll("\n", ""), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        return decodedByte;
     }
 
     protected void setDisabled(View v){

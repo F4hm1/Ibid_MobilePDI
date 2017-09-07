@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -21,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -31,6 +33,8 @@ import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.InsertUnit;
+import com.example.android.ibidsera.model.Sign;
+import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.api.AuctionService;
@@ -153,20 +157,27 @@ public class AddKeluar extends BaseFragment{
 
             List<String> ls2 = required(h);
             if(ls2.size() <= 0) {
-                auctionService.insertUnitKeluar(setInsertUnit(StaticUnit.getLu())).enqueue(new Callback<GetStatus>() {
-                    @Override
-                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                        Log.i("info", "post submitted to API." + response.body());
-                        pDialog.hide();
-                        alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
-                    }
+                final Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    auctionService.insertUnitKeluar(setInsertUnit(StaticUnit.getLu())).enqueue(new Callback<GetStatus>() {
+                        @Override
+                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                            GetStatus getStatus = response.body();
+                            Log.i("info", "post submitted to API." + response.body());
+                            try {
+                                if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
+                                    postSignature(getStatus, auctionService, pDialog);
+                                }
+                            }catch (Exception e){}
+                        }
 
-                    @Override
-                    public void onFailure(Call<GetStatus> call, Throwable t) {
-                        pDialog.hide();
-                        errorRetrofit(call, t);
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<GetStatus> call, Throwable t) {
+                            pDialog.hide();
+                            errorRetrofit(call, t);
+                        }
+                    });
+                }, 2000);
             }else {
                 pDialog.hide();
                 String required = "";
@@ -306,7 +317,7 @@ public class AddKeluar extends BaseFragment{
 
     private void getDropdownList(AuctionService auctionService, List<String> ls){
         if (!nopol.getText().toString().equals("")){
-            auctionService.getSearchUnitm(nopol.getText().toString()).enqueue(new Callback<List<Unit>>() {
+            auctionService.getAutoUnitk(nopol.getText().toString()).enqueue(new Callback<List<Unit>>() {
                 @Override
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     List<Unit> lu = response.body();
@@ -400,12 +411,25 @@ public class AddKeluar extends BaseFragment{
         alertDialog.setTitle("Signature Here");
         alertDialog.setCancelable(true);
 
+        LinearLayout linearLayout = new LinearLayout(getContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
         FrameLayout container = new FrameLayout(getContext());
         container.setBackgroundDrawable(getResources().getDrawable(R.drawable.canvas_style));
         Signature mSignature = new Signature(getContext(), null, container);
-        container.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, 400);
-        alertDialog.setView(container);
-
+        container.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, 300);
+        linearLayout.addView(container);
+        Button reset = new Button(getContext());
+        reset.setText("Clear Canvas");
+        reset.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_style));
+        reset.setTextColor(getResources().getColor(R.color.colorPrimary));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(16,16,16,16);
+        reset.setLayoutParams(params);
+        reset.setOnClickListener(v -> {
+            mSignature.clear();
+        });
+        linearLayout.addView(reset);
+        alertDialog.setView(linearLayout);
         // Set up the buttons
         alertDialog.setPositiveButton("Save Signature", (dialog, which) -> {
             container.setDrawingCacheEnabled(true);
@@ -420,7 +444,44 @@ public class AddKeluar extends BaseFragment{
                 bitmap2 = bitmap;
             }
         });
-        alertDialog.setNegativeButton("Clear Canvas", (dialog, which) -> mSignature.clear());
+        alertDialog.setNegativeButton("Cancel", (dialog, which) -> mSignature.clear());
         alertDialog.create().show();
+    }
+
+    private void postSignature(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog){
+        auctionService.postSignMasuk(setSignature(StaticUnit.getLu(), gs)).enqueue(new Callback<SignValue>() {
+            @Override
+            public void onResponse(Call<SignValue> call, Response<SignValue> response) {
+                Log.i("info", "post submitted to API." + response.body());
+                pDialog.hide();
+                alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
+            }
+
+            @Override
+            public void onFailure(Call<SignValue> call, Throwable t) {
+                pDialog.hide();
+                errorRetrofit(call, t);
+            }
+        });
+    }
+
+    private Sign setSignature(List<Unit> lu, GetStatus gs){
+        signature1.buildDrawingCache();
+        bitmap1 = signature1.getDrawingCache();
+        signature2.buildDrawingCache();
+        bitmap2 = signature2.getDrawingCache();
+
+        Sign sign = new Sign();
+
+        sign.setSign_ibid_msk(base64Encode(bitmap1));
+        sign.setSign_cust_msk(base64Encode(bitmap2));
+        sign.setId_pemeriksaanitem(gs.getId_pemeriksaan_item());
+
+        if(lu.get(position).getAuction().getId_auctionitem() != 0){
+            sign.setId_auctionitem(lu.get(position).getAuction().getId_auctionitem());
+        }else{
+            sign.setId_auctionitem(lu.get(position).getAuction().getIdauction_item());
+        }
+        return sign;
     }
 }
