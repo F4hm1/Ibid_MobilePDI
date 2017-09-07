@@ -50,9 +50,13 @@ public class BaseFragment<T> extends Fragment {
 
     protected void errorRetrofit(Call<T> pv, Throwable t){
         try {
-            Toast.makeText(getContext(), "Tidak ada internet", Toast.LENGTH_SHORT).show();
+            showToast("Tidak Ada Internet");
             Log.e("error", t.getMessage());
         }catch (Exception e){}
+    }
+
+    protected void showToast(String message){
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     protected ArrayAdapter<String> getAdapter(List<String> list){

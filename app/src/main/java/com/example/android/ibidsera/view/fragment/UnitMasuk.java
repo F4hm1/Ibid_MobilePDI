@@ -84,7 +84,13 @@ public class UnitMasuk extends BaseFragment{
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     List<Unit> lu = response.body();
                     StaticUnit.setLu(lu);
-                    getUnitm(lu);
+                    try {
+                        if (!response.body().toString().equals("[]")) {
+                            getUnitm(lu);
+                        } else {
+                            showToast("Tidak ada data");
+                        }
+                    }catch (Exception e){}
                 }
 
                 @Override
@@ -98,7 +104,13 @@ public class UnitMasuk extends BaseFragment{
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     List<Unit> lu = response.body();
                     StaticUnit.setLu(lu);
-                    getUnitm(lu);
+                    try {
+                        if (!response.body().toString().equals("[]")) {
+                            getUnitm(lu);
+                        } else {
+                            showToast("Tidak ada data");
+                        }
+                    }catch (Exception e){}
                 }
 
                 @Override

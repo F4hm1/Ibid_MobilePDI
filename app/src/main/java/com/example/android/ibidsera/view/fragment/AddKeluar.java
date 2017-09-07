@@ -234,7 +234,7 @@ public class AddKeluar extends BaseFragment{
 
     public InsertUnit setInsertUnit(List<Unit> lUnit){
         InsertUnit insertUnit = new InsertUnit();
-        insertUnit.setIdpemeriksaanitem(lUnit.get(position).getAuction().getId_pemeriksaanitem());
+        insertUnit.setIdpemeriksaanitem(lUnit.get(position).getId_pemeriksaanitem());
         if(lUnit.get(position).getAuction().getId_auctionitem() != 0){
             insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getId_auctionitem());
         }else{
@@ -346,7 +346,7 @@ public class AddKeluar extends BaseFragment{
     }
 
     private void getKomponen(AuctionService auctionService){
-        auctionService.getUnitM().enqueue(new Callback<List<Unit>>() {
+        auctionService.getUnitK().enqueue(new Callback<List<Unit>>() {
             @Override
             public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                 List<Unit> lu = response.body();
@@ -440,7 +440,7 @@ public class AddKeluar extends BaseFragment{
     }
 
     private void postSignature(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog){
-        auctionService.postSignMasuk(setSignature(StaticUnit.getLu(), gs)).enqueue(new Callback<SignValue>() {
+        auctionService.postSignKeluar(setSignature(StaticUnit.getLu(), gs)).enqueue(new Callback<SignValue>() {
             @Override
             public void onResponse(Call<SignValue> call, Response<SignValue> response) {
                 Log.i("info", "post submitted to API." + response.body());
