@@ -1,5 +1,7 @@
 package com.example.android.ibidsera.model;
 
+import com.example.android.ibidsera.util.ErrorHandler;
+
 import java.util.List;
 
 /**
@@ -27,15 +29,8 @@ public class Unit {
     }
 
     public void setAuction(Auction auction) {
+        if (auction == null) throw new NullPointerException("auction");
         this.auction = auction;
-    }
-
-    public String getNama_merk() {
-        return nama_merk;
-    }
-
-    public void setNama_merk(String nama_merk) {
-        this.nama_merk = nama_merk;
     }
 
     public List<Attribute> getTipe() {
@@ -43,31 +38,16 @@ public class Unit {
     }
 
     public void setTipe(List<Attribute> tipe) {
+        if (tipe == null) throw new NullPointerException("tipe");
         this.tipe = tipe;
     }
 
-    public String getModel() {
-        return model;
+    public int getId_pemeriksaanitem() {
+        return id_pemeriksaanitem;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getTransmisi() {
-        return transmisi;
-    }
-
-    public void setTransmisi(String transmisi) {
-        this.transmisi = transmisi;
-    }
-
-    public String getTahun() {
-        return tahun;
-    }
-
-    public void setTahun(String tahun) {
-        this.tahun = tahun;
+    public void setId_pemeriksaanitem(int id_pemeriksaanitem) {
+        this.id_pemeriksaanitem = id_pemeriksaanitem;
     }
 
     public Pntp getPntp() {
@@ -75,15 +55,8 @@ public class Unit {
     }
 
     public void setPntp(Pntp pntp) {
+        if (pntp == null) throw new NullPointerException("pntp");
         this.pntp = pntp;
-    }
-
-    public String getPenggerak() {
-        return penggerak;
-    }
-
-    public void setPenggerak(String penggerak) {
-        this.penggerak = penggerak;
     }
 
     public List<Komponen> getKomponen() {
@@ -91,6 +64,7 @@ public class Unit {
     }
 
     public void setKomponen(List<Komponen> komponen) {
+        if (komponen == null) throw new NullPointerException("komponen");
         this.komponen = komponen;
     }
 
@@ -102,27 +76,66 @@ public class Unit {
         this.count_checklist = count_checklist;
     }
 
-    public String getKm() {
-        return km;
-    }
-
-    public void setKm(String km) {
-        this.km = km;
-    }
-
     public String getId_merk() {
-        return id_merk;
+        return ErrorHandler.nullString(id_merk);
     }
 
     public void setId_merk(String id_merk) {
+        if (id_merk == null) throw new NullPointerException("id_merk");
         this.id_merk = id_merk;
     }
 
-    public int getId_pemeriksaanitem() {
-        return id_pemeriksaanitem;
+    public String getNama_merk() {
+        return ErrorHandler.nullString(nama_merk);
     }
 
-    public void setId_pemeriksaanitem(int id_pemeriksaanitem) {
-        this.id_pemeriksaanitem = id_pemeriksaanitem;
+    public void setNama_merk(String nama_merk) {
+        if (nama_merk == null) throw new NullPointerException("nama_merk");
+        this.nama_merk = nama_merk;
+    }
+
+    public String getModel() {
+        return ErrorHandler.nullString(model);
+    }
+
+    public void setModel(String model) {
+        if (model == null) throw new NullPointerException("model");
+        this.model = model;
+    }
+
+    public String getTransmisi() {
+        return ErrorHandler.nullString(transmisi);
+    }
+
+    public void setTransmisi(String transmisi) {
+        if (transmisi == null) throw new NullPointerException("transmisi");
+        this.transmisi = transmisi;
+    }
+
+    public String getTahun() {
+        return ErrorHandler.nullString(tahun);
+    }
+
+    public void setTahun(String tahun) {
+        if (tahun == null) throw new NullPointerException("tahun");
+        this.tahun = tahun;
+    }
+
+    public String getKm() {
+        return ErrorHandler.nullString(km);
+    }
+
+    public void setKm(String km) {
+        if (km == null) throw new NullPointerException("km");
+        this.km = km;
+    }
+
+    public String getPenggerak() {
+        return ErrorHandler.nullString(penggerak);
+    }
+
+    public void setPenggerak(String penggerak) {
+        if (penggerak == null) throw new NullPointerException("penggerak");
+        this.penggerak = penggerak;
     }
 }

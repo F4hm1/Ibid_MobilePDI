@@ -209,7 +209,7 @@ public class DetailMasuk extends BaseFragment{
     public void imgStyle(ImageView imageView, TableRow row, TableRow.LayoutParams imgParam, String check) {
         imageView.setLayoutParams(imgParam);
         Bitmap bmp;
-        if(check.equals("1")){
+        if(check.equals("true")){
             bmp = BitmapFactory.decodeResource(getResources(), R.drawable.checklist);
         }else {
             bmp = BitmapFactory.decodeResource(getResources(), R.drawable.delete);

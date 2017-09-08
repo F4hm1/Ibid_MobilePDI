@@ -42,7 +42,7 @@
                     android:orientation="vertical">
                     <TextView
                         style="@style/FontTextViewFormHead"
-                        android:text="NO POLISI"/>
+                        android:text="NO POLISI *"/>
                     <TextView
                         android:id="@+id/nopol"
                         style="@style/FontIsiTextViewForm" />
@@ -110,7 +110,7 @@
                         style="@style/FontIsiTextViewForm"/>
                     <TextView
                         style="@style/FontTextViewFormHead"
-                        android:text="FUEL DIPERIKSA"/>
+                        android:text="FUEL DIPERIKSA *"/>
                     <TextView
                         android:id="@+id/fuel"
                         style="@style/FontIsiTextViewForm"/>
@@ -170,7 +170,7 @@
                     </LinearLayout>
                     <TextView
                         style="@style/FontTextViewFormHead"
-                        android:text="Nama Pengemudi"/>
+                        android:text="Nama Pengemudi *"/>
                     <TextView
                         android:id="@+id/nama_pengemudi"
                         style="@style/FontIsiTextViewForm"/>

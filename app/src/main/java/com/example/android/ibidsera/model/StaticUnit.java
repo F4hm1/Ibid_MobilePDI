@@ -9,6 +9,7 @@ import java.util.List;
 public class StaticUnit {
 
     private static List<Unit> lu;
+    private static Unit unit;
 
     public static List<Unit> getLu() {
         return lu;
@@ -18,4 +19,12 @@ public class StaticUnit {
         StaticUnit.lu = lu;
     }
 
+    public static Unit getUnit() {
+        return unit;
+    }
+
+    public static void setUnit(Unit unit) {
+        if (unit == null) throw new NullPointerException("unit");
+        StaticUnit.unit = unit;
+    }
 }

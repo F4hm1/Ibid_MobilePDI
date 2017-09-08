@@ -22,4 +22,5 @@
     <string name="title_activity_unitk">UnitkActivity</string>
     <string name="title_activity_unitm">UnitmActivity</string>
     <string name="title_activity_persiapan">UnitmActivity</string>
+    <string name="field_required">*</string>
 </resources>
