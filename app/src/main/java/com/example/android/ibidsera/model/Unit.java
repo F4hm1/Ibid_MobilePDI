@@ -17,6 +17,7 @@ public class Unit {
     private String tahun;
     private String km;
     private String penggerak;
+    private int id_pemeriksaanitem;
     private Pntp pntp;
     private List<Komponen> komponen;
     private int count_checklist;
@@ -115,5 +116,13 @@ public class Unit {
 
     public void setId_merk(String id_merk) {
         this.id_merk = id_merk;
+    }
+
+    public int getId_pemeriksaanitem() {
+        return id_pemeriksaanitem;
+    }
+
+    public void setId_pemeriksaanitem(int id_pemeriksaanitem) {
+        this.id_pemeriksaanitem = id_pemeriksaanitem;
     }
 }
