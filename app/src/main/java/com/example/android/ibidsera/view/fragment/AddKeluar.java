@@ -244,7 +244,6 @@ public class AddKeluar extends BaseFragment{
 
     public InsertUnit setInsertUnit(Unit lUnit){
         InsertUnit insertUnit = new InsertUnit();
-        position = 0;
         insertUnit.setIdpemeriksaanitem(lUnit.getId_pemeriksaanitem());
         if(lUnit.getAuction().getId_auctionitem() != 0){
             insertUnit.setIdauctionitem(lUnit.getAuction().getId_auctionitem());

@@ -104,7 +104,6 @@ public class AddMasuk extends BaseFragment{
     private Bitmap bitmap3;
     private Bitmap bitmap4;
     private boolean onClickSpinner = false;
-    private Unit lu;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,7 +129,7 @@ public class AddMasuk extends BaseFragment{
 
         cpvStart(cpv, bp);
         if(position!=-1){
-            getAddm(position);
+            getAddm(StaticUnit.getLu().get(position) ,position);
         }
 
         datePicker(tgl_pemeriksaan, 0);
@@ -158,11 +157,9 @@ public class AddMasuk extends BaseFragment{
         });
 
         nopol.setOnItemClickListener((parent, view, position, id1) -> {
-            lu = StaticUnit.getLu().get(position);
-            onClickSpinner = true;
             hideKeyboard();
             cpvStart(cpv, bp);
-            getAddm(position);
+            getAddm(StaticUnit.getLu().get(position), position);
             cpvStop(cpv, bp);
         });
 
@@ -186,7 +183,7 @@ public class AddMasuk extends BaseFragment{
             if(ls2.size() <= 0) {
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {
-                    auctionService.insertUnitMasuk(setInsertUnit()).enqueue(new Callback<GetStatus>() {
+                    auctionService.insertUnitMasuk(setInsertUnit(StaticUnit.getUnit())).enqueue(new Callback<GetStatus>() {
                         @Override
                         public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                             GetStatus getStatus = response.body();
@@ -227,8 +224,9 @@ public class AddMasuk extends BaseFragment{
         return myFragment;
     }
 
-    public void getAddm(int id) {
+    public void getAddm(Unit lu, int id) {
         position = id;
+        StaticUnit.setUnit(lu);
         if (lu.getAuction().getValue() != null) {
             nopol.setText(lu.getAuction().getValue());
         }else{
@@ -272,7 +270,7 @@ public class AddMasuk extends BaseFragment{
         return getAdapter(list);
     }
 
-    public InsertUnit setInsertUnit(){
+    public InsertUnit setInsertUnit(Unit lu){
         InsertUnit insertUnit = new InsertUnit();
         insertUnit.setIdpemeriksaanitem(lu.getAuction().getId_pemeriksaanitem());
         if(lu.getAuction().getId_auctionitem() != 0){
@@ -324,7 +322,7 @@ public class AddMasuk extends BaseFragment{
         return insertUnit;
     }
 
-    private Sign setSignature(GetStatus gs){
+    private Sign setSignature(Unit lu, GetStatus gs){
         signature1.buildDrawingCache();
         bitmap1 = signature1.getDrawingCache();
         signature2.buildDrawingCache();
@@ -400,7 +398,6 @@ public class AddMasuk extends BaseFragment{
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     List<Unit> lu = response.body();
                     StaticUnit.setLu(lu);
-
                     ls.clear();
                     try {
                         for (int i = 0; i < lu.size(); i++) {
@@ -643,7 +640,7 @@ public class AddMasuk extends BaseFragment{
     }
 
     private void postSignature(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog){
-        auctionService.postSignMasuk(setSignature(gs)).enqueue(new Callback<SignValue>() {
+        auctionService.postSignMasuk(setSignature(StaticUnit.getUnit(), gs)).enqueue(new Callback<SignValue>() {
             @Override
             public void onResponse(Call<SignValue> call, Response<SignValue> response) {
                 Log.i("info", "post submitted to API." + response.body());
