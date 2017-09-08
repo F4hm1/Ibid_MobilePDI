@@ -20,7 +20,7 @@ import com.example.android.ibidsera.view.activity.LoginActivity;
 
 public class BaseActivity extends AppCompatActivity{
 
-    public static final long DISCONNECT_TIMEOUT = 90000; // 5 min = 5 * 60 * 1000 ms
+    public static final long DISCONNECT_TIMEOUT = 900000; // 5 min = 5 * 60 * 1000 ms
 
     protected void openNewActivity(Class activity) {
         startActivity(new Intent(this, activity));
@@ -44,40 +44,40 @@ public class BaseActivity extends AppCompatActivity{
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-//    private Handler disconnectHandler = new Handler(){
-//        public void handleMessage(Message msg) {
-//        }
-//    };
-//
-//    private Runnable disconnectCallback = () -> {
-//        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-//        editor.clear().apply();
-//        openNewActivity(LoginActivity.class);
-//    };
-//
-//    public void resetDisconnectTimer(){
-//        disconnectHandler.removeCallbacks(disconnectCallback);
-//        disconnectHandler.postDelayed(disconnectCallback, DISCONNECT_TIMEOUT);
-//    }
-//
-//    public void stopDisconnectTimer(){
-//        disconnectHandler.removeCallbacks(disconnectCallback);
-//    }
-//
-//    @Override
-//    public void onUserInteraction(){
-//        resetDisconnectTimer();
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        resetDisconnectTimer();
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        stopDisconnectTimer();
-//    }
+    private Handler disconnectHandler = new Handler(){
+        public void handleMessage(Message msg) {
+        }
+    };
+
+    private Runnable disconnectCallback = () -> {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        editor.clear().apply();
+        openNewActivity(LoginActivity.class);
+    };
+
+    public void resetDisconnectTimer(){
+        disconnectHandler.removeCallbacks(disconnectCallback);
+        disconnectHandler.postDelayed(disconnectCallback, DISCONNECT_TIMEOUT);
+    }
+
+    public void stopDisconnectTimer(){
+        disconnectHandler.removeCallbacks(disconnectCallback);
+    }
+
+    @Override
+    public void onUserInteraction(){
+        resetDisconnectTimer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        resetDisconnectTimer();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopDisconnectTimer();
+    }
 }
