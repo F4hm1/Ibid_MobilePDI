@@ -41,6 +41,7 @@
                     android:layout_margin="8dp"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/nopol_title"
                         style="@style/FontTextViewForm"
                         android:text="NO POLISI"/>
                     <AutoCompleteTextView
@@ -48,6 +49,7 @@
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style"/>
                     <TextView
+
                         style="@style/FontTextViewForm"
                         android:text="MERK"/>
                     <Spinner
@@ -186,6 +188,7 @@
                             android:layout_marginRight="16dp"/>
                     </LinearLayout>
                     <TextView
+                        android:id="@+id/nama_title"
                         style="@style/FontTextViewForm"
                         android:text="Nama Pengemudi"/>
                     <EditText
@@ -200,6 +203,7 @@
                     android:layout_margin="8dp"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/alamat_title"
                         style="@style/FontTextViewForm"
                         android:text="Alamat Pengemudi"/>
                     <EditText
@@ -207,6 +211,7 @@
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style"/>
                     <TextView
+                        android:id="@+id/kota_title"
                         style="@style/FontTextViewForm"
                         android:text="Kota"/>
                     <EditText
@@ -214,6 +219,7 @@
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style"/>
                     <TextView
+                        android:id="@+id/telepon_title"
                         style="@style/FontTextViewForm"
                         android:text="Telepon"/>
                     <EditText
