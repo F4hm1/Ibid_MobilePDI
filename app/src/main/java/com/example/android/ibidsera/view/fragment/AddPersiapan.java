@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.Attribute;
+import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.Penitip;
 import com.example.android.ibidsera.model.PersiapanPost;
 import com.example.android.ibidsera.model.PersiapanValue;
@@ -194,7 +195,6 @@ public class AddPersiapan extends BaseFragment {
                     @Override
                     public void onFailure(Call<List<Attribute>> call, Throwable t) {
                         errorRetrofit(call, t);
-                        Log.e("Test", String.valueOf(pv.getMerk().get(i).getId_attrdetail()));
                     }
 
                 });
@@ -322,68 +322,65 @@ public class AddPersiapan extends BaseFragment {
 //            }
 //        });
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pDialog.setMessage("Sending Data..");
-                pDialog.show();
+        save.setOnClickListener(view -> {
+            pDialog.setMessage("Sending Data..");
+            pDialog.show();
 
-                try {
-                    if (perusahaan.isChecked()) {
-                        lp.get(position).setStatus_biodata(1);
-                    } else {
-                        lp.get(position).setStatus_biodata(0);
-                    }
-                    lp.get(position).setNo_identitas(noIdentitas.getText().toString());
-                }catch (Exception e){}
-
-                HashMap<String, EditText> h = new HashMap<>();
-                h.put("NO POLISI", noPolisi);
-                h.put("Transmisi", transmisi);
-                h.put("Tahun", tahun);
-                h.put("Nama", nama);
-                h.put("Ponsel", ponselPic);
-
-                HashMap<String, Spinner> hs = new HashMap<>();
-                hs.put("Merk", merk);
-                hs.put("Seri", seri);
-                hs.put("Silinder", silinder);
-                hs.put("Grade", grade);
-                hs.put("Sub Grade", subGrade);
-
-                List<String> ls2 = AddPersiapan.this.required(h);
-                List<String> lsSpinner = AddPersiapan.this.requiredSpinner(hs);
-
-                if (ls2.size() <= 0 || lsSpinner.size() <= 0) {
-
-                    persiapanPost = AddPersiapan.this.getDataView();
-                    final Handler handler = new Handler();
-                    handler.postDelayed(() -> {
-
-                        auctionService.insertUnit(persiapanPost).enqueue(new Callback<PersiapanPost>() {
-
-                            @Override
-                            public void onResponse(Call<PersiapanPost> call, Response<PersiapanPost> response) {
-                                Log.i("info", "post submitted to API." + response.body());
-                                pDialog.hide();
-                                alertDialog("Proses Penambahan Item Berhasil", 1);
-                            }
-
-                            @Override
-                            public void onFailure(Call<PersiapanPost> call, Throwable t) {
-                                errorRetrofit(call, t);
-                                pDialog.hide();
-                            }
-                        });
-                    }, 2000);
-
+            try {
+                if (perusahaan.isChecked()) {
+                    lp.get(position).setStatus_biodata(1);
                 } else {
-                    pDialog.hide();
-                    AddPersiapan.this.alertLogic(ls2);
-                    AddPersiapan.this.alertLogic(lsSpinner);
+                    lp.get(position).setStatus_biodata(0);
                 }
+                lp.get(position).setNo_identitas(noIdentitas.getText().toString());
+            }catch (Exception e){}
 
+            HashMap<String, EditText> h = new HashMap<>();
+            h.put("NO POLISI", noPolisi);
+            h.put("Transmisi", transmisi);
+            h.put("Tahun", tahun);
+            h.put("Nama", nama);
+            h.put("Ponsel", ponselPic);
+
+            HashMap<String, Spinner> hs = new HashMap<>();
+            hs.put("Merk", merk);
+            hs.put("Seri", seri);
+            hs.put("Silinder", silinder);
+            hs.put("Grade", grade);
+            hs.put("Sub Grade", subGrade);
+
+            List<String> ls2 = AddPersiapan.this.required(h);
+            List<String> lsSpinner = AddPersiapan.this.requiredSpinner(hs);
+
+            if (ls2.size() <= 0 || lsSpinner.size() <= 0) {
+
+                persiapanPost = AddPersiapan.this.getDataView();
+                final Handler handler = new Handler();
+                handler.postDelayed(() -> {
+
+                    auctionService.insertUnit(persiapanPost).enqueue(new Callback<GetStatus>() {
+
+                        @Override
+                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                            Log.i("info", "post submitted to API." + response.body());
+                            pDialog.hide();
+                            alertDialog("Proses Penambahan Item Berhasil", 1);
+                        }
+
+                        @Override
+                        public void onFailure(Call<GetStatus> call, Throwable t) {
+                            errorRetrofit(call, t);
+                            pDialog.hide();
+                        }
+                    });
+                }, 2000);
+
+            } else {
+                pDialog.hide();
+                AddPersiapan.this.alertLogic(ls2);
+                AddPersiapan.this.alertLogic(lsSpinner);
             }
+
         });
         cpvStop(cpv, bp);
     }
@@ -649,10 +646,11 @@ public class AddPersiapan extends BaseFragment {
 //    private void convertToRupiah(EditText editText){
 //        String separator = ".";
 //        int j = 0;
-//        for (int i = editText.length(); i > 0; i--) {
-//            j = j + 1;
-//            if (((j % 3) == 1) && (j != 1)) {
-//                editText.setText(editText.getText().toString().substring(i-1, 1) + separator + editText.getText());
+//        for (int i = editText.length()-1; i >= 0; i--) {
+//            j++;
+//            if ((j % 3) == 0) {
+//                editText.setText(editText.getText().toString().substring(0, i-1) + separator
+//                      + editText.getText().toString().substring(i, editText.length()-1));
 //            }
 //        }
 //    }
