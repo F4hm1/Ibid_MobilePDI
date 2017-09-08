@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,6 +49,17 @@ import static com.example.android.ibidsera.model.PersiapanBuilder.persiapan;
  */
 
 public class AddPersiapan extends BaseFragment {
+    @BindView(R.id.nopol_title) TextView nopol_title;
+    @BindView(R.id.merk_title) TextView merk_title;
+    @BindView(R.id.seri_title) TextView seri_title;
+    @BindView(R.id.silinder_title) TextView silinder_title;
+    @BindView(R.id.grade_title) TextView grade_title;
+    @BindView(R.id.sub_grade_title) TextView sub_grade_title;
+    @BindView(R.id.plat_title) TextView plat_title;
+    @BindView(R.id.transmisi_title) TextView transmisi_title;
+    @BindView(R.id.tahun_title) TextView tahun_title;
+    @BindView(R.id.nama_penitip_title) TextView nama_penitip_title;
+
     @BindView(R.id.progress_view) CircularProgressView cpv;
     @BindView(R.id.background_progress) RelativeLayout bp;
     @BindView(R.id.no_polisi) protected EditText noPolisi;
@@ -134,6 +146,7 @@ public class AddPersiapan extends BaseFragment {
         setAllCaps();
         datePicker(tglKeur, 1);
         datePicker(stnkSd, 1);
+        setRequired();
 
         pDialog = new ProgressDialog(getContext());
 
@@ -617,6 +630,20 @@ public class AddPersiapan extends BaseFragment {
             setGone(no_npwphead);
             setGone(no_npwp);
         }
+    }
+
+    private void setRequired(){
+        String required = "<font color=#FF0000> *</font>";
+        nopol_title.setText(Html.fromHtml(nopol_title.getText() + required));
+        merk_title.setText(Html.fromHtml(merk_title.getText() + required));
+        seri_title.setText(Html.fromHtml(seri_title.getText() + required));
+        silinder_title.setText(Html.fromHtml(silinder_title.getText() + required));
+        grade_title.setText(Html.fromHtml(grade_title.getText() + required));
+        sub_grade_title.setText(Html.fromHtml(sub_grade_title.getText() + required));
+        plat_title.setText(Html.fromHtml(plat_title.getText() + required));
+        transmisi_title.setText(Html.fromHtml(transmisi_title.getText() + required));
+        tahun_title.setText(Html.fromHtml(tahun_title.getText() + required));
+        nama_penitip_title.setText(Html.fromHtml(nama_penitip_title.getText() + required));
     }
 
 //    private void convertToRupiah(EditText editText){

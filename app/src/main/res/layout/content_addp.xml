@@ -47,6 +47,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/nopol_title"
                         style="@style/FontTextViewForm"
                         android:text="NO POLISI *"/>
 
@@ -77,6 +78,7 @@
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
+                        android:id="@+id/merk_title"
                         style="@style/FontTextViewForm"
                         android:text="MERK *"/>
 
@@ -85,6 +87,7 @@
                         style="@style/SpinnerEditForm"/>
 
                     <TextView
+                        android:id="@+id/seri_title"
                         style="@style/FontTextViewForm"
                         android:text="SERI *"/>
 
@@ -93,6 +96,7 @@
                         style="@style/SpinnerEditForm"/>
 
                     <TextView
+                        android:id="@+id/silinder_title"
                         style="@style/FontTextViewForm"
                         android:text="SILINDER *"/>
 
@@ -101,6 +105,7 @@
                         style="@style/SpinnerEditForm"/>
 
                     <TextView
+                        android:id="@+id/grade_title"
                         style="@style/FontTextViewForm"
                         android:text="GRADE *"/>
 
@@ -109,6 +114,7 @@
                         style="@style/SpinnerEditForm"/>
 
                     <TextView
+                        android:id="@+id/sub_grade_title"
                         style="@style/FontTextViewForm"
                         android:text="SUB GRADE *"/>
 
@@ -117,6 +123,7 @@
                         style="@style/SpinnerEditForm"/>
 
                     <TextView
+                        android:id="@+id/plat_title"
                         style="@style/FontTextViewForm"
                         android:text="PLAT DASAR"/>
 
@@ -125,6 +132,7 @@
                         style="@style/SpinnerEditForm"/>
 
                     <TextView
+                        android:id="@+id/transmisi_title"
                         style="@style/FontTextViewForm"
                         android:text="TRANSMISI *"/>
 
@@ -135,6 +143,7 @@
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
+                        android:id="@+id/tahun_title"
                         style="@style/FontTextViewForm"
                         android:text="TAHUN *"/>
 
@@ -392,6 +401,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/nama_penitip_title"
                         style="@style/FontTextViewForm"
                         android:text="NAMA *"/>
 

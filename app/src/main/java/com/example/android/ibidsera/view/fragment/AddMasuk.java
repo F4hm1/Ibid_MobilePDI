@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,6 +57,11 @@ import retrofit2.Response;
 
 public class AddMasuk extends BaseFragment{
 
+    @BindView(R.id.nopol_title) TextView nopol_title;
+    @BindView(R.id.nama_title) TextView nama_title;
+    @BindView(R.id.alamat_title) TextView alamat_title;
+    @BindView(R.id.kota_title) TextView kota_title;
+    @BindView(R.id.telepon_title) TextView telepon_title;
     @BindView(R.id.table_addm) TableLayout tl;
     @BindView(R.id.progress_view) CircularProgressView cpv;
     @BindView(R.id.background_progress) RelativeLayout bp;
@@ -98,6 +104,7 @@ public class AddMasuk extends BaseFragment{
     private Bitmap bitmap3;
     private Bitmap bitmap4;
     private boolean onClickSpinner = false;
+    private Unit lu;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -114,6 +121,7 @@ public class AddMasuk extends BaseFragment{
         hideKeyboard();
         setAllCaps();
         setAllDisabled();
+        setRequired();
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -122,7 +130,7 @@ public class AddMasuk extends BaseFragment{
 
         cpvStart(cpv, bp);
         if(position!=-1){
-            getAddm(StaticUnit.getLu(), position);
+            getAddm(position);
         }
 
         datePicker(tgl_pemeriksaan, 0);
@@ -150,10 +158,11 @@ public class AddMasuk extends BaseFragment{
         });
 
         nopol.setOnItemClickListener((parent, view, position, id1) -> {
+            lu = StaticUnit.getLu().get(position);
             onClickSpinner = true;
             hideKeyboard();
             cpvStart(cpv, bp);
-            getAddm(StaticUnit.getLu(), position);
+            getAddm(position);
             cpvStop(cpv, bp);
         });
 
@@ -177,7 +186,7 @@ public class AddMasuk extends BaseFragment{
             if(ls2.size() <= 0) {
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {
-                    auctionService.insertUnitMasuk(setInsertUnit(StaticUnit.getLu())).enqueue(new Callback<GetStatus>() {
+                    auctionService.insertUnitMasuk(setInsertUnit()).enqueue(new Callback<GetStatus>() {
                         @Override
                         public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                             GetStatus getStatus = response.body();
@@ -218,33 +227,33 @@ public class AddMasuk extends BaseFragment{
         return myFragment;
     }
 
-    public void getAddm(List<Unit> lu, int id) {
+    public void getAddm(int id) {
         position = id;
-        if (lu.get(id).getAuction().getValue() != null) {
-            nopol.setText(lu.get(id).getAuction().getValue());
+        if (lu.getAuction().getValue() != null) {
+            nopol.setText(lu.getAuction().getValue());
         }else{
-            nopol.setText(lu.get(id).getAuction().getNo_polisi());
+            nopol.setText(lu.getAuction().getNo_polisi());
         }
-        merk.setAdapter(getAdapterList(lu.get(id).getNama_merk()));
-        seri.setAdapter(getAdapterList(lu.get(id).getTipe().get(0).getAttributedetail()));
-        silinder.setAdapter(getAdapterList(lu.get(id).getTipe().get(1).getAttributedetail()));
-        grade.setAdapter(getAdapterList(lu.get(id).getTipe().get(2).getAttributedetail()));
-        sub_grade.setAdapter(getAdapterList(lu.get(id).getTipe().get(3).getAttributedetail()));
-        transmisi.setText(lu.get(id).getTransmisi());
-        tahun.setText(lu.get(id).getTahun());
-        km.setText(String.valueOf(lu.get(id).getKm()));
-        nama_pemilik.setText(lu.get(id).getPntp().getName_pntp());
+        merk.setAdapter(getAdapterList(lu.getNama_merk()));
+        seri.setAdapter(getAdapterList(lu.getTipe().get(0).getAttributedetail()));
+        silinder.setAdapter(getAdapterList(lu.getTipe().get(1).getAttributedetail()));
+        grade.setAdapter(getAdapterList(lu.getTipe().get(2).getAttributedetail()));
+        sub_grade.setAdapter(getAdapterList(lu.getTipe().get(3).getAttributedetail()));
+        transmisi.setText(lu.getTransmisi());
+        tahun.setText(lu.getTahun());
+        km.setText(String.valueOf(lu.getKm()));
+        nama_pemilik.setText(lu.getPntp().getName_pntp());
 
         fuel.setAdapter(setDropdown(R.array.fuel));
         cat.setAdapter(setDropdown(R.array.cat));
 
-        nama_pengemudi.setText(lu.get(id).getAuction().getNama_pengemudi_msk());
-        alamat_pengemudi.setText(lu.get(id).getAuction().getAlamat_pengemudi_msk());
-        kota.setText(lu.get(id).getAuction().getKota_msk());
-        telepon.setText(lu.get(id).getAuction().getTelepon_msk());
-        catatan.setText(lu.get(id).getAuction().getCatatan());
-        pool.setText(lu.get(id).getAuction().getPoolkota());
-        cases.setText(lu.get(id).getAuction().getCases());
+        nama_pengemudi.setText(lu.getAuction().getNama_pengemudi_msk());
+        alamat_pengemudi.setText(lu.getAuction().getAlamat_pengemudi_msk());
+        kota.setText(lu.getAuction().getKota_msk());
+        telepon.setText(lu.getAuction().getTelepon_msk());
+        catatan.setText(lu.getAuction().getCatatan());
+        pool.setText(lu.getAuction().getPoolkota());
+        cases.setText(lu.getAuction().getCases());
         if(bitmap3 != null){
             ibid_sedan.setImageBitmap(bitmap3);
         } else if(bitmap4 != null){
@@ -263,21 +272,21 @@ public class AddMasuk extends BaseFragment{
         return getAdapter(list);
     }
 
-    private InsertUnit setInsertUnit(List<Unit> lUnit){
+    public InsertUnit setInsertUnit(){
         InsertUnit insertUnit = new InsertUnit();
-        insertUnit.setIdpemeriksaanitem(lUnit.get(position).getAuction().getId_pemeriksaanitem());
-        if(lUnit.get(position).getAuction().getId_auctionitem() != 0){
-            insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getId_auctionitem());
+        insertUnit.setIdpemeriksaanitem(lu.getAuction().getId_pemeriksaanitem());
+        if(lu.getAuction().getId_auctionitem() != 0){
+            insertUnit.setIdauctionitem(lu.getAuction().getId_auctionitem());
         }else{
-            insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getIdauction_item());
+            insertUnit.setIdauctionitem(lu.getAuction().getIdauction_item());
         }
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
-        insertUnit.setMERK(lUnit.get(position).getId_merk());
-        insertUnit.setSERI(String.valueOf(lUnit.get(position).getTipe().get(0).getId_attrdetail()));
-        insertUnit.setSILINDER(String.valueOf(lUnit.get(position).getTipe().get(1).getId_attrdetail()));
-        insertUnit.setGRADE(String.valueOf(lUnit.get(position).getTipe().get(2).getId_attrdetail()));
-        insertUnit.setSUB_GRADE(String.valueOf(lUnit.get(position).getTipe().get(3).getId_attrdetail()));
+        insertUnit.setMERK(lu.getId_merk());
+        insertUnit.setSERI(String.valueOf(lu.getTipe().get(0).getId_attrdetail()));
+        insertUnit.setSILINDER(String.valueOf(lu.getTipe().get(1).getId_attrdetail()));
+        insertUnit.setGRADE(String.valueOf(lu.getTipe().get(2).getId_attrdetail()));
+        insertUnit.setSUB_GRADE(String.valueOf(lu.getTipe().get(3).getId_attrdetail()));
         insertUnit.setTRANSMISI(String.valueOf(transmisi.getText()));
         insertUnit.setKM(String.valueOf(km.getText()));
         insertUnit.setFuel(fuel.getSelectedItem().toString());
@@ -315,7 +324,7 @@ public class AddMasuk extends BaseFragment{
         return insertUnit;
     }
 
-    private Sign setSignature(List<Unit> lu, GetStatus gs){
+    private Sign setSignature(GetStatus gs){
         signature1.buildDrawingCache();
         bitmap1 = signature1.getDrawingCache();
         signature2.buildDrawingCache();
@@ -327,10 +336,10 @@ public class AddMasuk extends BaseFragment{
         sign.setSign_cust_msk(base64Encode(bitmap2));
         sign.setId_pemeriksaanitem(gs.getId_pemeriksaan_item());
 
-        if(lu.get(position).getAuction().getId_auctionitem() != 0){
-            sign.setId_auctionitem(lu.get(position).getAuction().getId_auctionitem());
+        if(lu.getAuction().getId_auctionitem() != 0){
+            sign.setId_auctionitem(lu.getAuction().getId_auctionitem());
         }else{
-            sign.setId_auctionitem(lu.get(position).getAuction().getIdauction_item());
+            sign.setId_auctionitem(lu.getAuction().getIdauction_item());
         }
         return sign;
     }
@@ -393,9 +402,11 @@ public class AddMasuk extends BaseFragment{
                     StaticUnit.setLu(lu);
 
                     ls.clear();
-                    for (int i = 0; i < lu.size(); i++) {
-                        ls.add(lu.get(i).getAuction().getValue());
-                    }
+                    try {
+                        for (int i = 0; i < lu.size(); i++) {
+                            ls.add(lu.get(i).getAuction().getValue());
+                        }
+                    }catch (Exception e){}
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                             android.R.layout.simple_dropdown_item_1line, ls);
                     nopol.setAdapter(adapter);
@@ -440,36 +451,38 @@ public class AddMasuk extends BaseFragment{
     }
 
     private void getKomponenList(List<Unit> lu){
-        size = lu.get(0).getKomponen().size();
-        for (int i = 0; i < size; i++) {
-            TableRow row = tableRow();
-            TableLayout tl2 = tableLayout();
-            TableRow row2 = tableRow();
-            TextView no = textView();
-            TextView nama = textView();
-            CheckBox b = checkBox();
-            CheckBox r = checkBox();
-            CheckBox t = checkBox();
+        try {
+            size = lu.get(0).getKomponen().size();
+            for (int i = 0; i < size; i++) {
+                TableRow row = tableRow();
+                TableLayout tl2 = tableLayout();
+                TableRow row2 = tableRow();
+                TextView no = textView();
+                TextView nama = textView();
+                CheckBox b = checkBox();
+                CheckBox r = checkBox();
+                CheckBox t = checkBox();
 
-            TableRow.LayoutParams param_25 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, .25f);
-            TableRow.LayoutParams param7 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 7f);
-            TableRow.LayoutParams param3 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 3f);
-            TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+                TableRow.LayoutParams param_25 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, .25f);
+                TableRow.LayoutParams param7 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 7f);
+                TableRow.LayoutParams param3 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 3f);
+                TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
 
-            rowColor(row, i);
-            textStyle(no, row, param_25, String.valueOf(i+1));
-            textStyle(nama, row2, param7, lu.get(0).getKomponen().get(i).getNama());
-            checkboxStyle(b, row2, param1, i, "b", h);
-            checkboxStyle(r, row2, param1, i, "r", h);
-            checkboxStyle(t, row2, param1, i, "t", h);
-            tl2.addView(row2);
-            tl2.setLayoutParams(param3);
-            row.addView(tl2);
-            tl.addView(row);
-        }
-        checkAllListener(checkBoxB, "b", size, h);
-        checkAllListener(checkBoxR, "r", size, h);
-        checkAllListener(checkBoxT, "t", size, h);
+                rowColor(row, i);
+                textStyle(no, row, param_25, String.valueOf(i + 1));
+                textStyle(nama, row2, param7, lu.get(0).getKomponen().get(i).getNama());
+                checkboxStyle(b, row2, param1, i, "b", h);
+                checkboxStyle(r, row2, param1, i, "r", h);
+                checkboxStyle(t, row2, param1, i, "t", h);
+                tl2.addView(row2);
+                tl2.setLayoutParams(param3);
+                row.addView(tl2);
+                tl.addView(row);
+            }
+            checkAllListener(checkBoxB, "b", size, h);
+            checkAllListener(checkBoxR, "r", size, h);
+            checkAllListener(checkBoxT, "t", size, h);
+        }catch (Exception e){}
     }
 
     private void imageClick(ImageView imageView, int id, int position){
@@ -630,7 +643,7 @@ public class AddMasuk extends BaseFragment{
     }
 
     private void postSignature(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog){
-        auctionService.postSignMasuk(setSignature(StaticUnit.getLu(), gs)).enqueue(new Callback<SignValue>() {
+        auctionService.postSignMasuk(setSignature(gs)).enqueue(new Callback<SignValue>() {
             @Override
             public void onResponse(Call<SignValue> call, Response<SignValue> response) {
                 Log.i("info", "post submitted to API." + response.body());
@@ -659,5 +672,14 @@ public class AddMasuk extends BaseFragment{
                 errorRetrofit(call, t);
             }
         });
+    }
+
+    private void setRequired(){
+        String required = "<font color=#FF0000> *</font>";
+        nopol_title.setText(Html.fromHtml(nopol_title.getText() + required));
+        nama_title.setText(Html.fromHtml(nama_title.getText() + required));
+        alamat_title.setText(Html.fromHtml(alamat_title.getText() + required));
+        kota_title.setText(Html.fromHtml(kota_title.getText() + required));
+        telepon_title.setText(Html.fromHtml(telepon_title.getText() + required));
     }
 }
