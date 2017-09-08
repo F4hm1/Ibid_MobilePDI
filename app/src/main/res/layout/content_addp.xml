@@ -54,7 +54,7 @@
                     <EditText
                         android:id="@+id/no_polisi"
                         style="@style/SpinnerEditForm"
-                        android:text="b3434"
+                        android:text=""
                         android:background="@drawable/edittext_style" />
 
                     <TextView
@@ -64,7 +64,7 @@
                     <EditText
                         android:id="@+id/stnk_an"
                         style="@style/SpinnerEditForm"
-                        android:text="d23423"
+                        android:text=""
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
@@ -74,7 +74,7 @@
                     <EditText
                         android:id="@+id/kota"
                         style="@style/SpinnerEditForm"
-                        android:text="depok"
+                        android:text=""
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
@@ -139,7 +139,8 @@
                     <EditText
                         android:id="@+id/transmisi"
                         style="@style/SpinnerEditForm"
-                        android:text="Manual"
+                        android:hint="AT / MT"
+                        android:text=""
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
@@ -150,7 +151,7 @@
                     <EditText
                         android:id="@+id/tahun"
                         style="@style/SpinnerEditForm"
-                        android:text="2017"
+                        android:text=""
                         android:background="@drawable/edittext_style"
                         android:inputType="number"/>
 
@@ -205,7 +206,7 @@
                     <EditText
                         android:id="@+id/no_rangka"
                         style="@style/SpinnerEditForm"
-                        android:text="asdas"
+                        android:text=""
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
@@ -214,7 +215,7 @@
 
                     <EditText
                         android:id="@+id/no_mesin"
-                        android:text="sdfds"
+                        android:text=""
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style"/>
 
@@ -224,7 +225,7 @@
 
                     <EditText
                         android:id="@+id/no_bpkb"
-                        android:text="sdfsdf"
+                        android:text=""
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style"/>
 
@@ -235,7 +236,7 @@
                     <EditText
                         android:id="@+id/no_faktur"
                         style="@style/SpinnerEditForm"
-                        android:text="werewrw"
+                        android:text=""
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
@@ -245,7 +246,7 @@
                     <EditText
                         android:id="@+id/no_stnk"
                         style="@style/SpinnerEditForm"
-                        android:text="ds123"
+                        android:text=""
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
@@ -254,7 +255,7 @@
 
                     <EditText
                         android:id="@+id/stnk_sd"
-                        android:text="werwe34234"
+                        android:text=""
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style"
                         android:clickable="true"
@@ -269,7 +270,7 @@
                     <EditText
                         android:id="@+id/no_keur"
                         style="@style/SpinnerEditForm"
-                        android:text="sd2342"
+                        android:text=""
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
@@ -292,7 +293,8 @@
                     <EditText
                         android:id="@+id/model"
                         style="@style/SpinnerEditForm"
-                        android:text="avanza"
+                        android:hint="SEDAN / MINIBUS"
+                        android:text=""
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
@@ -302,7 +304,8 @@
                     <EditText
                         android:id="@+id/penggerak"
                         style="@style/SpinnerEditForm"
-                        android:text="4x5"
+                        android:hint="4x2 / 4x4"
+                        android:text=""
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
@@ -312,7 +315,8 @@
                     <EditText
                         android:id="@+id/bahan_bakar"
                         style="@style/SpinnerEditForm"
-                        android:text="premium"
+                        android:hint="BENSIN / SOLAR / GAS"
+                        android:text=""
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
@@ -322,7 +326,7 @@
                     <EditText
                         android:id="@+id/km"
                         style="@style/SpinnerEditForm"
-                        android:text="1000"
+                        android:text="0"
                         android:background="@drawable/edittext_style"
                         android:inputType="number"/>
 
@@ -342,7 +346,7 @@
                     <EditText
                         android:id="@+id/kunci_tambahan"
                         style="@style/SpinnerEditForm"
-                        android:text="asdas"
+                        android:text=""
                         android:background="@drawable/edittext_style"/>
 
                     <TextView
@@ -352,7 +356,7 @@
                     <EditText
                         android:id="@+id/biaya_administrasi"
                         style="@style/SpinnerEditForm"
-                        android:text="10000"
+                        android:text="1750000"
                         android:background="@drawable/edittext_style"
                         android:inputType="number"/>
 
@@ -364,7 +368,7 @@
                     <EditText
                         android:id="@+id/biaya_parkir"
                         style="@style/SpinnerEditForm"
-                        android:text="10000"
+                        android:text=""
                         android:background="@drawable/edittext_style"
                         android:inputType="number"
                         android:hint="0"/>
@@ -440,7 +444,7 @@
 
                     <EditText
                         android:id="@+id/no_identitas"
-                        android:text="123aeaa"
+                        android:text=""
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style"
                         android:visibility="gone"/>
@@ -580,7 +584,7 @@
                     <EditText
                         android:id="@+id/nama_pic"
                         style="@style/SpinnerEditForm"
-                        android:text="asdsa"
+                        android:text=""
                         android:background="@drawable/edittext_style" />
 
                 </LinearLayout>
@@ -598,7 +602,7 @@
 
                     <EditText
                         android:id="@+id/ponsel_pic"
-                        android:text="019732982"
+                        android:text=""
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style"
                         android:inputType="number"/>
@@ -640,7 +644,7 @@
 
                     <EditText
                         android:id="@+id/lokasi_asal_unit"
-                        android:text="cibinong"
+                        android:text=""
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style" />
 
@@ -659,7 +663,7 @@
 
                     <EditText
                         android:id="@+id/nama_pic_display"
-                        android:text="qweqw"
+                        android:text=""
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style"/>
 
