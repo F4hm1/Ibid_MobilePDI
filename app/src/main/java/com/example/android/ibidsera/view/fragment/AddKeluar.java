@@ -131,7 +131,7 @@ public class AddKeluar extends BaseFragment{
         nopol.setOnItemClickListener((parent, view, position, id1) -> {
             hideKeyboard();
             cpvStart(cpv, bp);
-            getAddk(StaticUnit.getLu(), position);
+            getAddk(StaticUnit.getLu().get(position), position);
             cpvStop(cpv, bp);
         });
 
@@ -152,7 +152,7 @@ public class AddKeluar extends BaseFragment{
             if(ls2.size() <= 0) {
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {
-                    auctionService.insertUnitKeluar(setInsertUnit(StaticUnit.getLu())).enqueue(new Callback<GetStatus>() {
+                    auctionService.insertUnitKeluar(setInsertUnit(StaticUnit.getUnit())).enqueue(new Callback<GetStatus>() {
                         @Override
                         public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                             GetStatus getStatus = response.body();
@@ -191,41 +191,41 @@ public class AddKeluar extends BaseFragment{
         return myFragment;
     }
 
-    public void getAddk(List<Unit> lu, int id) {
+    public void getAddk(Unit lu, int id) {
         position = id;
-        if (lu.get(id).getAuction().getValue() != null) {
-            nopol.setText(lu.get(id).getAuction().getValue());
+        StaticUnit.setUnit(lu);
+        if (lu.getAuction().getValue() != null) {
+            nopol.setText(lu.getAuction().getValue());
         }else{
-            nopol.setText(lu.get(id).getAuction().getNo_polisi());
+            nopol.setText(lu.getAuction().getNo_polisi());
         }
-        nopol.setText(lu.get(id).getAuction().getValue());
-        merk.setAdapter(getAdapterList(lu.get(id).getNama_merk()));
-        seri.setAdapter(getAdapterList(lu.get(id).getTipe().get(0).getAttributedetail()));
-        silinder.setAdapter(getAdapterList(lu.get(id).getTipe().get(1).getAttributedetail()));
-        grade.setAdapter(getAdapterList(lu.get(id).getTipe().get(2).getAttributedetail()));
-        sub_grade.setAdapter(getAdapterList(lu.get(id).getTipe().get(3).getAttributedetail()));
-        transmisi.setText(lu.get(id).getTransmisi());
-        tahun.setText(lu.get(id).getTahun());
-        km.setText(String.valueOf(lu.get(id).getKm()));
-        nama_pemilik.setText(lu.get(id).getPntp().getName_pntp());
+        merk.setAdapter(getAdapterList(lu.getNama_merk()));
+        seri.setAdapter(getAdapterList(lu.getTipe().get(0).getAttributedetail()));
+        silinder.setAdapter(getAdapterList(lu.getTipe().get(1).getAttributedetail()));
+        grade.setAdapter(getAdapterList(lu.getTipe().get(2).getAttributedetail()));
+        sub_grade.setAdapter(getAdapterList(lu.getTipe().get(3).getAttributedetail()));
+        transmisi.setText(lu.getTransmisi());
+        tahun.setText(lu.getTahun());
+        km.setText(String.valueOf(lu.getKm()));
+        nama_pemilik.setText(lu.getPntp().getName_pntp());
 
         fuel.setAdapter(setDropdown(R.array.fuel));
         cat.setAdapter(setDropdown(R.array.cat));
 
-        nama_pengemudi.setText(lu.get(id).getAuction().getNama_pengemudi_klr());
-        alamat_pengemudi.setText(lu.get(id).getAuction().getAlamat_pengemudi_klr());
-        kota.setText(lu.get(id).getAuction().getKota_klr());
-        telepon.setText(lu.get(id).getAuction().getTelepon_klr());
-        catatan.setText(lu.get(id).getAuction().getCatatan_klr());
+        nama_pengemudi.setText(lu.getAuction().getNama_pengemudi_klr());
+        alamat_pengemudi.setText(lu.getAuction().getAlamat_pengemudi_klr());
+        kota.setText(lu.getAuction().getKota_klr());
+        telepon.setText(lu.getAuction().getTelepon_klr());
+        catatan.setText(lu.getAuction().getCatatan_klr());
         if(bitmap1 != null){
             signature1.setImageBitmap(bitmap1);
         } else if(bitmap2 != null){
             signature2.setImageBitmap(bitmap2);
         }
         for (int i = 0; i < size; i++) {
-            imgSet(hi.get("b"+i), lu.get(position).getKomponen().get(i).getTampil_b());
-            imgSet(hi.get("r"+i), lu.get(position).getKomponen().get(i).getTampil_r());
-            imgSet(hi.get("t"+i), lu.get(position).getKomponen().get(i).getTampil_t());
+            imgSet(hi.get("b"+i), lu.getKomponen().get(i).getTampil_b());
+            imgSet(hi.get("r"+i), lu.getKomponen().get(i).getTampil_r());
+            imgSet(hi.get("t"+i), lu.getKomponen().get(i).getTampil_t());
         }
     }
 
@@ -235,21 +235,22 @@ public class AddKeluar extends BaseFragment{
         return getAdapter(list);
     }
 
-    public InsertUnit setInsertUnit(List<Unit> lUnit){
+    public InsertUnit setInsertUnit(Unit lUnit){
         InsertUnit insertUnit = new InsertUnit();
-        insertUnit.setIdpemeriksaanitem(lUnit.get(position).getId_pemeriksaanitem());
-        if(lUnit.get(position).getAuction().getId_auctionitem() != 0){
-            insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getId_auctionitem());
+        position = 0;
+        insertUnit.setIdpemeriksaanitem(lUnit.getId_pemeriksaanitem());
+        if(lUnit.getAuction().getId_auctionitem() != 0){
+            insertUnit.setIdauctionitem(lUnit.getAuction().getId_auctionitem());
         }else{
-            insertUnit.setIdauctionitem(lUnit.get(position).getAuction().getIdauction_item());
+            insertUnit.setIdauctionitem(lUnit.getAuction().getIdauction_item());
         }
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
-        insertUnit.setMERK(lUnit.get(position).getId_merk());
-        insertUnit.setSERI(String.valueOf(lUnit.get(position).getTipe().get(0).getId_attrdetail()));
-        insertUnit.setSILINDER(String.valueOf(lUnit.get(position).getTipe().get(1).getId_attrdetail()));
-        insertUnit.setGRADE(String.valueOf(lUnit.get(position).getTipe().get(2).getId_attrdetail()));
-        insertUnit.setSUB_GRADE(String.valueOf(lUnit.get(position).getTipe().get(3).getId_attrdetail()));
+        insertUnit.setMERK(lUnit.getId_merk());
+        insertUnit.setSERI(String.valueOf(lUnit.getTipe().get(0).getId_attrdetail()));
+        insertUnit.setSILINDER(String.valueOf(lUnit.getTipe().get(1).getId_attrdetail()));
+        insertUnit.setGRADE(String.valueOf(lUnit.getTipe().get(2).getId_attrdetail()));
+        insertUnit.setSUB_GRADE(String.valueOf(lUnit.getTipe().get(3).getId_attrdetail()));
         insertUnit.setTRANSMISI(String.valueOf(transmisi.getText()));
         insertUnit.setKM(String.valueOf(km.getText()));
         insertUnit.setFuel(fuel.getSelectedItem().toString());
@@ -454,7 +455,7 @@ public class AddKeluar extends BaseFragment{
     }
 
     private void postSignature(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog){
-        auctionService.postSignKeluar(setSignature(StaticUnit.getLu(), gs)).enqueue(new Callback<SignValue>() {
+        auctionService.postSignKeluar(setSignature(StaticUnit.getUnit(), gs)).enqueue(new Callback<SignValue>() {
             @Override
             public void onResponse(Call<SignValue> call, Response<SignValue> response) {
                 Log.i("info", "post submitted to API." + response.body());
@@ -470,7 +471,7 @@ public class AddKeluar extends BaseFragment{
         });
     }
 
-    private Sign setSignature(List<Unit> lu, GetStatus gs){
+    private Sign setSignature(Unit lu, GetStatus gs){
         signature1.buildDrawingCache();
         bitmap1 = signature1.getDrawingCache();
         signature2.buildDrawingCache();
@@ -482,10 +483,10 @@ public class AddKeluar extends BaseFragment{
         sign.setSign_cust_klr(base64Encode(bitmap2));
         sign.setId_pemeriksaanitem(gs.getId_pemeriksaan_item());
 
-        if(lu.get(position).getAuction().getId_auctionitem() != 0){
-            sign.setId_auctionitem(lu.get(position).getAuction().getId_auctionitem());
+        if(lu.getAuction().getId_auctionitem() != 0){
+            sign.setId_auctionitem(lu.getAuction().getId_auctionitem());
         }else{
-            sign.setId_auctionitem(lu.get(position).getAuction().getIdauction_item());
+            sign.setId_auctionitem(lu.getAuction().getIdauction_item());
         }
         return sign;
     }
