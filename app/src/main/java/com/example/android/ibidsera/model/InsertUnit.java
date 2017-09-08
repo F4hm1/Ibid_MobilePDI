@@ -36,11 +36,6 @@ public class InsertUnit {
     private List<String> cektampilkanrusak;
     private List<String> cektampilkantidakada;
     private List<Integer> idkomponenpemeriksaan;
-    private String signibidmsk;
-    private String signcustmsk;
-    private String signibidklr;
-    private String signcustklr;
-    private List<Lampiran> lampiran;
 
     public int getIdpemeriksaanitem() {
         return idpemeriksaanitem;
@@ -274,43 +269,4 @@ public class InsertUnit {
         this.cektampilkantidakada = cektampilkantidakada;
     }
 
-    public String getSignibidmsk() {
-        return signibidmsk;
-    }
-
-    public void setSignibidmsk(String signibidmsk) {
-        this.signibidmsk = signibidmsk;
-    }
-
-    public String getSigncustmsk() {
-        return signcustmsk;
-    }
-
-    public void setSigncustmsk(String signcustmsk) {
-        this.signcustmsk = signcustmsk;
-    }
-
-    public String getSignibidklr() {
-        return signibidklr;
-    }
-
-    public void setSignibidklr(String signibidklr) {
-        this.signibidklr = signibidklr;
-    }
-
-    public String getSigncustklr() {
-        return signcustklr;
-    }
-
-    public void setSigncustklr(String signcustklr) {
-        this.signcustklr = signcustklr;
-    }
-
-    public List<Lampiran> getLampiran() {
-        return lampiran;
-    }
-
-    public void setLampiran(List<Lampiran> lampiran) {
-        this.lampiran = lampiran;
-    }
 }

@@ -184,6 +184,9 @@ public class AddMasuk extends BaseFragment{
                                 if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
                                     postSignature(getStatus, auctionService, pDialog);
                                     postLampiran(getStatus, auctionService, pDialog);
+                                }else {
+                                    pDialog.hide();
+                                    alertDialog(getStatus.getMessage(), 1);
                                 }
                             }catch (Exception e){}
                         }
