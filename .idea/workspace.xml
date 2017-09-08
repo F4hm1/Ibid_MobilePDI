@@ -140,8 +140,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a26e1fbd-ac5e-4d02-a0bf-5e240d96d20b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/SignPost.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/SignValue.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
@@ -169,15 +167,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/transition_25_3_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/transition_25_3_1.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/StockManagement.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/StockManagement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/api/AuctionService.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/api/AuctionService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddMasuk.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddMasuk.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailKeluar.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailKeluar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailMasuk.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailMasuk.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/Report.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/Report.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_detailk.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_detailk.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_detailm.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_detailm.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
     </list>
     <ignored path="ibidsera2.iws" />
@@ -232,11 +221,12 @@
       <file leaf-file-name="DetailMasuk.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailMasuk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
+            <state relative-caret-position="2159">
               <caret line="158" column="36" selection-start-line="158" selection-start-column="36" selection-end-line="158" selection-end-column="58" />
               <folding>
-                <element signature="e#8186#8187#0" expanded="true" />
-                <element signature="e#8240#8241#0" expanded="true" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#8593#8594#0" expanded="false" />
+                <element signature="e#8647#8648#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -244,38 +234,36 @@
       </file>
       <file leaf-file-name="content_detailm.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_detailm.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
+            <state relative-caret-position="6834">
               <caret line="402" column="27" selection-start-line="385" selection-start-column="12" selection-end-line="402" selection-end-column="27" />
               <folding />
             </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="content_detailk.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_detailk.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
+            <state relative-caret-position="5797">
               <caret line="341" column="27" selection-start-line="341" selection-start-column="27" selection-end-line="341" selection-end-column="27" />
               <folding />
             </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="AddMasuk.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddMasuk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
+            <state relative-caret-position="-1217">
               <caret line="331" column="0" selection-start-line="331" selection-start-column="0" selection-end-line="331" selection-end-column="0" />
-              <folding>
-                <marker date="1504544880500" expanded="true" signature="13463:13913" ph="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -283,9 +271,11 @@
       <file leaf-file-name="UnitMasuk.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/UnitMasuk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-501">
-              <caret line="79" column="47" selection-start-line="79" selection-start-column="42" selection-end-line="79" selection-end-column="47" />
-              <folding />
+            <state relative-caret-position="799">
+              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -293,11 +283,12 @@
       <file leaf-file-name="DetailKeluar.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailKeluar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-176">
-              <caret line="154" column="58" selection-start-line="154" selection-start-column="58" selection-end-line="154" selection-end-column="58" />
+            <state relative-caret-position="2091">
+              <caret line="154" column="28" selection-start-line="154" selection-start-column="28" selection-end-line="154" selection-end-column="28" />
               <folding>
-                <element signature="e#8210#8211#0" expanded="true" />
-                <element signature="e#8264#8265#0" expanded="true" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#8722#8723#0" expanded="false" />
+                <element signature="e#8776#8777#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -320,7 +311,7 @@
   <component name="GradleLocalSettings">
     <option name="myGradleHomes">
       <map>
-        <entry key="$PROJECT_DIR$" value="C:\Users\harfi\.gradle\wrapper\dists\gradle-3.3-all\55gk2rcmfc6p2dg9u9ohc3hw9\gradle-3.3" />
+        <entry key="$PROJECT_DIR$" value="C:\Users\Yosefricaro\.gradle\wrapper\dists\gradle-3.3-all\55gk2rcmfc6p2dg9u9ohc3hw9\gradle-3.3" />
       </map>
     </option>
     <option name="myGradleVersions">
@@ -1917,7 +1908,7 @@
       <map>
         <entry key="D:\HarfiProject\Sera Ibid Project\ibidsera2" value="4512438061099" />
         <entry key="F:\Ricaro\AndroidStudio\Android\IbidSera" value="4505386422629" />
-        <entry key="F:\Ricaro\AndroidStudio\Android\ibidsera2" value="4510910231539" />
+        <entry key="F:\Ricaro\AndroidStudio\Android\ibidsera2" value="4511620298003" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2294,10 +2285,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1358" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1296" />
-    <option name="height" value="1000" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -2463,19 +2454,19 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane />
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="settings.editor.selected.configurable" value="gradle.experimental" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="device.picker.selection" value="192.168.80.101:5555" />
+    <property name="device.picker.selection" value="192.168.238.101:5555" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../MyApplication" />
     <property name="SearchEverywhereHistoryKey" value="setvisibility&#9;PSI&#9;JAVA://android.app.Notification.Builder#setVisibility&#10;setvisi&#9;PSI&#9;JAVA://com.example.android.ibidsera.view.fragment.AddPersiapan#setVisible&#10;R.drawable.button2_style&#9;PSI&#9;JAVA://com.example.android.ibidsera.R.drawable#button2_style&#10;setBackground&#9;PSI&#9;JAVA://android.support.v4.view.ViewCompat.ViewCompatImpl#setBackground" />
     <property name="project.structure.last.edited" value="Messages" />
@@ -2883,7 +2874,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1358" y="-8" width="1296" height="1000" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2893,14 +2884,13 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7422803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2038835" sideWeight="0.48634812" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20347957" sideWeight="0.48634812" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928804" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2913,6 +2903,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -2935,14 +2926,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddMasuk.java</url>
-          <line>331</line>
-          <properties />
-          <option name="timeStamp" value="173" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="174" />
     </breakpoint-manager>
     <watches-manager />
@@ -2971,7 +2954,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-236">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2979,70 +2961,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3774">
           <caret line="244" column="5" selection-start-line="244" selection-start-column="5" selection-end-line="244" selection-end-column="5" />
-          <folding>
-            <element signature="e#7259#7260#0" expanded="false" />
-            <element signature="e#7295#7296#0" expanded="false" />
-            <element signature="e#7329#7330#0" expanded="false" />
-            <element signature="e#7362#7363#0" expanded="false" />
-            <element signature="e#7398#7399#0" expanded="false" />
-            <element signature="e#7430#7431#0" expanded="false" />
-            <element signature="e#7466#7467#0" expanded="false" />
-            <element signature="e#7501#7502#0" expanded="false" />
-            <element signature="e#7533#7534#0" expanded="false" />
-            <element signature="e#7561#7562#0" expanded="false" />
-            <element signature="e#7594#7595#0" expanded="false" />
-            <element signature="e#7626#7627#0" expanded="false" />
-            <element signature="e#7661#7662#0" expanded="false" />
-            <element signature="e#7695#7696#0" expanded="false" />
-            <element signature="e#8832#8833#0" expanded="false" />
-            <element signature="e#8866#8867#0" expanded="false" />
-            <element signature="e#8901#8902#0" expanded="false" />
-            <element signature="e#8932#8933#0" expanded="false" />
-            <element signature="e#8971#8972#0" expanded="false" />
-            <element signature="e#9006#9007#0" expanded="false" />
-            <element signature="e#9045#9046#0" expanded="false" />
-            <element signature="e#9080#9081#0" expanded="false" />
-            <element signature="e#9189#9190#0" expanded="false" />
-            <element signature="e#9226#9227#0" expanded="false" />
-            <element signature="e#9268#9269#0" expanded="false" />
-            <element signature="e#9306#9307#0" expanded="false" />
-            <element signature="e#9411#9412#0" expanded="false" />
-            <element signature="e#9448#9449#0" expanded="false" />
-            <element signature="e#9488#9489#0" expanded="false" />
-            <element signature="e#9524#9525#0" expanded="false" />
-            <element signature="e#9562#9563#0" expanded="false" />
-            <element signature="e#9596#9597#0" expanded="false" />
-            <element signature="e#9636#9637#0" expanded="false" />
-            <element signature="e#9672#9673#0" expanded="false" />
-            <element signature="e#9713#9714#0" expanded="false" />
-            <element signature="e#9750#9751#0" expanded="false" />
-            <element signature="e#9784#9785#0" expanded="false" />
-            <element signature="e#9814#9815#0" expanded="false" />
-            <element signature="e#9851#9852#0" expanded="false" />
-            <element signature="e#9884#9885#0" expanded="false" />
-            <element signature="e#9920#9921#0" expanded="false" />
-            <element signature="e#9952#9953#0" expanded="false" />
-            <element signature="e#9986#9987#0" expanded="false" />
-            <element signature="e#10016#10017#0" expanded="false" />
-            <element signature="e#10050#10051#0" expanded="false" />
-            <element signature="e#10080#10081#0" expanded="false" />
-            <element signature="e#10116#10117#0" expanded="false" />
-            <element signature="e#10148#10149#0" expanded="false" />
-            <element signature="e#10181#10182#0" expanded="false" />
-            <element signature="e#10210#10211#0" expanded="false" />
-            <element signature="e#10243#10244#0" expanded="false" />
-            <element signature="e#10272#10273#0" expanded="false" />
-            <element signature="e#10306#10307#0" expanded="false" />
-            <element signature="e#10336#10337#0" expanded="false" />
-            <element signature="e#10370#10371#0" expanded="false" />
-            <element signature="e#10400#10401#0" expanded="false" />
-            <element signature="e#10435#10436#0" expanded="false" />
-            <element signature="e#10466#10467#0" expanded="false" />
-            <element signature="e#10500#10501#0" expanded="false" />
-            <element signature="e#10530#10531#0" expanded="false" />
-            <element signature="e#10629#10630#0" expanded="false" />
-            <element signature="e#10659#10660#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3050,7 +2968,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="680">
           <caret line="58" column="49" selection-start-line="58" selection-start-column="43" selection-end-line="58" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3058,12 +2975,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
           <caret line="52" column="19" selection-start-line="52" selection-start-column="19" selection-end-line="52" selection-end-column="19" />
-          <folding>
-            <element signature="e#4475#4476#0" expanded="false" />
-            <element signature="e#4520#4521#0" expanded="false" />
-            <element signature="e#10970#10971#0" expanded="false" />
-            <element signature="e#11016#11017#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3071,7 +2982,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-233">
           <caret line="41" column="52" selection-start-line="41" selection-start-column="52" selection-end-line="41" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3083,53 +2993,52 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="311">
           <caret line="71" column="28" selection-start-line="71" selection-start-column="28" selection-end-line="71" selection-end-column="71" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/SignatureView.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_main.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-75">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="44" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/edittext_style.xml">
@@ -3141,59 +3050,59 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_unitm.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_persiapan.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_persiapan.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
           <caret line="50" column="64" selection-start-line="50" selection-start-column="64" selection-end-line="50" selection-end-column="64" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-25/android/widget/AdapterView.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_unitk.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="438">
           <caret line="136" column="43" selection-start-line="136" selection-start-column="43" selection-end-line="136" selection-end-column="43" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_addp.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_addp.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
           <caret line="696" column="0" selection-start-line="696" selection-start-column="0" selection-end-line="696" selection-end-column="40" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
@@ -3205,34 +3114,31 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_addm.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
           <caret line="387" column="39" selection-start-line="387" selection-start-column="39" selection-end-line="387" selection-end-column="39" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_addk.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_addk.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2846">
           <caret line="32" column="43" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/base/BaseFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3791">
           <caret line="223" column="0" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3240,7 +3146,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="59" column="33" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3248,7 +3153,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3265,7 +3169,7 @@
         <state relative-caret-position="1615">
           <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3274,7 +3178,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2720">
           <caret line="195" column="5" selection-start-line="195" selection-start-column="5" selection-end-line="195" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3282,7 +3185,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="86" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3290,7 +3192,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3298,37 +3199,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="816">
           <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding>
-            <element signature="e#289#290#0" expanded="true" />
-            <element signature="e#325#326#0" expanded="true" />
-            <element signature="e#499#500#0" expanded="true" />
-            <element signature="e#535#536#0" expanded="true" />
-            <element signature="e#709#710#0" expanded="true" />
-            <element signature="e#745#746#0" expanded="true" />
-            <element signature="e#919#920#0" expanded="true" />
-            <element signature="e#955#956#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/StockManagement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
-          <folding>
-            <element signature="e#2276#2277#0" expanded="true" />
-            <element signature="e#2307#2308#0" expanded="true" />
-            <element signature="e#2355#2356#0" expanded="true" />
-            <element signature="e#2395#2396#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/StockManagement.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/Report.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="601">
           <caret line="109" column="68" selection-start-line="109" selection-start-column="68" selection-end-line="109" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3336,10 +3214,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
-          <folding>
-            <element signature="e#483#484#0" expanded="true" />
-            <element signature="e#525#526#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3355,10 +3229,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
-          <folding>
-            <element signature="e#218#219#0" expanded="true" />
-            <element signature="e#243#244#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3366,7 +3236,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3374,7 +3243,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
           <caret line="54" column="125" selection-start-line="54" selection-start-column="125" selection-end-line="54" selection-end-column="125" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3382,73 +3250,70 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
-          <folding>
-            <element signature="e#222#223#0" expanded="true" />
-            <element signature="e#263#264#0" expanded="true" />
-            <element signature="e#488#489#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_detailm.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
+        <state relative-caret-position="6834">
           <caret line="402" column="27" selection-start-line="385" selection-start-column="12" selection-end-line="402" selection-end-column="27" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_detailk.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_detailk.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
+        <state relative-caret-position="5797">
           <caret line="341" column="27" selection-start-line="341" selection-start-column="27" selection-end-line="341" selection-end-column="27" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailMasuk.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
+        <state relative-caret-position="2159">
           <caret line="158" column="36" selection-start-line="158" selection-start-column="36" selection-end-line="158" selection-end-column="58" />
           <folding>
-            <element signature="e#8186#8187#0" expanded="true" />
-            <element signature="e#8240#8241#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#8593#8594#0" expanded="false" />
+            <element signature="e#8647#8648#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/UnitMasuk.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-501">
-          <caret line="79" column="47" selection-start-line="79" selection-start-column="42" selection-end-line="79" selection-end-column="47" />
-          <folding />
+        <state relative-caret-position="799">
+          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailKeluar.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-176">
-          <caret line="154" column="58" selection-start-line="154" selection-start-column="58" selection-end-line="154" selection-end-column="58" />
+        <state relative-caret-position="2091">
+          <caret line="154" column="28" selection-start-line="154" selection-start-column="28" selection-end-line="154" selection-end-column="28" />
           <folding>
-            <element signature="e#8210#8211#0" expanded="true" />
-            <element signature="e#8264#8265#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#8722#8723#0" expanded="false" />
+            <element signature="e#8776#8777#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddMasuk.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
+        <state relative-caret-position="-1217">
           <caret line="331" column="0" selection-start-line="331" selection-start-column="0" selection-end-line="331" selection-end-column="0" />
-          <folding>
-            <marker date="1504544880500" expanded="true" signature="13463:13913" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
