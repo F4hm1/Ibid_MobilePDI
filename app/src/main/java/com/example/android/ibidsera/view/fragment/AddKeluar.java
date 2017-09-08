@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -58,6 +59,11 @@ import retrofit2.Response;
  */
 
 public class AddKeluar extends BaseFragment{
+    @BindView(R.id.nopol_title) TextView nopol_title;
+    @BindView(R.id.nama_title) TextView nama_title;
+    @BindView(R.id.alamat_title) TextView alamat_title;
+    @BindView(R.id.kota_title) TextView kota_title;
+    @BindView(R.id.telepon_title) TextView telepon_title;
     @BindView(R.id.table_addm) TableLayout tl;
     @BindView(R.id.progress_view) CircularProgressView cpv;
     @BindView(R.id.background_progress) RelativeLayout bp;
@@ -110,6 +116,7 @@ public class AddKeluar extends BaseFragment{
         hideKeyboard();
         setAllCaps();
         setAllDisabled();
+        setRequired();
 
         datePicker(tgl_pemeriksaan, 0);
         getTimeSpinner();
@@ -314,9 +321,11 @@ public class AddKeluar extends BaseFragment{
                     List<Unit> lu = response.body();
                     StaticUnit.setLu(lu);
                     ls.clear();
-                    for (int i = 0; i < lu.size(); i++) {
-                        ls.add(lu.get(i).getAuction().getValue());
-                    }
+                    try {
+                        for (int i = 0; i < lu.size(); i++) {
+                            ls.add(lu.get(i).getAuction().getValue());
+                        }
+                    }catch (Exception e){}
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                             android.R.layout.simple_dropdown_item_1line, ls);
                     nopol.setAdapter(adapter);
@@ -361,47 +370,49 @@ public class AddKeluar extends BaseFragment{
     }
 
     private void getKomponenList(List<Unit> lu, int position){
-        size = lu.get(position).getKomponen().size();
-        for (int i = 0; i < size; i++) {
-            TableRow row = tableRow();
-            TableLayout tl2 = tableLayout();
-            TableRow row2 = tableRow();
-            TextView no = textView();
-            TextView nama = textView();
-            CheckBox b = checkBox();
-            CheckBox r = checkBox();
-            CheckBox t = checkBox();
-            ImageView b_in = imageView();
-            ImageView r_in = imageView();
-            ImageView t_in = imageView();
-            hi.put("b"+i, b_in);
-            hi.put("r"+i, r_in);
-            hi.put("t"+i, t_in);
+        try {
+            size = lu.get(position).getKomponen().size();
+            for (int i = 0; i < size; i++) {
+                TableRow row = tableRow();
+                TableLayout tl2 = tableLayout();
+                TableRow row2 = tableRow();
+                TextView no = textView();
+                TextView nama = textView();
+                CheckBox b = checkBox();
+                CheckBox r = checkBox();
+                CheckBox t = checkBox();
+                ImageView b_in = imageView();
+                ImageView r_in = imageView();
+                ImageView t_in = imageView();
+                hi.put("b" + i, b_in);
+                hi.put("r" + i, r_in);
+                hi.put("t" + i, t_in);
 
-            TableRow.LayoutParams param_25 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, .25f);
-            TableRow.LayoutParams param5 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 5f);
-            TableRow.LayoutParams param3 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 3f);
-            TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-            TableRow.LayoutParams paramCheck = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-            paramCheck.gravity = Gravity.CENTER;
+                TableRow.LayoutParams param_25 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, .25f);
+                TableRow.LayoutParams param5 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 5f);
+                TableRow.LayoutParams param3 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 3f);
+                TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+                TableRow.LayoutParams paramCheck = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+                paramCheck.gravity = Gravity.CENTER;
 
-            rowColor(row, i);
-            textStyle(no, row, param_25, String.valueOf(i+1));
-            textStyle(nama, row2, param5, lu.get(position).getKomponen().get(i).getNama());
-            checkboxStyle(b, row2, param1, i, "b", h);
-            checkboxStyle(r, row2, param1, i, "r", h);
-            checkboxStyle(t, row2, param1, i, "t", h);
-            imgStyle(b_in, row2, paramCheck);
-            imgStyle(r_in, row2, paramCheck);
-            imgStyle(t_in, row2, paramCheck);
-            tl2.addView(row2);
-            tl2.setLayoutParams(param3);
-            row.addView(tl2);
-            tl.addView(row);
-        }
-        checkAllListener(checkBoxB, "b", size, h);
-        checkAllListener(checkBoxR, "r", size, h);
-        checkAllListener(checkBoxT, "t", size, h);
+                rowColor(row, i);
+                textStyle(no, row, param_25, String.valueOf(i + 1));
+                textStyle(nama, row2, param5, lu.get(position).getKomponen().get(i).getNama());
+                checkboxStyle(b, row2, param1, i, "b", h);
+                checkboxStyle(r, row2, param1, i, "r", h);
+                checkboxStyle(t, row2, param1, i, "t", h);
+                imgStyle(b_in, row2, paramCheck);
+                imgStyle(r_in, row2, paramCheck);
+                imgStyle(t_in, row2, paramCheck);
+                tl2.addView(row2);
+                tl2.setLayoutParams(param3);
+                row.addView(tl2);
+                tl.addView(row);
+            }
+            checkAllListener(checkBoxB, "b", size, h);
+            checkAllListener(checkBoxR, "r", size, h);
+            checkAllListener(checkBoxT, "t", size, h);
+        }catch (Exception e){}
     }
 
     private void signatureClick(ImageView imageView, int id){
@@ -502,5 +513,14 @@ public class AddKeluar extends BaseFragment{
         }
         Bitmap resizedbitmap = Bitmap.createScaledBitmap(bmp, 20, 20, true);
         imageView.setImageBitmap(resizedbitmap);
+    }
+
+    private void setRequired(){
+        String required = "<font color=#FF0000> *</font>";
+        nopol_title.setText(Html.fromHtml(nopol_title.getText() + required));
+        nama_title.setText(Html.fromHtml(nama_title.getText() + required));
+        alamat_title.setText(Html.fromHtml(alamat_title.getText() + required));
+        kota_title.setText(Html.fromHtml(kota_title.getText() + required));
+        telepon_title.setText(Html.fromHtml(telepon_title.getText() + required));
     }
 }
