@@ -299,18 +299,30 @@ public class AddPersiapan extends BaseFragment {
             setSebagai();
         });
 
+//        km.addTextChangedListener(new TextWatcher() {
+//            public void afterTextChanged(Editable s) {}
+//
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+//
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                convertToRupiah(km);
+//            }
+//        });
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pDialog.setMessage("Sending Data..");
                 pDialog.show();
 
-                if (perusahaan.isChecked()) {
-                    lp.get(position).setStatus_biodata(1);
-                } else {
-                    lp.get(position).setStatus_biodata(0);
-                }
-                lp.get(position).setNo_identitas(noIdentitas.getText().toString());
+                try {
+                    if (perusahaan.isChecked()) {
+                        lp.get(position).setStatus_biodata(1);
+                    } else {
+                        lp.get(position).setStatus_biodata(0);
+                    }
+                    lp.get(position).setNo_identitas(noIdentitas.getText().toString());
+                }catch (Exception e){}
 
                 HashMap<String, EditText> h = new HashMap<>();
                 h.put("NO POLISI", noPolisi);
@@ -448,7 +460,7 @@ public class AddPersiapan extends BaseFragment {
 
     private void addList(List<Attribute> pv, Spinner spinner) {
         List<String> list = new ArrayList<String>();
-        map = new HashMap<String, String>();
+        map = new HashMap<>();
 
         for (int i = 0 ; i < pv.size(); i++) {
             map.put(String.valueOf(pv.get(i).getId_attrdetail())
@@ -606,6 +618,17 @@ public class AddPersiapan extends BaseFragment {
             setGone(no_npwp);
         }
     }
+
+//    private void convertToRupiah(EditText editText){
+//        String separator = ".";
+//        int j = 0;
+//        for (int i = editText.length(); i > 0; i--) {
+//            j = j + 1;
+//            if (((j % 3) == 1) && (j != 1)) {
+//                editText.setText(editText.getText().toString().substring(i-1, 1) + separator + editText.getText());
+//            }
+//        }
+//    }
 
     private String stringVal(EditText item) { // delete unknown symbol
         return item.getText().toString();

@@ -85,7 +85,13 @@ public class Persiapan extends BaseFragment {
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     List<Unit> lu = response.body();
                     StaticUnit.setLu(lu);
-                    getPersiapan(lu);
+                    try {
+                        if (!response.body().toString().equals("[]")) {
+                            getPersiapan(lu);
+                        } else {
+                            showToast("Tidak ada data");
+                        }
+                    }catch (Exception e){}
                 }
 
                 @Override
@@ -99,7 +105,13 @@ public class Persiapan extends BaseFragment {
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     List<Unit> lu = response.body();
                     StaticUnit.setLu(lu);
-                    getPersiapan(lu);
+                    try {
+                        if (!response.body().toString().equals("[]")) {
+                            getPersiapan(lu);
+                        } else {
+                            showToast("Tidak ada data");
+                        }
+                    }catch (Exception e){}
                 }
 
                 @Override
