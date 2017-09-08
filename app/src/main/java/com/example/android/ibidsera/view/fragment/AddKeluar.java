@@ -258,9 +258,9 @@ public class AddKeluar extends BaseFragment{
         insertUnit.setAlamatpengemudi(String.valueOf(alamat_pengemudi.getText()));
         insertUnit.setKotapengemudi(String.valueOf(kota.getText()));
         insertUnit.setTeleponpengemudi(String.valueOf(telepon.getText()));
-        List<Integer> lb = new ArrayList<>();
-        List<Integer> lr = new ArrayList<>();
-        List<Integer> lt = new ArrayList<>();
+        List<String> lb = new ArrayList<>();
+        List<String> lr = new ArrayList<>();
+        List<String> lt = new ArrayList<>();
         List<Integer> lidKomponen = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             CheckBox b = h.get("b"+i);
@@ -282,9 +282,9 @@ public class AddKeluar extends BaseFragment{
         return insertUnit;
     }
 
-    private int isChecked(CheckBox checkBox){
-        if(checkBox.isChecked()) return 1;
-        else return 0;
+    private String isChecked(CheckBox checkBox){
+        if(checkBox.isChecked()) return "true";
+        else return "false";
     }
 
     private void setAllDisabled(){
@@ -464,8 +464,8 @@ public class AddKeluar extends BaseFragment{
 
         Sign sign = new Sign();
 
-        sign.setSign_ibid_msk(base64Encode(bitmap1));
-        sign.setSign_cust_msk(base64Encode(bitmap2));
+        sign.setSign_ibid_klr(base64Encode(bitmap1));
+        sign.setSign_cust_klr(base64Encode(bitmap2));
         sign.setId_pemeriksaanitem(gs.getId_pemeriksaan_item());
 
         if(lu.get(position).getAuction().getId_auctionitem() != 0){

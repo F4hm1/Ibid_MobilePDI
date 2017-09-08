@@ -32,9 +32,9 @@ public class InsertUnit {
     private String kotapengemudi;
     private String teleponpengemudi;
     private int iduser;
-    private List<Integer> cektampilkanbaik;
-    private List<Integer> cektampilkanrusak;
-    private List<Integer> cektampilkantidakada;
+    private List<String> cektampilkanbaik;
+    private List<String> cektampilkanrusak;
+    private List<String> cektampilkantidakada;
     private List<Integer> idkomponenpemeriksaan;
     private String signibidmsk;
     private String signcustmsk;
@@ -250,27 +250,27 @@ public class InsertUnit {
         this.nopolisi = nopolisi;
     }
 
-    public List<Integer> getCektampilkanbaik() {
+    public List<String> getCektampilkanbaik() {
         return cektampilkanbaik;
     }
 
-    public void setCektampilkanbaik(List<Integer> cektampilkanbaik) {
+    public void setCektampilkanbaik(List<String> cektampilkanbaik) {
         this.cektampilkanbaik = cektampilkanbaik;
     }
 
-    public List<Integer> getCektampilkanrusak() {
+    public List<String> getCektampilkanrusak() {
         return cektampilkanrusak;
     }
 
-    public void setCektampilkanrusak(List<Integer> cektampilkanrusak) {
+    public void setCektampilkanrusak(List<String> cektampilkanrusak) {
         this.cektampilkanrusak = cektampilkanrusak;
     }
 
-    public List<Integer> getCektampilkantidakada() {
+    public List<String> getCektampilkantidakada() {
         return cektampilkantidakada;
     }
 
-    public void setCektampilkantidakada(List<Integer> cektampilkantidakada) {
+    public void setCektampilkantidakada(List<String> cektampilkantidakada) {
         this.cektampilkantidakada = cektampilkantidakada;
     }
 

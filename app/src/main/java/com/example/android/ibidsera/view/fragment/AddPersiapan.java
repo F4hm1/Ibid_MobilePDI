@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.Attribute;
-import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.Penitip;
 import com.example.android.ibidsera.model.PersiapanPost;
 import com.example.android.ibidsera.model.PersiapanValue;
@@ -300,11 +299,6 @@ public class AddPersiapan extends BaseFragment {
             setSebagai();
         });
 
-<<<<<<< HEAD
-        save.setOnClickListener(view -> {
-            pDialog.setMessage("Sending Data..");
-            pDialog.show();
-=======
 //        km.addTextChangedListener(new TextWatcher() {
 //            public void afterTextChanged(Editable s) {}
 //
@@ -354,65 +348,29 @@ public class AddPersiapan extends BaseFragment {
                     handler.postDelayed(() -> {
 
                         auctionService.insertUnit(persiapanPost).enqueue(new Callback<PersiapanPost>() {
->>>>>>> master
 
-            if (perusahaan.isChecked()) {
-                lp.get(position).setStatus_biodata(1);
-            } else {
-                lp.get(position).setStatus_biodata(0);
-            }
-            lp.get(position).setNo_identitas(noIdentitas.getText().toString());
-
-            HashMap<String, EditText> h = new HashMap<>();
-            h.put("NO POLISI", noPolisi);
-            h.put("Transmisi", transmisi);
-            h.put("Tahun", tahun);
-            h.put("Nama", nama);
-            h.put("Ponsel", ponselPic);
-
-            HashMap<String, Spinner> hs = new HashMap<>();
-            hs.put("Merk", merk);
-            hs.put("Seri", seri);
-            hs.put("Silinder", silinder);
-            hs.put("Grade", grade);
-            hs.put("Sub Grade", subGrade);
-
-            List<String> ls2 = AddPersiapan.this.required(h);
-            List<String> lsSpinner = AddPersiapan.this.requiredSpinner(hs);
-
-            if (ls2.size() <= 0 || lsSpinner.size() <= 0) {
-
-                persiapanPost = AddPersiapan.this.getDataView();
-                final Handler handler = new Handler();
-                handler.postDelayed(() -> {
-
-                    auctionService.insertUnit(persiapanPost).enqueue(new Callback<GetStatus>() {
-
-                        @Override
-                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                            Log.i("info", "post submitted to API." + response.body());
-                            pDialog.hide();
-                            if (response.body().getStatus() == 200){
+                            @Override
+                            public void onResponse(Call<PersiapanPost> call, Response<PersiapanPost> response) {
+                                Log.i("info", "post submitted to API." + response.body());
+                                pDialog.hide();
                                 alertDialog("Proses Penambahan Item Berhasil", 1);
-                            }else{
-                                alertDialog(response.body().getMessage(), 0);
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<GetStatus> call, Throwable t) {
-                            errorRetrofit(call, t);
-                            pDialog.hide();
-                        }
-                    });
-                }, 2000);
+                            @Override
+                            public void onFailure(Call<PersiapanPost> call, Throwable t) {
+                                errorRetrofit(call, t);
+                                pDialog.hide();
+                            }
+                        });
+                    }, 2000);
 
-            } else {
-                pDialog.hide();
-                AddPersiapan.this.alertLogic(ls2);
-                AddPersiapan.this.alertLogic(lsSpinner);
+                } else {
+                    pDialog.hide();
+                    AddPersiapan.this.alertLogic(ls2);
+                    AddPersiapan.this.alertLogic(lsSpinner);
+                }
+
             }
-
         });
         cpvStop(cpv, bp);
     }

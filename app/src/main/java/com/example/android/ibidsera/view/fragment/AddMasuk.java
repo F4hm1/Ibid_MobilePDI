@@ -171,10 +171,7 @@ public class AddMasuk extends BaseFragment{
             h.put("Telp", telepon);
 
             List<String> ls2 = required(h);
-<<<<<<< HEAD
 
-=======
->>>>>>> master
             if(ls2.size() <= 0) {
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {
@@ -261,7 +258,7 @@ public class AddMasuk extends BaseFragment{
         return getAdapter(list);
     }
 
-    public InsertUnit setInsertUnit(List<Unit> lUnit){
+    private InsertUnit setInsertUnit(List<Unit> lUnit){
         InsertUnit insertUnit = new InsertUnit();
         insertUnit.setIdpemeriksaanitem(lUnit.get(position).getAuction().getId_pemeriksaanitem());
         if(lUnit.get(position).getAuction().getId_auctionitem() != 0){
@@ -287,9 +284,9 @@ public class AddMasuk extends BaseFragment{
         insertUnit.setAlamatpengemudi(String.valueOf(alamat_pengemudi.getText()));
         insertUnit.setKotapengemudi(String.valueOf(kota.getText()));
         insertUnit.setTeleponpengemudi(String.valueOf(telepon.getText()));
-        List<Integer> lb = new ArrayList<>();
-        List<Integer> lr = new ArrayList<>();
-        List<Integer> lt = new ArrayList<>();
+        List<String> lb = new ArrayList<>();
+        List<String> lr = new ArrayList<>();
+        List<String> lt = new ArrayList<>();
         List<Integer> lidKomponen = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             CheckBox b = h.get("b"+i);
@@ -356,9 +353,9 @@ public class AddMasuk extends BaseFragment{
         return ll;
     }
 
-    private int isChecked(CheckBox checkBox){
-        if(checkBox.isChecked())return 1;
-        else return 0;
+    private String isChecked(CheckBox checkBox){
+        if(checkBox.isChecked())return "true";
+        else return "false";
     }
 
     private void setAllDisabled(){
