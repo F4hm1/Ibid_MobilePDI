@@ -11,7 +11,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -44,7 +43,6 @@ import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.util.RetrofitUtil;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -99,6 +97,7 @@ public class AddMasuk extends BaseFragment{
     private Bitmap bitmap2;
     private Bitmap bitmap3;
     private Bitmap bitmap4;
+    private boolean onClickSpinner = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,18 +129,26 @@ public class AddMasuk extends BaseFragment{
         cpvStop(cpv, bp);
 
         nopol.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+                if(onClickSpinner) {
+                    nopol.dismissDropDown();
+                    onClickSpinner = false;
+                }
+            }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 nopol.dismissDropDown();
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                getDropdownList(auctionService, ls);
+                if(!onClickSpinner) {
+                    getDropdownList(auctionService, ls);
+                }
             }
         });
 
         nopol.setOnItemClickListener((parent, view, position, id1) -> {
+            onClickSpinner = true;
             hideKeyboard();
             cpvStart(cpv, bp);
             getAddm(StaticUnit.getLu(), position);
@@ -164,7 +171,10 @@ public class AddMasuk extends BaseFragment{
             h.put("Telp", telepon);
 
             List<String> ls2 = required(h);
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
             if(ls2.size() <= 0) {
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {
@@ -309,21 +319,12 @@ public class AddMasuk extends BaseFragment{
         signature2.buildDrawingCache();
         bitmap2 = signature2.getDrawingCache();
 
-
-        byte[] byteArray;
         Sign sign = new Sign();
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap1.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byteArray = byteArrayOutputStream.toByteArray();
-        sign.setSign_ibid_msk(Base64.encodeToString(byteArray, Base64.DEFAULT));
-
-        ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
-        bitmap2.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream2);
-        byteArray = byteArrayOutputStream2.toByteArray();
-        sign.setSign_cust_msk(Base64.encodeToString(byteArray, Base64.DEFAULT));
-
+        sign.setSign_ibid_msk(base64Encode(bitmap1));
+        sign.setSign_cust_msk(base64Encode(bitmap2));
         sign.setId_pemeriksaanitem(gs.getId_pemeriksaan_item());
+
         if(lu.get(position).getAuction().getId_auctionitem() != 0){
             sign.setId_auctionitem(lu.get(position).getAuction().getId_auctionitem());
         }else{
@@ -338,25 +339,18 @@ public class AddMasuk extends BaseFragment{
         ibid_niaga.buildDrawingCache();
         bitmap4 = ibid_niaga.getDrawingCache();
 
-        byte[] byteArray;
         List<Lampiran> ll = new ArrayList<>();
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         Lampiran lampiran = new Lampiran();
-        bitmap3.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byteArray = byteArrayOutputStream.toByteArray();
         lampiran.setIdpemeriksaan_item(gs.getId_pemeriksaan_item());
         lampiran.setNama_lampiran("mobil1");
-        lampiran.setBase64img(Base64.encodeToString(byteArray, Base64.DEFAULT));
+        lampiran.setBase64img(base64Encode(bitmap3));
         ll.add(lampiran);
 
-        ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
         Lampiran lampiran2 = new Lampiran();
-        bitmap4.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream2);
-        byteArray = byteArrayOutputStream2.toByteArray();
         lampiran2.setIdpemeriksaan_item(gs.getId_pemeriksaan_item());
         lampiran2.setNama_lampiran("mobil2");
-        lampiran2.setBase64img(Base64.encodeToString(byteArray, Base64.DEFAULT));
+        lampiran2.setBase64img(base64Encode(bitmap4));
         ll.add(lampiran2);
 
         return ll;
@@ -478,21 +472,21 @@ public class AddMasuk extends BaseFragment{
 
     private void imageClick(ImageView imageView, int id, int position){
         if(id == 1) {
-            imageView.setOnClickListener(v -> catatanDialog(position));
+            imageView.setOnClickListener(v -> lampiranDialog(position));
         }else {
             imageView.setOnClickListener(v -> signatureDialog(position));
         }
     }
 
-    private void catatanDialog(int id){
+    private void lampiranDialog(int id){
         AlertDialog.Builder alertDialog  = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("Catatan");
+        alertDialog.setTitle("Lampiran");
         alertDialog.setCancelable(false);
 
         LinearLayout linearLayout = new LinearLayout(getContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         FrameLayout container = new FrameLayout(getContext());
-        onTouch(container);
+        onTouchLampiran(container);
         ImageView imageView = new ImageView(getContext());
         if(id == 1){
             if(bitmap3 == null) {
@@ -589,7 +583,7 @@ public class AddMasuk extends BaseFragment{
         alertDialog.create().show();
     }
 
-    private void onTouch(FrameLayout frameLayout){
+    private void onTouchLampiran(FrameLayout frameLayout){
         frameLayout.setOnTouchListener((view, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
 

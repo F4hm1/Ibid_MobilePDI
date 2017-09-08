@@ -64,7 +64,13 @@ public class Report extends BaseFragment{
             public void onResponse(Call<List<ReportModel>> call, Response<List<ReportModel>> response) {
                 List<ReportModel> lu = response.body();
                 StaticReport.setLr(lu);
-                getReport(lu);
+                try {
+                    if (!response.body().toString().equals("[]")) {
+                        getReport(lu);
+                    } else {
+                        showToast("Tidak ada data");
+                    }
+                }catch (Exception e){}
             }
 
             @Override

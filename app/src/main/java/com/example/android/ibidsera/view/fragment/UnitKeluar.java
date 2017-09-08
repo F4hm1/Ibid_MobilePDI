@@ -84,7 +84,13 @@ public class UnitKeluar extends BaseFragment{
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     List<Unit> lu = response.body();
                     StaticUnit.setLu(lu);
-                    getUnitk(lu);
+                    try {
+                        if (!response.body().toString().equals("[]")) {
+                            getUnitk(lu);
+                        } else {
+                            showToast("Tidak ada data");
+                        }
+                    }catch (Exception e){}
                 }
 
                 @Override
@@ -98,7 +104,13 @@ public class UnitKeluar extends BaseFragment{
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     List<Unit> lu = response.body();
                     StaticUnit.setLu(lu);
-                    getUnitk(lu);
+                    try {
+                        if (!response.body().toString().equals("[]")) {
+                            getUnitk(lu);
+                        } else {
+                            showToast("Tidak ada data");
+                        }
+                    }catch (Exception e){}
                 }
 
                 @Override

@@ -22,7 +22,7 @@ public class Komponen {
     }
 
     public String getTampil_b() {
-        return tampil_b;
+        return nullString(tampil_b);
     }
 
     public void setTampil_b(String tampil_b) {
@@ -30,7 +30,7 @@ public class Komponen {
     }
 
     public String getTampil_r() {
-        return tampil_r;
+        return nullString(tampil_r);
     }
 
     public void setTampil_r(String tampil_r) {
@@ -38,7 +38,7 @@ public class Komponen {
     }
 
     public String getTampil_t() {
-        return tampil_t;
+        return nullString(tampil_t);
     }
 
     public void setTampil_t(String tampil_t) {
@@ -46,7 +46,7 @@ public class Komponen {
     }
 
     public String getTampil_b_klr() {
-        return tampil_b_klr;
+        return nullString(tampil_b_klr);
     }
 
     public void setTampil_b_klr(String tampil_b_klr) {
@@ -54,7 +54,7 @@ public class Komponen {
     }
 
     public String getTampil_r_klr() {
-        return tampil_r_klr;
+        return nullString(tampil_r_klr);
     }
 
     public void setTampil_r_klr(String tampil_r_klr) {
@@ -62,10 +62,18 @@ public class Komponen {
     }
 
     public String getTampil_t_klr() {
-        return tampil_t_klr;
+        return nullString(tampil_t_klr);
     }
 
     public void setTampil_t_klr(String tampil_t_klr) {
         this.tampil_t_klr = tampil_t_klr;
     }
+
+    private String nullString(String item){
+        if (item == null || item.equals("false")) item = "0";
+        else item = "1";
+
+        return item;
+    }
+
 }

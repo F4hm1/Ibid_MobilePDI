@@ -145,8 +145,22 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/base/BaseFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/base/BaseFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/Komponen.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/Komponen.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/PersiapanBuilder.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/PersiapanBuilder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/Unit.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/model/Unit.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddKeluar.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddKeluar.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddMasuk.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddMasuk.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddPersiapan.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddPersiapan.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailKeluar.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailKeluar.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailMasuk.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/DetailMasuk.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/Persiapan.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/Persiapan.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/Report.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/Report.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/UnitKeluar.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/UnitKeluar.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/UnitMasuk.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/UnitMasuk.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_addm.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_addm.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_detailk.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_detailk.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_detailm.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_detailm.xml" />
     </list>
     <ignored path="ibidsera2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -197,31 +211,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AddMasuk.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AddMasuk.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddMasuk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4655">
-              <caret line="390" column="17" selection-start-line="390" selection-start-column="17" selection-end-line="390" selection-end-column="17" />
+            <state relative-caret-position="296">
+              <caret line="173" column="0" selection-start-line="173" selection-start-column="0" selection-end-line="176" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddKeluar.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AddKeluar.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddKeluar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2980">
-              <caret line="309" column="25" selection-start-line="309" selection-start-column="25" selection-end-line="309" selection-end-column="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#setAllDisabled#0;class#AddKeluar#0" expanded="false" />
-                <element signature="method#setAllCaps#0;class#AddKeluar#0" expanded="false" />
-                <element signature="method#getTimeSpinner#0;class#AddKeluar#0" expanded="false" />
-                <element signature="method#getKomponen#0;class#AddKeluar#0" expanded="false" />
-                <element signature="method#getKomponenList#0;class#AddKeluar#0" expanded="false" />
-                <element signature="method#signatureClick#0;class#AddKeluar#0" expanded="false" />
-                <element signature="method#signatureDialog#0;class#AddKeluar#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="787">
+              <caret line="311" column="25" selection-start-line="311" selection-start-column="25" selection-end-line="311" selection-end-column="25" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1838,7 +1843,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="D:\HarfiProject\Sera Ibid Project\ibidsera2" value="4512661358264" />
+        <entry key="D:\HarfiProject\Sera Ibid Project\ibidsera2" value="4512744743243" />
         <entry key="F:\Ricaro\AndroidStudio\Android\IbidSera" value="4505386422629" />
         <entry key="F:\Ricaro\AndroidStudio\Android\ibidsera2" value="4510910231539" />
       </map>
@@ -2210,9 +2215,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_persiapan.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_addp.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_detailm.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddMasuk.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/UnitKeluar.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddKeluar.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddMasuk.java" />
       </list>
     </option>
   </component>
@@ -2250,12 +2255,11 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane />
       </pane>
+      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2276,6 +2280,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2745,7 +2750,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddPersiapan.java</url>
-          <line>342</line>
+          <line>396</line>
           <properties />
           <option name="timeStamp" value="175" />
         </line-breakpoint>
@@ -2759,7 +2764,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-236">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2774,12 +2778,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
           <caret line="52" column="19" selection-start-line="52" selection-start-column="19" selection-end-line="52" selection-end-column="19" />
-          <folding>
-            <element signature="e#4475#4476#0" expanded="false" />
-            <element signature="e#4520#4521#0" expanded="false" />
-            <element signature="e#10970#10971#0" expanded="false" />
-            <element signature="e#11016#11017#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2787,7 +2785,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-233">
           <caret line="41" column="52" selection-start-line="41" selection-start-column="52" selection-end-line="41" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2821,7 +2818,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2923,7 +2919,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2938,7 +2933,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2954,7 +2948,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="601">
           <caret line="109" column="68" selection-start-line="109" selection-start-column="68" selection-end-line="109" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2980,7 +2973,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3037,7 +3029,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3264">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3045,7 +3036,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="217">
           <caret line="53" column="85" selection-start-line="53" selection-start-column="85" selection-end-line="53" selection-end-column="85" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3053,7 +3043,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="2654" column="0" selection-start-line="2654" selection-start-column="0" selection-end-line="2654" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3061,7 +3050,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="369">
           <caret line="24" column="33" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3093,7 +3081,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="586" column="46" selection-start-line="586" selection-start-column="46" selection-end-line="586" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3113,13 +3100,6 @@
           <caret line="327" column="61" selection-start-line="327" selection-start-column="61" selection-end-line="327" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="method#getDataView#0;class#AddPersiapan#0" expanded="false" />
-            <element signature="method#addList#0;class#AddPersiapan#0" expanded="false" />
-            <element signature="method#setAllCaps#0;class#AddPersiapan#0" expanded="false" />
-            <element signature="method#getDropdownListWarna#0;class#AddPersiapan#0" expanded="false" />
-            <element signature="method#getDropdownListPenitip#0;class#AddPersiapan#0" expanded="false" />
-            <element signature="method#getPenitip#0;class#AddPersiapan#0" expanded="false" />
-            <element signature="method#setSebagai#0;class#AddPersiapan#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3136,32 +3116,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="498">
           <caret line="81" column="41" selection-start-line="81" selection-start-column="27" selection-end-line="81" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddKeluar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="787">
+          <caret line="311" column="25" selection-start-line="311" selection-start-column="25" selection-end-line="311" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddMasuk.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4655">
-          <caret line="390" column="17" selection-start-line="390" selection-start-column="17" selection-end-line="390" selection-end-column="17" />
+        <state relative-caret-position="296">
+          <caret line="173" column="0" selection-start-line="173" selection-start-column="0" selection-end-line="176" selection-end-column="14" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/android/ibidsera/view/fragment/AddKeluar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2980">
-          <caret line="309" column="25" selection-start-line="309" selection-start-column="25" selection-end-line="309" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#setAllDisabled#0;class#AddKeluar#0" expanded="false" />
-            <element signature="method#setAllCaps#0;class#AddKeluar#0" expanded="false" />
-            <element signature="method#getTimeSpinner#0;class#AddKeluar#0" expanded="false" />
-            <element signature="method#getKomponen#0;class#AddKeluar#0" expanded="false" />
-            <element signature="method#getKomponenList#0;class#AddKeluar#0" expanded="false" />
-            <element signature="method#signatureClick#0;class#AddKeluar#0" expanded="false" />
-            <element signature="method#signatureDialog#0;class#AddKeluar#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
