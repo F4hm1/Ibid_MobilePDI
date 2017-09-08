@@ -3,6 +3,7 @@ package com.example.android.ibidsera.view.fragment;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +91,7 @@ public class AddKeluar extends BaseFragment{
     private int size = 0;
     private int position = -1;
     HashMap<String, CheckBox> h = new HashMap<>();
+    HashMap<String, ImageView> hi = new HashMap<>();
     private Bitmap bitmap1;
     private Bitmap bitmap2;
 
@@ -98,6 +101,8 @@ public class AddKeluar extends BaseFragment{
         View myFragment = inflater.inflate(R.layout.content_addk, container, false);
         ButterKnife.bind(this, myFragment);
 
+        cpvStart(cpv, bp);
+
         AuctionService auctionService = RetrofitUtil.getAuctionService();
         List<String> ls = new ArrayList<>();
         ProgressDialog pDialog = new ProgressDialog(getContext());
@@ -106,19 +111,9 @@ public class AddKeluar extends BaseFragment{
         setAllCaps();
         setAllDisabled();
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            position = bundle.getInt("id");
-        }
-
-        cpvStart(cpv, bp);
-        if(position!=-1){
-            getAddk(StaticUnit.getLu(), position);
-        }
-
         datePicker(tgl_pemeriksaan, 0);
         getTimeSpinner();
-        getKomponen(auctionService);
+        getKomponen(auctionService, -1);
         cpvStop(cpv, bp);
 
         nopol.addTextChangedListener(new TextWatcher() {
@@ -226,6 +221,11 @@ public class AddKeluar extends BaseFragment{
             signature1.setImageBitmap(bitmap1);
         } else if(bitmap2 != null){
             signature2.setImageBitmap(bitmap2);
+        }
+        for (int i = 0; i < size; i++) {
+            imgSet(hi.get("b"+i), lu.get(position).getKomponen().get(i).getTampil_b());
+            imgSet(hi.get("r"+i), lu.get(position).getKomponen().get(i).getTampil_r());
+            imgSet(hi.get("t"+i), lu.get(position).getKomponen().get(i).getTampil_t());
         }
     }
 
@@ -348,12 +348,12 @@ public class AddKeluar extends BaseFragment{
         menit.setSelection(menit_now);
     }
 
-    private void getKomponen(AuctionService auctionService){
+    private void getKomponen(AuctionService auctionService, int position){
         auctionService.getUnitK().enqueue(new Callback<List<Unit>>() {
             @Override
             public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                 List<Unit> lu = response.body();
-                getKomponenList(lu);
+                getKomponenList(lu, 0);
             }
 
             @Override
@@ -363,8 +363,8 @@ public class AddKeluar extends BaseFragment{
         });
     }
 
-    private void getKomponenList(List<Unit> lu){
-        size = lu.get(0).getKomponen().size();
+    private void getKomponenList(List<Unit> lu, int position){
+        size = lu.get(position).getKomponen().size();
         for (int i = 0; i < size; i++) {
             TableRow row = tableRow();
             TableLayout tl2 = tableLayout();
@@ -374,18 +374,29 @@ public class AddKeluar extends BaseFragment{
             CheckBox b = checkBox();
             CheckBox r = checkBox();
             CheckBox t = checkBox();
+            ImageView b_in = imageView();
+            ImageView r_in = imageView();
+            ImageView t_in = imageView();
+            hi.put("b"+i, b_in);
+            hi.put("r"+i, r_in);
+            hi.put("t"+i, t_in);
 
             TableRow.LayoutParams param_25 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, .25f);
-            TableRow.LayoutParams param7 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 7f);
+            TableRow.LayoutParams param5 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 5f);
             TableRow.LayoutParams param3 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 3f);
             TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+            TableRow.LayoutParams paramCheck = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+            paramCheck.gravity = Gravity.CENTER;
 
             rowColor(row, i);
             textStyle(no, row, param_25, String.valueOf(i+1));
-            textStyle(nama, row2, param7, lu.get(0).getKomponen().get(i).getNama());
+            textStyle(nama, row2, param5, lu.get(position).getKomponen().get(i).getNama());
             checkboxStyle(b, row2, param1, i, "b", h);
             checkboxStyle(r, row2, param1, i, "r", h);
             checkboxStyle(t, row2, param1, i, "t", h);
+            imgStyle(b_in, row2, paramCheck);
+            imgStyle(r_in, row2, paramCheck);
+            imgStyle(t_in, row2, paramCheck);
             tl2.addView(row2);
             tl2.setLayoutParams(param3);
             row.addView(tl2);
@@ -477,5 +488,22 @@ public class AddKeluar extends BaseFragment{
             sign.setId_auctionitem(lu.get(position).getAuction().getIdauction_item());
         }
         return sign;
+    }
+
+    public void imgStyle(ImageView imageView, TableRow row, TableRow.LayoutParams imgParam) {
+        imageView.setLayoutParams(imgParam);
+        imageView.setBackgroundDrawable(null);
+        row.addView(imageView);
+    }
+
+    public void imgSet(ImageView imageView, String check){
+        Bitmap bmp;
+        if(check.equals("1")){
+            bmp = BitmapFactory.decodeResource(getResources(), R.drawable.checklist);
+        }else {
+            bmp = BitmapFactory.decodeResource(getResources(), R.drawable.delete);
+        }
+        Bitmap resizedbitmap = Bitmap.createScaledBitmap(bmp, 20, 20, true);
+        imageView.setImageBitmap(resizedbitmap);
     }
 }

@@ -249,7 +249,7 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.5"
                         style="@style/FontTableHead"
                         android:text="No" />
                     <View
@@ -270,8 +270,13 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 style="@style/FontTableHead"
-                                android:layout_span="3"
-                                android:text="Kondisi" />
+                                android:layout_span="6"
+                                android:text="Kondisi Out" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/FontTableHead"
+                                android:layout_span="6"
+                                android:text="Kondisi In" />
                         </TableRow>
                         <View
                             android:layout_width="match_parent"
@@ -295,6 +300,30 @@
                             <CheckBox
                                 android:id="@+id/checkboxT"
                                 android:text="T   " android:theme="@style/WhiteCheck"/>
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height= "match_parent"
+                                android:background="@color/colorPrimary" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/FontTableHead"
+                                android:text="   B   " />
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height= "match_parent"
+                                android:background="@color/colorPrimary" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/FontTableHead"
+                                android:text="   R   " />
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height= "match_parent"
+                                android:background="@color/colorPrimary" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/FontTableHead"
+                                android:text="   T   " />
                         </TableRow>
                     </TableLayout>
                 </TableRow>
