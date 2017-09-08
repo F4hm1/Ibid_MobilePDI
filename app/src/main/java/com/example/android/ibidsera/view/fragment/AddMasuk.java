@@ -105,6 +105,8 @@ public class AddMasuk extends BaseFragment{
         View myFragment = inflater.inflate(R.layout.content_addm, container, false);
         ButterKnife.bind(this, myFragment);
 
+        cpvStart(cpv, bp);
+
         AuctionService auctionService = RetrofitUtil.getAuctionService();
         List<String> ls = new ArrayList<>();
         ProgressDialog pDialog = new ProgressDialog(getContext());
