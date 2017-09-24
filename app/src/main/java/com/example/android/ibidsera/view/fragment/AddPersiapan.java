@@ -178,6 +178,11 @@ public class AddPersiapan extends BaseFragment {
     public void onStart() {
         super.onStart();
 
+        toolTip(transmisi, "AT / MT");
+        toolTip(model, "SEDAN / MINIBUS");
+        toolTip(penggerak, "4x2 / 4x4");
+        toolTip(bahanBakar, "BENSIN / SOLAR / GAS");
+
         List<String> ls = new ArrayList<>();
 
         merk.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -301,11 +306,11 @@ public class AddPersiapan extends BaseFragment {
         });
 
         nama.setOnItemClickListener((parent, view, position1, id1) -> {
-            AddPersiapan.this.position = position1;
-            AddPersiapan.this.hideKeyboard();
-            AddPersiapan.this.cpvStart(cpv, bp);
-            AddPersiapan.this.getPenitip();
-            AddPersiapan.this.cpvStop(cpv, bp);
+            position = position1;
+            hideKeyboard();
+            cpvStart(cpv, bp);
+            getPenitip();
+            cpvStop(cpv, bp);
         });
 
         perusahaan.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -318,7 +323,7 @@ public class AddPersiapan extends BaseFragment {
 //            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 //
 //            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                convertToRupiah(km);
+//                NumberFormat.getCurrencyInstance(km.getText().toString());
 //            }
 //        });
 
@@ -646,13 +651,17 @@ public class AddPersiapan extends BaseFragment {
 //    private void convertToRupiah(EditText editText){
 //        String separator = ".";
 //        int j = 0;
-//        for (int i = editText.length()-1; i >= 0; i--) {
+//        String c = "";
+//        for (int i = editText.getText().length(); i > 0; i--) {
 //            j++;
-//            if ((j % 3) == 0) {
-//                editText.setText(editText.getText().toString().substring(0, i-1) + separator
-//                      + editText.getText().toString().substring(i, editText.length()-1));
+//            if (((j % 3) == 1) && (j != 1)) {
+//                c = editText.getText().toString().substring(i-1, 1) + separator + c;
+//            }else {
+//                c = editText.getText().toString().substring(i-1, 1) + c;
 //            }
 //        }
+//        editText.setText("100.000");
+//        editText.setText(c);
 //    }
 
     private String stringVal(EditText item) { // delete unknown symbol

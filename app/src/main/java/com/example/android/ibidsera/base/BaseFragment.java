@@ -40,6 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import retrofit2.Call;
 
 /**
@@ -246,6 +247,20 @@ public class BaseFragment<T> extends Fragment {
         }catch (Exception e){}
 
         return decodedByte;
+    }
+
+    protected void toolTip(EditText editText, String text){
+        editText.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus){
+                new SimpleTooltip.Builder(getContext())
+                        .anchorView(editText)
+                        .text(text)
+                        .gravity(Gravity.END)
+                        .animated(true)
+                        .build()
+                        .show();
+            }
+        });
     }
 
     protected void setDisabled(View v){

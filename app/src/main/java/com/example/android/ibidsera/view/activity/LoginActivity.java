@@ -74,6 +74,12 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopDisconnectTimer();
+    }
+
     private void alertDialog(String title){
         AlertDialog.Builder alertDialog  = new AlertDialog.Builder(this);
         alertDialog.setTitle(title);

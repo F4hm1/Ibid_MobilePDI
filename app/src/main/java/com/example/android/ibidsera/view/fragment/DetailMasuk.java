@@ -160,18 +160,19 @@ public class DetailMasuk extends BaseFragment{
             @Override
             public void onResponse(Call<List<Lampiran>> call, Response<List<Lampiran>> response) {
                 List<Lampiran> ls = response.body();
-
-                if (!ls.isEmpty()) {
-                    for (int i = 0; i < ls.size() && i < 2; i++) {
-                        if (ls.get(i).getNama_lampiran().equals("mobil1")) {
-                            bitmap3 = decodeImg(ls.get(i).getBase64img());
-                            imgSedan.setImageBitmap(bitmap3);
-                        } else if (ls.get(i).getNama_lampiran().equals("mobil2")) {
-                            bitmap4 = decodeImg(ls.get(i).getBase64img());
-                            imgMiniBus.setImageBitmap(bitmap4);
+                try {
+                    if (!ls.isEmpty()) {
+                        for (int i = 0; i < ls.size() && i < 2; i++) {
+                            if (ls.get(i).getNama_lampiran().equals("mobil1")) {
+                                bitmap3 = decodeImg(ls.get(i).getBase64img());
+                                imgSedan.setImageBitmap(bitmap3);
+                            } else if (ls.get(i).getNama_lampiran().equals("mobil2")) {
+                                bitmap4 = decodeImg(ls.get(i).getBase64img());
+                                imgMiniBus.setImageBitmap(bitmap4);
+                            }
                         }
                     }
-                }
+                }catch (Exception e){}
             }
 
             @Override
@@ -264,15 +265,11 @@ public class DetailMasuk extends BaseFragment{
         FrameLayout container = new FrameLayout(getContext());
         ImageView imageView = new ImageView(getContext());
         if(id == 1){
-            if(bitmap1 == null) {
-                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
-            }else {
+            if(bitmap1 != null) {
                 imageView.setImageBitmap(bitmap1);
             }
         }else {
-            if(bitmap2 == null) {
-                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
-            }else {
+            if(bitmap2 != null) {
                 imageView.setImageBitmap(bitmap2);
             }
         }

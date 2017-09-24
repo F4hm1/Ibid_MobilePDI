@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "URI", "\"http://192.168.1.100/ibid-ims-api/\"")
+        buildConfigField("String", "URI", "\"http://192.168.56.1/ibid-ims-api/\"")
         buildTypes.each {
             it.buildConfigField 'String', 'API_KEY', IbidImsApiKey
         }
@@ -45,5 +45,6 @@ dependencies {
     compile 'com.jakewharton:butterknife-compiler:8.8.0'
     compile 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.douglasjunior:android-simple-tooltip:0.2.1'
     apply plugin: 'realm-android'
 }

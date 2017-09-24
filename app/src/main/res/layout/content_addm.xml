@@ -349,7 +349,6 @@
                         android:text="Case"/>
                     <EditText
                         android:id="@+id/cases"
-                        android:hint="BUY BACK / WANPRES"
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style"/>
                 </LinearLayout>

@@ -44,10 +44,12 @@ public class BaseActivity extends AppCompatActivity{
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    private Handler disconnectHandler = new Handler(){
-        public void handleMessage(Message msg) {
+    private Handler disconnectHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            return false;
         }
-    };
+    });
 
     private Runnable disconnectCallback = () -> {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
@@ -73,11 +75,5 @@ public class BaseActivity extends AppCompatActivity{
     public void onResume() {
         super.onResume();
         resetDisconnectTimer();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        stopDisconnectTimer();
     }
 }

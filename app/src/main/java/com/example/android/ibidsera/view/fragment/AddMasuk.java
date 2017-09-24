@@ -163,6 +163,7 @@ public class AddMasuk extends BaseFragment{
             cpvStop(cpv, bp);
         });
 
+        toolTip(cases, "BUY BACK / WANPRES");
         imageClick(ibid_sedan, 1, 1);
         imageClick(ibid_niaga, 1, 2);
         imageClick(signature1, 2, 1);

@@ -22,6 +22,12 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopDisconnectTimer();
+    }
+
     public void waitSplash(Class activity) {
         new Handler().postDelayed(() -> {
             openNewActivity(activity);

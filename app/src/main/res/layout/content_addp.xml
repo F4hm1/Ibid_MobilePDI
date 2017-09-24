@@ -139,7 +139,6 @@
                     <EditText
                         android:id="@+id/transmisi"
                         style="@style/SpinnerEditForm"
-                        android:hint="AT / MT"
                         android:text=""
                         android:background="@drawable/edittext_style"/>
 
@@ -293,7 +292,6 @@
                     <EditText
                         android:id="@+id/model"
                         style="@style/SpinnerEditForm"
-                        android:hint="SEDAN / MINIBUS"
                         android:text=""
                         android:background="@drawable/edittext_style"/>
 
@@ -304,7 +302,6 @@
                     <EditText
                         android:id="@+id/penggerak"
                         style="@style/SpinnerEditForm"
-                        android:hint="4x2 / 4x4"
                         android:text=""
                         android:background="@drawable/edittext_style"/>
 
@@ -315,7 +312,6 @@
                     <EditText
                         android:id="@+id/bahan_bakar"
                         style="@style/SpinnerEditForm"
-                        android:hint="BENSIN / SOLAR / GAS"
                         android:text=""
                         android:background="@drawable/edittext_style"/>
 
@@ -326,7 +322,7 @@
                     <EditText
                         android:id="@+id/km"
                         style="@style/SpinnerEditForm"
-                        android:text="0"
+                        android:hint="0"
                         android:background="@drawable/edittext_style"
                         android:inputType="number"/>
 
@@ -356,9 +352,9 @@
                     <EditText
                         android:id="@+id/biaya_administrasi"
                         style="@style/SpinnerEditForm"
-                        android:text="1750000"
                         android:background="@drawable/edittext_style"
-                        android:inputType="number"/>
+                        android:inputType="number"
+                        android:hint="0"/>
 
                     <TextView
                         style="@style/FontTextViewForm"
