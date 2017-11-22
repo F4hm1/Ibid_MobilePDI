@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,11 +44,16 @@ import retrofit2.Response;
  */
 
 public class Persiapan extends BaseFragment {
-    @BindView(R.id.table_persiapan) TableLayout tl;
-    @BindView(R.id.progress_view) CircularProgressView cpv;
-    @BindView(R.id.background_progress) RelativeLayout bp;
-    @BindView(R.id.refreshContainer) SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.et_persiapan) EditText searchPersiapan;
+    @BindView(R.id.table_persiapan)
+    TableLayout tl;
+    @BindView(R.id.progress_view)
+    CircularProgressView cpv;
+    @BindView(R.id.background_progress)
+    RelativeLayout bp;
+    @BindView(R.id.refreshContainer)
+    SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.et_persiapan)
+    EditText searchPersiapan;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,13 +76,13 @@ public class Persiapan extends BaseFragment {
 
         getItemList(psearch);
 
-        cpvStop(cpv, bp);
+//        cpvStop(cpv, bp);
         swipeRefresh(refreshLayout, R.id.nav_persiapan);
 
         return myFragment;
     }
 
-    public void getItemList(String nopol){
+    public void getItemList(String nopol) {
         AuctionService auctionService = RetrofitUtil.getAuctionService();
 
         if (nopol != null && !nopol.isEmpty()) {
@@ -91,39 +97,48 @@ public class Persiapan extends BaseFragment {
                         } else {
                             showToast("Tidak ada data");
                         }
-                    }catch (Exception e){}
+                    } catch (Exception e) {
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<List<Unit>> call, Throwable t) {
+                    Log.d("FAILURE", "1: " + t.getMessage());
                     errorRetrofit(call, t);
                 }
             });
-        }else {
+        } else {
+//            cpvStart(cpv, bp);
             auctionService.getPersiapan().enqueue(new Callback<List<Unit>>() {
                 @Override
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
+                    Log.d("POLO", "LIST1: " + RetrofitUtil.toJson(response.body()));
                     List<Unit> lu = response.body();
                     StaticUnit.setLu(lu);
+                    Log.d("POLO", "LIST: "+RetrofitUtil.toJson(lu));
                     try {
                         if (!response.body().toString().equals("[]")) {
                             getPersiapan(lu);
                         } else {
                             showToast("Tidak ada data");
                         }
-                    }catch (Exception e){}
+                    } catch (Exception e) {
+                    }
+                    cpvStop(cpv, bp);
                 }
 
                 @Override
                 public void onFailure(Call<List<Unit>> call, Throwable t) {
+                    Log.d("FAILURE", "2: " + t.getMessage());
                     errorRetrofit(call, t);
+                    cpvStop(cpv, bp);
                 }
             });
         }
     }
 
-    public void getPersiapan(List<Unit> lu){
-        try{
+    public void getPersiapan(List<Unit> lu) {
+        try {
             for (int i = 0; i < lu.size(); i++) {
                 TableRow row = tableRow();
                 TextView no = textView();
@@ -147,10 +162,10 @@ public class Persiapan extends BaseFragment {
                 textStyle(merk, row, param1, lu.get(i).getNama_merk());
                 String tipe = "";
                 for (Attribute t : lu.get(i).getTipe()) {
-                    if(t.getAttributedetail() != null){
-                        if(tipe.equals("")){
+                    if (t.getAttributedetail() != null) {
+                        if (tipe.equals("")) {
                             tipe = t.getAttributedetail();
-                        }else {
+                        } else {
                             tipe = tipe + " " + t.getAttributedetail();
                         }
                     }
@@ -159,34 +174,35 @@ public class Persiapan extends BaseFragment {
                 textStyle(model, row, param1, lu.get(i).getModel());
                 textStyle(tahun, row, param1, lu.get(i).getTahun());
 
-                if(lu.get(i).getCount_checklist() == 1){
+                if (lu.get(i).getCount_checklist() == 1) {
                     imgStyle(unit_in2, row, paramImg);
-                }else {
+                } else {
                     checklist(unit_in1, row, param1, i);
                 }
                 tl.addView(row);
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
-    
-    public void imgStyle(ImageView imageView, TableRow row, TableRow.LayoutParams imgParam){
+
+    public void imgStyle(ImageView imageView, TableRow row, TableRow.LayoutParams imgParam) {
         imageView.setLayoutParams(imgParam);
-        Bitmap bmp= BitmapFactory.decodeResource(getResources(), R.drawable.checklist);
-        Bitmap resizedbitmap=Bitmap.createScaledBitmap(bmp, 20, imgParam.height, true);
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.checklist);
+        Bitmap resizedbitmap = Bitmap.createScaledBitmap(bmp, 20, imgParam.height, true);
         imageView.setImageBitmap(resizedbitmap);
         imageView.setBackgroundDrawable(null);
         row.addView(imageView);
     }
 
-    public void checklist(TextView textView, TableRow row, TableRow.LayoutParams param, int id){
+    public void checklist(TextView textView, TableRow row, TableRow.LayoutParams param, int id) {
 
-        int[][] states = new int[][] {
-                new int[] { android.R.attr.state_pressed}, // pressed
-                new int[] { android.R.attr.state_focused}, // focused
-                new int[] { android.R.attr.state_enabled} // enabled
+        int[][] states = new int[][]{
+                new int[]{android.R.attr.state_pressed}, // pressed
+                new int[]{android.R.attr.state_focused}, // focused
+                new int[]{android.R.attr.state_enabled} // enabled
         };
 
-        int[] colors = new int[] {
+        int[] colors = new int[]{
                 Color.parseColor("#005599"), // dark blue
                 Color.parseColor("#005599"), // dark blue
                 Color.parseColor("#2196F3")  // light blue

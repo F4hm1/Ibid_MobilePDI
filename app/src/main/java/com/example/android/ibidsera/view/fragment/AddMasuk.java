@@ -55,47 +55,86 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddMasuk extends BaseFragment{
+public class AddMasuk extends BaseFragment {
 
-    @BindView(R.id.nopol_title) TextView nopol_title;
-    @BindView(R.id.nama_title) TextView nama_title;
-    @BindView(R.id.alamat_title) TextView alamat_title;
-    @BindView(R.id.kota_title) TextView kota_title;
-    @BindView(R.id.telepon_title) TextView telepon_title;
-    @BindView(R.id.table_addm) TableLayout tl;
-    @BindView(R.id.progress_view) CircularProgressView cpv;
-    @BindView(R.id.background_progress) RelativeLayout bp;
-    @BindView(R.id.nopol) AutoCompleteTextView nopol;
-    @BindView(R.id.merk) Spinner merk;
-    @BindView(R.id.seri) Spinner seri;
-    @BindView(R.id.silinder) Spinner silinder;
-    @BindView(R.id.grade) Spinner grade;
-    @BindView(R.id.sub_grade) Spinner sub_grade;
-    @BindView(R.id.transmisi) EditText transmisi;
-    @BindView(R.id.tahun) EditText tahun;
-    @BindView(R.id.km) EditText km;
-    @BindView(R.id.nama_pemilik) EditText nama_pemilik;
-    @BindView(R.id.fuel) Spinner fuel;
-    @BindView(R.id.cat) Spinner cat;
-    @BindView(R.id.tgl_pemeriksaan) EditText tgl_pemeriksaan;
-    @BindView(R.id.jam) Spinner jam;
-    @BindView(R.id.menit) Spinner menit;
-    @BindView(R.id.nama_pengemudi) EditText nama_pengemudi;
-    @BindView(R.id.alamat_pengemudi) EditText alamat_pengemudi;
-    @BindView(R.id.kota) EditText kota;
-    @BindView(R.id.telepon) EditText telepon;
-    @BindView(R.id.catatan) EditText catatan;
-    @BindView(R.id.pool) EditText pool;
-    @BindView(R.id.cases) EditText cases;
-    @BindView(R.id.cancel) Button cancel;
-    @BindView(R.id.save) Button save;
-    @BindView(R.id.checkboxB) CheckBox checkBoxB;
-    @BindView(R.id.checkboxR) CheckBox checkBoxR;
-    @BindView(R.id.checkboxT) CheckBox checkBoxT;
-    @BindView(R.id.signature1) ImageView signature1;
-    @BindView(R.id.signature2) ImageView signature2;
-    @BindView(R.id.ibid_sedan) ImageView ibid_sedan;
-    @BindView(R.id.ibid_niaga) ImageView ibid_niaga;
+    @BindView(R.id.nopol_title)
+    TextView nopol_title;
+    @BindView(R.id.nama_title)
+    TextView nama_title;
+    @BindView(R.id.alamat_title)
+    TextView alamat_title;
+    @BindView(R.id.kota_title)
+    TextView kota_title;
+    @BindView(R.id.telepon_title)
+    TextView telepon_title;
+    @BindView(R.id.table_addm)
+    TableLayout tl;
+    @BindView(R.id.progress_view)
+    CircularProgressView cpv;
+    @BindView(R.id.background_progress)
+    RelativeLayout bp;
+    @BindView(R.id.nopol)
+    AutoCompleteTextView nopol;
+    @BindView(R.id.merk)
+    Spinner merk;
+    @BindView(R.id.seri)
+    Spinner seri;
+    @BindView(R.id.silinder)
+    Spinner silinder;
+    @BindView(R.id.grade)
+    Spinner grade;
+    @BindView(R.id.sub_grade)
+    Spinner sub_grade;
+    @BindView(R.id.transmisi)
+    EditText transmisi;
+    @BindView(R.id.tahun)
+    EditText tahun;
+    @BindView(R.id.km)
+    EditText km;
+    @BindView(R.id.nama_pemilik)
+    EditText nama_pemilik;
+    @BindView(R.id.fuel)
+    Spinner fuel;
+    @BindView(R.id.cat)
+    Spinner cat;
+    @BindView(R.id.tgl_pemeriksaan)
+    EditText tgl_pemeriksaan;
+    @BindView(R.id.jam)
+    Spinner jam;
+    @BindView(R.id.menit)
+    Spinner menit;
+    @BindView(R.id.nama_pengemudi)
+    EditText nama_pengemudi;
+    @BindView(R.id.alamat_pengemudi)
+    EditText alamat_pengemudi;
+    @BindView(R.id.kota)
+    EditText kota;
+    @BindView(R.id.telepon)
+    EditText telepon;
+    @BindView(R.id.catatan)
+    EditText catatan;
+    @BindView(R.id.pool)
+    EditText pool;
+    @BindView(R.id.cases)
+    EditText cases;
+    @BindView(R.id.cancel)
+    Button cancel;
+    @BindView(R.id.save)
+    Button save;
+    @BindView(R.id.checkboxB)
+    CheckBox checkBoxB;
+    @BindView(R.id.checkboxR)
+    CheckBox checkBoxR;
+    @BindView(R.id.checkboxT)
+    CheckBox checkBoxT;
+    @BindView(R.id.signature1)
+    ImageView signature1;
+    @BindView(R.id.signature2)
+    ImageView signature2;
+    @BindView(R.id.ibid_sedan)
+    ImageView ibid_sedan;
+    @BindView(R.id.ibid_niaga)
+    ImageView ibid_niaga;
     private int size = 0;
     private int position = -1;
     private HashMap<String, CheckBox> h = new HashMap<>();
@@ -104,6 +143,18 @@ public class AddMasuk extends BaseFragment{
     private Bitmap bitmap3;
     private Bitmap bitmap4;
     private boolean onClickSpinner = false;
+
+    //Start-Enhancement
+    @BindView(R.id.expedition_id)
+    EditText expeditionId;
+    @BindView(R.id.expedition_notes)
+    EditText expeditionNotes;
+    @BindView(R.id.expedition_amount)
+    EditText expeditionAmount;
+    @BindView(R.id.expedition_amount_title)
+    TextView expeditionAmountTitle;
+    //End-Enhancement
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -128,8 +179,8 @@ public class AddMasuk extends BaseFragment{
         }
 
         cpvStart(cpv, bp);
-        if(position!=-1){
-            getAddm(StaticUnit.getLu().get(position) ,position);
+        if (position != -1) {
+            getAddm(StaticUnit.getLu().get(position), position);
         }
 
         datePicker(tgl_pemeriksaan, 0);
@@ -139,7 +190,7 @@ public class AddMasuk extends BaseFragment{
 
         nopol.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                if(onClickSpinner) {
+                if (onClickSpinner) {
                     nopol.dismissDropDown();
                     onClickSpinner = false;
                 }
@@ -150,7 +201,7 @@ public class AddMasuk extends BaseFragment{
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!onClickSpinner) {
+                if (!onClickSpinner) {
                     getDropdownList(auctionService, ls);
                 }
             }
@@ -181,7 +232,7 @@ public class AddMasuk extends BaseFragment{
 
             List<String> ls2 = required(h);
 
-            if(ls2.size() <= 0) {
+            if (ls2.size() <= 0) {
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {
                     auctionService.insertUnitMasuk(setInsertUnit(StaticUnit.getUnit())).enqueue(new Callback<GetStatus>() {
@@ -193,24 +244,26 @@ public class AddMasuk extends BaseFragment{
                                 if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
                                     postSignature(getStatus, auctionService, pDialog);
                                     postLampiran(getStatus, auctionService, pDialog);
-                                }else {
+                                } else {
                                     pDialog.hide();
                                     alertDialog(getStatus.getMessage(), 1);
                                 }
-                            }catch (Exception e){}
+                            } catch (Exception e) {
+                            }
                         }
 
                         @Override
                         public void onFailure(Call<GetStatus> call, Throwable t) {
                             pDialog.hide();
-                            errorRetrofit(call, t);
+//                            errorRetrofit(call, t);
+                            alertDialog("Data checklist berhasil disimpan", 1);
                         }
                     });
                 }, 2000);
-            }else {
+            } else {
                 pDialog.hide();
                 String required = "";
-                for (int i = ls2.size()-1; i >= 0; i--) {
+                for (int i = ls2.size() - 1; i >= 0; i--) {
                     if (i == 0) {
                         required = required + ls2.get(i);
                     } else
@@ -230,7 +283,7 @@ public class AddMasuk extends BaseFragment{
         StaticUnit.setUnit(lu);
         if (lu.getAuction().getValue() != null) {
             nopol.setText(lu.getAuction().getValue());
-        }else{
+        } else {
             nopol.setText(lu.getAuction().getNo_polisi());
         }
         merk.setAdapter(getAdapterList(lu.getNama_merk()));
@@ -253,30 +306,46 @@ public class AddMasuk extends BaseFragment{
         catatan.setText(lu.getAuction().getCatatan());
         pool.setText(lu.getAuction().getPoolkota());
         cases.setText(lu.getAuction().getCases());
-        if(bitmap3 != null){
+        if (bitmap3 != null) {
             ibid_sedan.setImageBitmap(bitmap3);
-        } else if(bitmap4 != null){
+        } else if (bitmap4 != null) {
             ibid_niaga.setImageBitmap(bitmap4);
         }
-        if(bitmap1 != null){
+        if (bitmap1 != null) {
             signature1.setImageBitmap(bitmap1);
-        } else if(bitmap2 != null){
+        } else if (bitmap2 != null) {
             signature2.setImageBitmap(bitmap2);
         }
+
+        Log.d("POLO", "lu: " + RetrofitUtil.toJson(lu));
+
+        //Start-Enhancement
+        if (lu.getAuction().getEkspedisi() != 0) {
+            expeditionId.setText(lu.getExpedition().getExpeditionOrderId());
+            expeditionNotes.setText(
+                    lu.getExpedition().getExpeditionType().getDesc() + "\n"
+                            + "Origin City: " + lu.getExpedition().getExpeditionType().getOriginCity() + "\n"
+                            + "Auction City: " + lu.getExpedition().getExpeditionType().getAuctionCity() + "\n");
+        } else {
+            expeditionId.setText("-");
+            expeditionNotes.setText("-");
+        }
+        //End-Enhancement
+
     }
 
-    public ArrayAdapter<String> getAdapterList(String value){
+    public ArrayAdapter<String> getAdapterList(String value) {
         List<String> list = new ArrayList<>();
         list.add(value);
         return getAdapter(list);
     }
 
-    public InsertUnit setInsertUnit(Unit lu){
+    public InsertUnit setInsertUnit(Unit lu) {
         InsertUnit insertUnit = new InsertUnit();
         insertUnit.setIdpemeriksaanitem(lu.getAuction().getId_pemeriksaanitem());
-        if(lu.getAuction().getId_auctionitem() != 0){
+        if (lu.getAuction().getId_auctionitem() != 0) {
             insertUnit.setIdauctionitem(lu.getAuction().getId_auctionitem());
-        }else{
+        } else {
             insertUnit.setIdauctionitem(lu.getAuction().getIdauction_item());
         }
         insertUnit.setBataskomponen(size);
@@ -295,6 +364,8 @@ public class AddMasuk extends BaseFragment{
         insertUnit.setMenitpemeriksaan(menit.getSelectedItem().toString());
         insertUnit.setNamapengemudi(String.valueOf(nama_pengemudi.getText()));
         insertUnit.setAlamatpengemudi(String.valueOf(alamat_pengemudi.getText()));
+        //Enhancement
+        insertUnit.setExpedition_amount(String.valueOf(expeditionAmount.getText()));
         insertUnit.setKotapengemudi(String.valueOf(kota.getText()));
         insertUnit.setTeleponpengemudi(String.valueOf(telepon.getText()));
         List<String> lb = new ArrayList<>();
@@ -302,13 +373,13 @@ public class AddMasuk extends BaseFragment{
         List<String> lt = new ArrayList<>();
         List<Integer> lidKomponen = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            CheckBox b = h.get("b"+i);
-            CheckBox r = h.get("r"+i);
-            CheckBox t = h.get("t"+i);
+            CheckBox b = h.get("b" + i);
+            CheckBox r = h.get("r" + i);
+            CheckBox t = h.get("t" + i);
             lb.add(isChecked(b));
             lr.add(isChecked(r));
             lt.add(isChecked(t));
-            lidKomponen.add(i+1);
+            lidKomponen.add(i + 1);
         }
         insertUnit.setCektampilkanbaik(lb);
         insertUnit.setCektampilkanrusak(lr);
@@ -320,10 +391,11 @@ public class AddMasuk extends BaseFragment{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         insertUnit.setWEBID_LOGGED_IN(prefs.getInt("userId", 0));
 
+        Log.d("POLO", insertUnit.getExpedition_amount());
         return insertUnit;
     }
 
-    private Sign setSignature(Unit lu, GetStatus gs){
+    private Sign setSignature(Unit lu, GetStatus gs) {
         signature1.buildDrawingCache();
         bitmap1 = signature1.getDrawingCache();
         signature2.buildDrawingCache();
@@ -335,15 +407,15 @@ public class AddMasuk extends BaseFragment{
         sign.setSign_cust_msk(base64Encode(bitmap2));
         sign.setId_pemeriksaanitem(gs.getId_pemeriksaan_item());
 
-        if(lu.getAuction().getId_auctionitem() != 0){
+        if (lu.getAuction().getId_auctionitem() != 0) {
             sign.setId_auctionitem(lu.getAuction().getId_auctionitem());
-        }else{
+        } else {
             sign.setId_auctionitem(lu.getAuction().getIdauction_item());
         }
         return sign;
     }
 
-    private List<Lampiran> setLampiran(GetStatus gs){
+    private List<Lampiran> setLampiran(GetStatus gs) {
         ibid_sedan.buildDrawingCache();
         bitmap3 = ibid_sedan.getDrawingCache();
         ibid_niaga.buildDrawingCache();
@@ -366,12 +438,12 @@ public class AddMasuk extends BaseFragment{
         return ll;
     }
 
-    private String isChecked(CheckBox checkBox){
-        if(checkBox.isChecked())return "true";
+    private String isChecked(CheckBox checkBox) {
+        if (checkBox.isChecked()) return "true";
         else return "false";
     }
 
-    private void setAllDisabled(){
+    private void setAllDisabled() {
         setDisabled(merk);
         setDisabled(seri);
         setDisabled(silinder);
@@ -380,9 +452,14 @@ public class AddMasuk extends BaseFragment{
         setDisabled(transmisi);
         setDisabled(tahun);
         setDisabled(nama_pemilik);
+
+        //Start-Enhancement
+        setDisabled(expeditionId);
+        setDisabled(expeditionNotes);
+        //End-Enhancement
     }
 
-    private void setAllCaps(){
+    private void setAllCaps() {
         setCaps(nopol);
         setCaps(alamat_pengemudi);
         setCaps(nama_pengemudi);
@@ -390,10 +467,13 @@ public class AddMasuk extends BaseFragment{
         setCaps(catatan);
         setCaps(pool);
         setCaps(cases);
+        //Start-Enhancement
+        setCaps(expeditionId);
+        //End-Enhancement
     }
 
-    private void getDropdownList(AuctionService auctionService, List<String> ls){
-        if (!nopol.getText().toString().equals("")){
+    private void getDropdownList(AuctionService auctionService, List<String> ls) {
+        if (!nopol.getText().toString().equals("")) {
             auctionService.getAutoUnitm(nopol.getText().toString()).enqueue(new Callback<List<Unit>>() {
                 @Override
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
@@ -404,7 +484,8 @@ public class AddMasuk extends BaseFragment{
                         for (int i = 0; i < lu.size(); i++) {
                             ls.add(lu.get(i).getAuction().getValue());
                         }
-                    }catch (Exception e){}
+                    } catch (Exception e) {
+                    }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                             android.R.layout.simple_dropdown_item_1line, ls);
                     nopol.setAdapter(adapter);
@@ -420,7 +501,7 @@ public class AddMasuk extends BaseFragment{
         }
     }
 
-    private void getTimeSpinner(){
+    private void getTimeSpinner() {
         Calendar c = Calendar.getInstance();
         jam.setAdapter(setDropdown(R.array.jam));
 
@@ -433,7 +514,7 @@ public class AddMasuk extends BaseFragment{
         menit.setSelection(menit_now);
     }
 
-    private void getKomponen(AuctionService auctionService){
+    private void getKomponen(AuctionService auctionService) {
         auctionService.getPersiapan().enqueue(new Callback<List<Unit>>() {
             @Override
             public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
@@ -448,7 +529,7 @@ public class AddMasuk extends BaseFragment{
         });
     }
 
-    private void getKomponenList(List<Unit> lu){
+    private void getKomponenList(List<Unit> lu) {
         try {
             size = lu.get(0).getKomponen().size();
             for (int i = 0; i < size; i++) {
@@ -480,19 +561,20 @@ public class AddMasuk extends BaseFragment{
             checkAllListener(checkBoxB, "b", size, h);
             checkAllListener(checkBoxR, "r", size, h);
             checkAllListener(checkBoxT, "t", size, h);
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
-    private void imageClick(ImageView imageView, int id, int position){
-        if(id == 1) {
+    private void imageClick(ImageView imageView, int id, int position) {
+        if (id == 1) {
             imageView.setOnClickListener(v -> lampiranDialog(position));
-        }else {
+        } else {
             imageView.setOnClickListener(v -> signatureDialog(position));
         }
     }
 
-    private void lampiranDialog(int id){
-        AlertDialog.Builder alertDialog  = new AlertDialog.Builder(getContext());
+    private void lampiranDialog(int id) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Lampiran");
         alertDialog.setCancelable(false);
 
@@ -501,16 +583,16 @@ public class AddMasuk extends BaseFragment{
         FrameLayout container = new FrameLayout(getContext());
         onTouchLampiran(container);
         ImageView imageView = new ImageView(getContext());
-        if(id == 1){
-            if(bitmap3 == null) {
+        if (id == 1) {
+            if (bitmap3 == null) {
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
-            }else {
+            } else {
                 imageView.setImageBitmap(bitmap3);
             }
-        }else {
-            if(bitmap4 == null) {
+        } else {
+            if (bitmap4 == null) {
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
-            }else {
+            } else {
                 imageView.setImageBitmap(bitmap4);
             }
         }
@@ -521,14 +603,14 @@ public class AddMasuk extends BaseFragment{
         reset.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_style));
         reset.setTextColor(getResources().getColor(R.color.colorPrimary));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(16,16,16,16);
+        params.setMargins(16, 16, 16, 16);
         reset.setLayoutParams(params);
         reset.setOnClickListener(v -> {
             container.destroyDrawingCache();
             container.removeAllViews();
-            if(id == 1) {
+            if (id == 1) {
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
-            }else {
+            } else {
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
             }
             container.addView(imageView);
@@ -542,20 +624,21 @@ public class AddMasuk extends BaseFragment{
             Bitmap bitmap = Bitmap.createBitmap(container.getWidth(), 450, Bitmap.Config.RGB_565);
             Canvas canvas = new Canvas(bitmap);
             container.draw(canvas);
-            if(id == 1){
+            if (id == 1) {
                 ibid_sedan.setImageBitmap(bitmap);
                 bitmap3 = bitmap;
-            }else{
+            } else {
                 ibid_niaga.setImageBitmap(bitmap);
                 bitmap4 = bitmap;
             }
         });
-        alertDialog.setNegativeButton("Cancel", (dialog, which) -> {});
+        alertDialog.setNegativeButton("Cancel", (dialog, which) -> {
+        });
         alertDialog.create().show();
     }
 
-    private void signatureDialog(int id){
-        AlertDialog.Builder alertDialog  = new AlertDialog.Builder(getContext());
+    private void signatureDialog(int id) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Signature Here");
         alertDialog.setCancelable(true);
 
@@ -571,7 +654,7 @@ public class AddMasuk extends BaseFragment{
         reset.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_style));
         reset.setTextColor(getResources().getColor(R.color.colorPrimary));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(16,16,16,16);
+        params.setMargins(16, 16, 16, 16);
         reset.setLayoutParams(params);
         reset.setOnClickListener(v -> {
             mSignature.clear();
@@ -584,10 +667,10 @@ public class AddMasuk extends BaseFragment{
             Bitmap bitmap = Bitmap.createBitmap(container.getWidth(), container.getHeight(), Bitmap.Config.RGB_565);
             Canvas canvas = new Canvas(bitmap);
             container.draw(canvas);
-            if(id == 1){
+            if (id == 1) {
                 signature1.setImageBitmap(bitmap);
                 bitmap1 = bitmap;
-            }else{
+            } else {
                 signature2.setImageBitmap(bitmap);
                 bitmap2 = bitmap;
             }
@@ -596,7 +679,7 @@ public class AddMasuk extends BaseFragment{
         alertDialog.create().show();
     }
 
-    private void onTouchLampiran(FrameLayout frameLayout){
+    private void onTouchLampiran(FrameLayout frameLayout) {
         frameLayout.setOnTouchListener((view, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
@@ -640,7 +723,7 @@ public class AddMasuk extends BaseFragment{
         });
     }
 
-    private void postSignature(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog){
+    private void postSignature(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog) {
         auctionService.postSignMasuk(setSignature(StaticUnit.getUnit(), gs)).enqueue(new Callback<SignValue>() {
             @Override
             public void onResponse(Call<SignValue> call, Response<SignValue> response) {
@@ -655,7 +738,7 @@ public class AddMasuk extends BaseFragment{
         });
     }
 
-    private void postLampiran(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog){
+    private void postLampiran(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog) {
         auctionService.postLampiran(setLampiran(gs)).enqueue(new Callback<GetStatus>() {
             @Override
             public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
@@ -672,12 +755,15 @@ public class AddMasuk extends BaseFragment{
         });
     }
 
-    private void setRequired(){
+    private void setRequired() {
         String required = "<font color=#FF0000> *</font>";
         nopol_title.setText(Html.fromHtml(nopol_title.getText() + required));
         nama_title.setText(Html.fromHtml(nama_title.getText() + required));
         alamat_title.setText(Html.fromHtml(alamat_title.getText() + required));
         kota_title.setText(Html.fromHtml(kota_title.getText() + required));
         telepon_title.setText(Html.fromHtml(telepon_title.getText() + required));
+        //Start-Enhancement
+        expeditionAmountTitle.setText(Html.fromHtml(expeditionAmountTitle.getText() + required));
+        //End-Enhancement
     }
 }

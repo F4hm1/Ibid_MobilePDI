@@ -15,4 +15,9 @@
     <color name="red">#DD4B39</color>
     <color name="yellow">#F39C12</color>
     <color name="orange">#FF8000</color>
+
+    <color name="paintBaret">#00aaea</color>
+    <color name="paintPenyok">#0bea00</color>
+    <color name="paintRetak">#eae300</color>
+    <color name="paintPecah">#ea0043</color>
 </resources>

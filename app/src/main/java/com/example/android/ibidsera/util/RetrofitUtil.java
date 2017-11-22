@@ -5,6 +5,8 @@ import com.example.android.ibidsera.model.api.AuctionService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -26,6 +28,8 @@ public class RetrofitUtil {
 
         // add logging as last interceptor
         httpClient.addInterceptor(logging);  // <-- this is the important line!
+        httpClient.connectTimeout(60, TimeUnit.SECONDS);
+        httpClient.readTimeout(60, TimeUnit.SECONDS);
 
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.URI)

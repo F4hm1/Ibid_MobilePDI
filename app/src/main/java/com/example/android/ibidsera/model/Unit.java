@@ -19,10 +19,11 @@ public class Unit {
     private String tahun;
     private String km;
     private String penggerak;
-    private int id_pemeriksaanitem;
+    private String id_pemeriksaanitem;
     private Pntp pntp;
     private List<Komponen> komponen;
     private int count_checklist;
+    private Expedition expedition;
 
     public Auction getAuction() {
         return auction;
@@ -42,11 +43,11 @@ public class Unit {
         this.tipe = tipe;
     }
 
-    public int getId_pemeriksaanitem() {
+    public String getId_pemeriksaanitem() {
         return id_pemeriksaanitem;
     }
 
-    public void setId_pemeriksaanitem(int id_pemeriksaanitem) {
+    public void setId_pemeriksaanitem(String id_pemeriksaanitem) {
         this.id_pemeriksaanitem = id_pemeriksaanitem;
     }
 
@@ -137,5 +138,14 @@ public class Unit {
     public void setPenggerak(String penggerak) {
         if (penggerak == null) throw new NullPointerException("penggerak");
         this.penggerak = penggerak;
+    }
+
+    public Expedition getExpedition() {
+        return expedition;
+    }
+
+    public void setExpedition(Expedition expedition) {
+        if (expedition == null) throw new NullPointerException("expedition");
+        this.expedition = expedition;
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
  */
 
 public class InsertUnit {
-    private int idpemeriksaanitem;
+    private String idpemeriksaanitem;
     private int idauctionitem;
     private int bataskomponen;
     private String fuel;
@@ -31,17 +31,18 @@ public class InsertUnit {
     private String alamatpengemudi;
     private String kotapengemudi;
     private String teleponpengemudi;
+    private String expedition_amount;
     private int iduser;
     private List<String> cektampilkanbaik;
     private List<String> cektampilkanrusak;
     private List<String> cektampilkantidakada;
     private List<Integer> idkomponenpemeriksaan;
 
-    public int getIdpemeriksaanitem() {
+    public String getIdpemeriksaanitem() {
         return idpemeriksaanitem;
     }
 
-    public void setIdpemeriksaanitem(int idpemeriksaanitem) {
+    public void setIdpemeriksaanitem(String idpemeriksaanitem) {
         this.idpemeriksaanitem = idpemeriksaanitem;
     }
 
@@ -269,4 +270,11 @@ public class InsertUnit {
         this.cektampilkantidakada = cektampilkantidakada;
     }
 
+    public String getExpedition_amount() {
+        return expedition_amount;
+    }
+
+    public void setExpedition_amount(String expedition_amount) {
+        this.expedition_amount = expedition_amount;
+    }
 }

@@ -284,13 +284,18 @@
                         <TableRow>
                             <CheckBox
                                 android:id="@+id/checkboxB"
-                                android:text="B   " android:theme="@style/WhiteCheck"/>
+                                android:enabled="false"
+                                android:textColor="@color/colorPrimary"
+                                android:text="B   "
+                                android:theme="@style/WhiteCheck"/>
                             <View
                                 android:layout_width="2dp"
                                 android:layout_height= "match_parent"
                                 android:background="@color/colorPrimary" />
                             <CheckBox
                                 android:id="@+id/checkboxR"
+                                android:enabled="false"
+                                android:textColor="@color/colorPrimary"
                                 android:text="R   " android:theme="@style/WhiteCheck"/>
                             <View
                                 android:layout_width="2dp"
@@ -298,6 +303,8 @@
                                 android:background="@color/colorPrimary" />
                             <CheckBox
                                 android:id="@+id/checkboxT"
+                                android:enabled="false"
+                                android:textColor="@color/colorPrimary"
                                 android:text="T   " android:theme="@style/WhiteCheck"/>
                         </TableRow>
                     </TableLayout>
@@ -327,16 +334,11 @@
                     <TextView
                         style="@style/FontTextViewForm"
                         android:text="Catatan"/>
+
                     <EditText
                         android:id="@+id/catatan"
-                        style="@style/SpinnerEditForm"
-                        android:background="@drawable/edittext_style"/>
-                    <TextView
-                        style="@style/FontTextViewForm"
-                        android:text="Pool Ibid Cabang"/>
-                    <EditText
-                        android:id="@+id/pool"
-                        style="@style/SpinnerEditForm"
+                        android:gravity="top"
+                        style="@style/MultilineEditTextWithMinimum"
                         android:background="@drawable/edittext_style"/>
                 </LinearLayout>
                 <LinearLayout
@@ -349,6 +351,13 @@
                         android:text="Case"/>
                     <EditText
                         android:id="@+id/cases"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Pool Ibid Cabang"/>
+                    <EditText
+                        android:id="@+id/pool"
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style"/>
                 </LinearLayout>
@@ -406,6 +415,63 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Expedisi"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height= "1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="NO EXPEDISI"/>
+                    <EditText
+                        android:id="@+id/expedition_id"
+                        style="@style/SpinnerEditForm"
+                        android:text="Ini nomor expedisi"
+                        android:background="@drawable/edittext_style"/>
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:id="@+id/expedition_amount_title"
+                        android:text="AMOUNT"/>
+                    <EditText
+                        android:id="@+id/expedition_amount"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"
+                        android:inputType="number"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="CATATAN"/>
+                    <EditText
+                        android:id="@+id/expedition_notes"
+                        android:text="Ini catatan expedisi Ini catatan expedisi Ini catatan expedisi Ini catatan expedisi Ini catatan expedisi"
+                        style="@style/MultilineEditText"
+                        android:background="@drawable/edittext_style"/>
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Tanda Tangan"
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_margin="16dp"
@@ -442,7 +508,7 @@
                     android:orientation="vertical"
                     android:layout_weight="1">
                     <TextView
-                        android:text="Pihak Customer"
+                        android:text="Pihak Customer atau Driver bertugas"
                         style="@style/FontTextViewForm"/>
                     <ImageView
                         android:id="@+id/signature2"

@@ -6,14 +6,14 @@ package com.example.android.ibidsera.model;
 
 public class SignPost {
 
-    private int id_pemeriksaanitem;
+    private String id_pemeriksaanitem;
     private int id_auctionitem;
 
-    public int getId_pemeriksaanitem() {
+    public String getId_pemeriksaanitem() {
         return id_pemeriksaanitem;
     }
 
-    public SignPost setId_pemeriksaanitem(int id_pemeriksaanitem) {
+    public SignPost setId_pemeriksaanitem(String id_pemeriksaanitem) {
         this.id_pemeriksaanitem = id_pemeriksaanitem;
         return this;
     }

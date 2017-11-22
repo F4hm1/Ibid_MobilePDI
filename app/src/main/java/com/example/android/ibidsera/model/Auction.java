@@ -12,7 +12,7 @@ public class Auction {
     private int sts_remove;
     private char sold;
 
-    private int id_pemeriksaanitem;
+    private String id_pemeriksaanitem;
     private int idauction_item;
     private int id_auctionitem;
     private String no_polisi;
@@ -34,6 +34,7 @@ public class Auction {
     private String cases;
     private String poolkota;
     private String catatan_klr;
+    private int ekspedisi;
 
     public int getIdauction_detail() {
         return idauction_detail;
@@ -232,11 +233,11 @@ public class Auction {
         this.catatan_klr = catatan_klr;
     }
 
-    public int getId_pemeriksaanitem() {
+    public String getId_pemeriksaanitem() {
         return id_pemeriksaanitem;
     }
 
-    public void setId_pemeriksaanitem(int id_pemeriksaanitem) {
+    public void setId_pemeriksaanitem(String id_pemeriksaanitem) {
         this.id_pemeriksaanitem = id_pemeriksaanitem;
     }
 
@@ -254,5 +255,13 @@ public class Auction {
 
     public void setIdauction_item(int idauction_item) {
         this.idauction_item = idauction_item;
+    }
+
+    public int getEkspedisi() {
+        return ekspedisi;
+    }
+
+    public void setEkspedisi(int ekspedisi) {
+        this.ekspedisi = ekspedisi;
     }
 }

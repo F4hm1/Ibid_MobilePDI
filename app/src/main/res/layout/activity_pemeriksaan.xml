@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        android:background="@android:color/white">
+
+
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            android:text="Hapus/Ulangi"
+            tools:ignore="ButtonStyle"
+            android:layout_marginRight="8dp"
+            android:textColor="@android:color/white"
+            android:background="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/btn_paint_baret"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="BARET"
+            tools:ignore="ButtonStyle"
+            android:textColor="@android:color/black"
+            android:background="@color/paintBaret" />
+
+        <Button
+            android:id="@+id/btn_paint_penyok"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="PENYOK"
+            tools:ignore="ButtonStyle"
+            android:textColor="@android:color/black"
+            android:background="@color/paintPenyok" />
+        <Button
+            android:id="@+id/btn_paint_retak"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="RETAK"
+            tools:ignore="ButtonStyle"
+            android:textColor="@android:color/black"
+            android:background="@color/paintRetak" />
+
+        <Button
+            android:id="@+id/btn_paint_pecah"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="PECAH"
+            tools:ignore="ButtonStyle"
+            android:textColor="@android:color/black"
+            android:background="@color/paintPecah" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            android:layout_marginLeft="8dp"
+            android:text="Simpan"
+            tools:ignore="ButtonStyle"
+            android:textColor="@android:color/white"
+            android:background="@color/colorAccent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_forcanvas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" />
+
+</LinearLayout>

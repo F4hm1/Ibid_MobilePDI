@@ -29,9 +29,11 @@ import retrofit2.http.Path;
  */
 
 public interface AuctionService {
+
     @GET("index.php/home?api_key=" + BuildConfig.API_KEY) Call<HomeModel> getHome();
     @GET("index.php/persiapan/add_data?api_key=" + BuildConfig.API_KEY) Call<PersiapanValue> getAddPersiapan();
-    @GET("index.php/persiapan?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getPersiapan();
+//    @GET("index.php/persiapan?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getPersiapan();
+    @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/persiapan") Call<List<Unit>> getPersiapan();
     @GET("index.php/unitmasuk?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitM();
     @GET("index.php/unitkeluar?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitK();
     @GET("index.php/stockmanagement?api_key=" + BuildConfig.API_KEY) Call<List<ReportModel>> getReport();
@@ -40,7 +42,7 @@ public interface AuctionService {
     @GET("index.php/unitkeluar/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitk(@Path("nopol") String nopol);
     @GET("index.php/masteritem/warna/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItemWarna(@Path("key") String key);
     @GET("index.php/masteritem/penitip/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Penitip>> getMasterItemPenitip(@Path("key") String key);
-    @GET("index.php/masteritem/get_lampiran/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Lampiran>> getLampiran(@Path("key") int key);
+    @GET("index.php/masteritem/get_lampiran/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Lampiran>> getLampiran(@Path("key") String key);
     @GET("index.php/unitmasuk/auto/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getAutoUnitm(@Path("nopol") String nopol);
     @GET("index.php/unitkeluar/auto/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getAutoUnitk(@Path("nopol") String nopol);
 
@@ -49,7 +51,11 @@ public interface AuctionService {
 //            "Auth-Key : simplerestapi",
 //            "Content-Type : application/json"
 //    })
-    @POST("index.php/unitmasuk/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnitMasuk(@Body InsertUnit insertUnit);
+
+//    @POST("index.php/unitmasuk/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnitMasuk(@Body InsertUnit insertUnit);
+    @POST("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/UnitMasuk/insert") Call<GetStatus> insertUnitMasuk(@Body InsertUnit insertUnit);
+
+
     @POST("index.php/unitkeluar/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnitKeluar(@Body InsertUnit insertUnit);
     @POST("index.php/persiapan/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnit(@Body PersiapanPost persiapanPost);
     @POST("index.php/masteritem/search?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItem(@Body Attribute item);
