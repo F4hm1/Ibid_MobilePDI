@@ -83,10 +83,10 @@ public class DrawView extends View implements View.OnTouchListener {
         mPaintTransparent.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
 
-        mPaintBaret = getColorPaint(COLOR_BARET, 8);
-        mPaintPenyok = getColorPaint(COLOR_PENYOK, 8);
-        mPaintRetak = getColorPaint(COLOR_RETAK, 8);
-        mPaintPecah = getColorPaint(COLOR_PECAH, 8);
+        mPaintBaret = getColorPaint(COLOR_BARET, 4);
+        mPaintPenyok = getColorPaint(COLOR_PENYOK, 4);
+        mPaintRetak = getColorPaint(COLOR_RETAK, 4);
+        mPaintPecah = getColorPaint(COLOR_PECAH, 4);
 
         this.mBitmap = mBitmap.copy(Bitmap.Config.ARGB_8888, true);
         this.tempBitmap = mBitmap.copy(Bitmap.Config.ARGB_8888, true);
@@ -114,7 +114,7 @@ public class DrawView extends View implements View.OnTouchListener {
         float xScale = (float) w / originalWidth;
         float yScale = (float) h / originalHeight;
         float scale = Math.max(xScale, yScale);
-        scale -= 0.5f;
+        scale -= 0.7f;
 
         float xTranslation = (w - originalWidth * scale) / 2.0f;
         float yTranslation = (h - originalHeight * scale) / 2.0f;
@@ -273,21 +273,9 @@ public class DrawView extends View implements View.OnTouchListener {
         invalidate();
     }
 
-    public Bitmap save(View v, String StoredPath) {
+    public Bitmap getBitmap() {
         if (targetSaveBitmap == null) {
             targetSaveBitmap = Bitmap.createBitmap(mContainer.getWidth(), mContainer.getHeight(), Bitmap.Config.RGB_565);
-        }
-        Canvas canvas = new Canvas(targetSaveBitmap);
-        try {
-            // Output the file
-            FileOutputStream mFileOutStream = new FileOutputStream(StoredPath);
-            v.draw(canvas);
-            // Convert the output file to Image such as .jpeg
-            targetSaveBitmap.compress(Bitmap.CompressFormat.JPEG, 100, mFileOutStream);
-            mFileOutStream.flush();
-            mFileOutStream.close();
-        } catch (Exception e) {
-            Log.v("SIGN_TAG", e.toString());
         }
         return targetSaveBitmap;
     }

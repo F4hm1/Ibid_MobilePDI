@@ -227,13 +227,34 @@
                         android:inputType="number"/>
                 </LinearLayout>
             </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Kelengkapan Kondisi Komponen"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_margin="16dp"
-                android:textSize="24sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="Kelengkapan Kondisi Komponen"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="Dapat dilakukan checklist terhadap komponen?"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp"/>
+
+                <Switch
+                    android:id="@+id/toggle_checklistable"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:textOff="Tidak"
+                    android:textOn="Ya" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height= "1dp"
@@ -310,6 +331,14 @@
                     </TableLayout>
                 </TableRow>
             </TableLayout>
+            <EditText
+                android:id="@+id/et_checklist_not"
+                android:hint="Tulis alasan kenapa unit ini tidak dapat di checklist"
+                style="@style/MultilineEditTextWithMinimum"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:background="@drawable/edittext_style"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

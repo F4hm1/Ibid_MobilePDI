@@ -1,8 +1,10 @@
 package com.example.android.ibidsera.view.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -41,7 +44,9 @@ import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.api.AuctionService;
+import com.example.android.ibidsera.util.HelperConstant;
 import com.example.android.ibidsera.util.RetrofitUtil;
+import com.example.android.ibidsera.view.activity.PemeriksaanActivity;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.ArrayList;
@@ -54,6 +59,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 public class AddMasuk extends BaseFragment {
 
@@ -153,7 +160,17 @@ public class AddMasuk extends BaseFragment {
     EditText expeditionAmount;
     @BindView(R.id.expedition_amount_title)
     TextView expeditionAmountTitle;
+
+    @BindView(R.id.toggle_checklistable)
+    Switch mToggleChecklist;
+
+    @BindView(R.id.et_checklist_not)
+    EditText mEtChecklistNot;
+
     //End-Enhancement
+
+    private static final int KEY_PEMERIKSAAN_ACTIVITY = 1009;
+
 
 
     @Override
@@ -161,6 +178,16 @@ public class AddMasuk extends BaseFragment {
                              Bundle savedInstanceState) {
         View myFragment = inflater.inflate(R.layout.content_addm, container, false);
         ButterKnife.bind(this, myFragment);
+
+        mToggleChecklist.setOnCheckedChangeListener((compoundButton, b) -> {
+            if(b){
+                tl.setVisibility(View.VISIBLE);
+                mEtChecklistNot.setVisibility(View.GONE);
+            }else{
+                tl.setVisibility(View.GONE);
+                mEtChecklistNot.setVisibility(View.VISIBLE);
+            }
+        });
 
         cpvStart(cpv, bp);
 
@@ -567,9 +594,22 @@ public class AddMasuk extends BaseFragment {
 
     private void imageClick(ImageView imageView, int id, int position) {
         if (id == 1) {
-            imageView.setOnClickListener(v -> lampiranDialog(position));
+//            imageView.setOnClickListener(v -> lampiranDialog(position));
+            imageView.setOnClickListener(v -> goToPemeriksaanActivity(position));
+
         } else {
             imageView.setOnClickListener(v -> signatureDialog(position));
+        }
+    }
+
+    private void goToPemeriksaanActivity(int curPosition) {
+        Intent intent = new Intent(getActivity(), PemeriksaanActivity.class);
+        if (curPosition == 1) {
+            intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_SEDAN);
+            startActivityForResult(intent, HelperConstant.LAMPIRAN_SEDAN);
+        } else {
+            intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_NIAGA);
+            startActivityForResult(intent, HelperConstant.LAMPIRAN_NIAGA);
         }
     }
 
@@ -765,5 +805,30 @@ public class AddMasuk extends BaseFragment {
         //Start-Enhancement
         expeditionAmountTitle.setText(Html.fromHtml(expeditionAmountTitle.getText() + required));
         //End-Enhancement
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case HelperConstant.LAMPIRAN_SEDAN: {
+                if (resultCode == RESULT_OK) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(
+                            data.getByteArrayExtra("bitmapArray"), 0,
+                            data.getByteArrayExtra("bitmapArray").length);
+                    ibid_sedan.setImageBitmap(bitmap);
+                }
+                break;
+            }
+            case HelperConstant.LAMPIRAN_NIAGA: {
+                if (resultCode == RESULT_OK) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(
+                            data.getByteArrayExtra("bitmapArray"), 0,
+                            data.getByteArrayExtra("bitmapArray").length);
+                    ibid_niaga.setImageBitmap(bitmap);
+                }
+                break;
+            }
+        }
     }
 }

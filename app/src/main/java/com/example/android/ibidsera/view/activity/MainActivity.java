@@ -1,5 +1,6 @@
 package com.example.android.ibidsera.view.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -200,5 +201,10 @@ public class MainActivity extends BaseActivity
             ft.replace(R.id.content_frame, fragment);
             ft.commit();
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

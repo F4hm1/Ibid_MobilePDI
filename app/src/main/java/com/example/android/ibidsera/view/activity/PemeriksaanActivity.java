@@ -1,23 +1,29 @@
 package com.example.android.ibidsera.view.activity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseActivity;
+import com.example.android.ibidsera.util.HelperConstant;
 import com.example.android.ibidsera.view.fragment.DrawView;
+
+import java.io.ByteArrayOutputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +33,7 @@ import butterknife.ButterKnife;
  * randi.dwinandra@gmail.com
  */
 
-public class PemeriksaanActivity extends BaseActivity {
+public class PemeriksaanActivity extends AppCompatActivity {
 
     @BindView(R.id.linear_forcanvas)
     FrameLayout mLinCanvas;
@@ -55,6 +61,7 @@ public class PemeriksaanActivity extends BaseActivity {
 
     DrawView mDrawView;
     private Bitmap bitmapBackground;
+    private int lampiranType = HelperConstant.LAMPIRAN_SEDAN;
 
     private static final float TEXT_SIZE_SELECTED = 17;
     private static final float TEXT_SIZE_NOT_SELECTED = 12;
@@ -65,13 +72,27 @@ public class PemeriksaanActivity extends BaseActivity {
         setContentView(R.layout.activity_pemeriksaan);
         ButterKnife.bind(this);
 
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            if (extras.containsKey(HelperConstant.LAMPIRAN_KEY)) {
+                lampiranType = extras.getInt(HelperConstant.LAMPIRAN_KEY);
+            }
+        }
+
         Resources resources = this.getResources();
-        bitmapBackground = BitmapFactory.decodeResource(resources, R.drawable.ibid_sedan);
+        if(lampiranType == HelperConstant.LAMPIRAN_SEDAN){
+            bitmapBackground = BitmapFactory.decodeResource(resources, R.drawable.ibid_sedan);
+        }else{
+            bitmapBackground = BitmapFactory.decodeResource(resources, R.drawable.ibid_niaga);
+        }
+
         mDrawView = new DrawView(this, bitmapBackground, mLinCanvas);
 
         mLinCanvas.addView(mDrawView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         mBtnClear.setOnClickListener(view -> mDrawView.clearAll());
+        mBtnSave.setOnClickListener(view -> saveBitmap(mDrawView.getBitmap()));
         mBtnBaret.setOnClickListener(view -> changePaint(DrawView.COLOR_BARET, mBtnBaret));
         mBtnPenyok.setOnClickListener(view -> changePaint(DrawView.COLOR_PENYOK, mBtnPenyok));
         mBtnRetak.setOnClickListener(view -> changePaint(DrawView.COLOR_RETAK, mBtnRetak));
@@ -85,7 +106,22 @@ public class PemeriksaanActivity extends BaseActivity {
             mDrawView.changePaintType(DrawView.COLOR_ERASER);
         });
         changePaint(DrawView.COLOR_BARET, mBtnBaret);
-        mDrawView.save()
+    }
+
+    private void saveBitmap(Bitmap bitmap) {
+        Canvas canvas = new Canvas(bitmap);
+        mLinCanvas.draw(canvas);
+
+        Intent i = new Intent();
+        ByteArrayOutputStream bs = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 90, bs);
+        i.putExtra("bitmapArray", bs.toByteArray());
+
+
+        Log.d("checking", "check");
+
+        setResult(RESULT_OK, i);
+        this.finish();
     }
 
     private void changePaint(String paintType, Button btn) {
