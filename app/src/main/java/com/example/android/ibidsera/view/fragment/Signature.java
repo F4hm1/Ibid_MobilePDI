@@ -40,8 +40,6 @@ public class Signature extends View {
     }
 
     public void save(View v, String StoredPath) {
-        Log.v("SIGN_TAG", "Width: " + v.getWidth());
-        Log.v("SIGN_TAG", "Height: " + v.getHeight());
         if (bitmap == null) {
             bitmap = Bitmap.createBitmap(mContainer.getWidth(), mContainer.getHeight(), Bitmap.Config.RGB_565);
         }

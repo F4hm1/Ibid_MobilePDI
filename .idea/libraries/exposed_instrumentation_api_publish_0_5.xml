@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="exposed-instrumentation-api-publish-0.5">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/73a2632153f7a5942ca3266d5a2fff6b156885e6/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/73a2632153f7a5942ca3266d5a2fff6b156885e6/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/256973f1c8f04a86f3d25e727ae4cad7c408ca4c/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/256973f1c8f04a86f3d25e727ae4cad7c408ca4c/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/test/exposed-instrumentation-api-publish/0.5/exposed-instrumentation-api-publish-0.5-sources.jar!/" />
+      <root url="jar://$USER_HOME$/AppData/Local/Android/Sdk/extras/android/m2repository/com/android/support/test/exposed-instrumentation-api-publish/0.5/exposed-instrumentation-api-publish-0.5-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
