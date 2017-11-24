@@ -542,18 +542,19 @@ public class AddMasuk extends BaseFragment {
     }
 
     private void getKomponen(AuctionService auctionService) {
-        auctionService.getPersiapan().enqueue(new Callback<List<Unit>>() {
-            @Override
-            public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
-                List<Unit> lu = response.body();
-                getKomponenList(lu);
-            }
-
-            @Override
-            public void onFailure(Call<List<Unit>> call, Throwable t) {
-                errorRetrofit(call, t);
-            }
-        });
+//        auctionService.getPersiapan().enqueue(new Callback<List<Unit>>() {
+//            @Override
+//            public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
+//                List<Unit> lu = response.body();
+//                getKomponenList(lu);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Unit>> call, Throwable t) {
+//                errorRetrofit(call, t);
+//            }
+//        });
+        getKomponenList(StaticUnit.getLu());
     }
 
     private void getKomponenList(List<Unit> lu) {
@@ -799,8 +800,8 @@ public class AddMasuk extends BaseFragment {
         String required = "<font color=#FF0000> *</font>";
         nopol_title.setText(Html.fromHtml(nopol_title.getText() + required));
         nama_title.setText(Html.fromHtml(nama_title.getText() + required));
-        alamat_title.setText(Html.fromHtml(alamat_title.getText() + required));
-        kota_title.setText(Html.fromHtml(kota_title.getText() + required));
+//        alamat_title.setText(Html.fromHtml(alamat_title.getText() + required));
+//        kota_title.setText(Html.fromHtml(kota_title.getText() + required));
         telepon_title.setText(Html.fromHtml(telepon_title.getText() + required));
         //Start-Enhancement
         expeditionAmountTitle.setText(Html.fromHtml(expeditionAmountTitle.getText() + required));
@@ -813,19 +814,25 @@ public class AddMasuk extends BaseFragment {
         switch (requestCode) {
             case HelperConstant.LAMPIRAN_SEDAN: {
                 if (resultCode == RESULT_OK) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(
-                            data.getByteArrayExtra("bitmapArray"), 0,
-                            data.getByteArrayExtra("bitmapArray").length);
-                    ibid_sedan.setImageBitmap(bitmap);
+//                    Bitmap bitmap = BitmapFactory.decodeByteArray(
+//                            data.getByteArrayExtra("bitmapArray"), 0,
+//                            data.getByteArrayExtra("bitmapArray").length);
+                    if(HelperConstant.mTempBitmapSedan != null){
+                        ibid_sedan.setImageBitmap(HelperConstant.mTempBitmapSedan);
+                    }
+//                    ibid_sedan.setImageBitmap(bitmap);
                 }
                 break;
             }
             case HelperConstant.LAMPIRAN_NIAGA: {
                 if (resultCode == RESULT_OK) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(
-                            data.getByteArrayExtra("bitmapArray"), 0,
-                            data.getByteArrayExtra("bitmapArray").length);
-                    ibid_niaga.setImageBitmap(bitmap);
+//                    Bitmap bitmap = BitmapFactory.decodeByteArray(
+//                            data.getByteArrayExtra("bitmapArray"), 0,
+//                            data.getByteArrayExtra("bitmapArray").length);
+                    if(HelperConstant.mTempBitmapNiaga != null){
+                        ibid_niaga.setImageBitmap(HelperConstant.mTempBitmapNiaga);
+                    }
+//                    ibid_niaga.setImageBitmap(bitmap);
                 }
                 break;
             }

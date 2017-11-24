@@ -61,9 +61,9 @@ public class DrawView extends View implements View.OnTouchListener {
     private boolean isClearing = false;
     private FrameLayout mContainer;
     private Bitmap targetSaveBitmap;
+    private float decreasedBitmapScaleSize;
 
-
-    public DrawView(Context context, Bitmap mBitmap, FrameLayout mContainer) {
+    public DrawView(Context context, Bitmap mBitmap, FrameLayout mContainer, float decreasedBitmapScaleSize) {
         super(context);
         this.mContainer = mContainer;
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
@@ -98,6 +98,7 @@ public class DrawView extends View implements View.OnTouchListener {
 
         mPaint = mPaintBaret;
         pathSaved.add(new PathColored(mPaint, mPath));
+        this.decreasedBitmapScaleSize = decreasedBitmapScaleSize;
     }
 
     @Override
@@ -114,7 +115,7 @@ public class DrawView extends View implements View.OnTouchListener {
         float xScale = (float) w / originalWidth;
         float yScale = (float) h / originalHeight;
         float scale = Math.max(xScale, yScale);
-        scale -= 0.7f;
+        scale -= decreasedBitmapScaleSize;
 
         float xTranslation = (w - originalWidth * scale) / 2.0f;
         float yTranslation = (h - originalHeight * scale) / 2.0f;
@@ -278,5 +279,15 @@ public class DrawView extends View implements View.OnTouchListener {
             targetSaveBitmap = Bitmap.createBitmap(mContainer.getWidth(), mContainer.getHeight(), Bitmap.Config.RGB_565);
         }
         return targetSaveBitmap;
+    }
+
+    public ArrayList<PathColored> getPathSaved() {
+        return pathSaved;
+    }
+
+    public void setPathSaved(ArrayList<PathColored> pathSaved) {
+        this.pathSaved = pathSaved;
+        pathSaved.get(pathSaved.size() - 1).setPaint(mPaint);
+        pathSaved.get(pathSaved.size() - 1).setPath(mPath);
     }
 }
