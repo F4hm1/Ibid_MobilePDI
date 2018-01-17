@@ -98,13 +98,16 @@ public class Persiapan extends BaseFragment {
                             showToast("Tidak ada data");
                         }
                     } catch (Exception e) {
+
                     }
+                    cpvStop(cpv, bp);
                 }
 
                 @Override
                 public void onFailure(Call<List<Unit>> call, Throwable t) {
                     Log.d("FAILURE", "1: " + t.getMessage());
                     errorRetrofit(call, t);
+                    cpvStop(cpv, bp);
                 }
             });
         } else {
@@ -115,7 +118,7 @@ public class Persiapan extends BaseFragment {
                     Log.d("POLO", "LIST1: " + RetrofitUtil.toJson(response.body()));
                     List<Unit> lu = response.body();
                     StaticUnit.setLu(lu);
-                    Log.d("POLO", "LIST: "+RetrofitUtil.toJson(lu));
+                    Log.d("POLO", "LIST: " + RetrofitUtil.toJson(lu));
                     try {
                         if (!response.body().toString().equals("[]")) {
                             getPersiapan(lu);

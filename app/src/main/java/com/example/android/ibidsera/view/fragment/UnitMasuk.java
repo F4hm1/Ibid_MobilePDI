@@ -68,7 +68,7 @@ public class UnitMasuk extends BaseFragment{
             getItemList(psearch);
         }catch (Exception e){}
 
-        cpvStop(cpv, bp);
+//        cpvStop(cpv, bp);
 
         swipeRefresh(refreshLayout, R.id.nav_masuk);
 
@@ -91,11 +91,13 @@ public class UnitMasuk extends BaseFragment{
                             showToast("Tidak ada data");
                         }
                     }catch (Exception e){}
+                    cpvStop(cpv, bp);
                 }
 
                 @Override
                 public void onFailure(Call<List<Unit>> call, Throwable t) {
                     errorRetrofit(call, t);
+                    cpvStop(cpv, bp);
                 }
             });
         }else {
@@ -111,11 +113,13 @@ public class UnitMasuk extends BaseFragment{
                             showToast("Tidak ada data");
                         }
                     }catch (Exception e){}
+                    cpvStop(cpv, bp);
                 }
 
                 @Override
                 public void onFailure(Call<List<Unit>> call, Throwable t) {
                     errorRetrofit(call, t);
+                    cpvStop(cpv, bp);
                 }
             });
         }

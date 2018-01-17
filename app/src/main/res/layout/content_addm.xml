@@ -413,9 +413,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1">
-                    <TextView
-                        android:text="Sedan"
-                        style="@style/FontTextViewForm"/>
+                    <!--<TextView-->
+                        <!--android:text="Sedan"-->
+                        <!--style="@style/FontTextViewForm"/>-->
+                    <RadioButton
+                        android:id="@+id/radio_addm_sedan"
+                        style="@style/FontTextViewForm"
+                        android:text="Sedan"/>
                     <ImageView
                         android:id="@+id/ibid_sedan"
                         android:src="@drawable/ibid_sedan"
@@ -424,14 +428,16 @@
                         android:layout_gravity="center_horizontal"
                         android:clickable="true"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1">
-                    <TextView
-                        android:text="Minibus"
-                        style="@style/FontTextViewForm"/>
+                    <RadioButton
+                        android:id="@+id/radio_addm_minibus"
+                        style="@style/FontTextViewForm"
+                        android:text="Minibus"/>
                     <ImageView
                         android:id="@+id/ibid_niaga"
                         android:src="@drawable/ibid_niaga"
@@ -440,6 +446,7 @@
                         android:layout_gravity="center_horizontal"
                         android:clickable="true"/>
                 </LinearLayout>
+
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"

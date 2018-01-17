@@ -72,10 +72,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginRight="16dp"
-                    android:text="Add Item"
                     android:background="@drawable/button_style"
+                    android:onClick="ClickHandler"
+                    android:text="Add Item"
                     android:textColor="@android:color/white"
-                    android:onClick="ClickHandler"/>
+                    android:visibility="gone" />
 
                 <TableLayout
                     android:id="@+id/table_persiapan"

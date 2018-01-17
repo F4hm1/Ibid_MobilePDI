@@ -7,6 +7,7 @@ import com.example.android.ibidsera.model.HomeModel;
 import com.example.android.ibidsera.model.InsertUnit;
 import com.example.android.ibidsera.model.Lampiran;
 import com.example.android.ibidsera.model.Login;
+import com.example.android.ibidsera.model.NoPolUnit;
 import com.example.android.ibidsera.model.Penitip;
 import com.example.android.ibidsera.model.PersiapanPost;
 import com.example.android.ibidsera.model.PersiapanValue;
@@ -23,6 +24,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Yosefricaro on 25/07/2017.
@@ -34,16 +36,33 @@ public interface AuctionService {
     @GET("index.php/persiapan/add_data?api_key=" + BuildConfig.API_KEY) Call<PersiapanValue> getAddPersiapan();
 //    @GET("index.php/persiapan?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getPersiapan();
     @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/persiapan") Call<List<Unit>> getPersiapan();
+
     @GET("index.php/unitmasuk?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitM();
     @GET("index.php/unitkeluar?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitK();
     @GET("index.php/stockmanagement?api_key=" + BuildConfig.API_KEY) Call<List<ReportModel>> getReport();
-    @GET("index.php/persiapan/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchPersiapan(@Path("nopol") String nopol);
+
+
+//    @GET("index.php/persiapan/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchPersiapan(@Path("nopol") String nopol);
+    @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/search") Call<List<Unit>> getSearchPersiapan(@Query("nopolisi") String nopol);
+
     @GET("index.php/unitmasuk/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitm(@Path("nopol") String nopol);
     @GET("index.php/unitkeluar/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitk(@Path("nopol") String nopol);
     @GET("index.php/masteritem/warna/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItemWarna(@Path("key") String key);
     @GET("index.php/masteritem/penitip/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Penitip>> getMasterItemPenitip(@Path("key") String key);
     @GET("index.php/masteritem/get_lampiran/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Lampiran>> getLampiran(@Path("key") String key);
+
+//    @GET("index.php/unitmasuk/auto/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getAutoUnitm(@Path("nopol") String nopol);
     @GET("index.php/unitmasuk/auto/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getAutoUnitm(@Path("nopol") String nopol);
+
+
+
+    //Get NoPol untuk dropdown list target checklist unit masuk
+    @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/search/nopolmasuk") Call<List<NoPolUnit>> getNoPolUnitM(@Query("nopolisi") String noPolkey);
+
+    //Get detail unit persiapan based on id
+    @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/search/masukbyid") Call<List<Unit>> getDetailUnitPersiapan(@Query("AuctionItemId") String auctionItemId);
+
+
     @GET("index.php/unitkeluar/auto/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getAutoUnitk(@Path("nopol") String nopol);
 
 //        @Headers({
@@ -59,7 +78,9 @@ public interface AuctionService {
     @POST("index.php/unitkeluar/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnitKeluar(@Body InsertUnit insertUnit);
     @POST("index.php/persiapan/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnit(@Body PersiapanPost persiapanPost);
     @POST("index.php/masteritem/search?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItem(@Body Attribute item);
-    @POST("index.php/auth/login?api_key=" + BuildConfig.API_KEY) Call<Login> getLogin(@Body Login login);
+//    @POST("index.php/auth/login?api_key=" + BuildConfig.API_KEY) Call<Login> getLogin(@Body Login login);
+    @POST("http://ibidadmsdevserviceaccount.azurewebsites.net/index.php/pdi/auth") Call<Login> getLogin(@Body Login login);
+
     @POST("index.php/masteritem/get_sign_masuk?api_key=" + BuildConfig.API_KEY) Call<SignValue> getSignMasuk(@Body SignPost item);
     @POST("index.php/masteritem/get_sign_keluar?api_key=" + BuildConfig.API_KEY) Call<SignValue> getSignKeluar(@Body SignPost item);
     @POST("index.php/masteritem/post_sign_masuk?api_key=" + BuildConfig.API_KEY) Call<SignValue> postSignMasuk(@Body Sign item);

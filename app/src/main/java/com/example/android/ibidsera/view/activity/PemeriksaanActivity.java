@@ -123,7 +123,7 @@ public class PemeriksaanActivity extends AppCompatActivity {
 
         Intent i = new Intent();
         ByteArrayOutputStream bs = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 90, bs);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bs);
 
         if(lampiranType == HelperConstant.LAMPIRAN_SEDAN){
             HelperConstant.mTempBitmapSedan = bitmap;

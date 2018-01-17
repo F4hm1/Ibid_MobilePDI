@@ -11,16 +11,14 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.util.PathColored;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -41,6 +39,9 @@ public class DrawView extends View implements View.OnTouchListener {
     private Paint mPaintRetak;
     private Paint mPaintPecah;
 
+    private Paint mPaintText;
+    private Paint mPaintTextBg;
+
     private ArrayList<Path> paths = new ArrayList<Path>();
     private ArrayList<Path> undonePaths = new ArrayList<Path>();
     private ArrayList<PathColored> pathSaved = new ArrayList<PathColored>();
@@ -52,6 +53,8 @@ public class DrawView extends View implements View.OnTouchListener {
     public static final String COLOR_PENYOK = "#0bea00";
     public static final String COLOR_RETAK = "#eae300";
     public static final String COLOR_PECAH = "#ea0043";
+    public static final String COLOR_TEXT = "#A6000000";
+    public static final String COLOR_TEXT_BACKGROUND = "#A6eae300";
     public static final String COLOR_ERASER = "0";
 
     //    private Canvas temp;
@@ -63,8 +66,13 @@ public class DrawView extends View implements View.OnTouchListener {
     private Bitmap targetSaveBitmap;
     private float decreasedBitmapScaleSize;
 
+    private Bitmap mBitmapNumber;
+    private Bitmap mBitmapNumber2;
+
     public DrawView(Context context, Bitmap mBitmap, FrameLayout mContainer, float decreasedBitmapScaleSize) {
         super(context);
+        mBitmapNumber = BitmapFactory.decodeResource(context.getResources(), R.drawable.one);
+        mBitmapNumber2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.two);
         this.mContainer = mContainer;
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
         setFocusable(true);
@@ -87,6 +95,9 @@ public class DrawView extends View implements View.OnTouchListener {
         mPaintPenyok = getColorPaint(COLOR_PENYOK, 4);
         mPaintRetak = getColorPaint(COLOR_RETAK, 4);
         mPaintPecah = getColorPaint(COLOR_PECAH, 4);
+        mPaintText = getColorPaint(COLOR_TEXT, 1);
+        mPaintTextBg = getColorPaint(COLOR_TEXT_BACKGROUND, 1);
+        mPaintTextBg.setStyle(Paint.Style.FILL);
 
         this.mBitmap = mBitmap.copy(Bitmap.Config.ARGB_8888, true);
         this.tempBitmap = mBitmap.copy(Bitmap.Config.ARGB_8888, true);
@@ -138,11 +149,42 @@ public class DrawView extends View implements View.OnTouchListener {
         for (PathColored p : pathSaved) {
             bgCanvas.drawPath(p.getPath(), p.getPaint());
         }
-        if(isClearing) {
+        if (pathSaved.size() > 1) {
+//            mBitmapNumber.setWidth(mBitmapNumber.getWidth() * (70 / 100));
+            bgCanvas.drawBitmap(mBitmapNumber, xCurTargetPoint, yCurTargetPoint, pathSaved.get(0).getPaint());
+//            bgCanvas.drawBitmap(mBitmapNumber2, xCurTargetText, yCurTargetText, pathSaved.get(0).getPaint());
+
+//            pathSaved.get(0).getPaint().setStyle(Paint.Style.FILL);
+//            pathSaved.get(0).getPaint().setAntiAlias(true);
+//            pathSaved.get(0).getPaint().setTextSize(18);
+//            bgCanvas.drawText(
+//                    "baret bagian sini",
+//                    xCurTargetText + 2,
+//                    yCurTargetText + pathSaved.get(0).getPaint().getTextSize(),
+//                    pathSaved.get(0).getPaint()
+//            );
+
+
+            String textToDraw = "baret bagian sini";
+            Rect rect = new Rect();
+            mPaintTextBg.setTextSize(15);
+            mPaintTextBg.getTextBounds(textToDraw, 0, textToDraw.length(), rect);
+            bgCanvas.translate(xCurTargetText + 2, yCurTargetText + mPaintTextBg.getTextSize());
+            mPaintTextBg.setStyle(Paint.Style.FILL);
+            bgCanvas.drawRect(rect, mPaintTextBg);
+
+            bgCanvas.translate(-(xCurTargetText + 2), -(yCurTargetText + mPaintTextBg.getTextSize()));
+            mPaintText.setStyle(Paint.Style.FILL);
+            mPaintText.setTextSize(15);
+            bgCanvas.drawText(textToDraw, xCurTargetText + 2, yCurTargetText + mPaintTextBg.getTextSize(), mPaintText);
+
+        }
+
+        if (isClearing) {
             bgCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             isClearing = false;
         }
-        canvas.drawBitmap(drawableBitmap, 0,0, mBitmapPaint);
+        canvas.drawBitmap(drawableBitmap, 0, 0, mBitmapPaint);
     }
 
     private float mX, mY;
@@ -220,7 +262,7 @@ public class DrawView extends View implements View.OnTouchListener {
                 mPaint = mPaintPecah;
                 break;
             }
-            case COLOR_ERASER:{
+            case COLOR_ERASER: {
                 mPaint = mPaintTransparent;
                 break;
             }
@@ -245,13 +287,28 @@ public class DrawView extends View implements View.OnTouchListener {
                 break;
             case MotionEvent.ACTION_UP:
                 touch_up();
+                putPoint(x, y);
                 invalidate();
                 break;
         }
         return true;
     }
 
-    private Paint getColorPaint(String color, int strokeSize){
+    private float xCurTargetPoint = 0f;
+    private float yCurTargetPoint = 0f;
+
+    private float xCurTargetText = 0f;
+    private float yCurTargetText = 0f;
+
+    private void putPoint(float x, float y) {
+        xCurTargetPoint = x - (mBitmapNumber.getWidth() / 2f);
+        yCurTargetPoint = y - (mBitmapNumber.getHeight() / 2f);
+
+        xCurTargetText = x + (mBitmapNumber.getWidth() / 2f);
+        yCurTargetText = y - (mBitmapNumber.getHeight() / 2f);
+    }
+
+    private Paint getColorPaint(String color, int strokeSize) {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setDither(true);
@@ -263,7 +320,7 @@ public class DrawView extends View implements View.OnTouchListener {
         return paint;
     }
 
-    public void clearAll(){
+    public void clearAll() {
         mPath.reset();
         for (PathColored p : pathSaved) {
             p.getPath().reset();

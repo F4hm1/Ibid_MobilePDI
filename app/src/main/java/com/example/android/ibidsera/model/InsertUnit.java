@@ -37,6 +37,10 @@ public class InsertUnit {
     private List<String> cektampilkanrusak;
     private List<String> cektampilkantidakada;
     private List<Integer> idkomponenpemeriksaan;
+    private String gambarchecklist;
+    private String ttdibid;
+    private String ttdcustomer;
+    private String reasonunchecklist;
 
     public String getIdpemeriksaanitem() {
         return idpemeriksaanitem;
@@ -276,5 +280,37 @@ public class InsertUnit {
 
     public void setExpedition_amount(String expedition_amount) {
         this.expedition_amount = expedition_amount;
+    }
+
+    public String getGambarchecklist() {
+        return gambarchecklist;
+    }
+
+    public void setGambarchecklist(String gambarchecklist) {
+        this.gambarchecklist = gambarchecklist;
+    }
+
+    public String getTtdibid() {
+        return ttdibid;
+    }
+
+    public void setTtdibid(String ttdibid) {
+        this.ttdibid = ttdibid;
+    }
+
+    public String getTtdcustomer() {
+        return ttdcustomer;
+    }
+
+    public void setTtdcustomer(String ttdcustomer) {
+        this.ttdcustomer = ttdcustomer;
+    }
+
+    public String getReasonunchecklist() {
+        return reasonunchecklist;
+    }
+
+    public void setReasonunchecklist(String reasonunchecklist) {
+        this.reasonunchecklist = reasonunchecklist;
     }
 }

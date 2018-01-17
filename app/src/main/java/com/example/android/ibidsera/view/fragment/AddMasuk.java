@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,10 +25,12 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -39,6 +43,7 @@ import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.InsertUnit;
 import com.example.android.ibidsera.model.Lampiran;
+import com.example.android.ibidsera.model.NoPolUnit;
 import com.example.android.ibidsera.model.Sign;
 import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
@@ -167,10 +172,15 @@ public class AddMasuk extends BaseFragment {
     @BindView(R.id.et_checklist_not)
     EditText mEtChecklistNot;
 
+    @BindView(R.id.radio_addm_minibus)
+    RadioButton mRadioMinibus;
+
+    @BindView(R.id.radio_addm_sedan)
+    RadioButton mRadioSedan;
+
     //End-Enhancement
 
     private static final int KEY_PEMERIKSAAN_ACTIVITY = 1009;
-
 
 
     @Override
@@ -180,14 +190,37 @@ public class AddMasuk extends BaseFragment {
         ButterKnife.bind(this, myFragment);
 
         mToggleChecklist.setOnCheckedChangeListener((compoundButton, b) -> {
-            if(b){
+            if (b) {
                 tl.setVisibility(View.VISIBLE);
                 mEtChecklistNot.setVisibility(View.GONE);
-            }else{
+            } else {
                 tl.setVisibility(View.GONE);
                 mEtChecklistNot.setVisibility(View.VISIBLE);
             }
         });
+
+        mRadioSedan.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                ibid_sedan.setEnabled(true);
+                ibid_niaga.setEnabled(false);
+                ibid_sedan.setAlpha(1f);
+                ibid_niaga.setAlpha(0.2f);
+
+                mRadioMinibus.setChecked(false);
+            }
+        });
+
+        mRadioMinibus.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                ibid_sedan.setEnabled(false);
+                ibid_niaga.setEnabled(true);
+                ibid_sedan.setAlpha(0.2f);
+                ibid_niaga.setAlpha(1f);
+                mRadioSedan.setChecked(false);
+            }
+        });
+
+        mRadioSedan.setChecked(true);
 
         cpvStart(cpv, bp);
 
@@ -237,8 +270,9 @@ public class AddMasuk extends BaseFragment {
         nopol.setOnItemClickListener((parent, view, position, id1) -> {
             hideKeyboard();
             cpvStart(cpv, bp);
-            getAddm(StaticUnit.getLu().get(position), position);
-            cpvStop(cpv, bp);
+//            getAddm(StaticUnit.getLu().get(position), position);
+            getDetailUnitById(listNoPolUnit.get(position).getAuctionItemId(), position, auctionService);
+//            cpvStop(cpv, bp);
         });
 
         toolTip(cases, "BUY BACK / WANPRES");
@@ -258,45 +292,48 @@ public class AddMasuk extends BaseFragment {
             h.put("Telp", telepon);
 
             List<String> ls2 = required(h);
+            InsertUnit requestUnit = setInsertUnit(StaticUnit.getUnit());
 
-            if (ls2.size() <= 0) {
-                final Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    auctionService.insertUnitMasuk(setInsertUnit(StaticUnit.getUnit())).enqueue(new Callback<GetStatus>() {
-                        @Override
-                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                            GetStatus getStatus = response.body();
-                            Log.i("info", "post submitted to API." + response.body());
-                            try {
-                                if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
-                                    postSignature(getStatus, auctionService, pDialog);
-                                    postLampiran(getStatus, auctionService, pDialog);
-                                } else {
-                                    pDialog.hide();
-                                    alertDialog(getStatus.getMessage(), 1);
+            if (requestUnit != null) {
+                if (ls2.size() <= 0) {
+                    final Handler handler = new Handler();
+                    handler.postDelayed(() -> {
+                        auctionService.insertUnitMasuk(requestUnit).enqueue(new Callback<GetStatus>() {
+                            @Override
+                            public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                GetStatus getStatus = response.body();
+                                Log.i("info", "post submitted to API." + response.body());
+                                try {
+                                    if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
+                                        pDialog.hide();
+                                        alertDialog("Proses Penambahan Pemeriksaan Unit Masuk Berhasil", 1);
+                                    } else {
+                                        pDialog.hide();
+                                        alertDialog(getStatus.getMessage(), 1);
+                                    }
+                                } catch (Exception e) {
                                 }
-                            } catch (Exception e) {
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<GetStatus> call, Throwable t) {
-                            pDialog.hide();
+                            @Override
+                            public void onFailure(Call<GetStatus> call, Throwable t) {
+                                pDialog.hide();
 //                            errorRetrofit(call, t);
-                            alertDialog("Data checklist berhasil disimpan", 1);
-                        }
-                    });
-                }, 2000);
-            } else {
-                pDialog.hide();
-                String required = "";
-                for (int i = ls2.size() - 1; i >= 0; i--) {
-                    if (i == 0) {
-                        required = required + ls2.get(i);
-                    } else
-                        required = required + ls2.get(i) + ", ";
+                                alertDialog("Data checklist berhasil disimpan", 1);
+                            }
+                        });
+                    }, 2000);
+                } else {
+                    pDialog.hide();
+                    String required = "";
+                    for (int i = ls2.size() - 1; i >= 0; i--) {
+                        if (i == 0) {
+                            required = required + ls2.get(i);
+                        } else
+                            required = required + ls2.get(i) + ", ";
+                    }
+                    alertDialog("Maaf " + required + " belum anda masukan !!", 2);
                 }
-                alertDialog("Maaf " + required + " belum anda masukan !!", 2);
             }
         });
 
@@ -305,8 +342,25 @@ public class AddMasuk extends BaseFragment {
         return myFragment;
     }
 
-    public void getAddm(Unit lu, int id) {
-        position = id;
+    private void getDetailUnitById(int auctionItemId, int position, AuctionService auctionService) {
+        auctionService.getDetailUnitPersiapan(auctionItemId + "").enqueue(new Callback<List<Unit>>() {
+            @Override
+            public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
+                List<Unit> lu = response.body();
+                StaticUnit.setLu(lu);
+                getAddm(lu.get(0), position);
+                cpvStop(cpv, bp);
+            }
+
+            @Override
+            public void onFailure(Call<List<Unit>> call, Throwable t) {
+                errorRetrofit(call, t);
+            }
+        });
+    }
+
+    public void getAddm(Unit lu, int pos) {
+        position = pos;
         StaticUnit.setUnit(lu);
         if (lu.getAuction().getValue() != null) {
             nopol.setText(lu.getAuction().getValue());
@@ -417,6 +471,38 @@ public class AddMasuk extends BaseFragment {
         insertUnit.setPoolkota(String.valueOf(pool.getText()));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         insertUnit.setWEBID_LOGGED_IN(prefs.getInt("userId", 0));
+        signature1.buildDrawingCache();
+        bitmap1 = signature1.getDrawingCache();
+        signature2.buildDrawingCache();
+        bitmap2 = signature2.getDrawingCache();
+        insertUnit.setTtdibid(base64Encode(bitmap1));
+        insertUnit.setTtdcustomer(base64Encode(bitmap2));
+
+        ibid_sedan.buildDrawingCache();
+        bitmap3 = ibid_sedan.getDrawingCache();
+        ibid_niaga.buildDrawingCache();
+        bitmap4 = ibid_niaga.getDrawingCache();
+        if (mRadioSedan.isChecked()) {
+            if (HelperConstant.mTempBitmapSedan != null) {
+                insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapSedan));
+            } else {
+                showToast("Harap melakukan checklist gambar tipe mobil sedan");
+                return null;
+            }
+        } else {
+            if (HelperConstant.mTempBitmapNiaga != null) {
+                insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapNiaga));
+            } else {
+                showToast("Harap melakukan checklist gambar tipe mobil minibus");
+                return null;
+            }
+        }
+
+        if (!mToggleChecklist.isChecked()) {
+            insertUnit.setReasonunchecklist(mEtChecklistNot.getText().toString());
+        } else {
+            insertUnit.setReasonunchecklist("");
+        }
 
         Log.d("POLO", insertUnit.getExpedition_amount());
         return insertUnit;
@@ -499,29 +585,32 @@ public class AddMasuk extends BaseFragment {
         //End-Enhancement
     }
 
+    List<NoPolUnit> listNoPolUnit = new ArrayList<>();
+
     private void getDropdownList(AuctionService auctionService, List<String> ls) {
         if (!nopol.getText().toString().equals("")) {
-            auctionService.getAutoUnitm(nopol.getText().toString()).enqueue(new Callback<List<Unit>>() {
+            auctionService.getNoPolUnitM(nopol.getText().toString()).enqueue(new Callback<List<NoPolUnit>>() {
                 @Override
-                public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
-                    List<Unit> lu = response.body();
-                    StaticUnit.setLu(lu);
-                    ls.clear();
+                public void onResponse(Call<List<NoPolUnit>> call, Response<List<NoPolUnit>> response) {
+                    List<NoPolUnit> lu = response.body();
+//                    StaticUnit.setLu(lu);
+//                    listNoPolUnit = lu;
+                    listNoPolUnit.clear();
                     try {
                         for (int i = 0; i < lu.size(); i++) {
-                            ls.add(lu.get(i).getAuction().getValue());
+                            listNoPolUnit.add(lu.get(i));
                         }
                     } catch (Exception e) {
+
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                            android.R.layout.simple_dropdown_item_1line, ls);
+                    ArrayAdapter<NoPolUnit> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, listNoPolUnit);
                     nopol.setAdapter(adapter);
                     nopol.setThreshold(1);
                     nopol.showDropDown();
                 }
 
                 @Override
-                public void onFailure(Call<List<Unit>> call, Throwable t) {
+                public void onFailure(Call<List<NoPolUnit>> call, Throwable t) {
                     errorRetrofit(call, t);
                 }
             });
@@ -817,7 +906,7 @@ public class AddMasuk extends BaseFragment {
 //                    Bitmap bitmap = BitmapFactory.decodeByteArray(
 //                            data.getByteArrayExtra("bitmapArray"), 0,
 //                            data.getByteArrayExtra("bitmapArray").length);
-                    if(HelperConstant.mTempBitmapSedan != null){
+                    if (HelperConstant.mTempBitmapSedan != null) {
                         ibid_sedan.setImageBitmap(HelperConstant.mTempBitmapSedan);
                     }
 //                    ibid_sedan.setImageBitmap(bitmap);
@@ -829,7 +918,7 @@ public class AddMasuk extends BaseFragment {
 //                    Bitmap bitmap = BitmapFactory.decodeByteArray(
 //                            data.getByteArrayExtra("bitmapArray"), 0,
 //                            data.getByteArrayExtra("bitmapArray").length);
-                    if(HelperConstant.mTempBitmapNiaga != null){
+                    if (HelperConstant.mTempBitmapNiaga != null) {
                         ibid_niaga.setImageBitmap(HelperConstant.mTempBitmapNiaga);
                     }
 //                    ibid_niaga.setImageBitmap(bitmap);

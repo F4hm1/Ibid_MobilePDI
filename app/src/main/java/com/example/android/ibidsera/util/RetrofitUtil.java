@@ -28,8 +28,8 @@ public class RetrofitUtil {
 
         // add logging as last interceptor
         httpClient.addInterceptor(logging);  // <-- this is the important line!
-        httpClient.connectTimeout(60, TimeUnit.SECONDS);
-        httpClient.readTimeout(60, TimeUnit.SECONDS);
+        httpClient.connectTimeout(120, TimeUnit.SECONDS);
+        httpClient.readTimeout(120, TimeUnit.SECONDS);
 
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.URI)
