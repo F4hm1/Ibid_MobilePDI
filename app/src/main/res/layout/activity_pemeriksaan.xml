@@ -27,40 +27,41 @@
         <Button
             android:id="@+id/btn_paint_baret"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/paintBaret"
-            android:text="BARET"
+            android:layout_margin="3dp"
+            android:text="(1)\nBARET"
             android:textColor="@android:color/black"
             tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_paint_penyok"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/paintPenyok"
-            android:text="PENYOK"
+            android:text="(2)\nPENYOK"
             android:textColor="@android:color/black"
             tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_paint_retak"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/paintRetak"
-            android:text="RETAK"
+            android:text="(3)\nRETAK"
             android:textColor="@android:color/black"
             tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_paint_pecah"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/paintPecah"
-            android:text="PECAH"
+            android:text="(4)\nPECAH"
             android:textColor="@android:color/black"
             tools:ignore="ButtonStyle"
             />
@@ -113,12 +114,11 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_height="20dp"
                     android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginRight="8dp"
-                    android:src="@drawable/rect_legend_penyok"
-                    android:background="@color/paintBaret">
-                </ImageView>
+                    android:background="@color/transparent"
+                    android:src="@drawable/one"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,12 +134,11 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_height="20dp"
                     android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginRight="8dp"
-                    android:src="@drawable/rect_legend_penyok"
-                    android:background="@color/paintPenyok">
-                </ImageView>
+                    android:background="@color/transparent"
+                    android:src="@drawable/two"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -155,12 +154,11 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_height="20dp"
                     android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginRight="8dp"
-                    android:src="@drawable/rect_legend_penyok"
-                    android:background="@color/paintRetak">
-                </ImageView>
+                    android:background="@color/transparent"
+                    android:src="@drawable/three"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -176,12 +174,11 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_height="20dp"
                     android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginRight="8dp"
-                    android:src="@drawable/rect_legend_penyok"
-                    android:background="@color/paintPecah">
-                </ImageView>
+                    android:background="@color/transparent"
+                    android:src="@drawable/four"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"

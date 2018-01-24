@@ -47,7 +47,7 @@ public class InsertUnit {
     }
 
     public void setIdpemeriksaanitem(String idpemeriksaanitem) {
-        this.idpemeriksaanitem = idpemeriksaanitem;
+        this.idpemeriksaanitem = idpemeriksaanitem == null ? "" : idpemeriksaanitem;
     }
 
     public int getIdauctionitem() {
@@ -71,7 +71,7 @@ public class InsertUnit {
     }
 
     public void setFuel(String fuel) {
-        this.fuel = fuel;
+        this.fuel = fuel == null ? "" : fuel;
     }
 
     public String getCatbody() {
@@ -79,7 +79,7 @@ public class InsertUnit {
     }
 
     public void setCatbody(String catbody) {
-        this.catbody = catbody;
+        this.catbody = catbody == null ? "" : catbody;
     }
 
     public String getCatatan() {
@@ -87,7 +87,7 @@ public class InsertUnit {
     }
 
     public void setCatatan(String catatan) {
-        this.catatan = catatan;
+        this.catatan = catatan == null ? "" : catatan;
     }
 
     public String getTglpemeriksaan() {
@@ -95,7 +95,7 @@ public class InsertUnit {
     }
 
     public void setTglpemeriksaan(String tglpemeriksaan) {
-        this.tglpemeriksaan = tglpemeriksaan;
+        this.tglpemeriksaan = tglpemeriksaan == null ? "" : tglpemeriksaan;
     }
 
     public String getJampemeriksaan() {
@@ -103,7 +103,7 @@ public class InsertUnit {
     }
 
     public void setJampemeriksaan(String jampemeriksaan) {
-        this.jampemeriksaan = jampemeriksaan;
+        this.jampemeriksaan = jampemeriksaan == null ? "" : jampemeriksaan;
     }
 
     public String getMenitpemeriksaan() {
@@ -111,7 +111,7 @@ public class InsertUnit {
     }
 
     public void setMenitpemeriksaan(String menitpemeriksaan) {
-        this.menitpemeriksaan = menitpemeriksaan;
+        this.menitpemeriksaan = menitpemeriksaan == null ? "" : menitpemeriksaan;
     }
 
     public String getNamapengemudi() {
@@ -119,7 +119,7 @@ public class InsertUnit {
     }
 
     public void setNamapengemudi(String namapengemudi) {
-        this.namapengemudi = namapengemudi;
+        this.namapengemudi = namapengemudi == null ? "" : namapengemudi;
     }
 
     public String getAlamatpengemudi() {
@@ -127,7 +127,7 @@ public class InsertUnit {
     }
 
     public void setAlamatpengemudi(String alamatpengemudi) {
-        this.alamatpengemudi = alamatpengemudi;
+        this.alamatpengemudi = alamatpengemudi == null ? "" : alamatpengemudi;
     }
 
     public String getKotapengemudi() {
@@ -135,7 +135,7 @@ public class InsertUnit {
     }
 
     public void setKotapengemudi(String kotapengemudi) {
-        this.kotapengemudi = kotapengemudi;
+        this.kotapengemudi = kotapengemudi == null ? "" : kotapengemudi;
     }
 
     public String getTeleponpengemudi() {
@@ -143,7 +143,7 @@ public class InsertUnit {
     }
 
     public void setTeleponpengemudi(String teleponpengemudi) {
-        this.teleponpengemudi = teleponpengemudi;
+        this.teleponpengemudi = teleponpengemudi == null ? "" : teleponpengemudi;
     }
 
     public int getIduser() {
@@ -175,7 +175,7 @@ public class InsertUnit {
     }
 
     public void setCases(String cases) {
-        this.cases = cases;
+        this.cases = cases == null ? "" : cases;
     }
 
     public String getPoolkota() {
@@ -183,7 +183,7 @@ public class InsertUnit {
     }
 
     public void setPoolkota(String poolkota) {
-        this.poolkota = poolkota;
+        this.poolkota = poolkota == null ? "" : poolkota;
     }
 
     public String getMERK() {
@@ -191,7 +191,7 @@ public class InsertUnit {
     }
 
     public void setMERK(String MERK) {
-        this.MERK = MERK;
+        this.MERK = MERK == null ? "" : MERK;
     }
 
     public String getSERI() {
@@ -199,7 +199,7 @@ public class InsertUnit {
     }
 
     public void setSERI(String SERI) {
-        this.SERI = SERI;
+        this.SERI = SERI == null ? "" : SERI;
     }
 
     public String getSILINDER() {
@@ -207,7 +207,7 @@ public class InsertUnit {
     }
 
     public void setSILINDER(String SILINDER) {
-        this.SILINDER = SILINDER;
+        this.SILINDER = SILINDER == null ? "" : SILINDER;
     }
 
     public String getGRADE() {
@@ -215,7 +215,7 @@ public class InsertUnit {
     }
 
     public void setGRADE(String GRADE) {
-        this.GRADE = GRADE;
+        this.GRADE = GRADE == null ? "" : GRADE;
     }
 
     public String getSUB_GRADE() {
@@ -223,7 +223,7 @@ public class InsertUnit {
     }
 
     public void setSUB_GRADE(String SUB_GRADE) {
-        this.SUB_GRADE = SUB_GRADE;
+        this.SUB_GRADE = SUB_GRADE == null ? "" : SUB_GRADE;
     }
 
     public String getTRANSMISI() {
@@ -231,7 +231,7 @@ public class InsertUnit {
     }
 
     public void setTRANSMISI(String TRANSMISI) {
-        this.TRANSMISI = TRANSMISI;
+        this.TRANSMISI = TRANSMISI == null ? "" : TRANSMISI;
     }
 
     public String getKM() {
@@ -239,7 +239,7 @@ public class InsertUnit {
     }
 
     public void setKM(String KM) {
-        this.KM = KM;
+        this.KM = KM == null ? "" : KM;
     }
 
     public String getNopolisi() {
@@ -247,7 +247,7 @@ public class InsertUnit {
     }
 
     public void setNopolisi(String nopolisi) {
-        this.nopolisi = nopolisi;
+        this.nopolisi = nopolisi == null ? "" : nopolisi;
     }
 
     public List<String> getCektampilkanbaik() {
@@ -279,7 +279,7 @@ public class InsertUnit {
     }
 
     public void setExpedition_amount(String expedition_amount) {
-        this.expedition_amount = expedition_amount;
+        this.expedition_amount = expedition_amount == null ? "" : expedition_amount;
     }
 
     public String getGambarchecklist() {
@@ -287,7 +287,7 @@ public class InsertUnit {
     }
 
     public void setGambarchecklist(String gambarchecklist) {
-        this.gambarchecklist = gambarchecklist;
+        this.gambarchecklist = gambarchecklist == null ? "" : gambarchecklist;
     }
 
     public String getTtdibid() {
@@ -295,7 +295,7 @@ public class InsertUnit {
     }
 
     public void setTtdibid(String ttdibid) {
-        this.ttdibid = ttdibid;
+        this.ttdibid = ttdibid == null ? "" : ttdibid;
     }
 
     public String getTtdcustomer() {
@@ -303,7 +303,7 @@ public class InsertUnit {
     }
 
     public void setTtdcustomer(String ttdcustomer) {
-        this.ttdcustomer = ttdcustomer;
+        this.ttdcustomer = ttdcustomer == null ? "" : ttdcustomer;
     }
 
     public String getReasonunchecklist() {
@@ -311,6 +311,6 @@ public class InsertUnit {
     }
 
     public void setReasonunchecklist(String reasonunchecklist) {
-        this.reasonunchecklist = reasonunchecklist;
+        this.reasonunchecklist = reasonunchecklist == null ? "" : reasonunchecklist;
     }
 }

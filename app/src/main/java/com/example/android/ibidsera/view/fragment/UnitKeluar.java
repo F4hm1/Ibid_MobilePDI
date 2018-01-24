@@ -22,6 +22,7 @@ import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.Attribute;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
+import com.example.android.ibidsera.model.UnitMasukKeluar;
 import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.util.RetrofitUtil;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
@@ -79,11 +80,11 @@ public class UnitKeluar extends BaseFragment{
         AuctionService auctionService = RetrofitUtil.getAuctionService();
 
         if (nopol != null && !nopol.isEmpty()) {
-            auctionService.getSearchUnitk(nopol).enqueue(new Callback<List<Unit>>() {
+            auctionService.getSearchUnitk(nopol).enqueue(new Callback<List<UnitMasukKeluar>>() {
                 @Override
-                public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
-                    List<Unit> lu = response.body();
-                    StaticUnit.setLu(lu);
+                public void onResponse(Call<List<UnitMasukKeluar>> call, Response<List<UnitMasukKeluar>> response) {
+                    List<UnitMasukKeluar> lu = response.body();
+                    StaticUnit.setLuMasukKeluar(lu);
                     try {
                         if (!response.body().toString().equals("[]")) {
                             getUnitk(lu);
@@ -94,16 +95,16 @@ public class UnitKeluar extends BaseFragment{
                 }
 
                 @Override
-                public void onFailure(Call<List<Unit>> call, Throwable t) {
+                public void onFailure(Call<List<UnitMasukKeluar>> call, Throwable t) {
                     errorRetrofit(call, t);
                 }
             });
         }else {
-            auctionService.getUnitK().enqueue(new Callback<List<Unit>>() {
+            auctionService.getUnitK().enqueue(new Callback<List<UnitMasukKeluar>>() {
                 @Override
-                public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
-                    List<Unit> lu = response.body();
-                    StaticUnit.setLu(lu);
+                public void onResponse(Call<List<UnitMasukKeluar>> call, Response<List<UnitMasukKeluar>> response) {
+                    List<UnitMasukKeluar> lu = response.body();
+                    StaticUnit.setLuMasukKeluar(lu);
                     try {
                         if (!response.body().toString().equals("[]")) {
                             getUnitk(lu);
@@ -114,14 +115,14 @@ public class UnitKeluar extends BaseFragment{
                 }
 
                 @Override
-                public void onFailure(Call<List<Unit>> call, Throwable t) {
+                public void onFailure(Call<List<UnitMasukKeluar>> call, Throwable t) {
                     errorRetrofit(call, t);
                 }
             });
         }
     }
 
-    public void getUnitk(List<Unit> lu){
+    public void getUnitk(List<UnitMasukKeluar> lu){
         try{
             for (int i = 0; i < lu.size(); i++) {
                 TableRow row = tableRow();
@@ -142,9 +143,9 @@ public class UnitKeluar extends BaseFragment{
                 textStyle(no_pol, row, param1, lu.get(i).getAuction().getNo_polisi());
                 textStyle(tgl_doc, row, param1, lu.get(i).getAuction().getTgl_serah_klr());
                 textStyle(pengemudi, row, param1, lu.get(i).getAuction().getNama_pengemudi_klr());
-                textStyle(merk, row, param1, lu.get(i).getNama_merk());
+                textStyle(merk, row, param1, lu.get(i).getAuctiondetail().getNama_merk());
                 String tipe = "";
-                for (Attribute t : lu.get(i).getTipe()) {
+                for (Attribute t : lu.get(i).getAuctiondetail().getTipe()) {
                     if(t.getAttributedetail() != null){
                         if(tipe.equals("")){
                             tipe = t.getAttributedetail();
@@ -153,7 +154,7 @@ public class UnitKeluar extends BaseFragment{
                         }
                     }
                 }
-                textStyle(type, row, param2, tipe.concat(" " + lu.get(i).getModel()).concat(" " + lu.get(i).getTransmisi()).concat(" " + lu.get(i).getTahun()));
+                textStyle(type, row, param2, tipe.concat(" " + lu.get(i).getAuctiondetail().getModel()).concat(" " + lu.get(i).getAuctiondetail().getTransmisi()).concat(" " + lu.get(i).getAuctiondetail().getTahun()));
                 tl.addView(row);
             }
         }catch (Exception e){}

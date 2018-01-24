@@ -1,6 +1,7 @@
 package com.example.android.ibidsera.view.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,8 +26,10 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -35,12 +38,16 @@ import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.InsertUnit;
+import com.example.android.ibidsera.model.NoPolUnit;
 import com.example.android.ibidsera.model.Sign;
 import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
+import com.example.android.ibidsera.model.UnitMasukKeluar;
 import com.example.android.ibidsera.model.api.AuctionService;
+import com.example.android.ibidsera.util.HelperConstant;
 import com.example.android.ibidsera.util.RetrofitUtil;
+import com.example.android.ibidsera.view.activity.PemeriksaanActivity;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.ArrayList;
@@ -54,46 +61,83 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by Yosefricaro on 24/07/2017.
  */
 
-public class AddKeluar extends BaseFragment{
-    @BindView(R.id.nopol_title) TextView nopol_title;
-    @BindView(R.id.nama_title) TextView nama_title;
-    @BindView(R.id.alamat_title) TextView alamat_title;
-    @BindView(R.id.kota_title) TextView kota_title;
-    @BindView(R.id.telepon_title) TextView telepon_title;
-    @BindView(R.id.table_addm) TableLayout tl;
-    @BindView(R.id.progress_view) CircularProgressView cpv;
-    @BindView(R.id.background_progress) RelativeLayout bp;
-    @BindView(R.id.nopol) AutoCompleteTextView nopol;
-    @BindView(R.id.merk) Spinner merk;
-    @BindView(R.id.seri) Spinner seri;
-    @BindView(R.id.silinder) Spinner silinder;
-    @BindView(R.id.grade) Spinner grade;
-    @BindView(R.id.sub_grade) Spinner sub_grade;
-    @BindView(R.id.transmisi) EditText transmisi;
-    @BindView(R.id.tahun) EditText tahun;
-    @BindView(R.id.km) EditText km;
-    @BindView(R.id.nama_pemilik) EditText nama_pemilik;
-    @BindView(R.id.fuel) Spinner fuel;
-    @BindView(R.id.cat) Spinner cat;
-    @BindView(R.id.tgl_pemeriksaan) EditText tgl_pemeriksaan;
-    @BindView(R.id.jam) Spinner jam;
-    @BindView(R.id.menit) Spinner menit;
-    @BindView(R.id.nama_pengemudi) EditText nama_pengemudi;
-    @BindView(R.id.alamat_pengemudi) EditText alamat_pengemudi;
-    @BindView(R.id.kota) EditText kota;
-    @BindView(R.id.telepon) EditText telepon;
-    @BindView(R.id.catatan) EditText catatan;
-    @BindView(R.id.cancel) Button cancel;
-    @BindView(R.id.save) Button save;
-    @BindView(R.id.checkboxB) CheckBox checkBoxB;
-    @BindView(R.id.checkboxR) CheckBox checkBoxR;
-    @BindView(R.id.checkboxT) CheckBox checkBoxT;
-    @BindView(R.id.signature1) ImageView signature1;
-    @BindView(R.id.signature2) ImageView signature2;
+public class AddKeluar extends BaseFragment {
+    @BindView(R.id.nopol_title)
+    TextView nopol_title;
+    @BindView(R.id.nama_title)
+    TextView nama_title;
+    @BindView(R.id.alamat_title)
+    TextView alamat_title;
+    @BindView(R.id.kota_title)
+    TextView kota_title;
+    @BindView(R.id.telepon_title)
+    TextView telepon_title;
+    @BindView(R.id.table_addm)
+    TableLayout tl;
+    @BindView(R.id.progress_view)
+    CircularProgressView cpv;
+    @BindView(R.id.background_progress)
+    RelativeLayout bp;
+    @BindView(R.id.nopol)
+    AutoCompleteTextView nopol;
+    @BindView(R.id.merk)
+    Spinner merk;
+    @BindView(R.id.seri)
+    Spinner seri;
+    @BindView(R.id.silinder)
+    Spinner silinder;
+    @BindView(R.id.grade)
+    Spinner grade;
+    @BindView(R.id.sub_grade)
+    Spinner sub_grade;
+    @BindView(R.id.transmisi)
+    EditText transmisi;
+    @BindView(R.id.tahun)
+    EditText tahun;
+    @BindView(R.id.km)
+    EditText km;
+    @BindView(R.id.nama_pemilik)
+    EditText nama_pemilik;
+    @BindView(R.id.fuel)
+    Spinner fuel;
+    @BindView(R.id.cat)
+    Spinner cat;
+    @BindView(R.id.tgl_pemeriksaan)
+    EditText tgl_pemeriksaan;
+    @BindView(R.id.jam)
+    Spinner jam;
+    @BindView(R.id.menit)
+    Spinner menit;
+    @BindView(R.id.nama_pengemudi)
+    EditText nama_pengemudi;
+    @BindView(R.id.alamat_pengemudi)
+    EditText alamat_pengemudi;
+    @BindView(R.id.kota)
+    EditText kota;
+    @BindView(R.id.telepon)
+    EditText telepon;
+    @BindView(R.id.catatan)
+    EditText catatan;
+    @BindView(R.id.cancel)
+    Button cancel;
+    @BindView(R.id.save)
+    Button save;
+    @BindView(R.id.checkboxB)
+    CheckBox checkBoxB;
+    @BindView(R.id.checkboxR)
+    CheckBox checkBoxR;
+    @BindView(R.id.checkboxT)
+    CheckBox checkBoxT;
+    @BindView(R.id.signature1)
+    ImageView signature1;
+    @BindView(R.id.signature2)
+    ImageView signature2;
     private int size = 0;
     private int position = -1;
     HashMap<String, CheckBox> h = new HashMap<>();
@@ -101,11 +145,69 @@ public class AddKeluar extends BaseFragment{
     private Bitmap bitmap1;
     private Bitmap bitmap2;
 
+    //Enhancement
+    @BindView(R.id.toggle_checklistable)
+    Switch mToggleChecklist;
+
+    @BindView(R.id.et_checklist_not)
+    EditText mEtChecklistNot;
+
+    @BindView(R.id.radio_addm_minibus)
+    RadioButton mRadioMinibus;
+
+    @BindView(R.id.radio_addm_sedan)
+    RadioButton mRadioSedan;
+
+    @BindView(R.id.ibid_sedan)
+    ImageView ibid_sedan;
+
+    @BindView(R.id.ibid_niaga)
+    ImageView ibid_niaga;
+
+    @BindView(R.id.cases)
+    EditText cases;
+
+    @BindView(R.id.pool)
+    EditText pool;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myFragment = inflater.inflate(R.layout.content_addk, container, false);
         ButterKnife.bind(this, myFragment);
+
+        mToggleChecklist.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                tl.setVisibility(View.VISIBLE);
+                mEtChecklistNot.setVisibility(View.GONE);
+            } else {
+                tl.setVisibility(View.GONE);
+                mEtChecklistNot.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mRadioSedan.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                ibid_sedan.setEnabled(true);
+                ibid_niaga.setEnabled(false);
+                ibid_sedan.setAlpha(1f);
+                ibid_niaga.setAlpha(0.2f);
+
+                mRadioMinibus.setChecked(false);
+            }
+        });
+
+        mRadioMinibus.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                ibid_sedan.setEnabled(false);
+                ibid_niaga.setEnabled(true);
+                ibid_sedan.setAlpha(0.2f);
+                ibid_niaga.setAlpha(1f);
+                mRadioSedan.setChecked(false);
+            }
+        });
+
+        mRadioSedan.setChecked(true);
 
         cpvStart(cpv, bp);
 
@@ -124,7 +226,8 @@ public class AddKeluar extends BaseFragment{
         cpvStop(cpv, bp);
 
         nopol.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 nopol.dismissDropDown();
@@ -138,12 +241,15 @@ public class AddKeluar extends BaseFragment{
         nopol.setOnItemClickListener((parent, view, position, id1) -> {
             hideKeyboard();
             cpvStart(cpv, bp);
-            getAddk(StaticUnit.getLu().get(position), position);
-            cpvStop(cpv, bp);
+//            getAddk(StaticUnit.getLu().get(position), position);
+//            cpvStop(cpv, bp);
+            getDetailUnitById(listNoPolUnit.get(position).getAuctionItemId(), position, auctionService);
         });
 
         signatureClick(signature1, 1);
         signatureClick(signature2, 2);
+        ibid_sedan.setOnClickListener(view -> goToPemeriksaanActivity(1));
+        ibid_niaga.setOnClickListener(view -> goToPemeriksaanActivity(2));
 
         save.setOnClickListener(v -> {
             pDialog.setMessage("Sending Data..");
@@ -156,35 +262,40 @@ public class AddKeluar extends BaseFragment{
             h.put("Telp", telepon);
 
             List<String> ls2 = required(h);
-            if(ls2.size() <= 0) {
+            InsertUnit requestUnit = setInsertUnit(StaticUnit.getUnitMasukKeluar());
+            if (ls2.size() <= 0) {
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {
-                    auctionService.insertUnitKeluar(setInsertUnit(StaticUnit.getUnit())).enqueue(new Callback<GetStatus>() {
+                    auctionService.insertUnitKeluar(requestUnit).enqueue(new Callback<GetStatus>() {
                         @Override
                         public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                             GetStatus getStatus = response.body();
                             Log.i("info", "post submitted to API." + response.body());
                             try {
                                 if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
-                                    postSignature(getStatus, auctionService, pDialog);
-                                }else {
+                                    pDialog.hide();
+                                    alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
+                                } else {
                                     pDialog.hide();
                                     alertDialog(getStatus.getMessage(), 1);
                                 }
-                            }catch (Exception e){}
+                            } catch (Exception e) {
+                            }
                         }
 
                         @Override
                         public void onFailure(Call<GetStatus> call, Throwable t) {
                             pDialog.hide();
-                            errorRetrofit(call, t);
+//                            errorRetrofit(call, t);
+                            alertDialog("Terdapat kesalahan ketika menyimpan data", 1);
+
                         }
                     });
                 }, 2000);
-            }else {
+            } else {
                 pDialog.hide();
                 String required = "";
-                for (int i = ls2.size()-1; i >= 0; i--) {
+                for (int i = ls2.size() - 1; i >= 0; i--) {
                     if (i == 0) {
                         required = required + ls2.get(i);
                     } else
@@ -198,23 +309,40 @@ public class AddKeluar extends BaseFragment{
         return myFragment;
     }
 
-    public void getAddk(Unit lu, int id) {
+    private void getDetailUnitById(int auctionItemId, int position, AuctionService auctionService) {
+        auctionService.getDetailUnitMasuk(auctionItemId + "").enqueue(new Callback<List<UnitMasukKeluar>>() {
+            @Override
+            public void onResponse(Call<List<UnitMasukKeluar>> call, Response<List<UnitMasukKeluar>> response) {
+                List<UnitMasukKeluar> lu = response.body();
+                StaticUnit.setLuMasukKeluar(lu);
+                getAddk(lu.get(0), position);
+                cpvStop(cpv, bp);
+            }
+
+            @Override
+            public void onFailure(Call<List<UnitMasukKeluar>> call, Throwable t) {
+                errorRetrofit(call, t);
+            }
+        });
+    }
+
+    public void getAddk(UnitMasukKeluar lu, int id) {
         position = id;
-        StaticUnit.setUnit(lu);
+        StaticUnit.setUnitMasukKeluar(lu);
         if (lu.getAuction().getValue() != null) {
             nopol.setText(lu.getAuction().getValue());
-        }else{
+        } else {
             nopol.setText(lu.getAuction().getNo_polisi());
         }
-        merk.setAdapter(getAdapterList(lu.getNama_merk()));
-        seri.setAdapter(getAdapterList(lu.getTipe().get(0).getAttributedetail()));
-        silinder.setAdapter(getAdapterList(lu.getTipe().get(1).getAttributedetail()));
-        grade.setAdapter(getAdapterList(lu.getTipe().get(2).getAttributedetail()));
-        sub_grade.setAdapter(getAdapterList(lu.getTipe().get(3).getAttributedetail()));
-        transmisi.setText(lu.getTransmisi());
-        tahun.setText(lu.getTahun());
-        km.setText(String.valueOf(lu.getKm()));
-        nama_pemilik.setText(lu.getPntp().getName_pntp());
+        merk.setAdapter(getAdapterList(lu.getAuctiondetail().getNama_merk()));
+        seri.setAdapter(getAdapterList(lu.getAuctiondetail().getTipe().get(0).getAttributedetail()));
+        silinder.setAdapter(getAdapterList(lu.getAuctiondetail().getTipe().get(1).getAttributedetail()));
+        grade.setAdapter(getAdapterList(lu.getAuctiondetail().getTipe().get(2).getAttributedetail()));
+        sub_grade.setAdapter(getAdapterList(lu.getAuctiondetail().getTipe().get(3).getAttributedetail()));
+        transmisi.setText(lu.getAuctiondetail().getTransmisi());
+        tahun.setText(lu.getAuctiondetail().getTahun());
+        km.setText(String.valueOf(lu.getAuctiondetail().getKm()));
+        nama_pemilik.setText(lu.getAuctiondetail().getPntp().getName_pntp());
 
         fuel.setAdapter(setDropdown(R.array.fuel));
         cat.setAdapter(setDropdown(R.array.cat));
@@ -224,39 +352,39 @@ public class AddKeluar extends BaseFragment{
         kota.setText(lu.getAuction().getKota_klr());
         telepon.setText(lu.getAuction().getTelepon_klr());
         catatan.setText(lu.getAuction().getCatatan_klr());
-        if(bitmap1 != null){
+        if (bitmap1 != null) {
             signature1.setImageBitmap(bitmap1);
-        } else if(bitmap2 != null){
+        } else if (bitmap2 != null) {
             signature2.setImageBitmap(bitmap2);
         }
         for (int i = 0; i < size; i++) {
-            imgSet(hi.get("b"+i), lu.getKomponen().get(i).getTampil_b());
-            imgSet(hi.get("r"+i), lu.getKomponen().get(i).getTampil_r());
-            imgSet(hi.get("t"+i), lu.getKomponen().get(i).getTampil_t());
+            imgSet(hi.get("b" + i), lu.getKomponen().get(i).getTampil_b());
+            imgSet(hi.get("r" + i), lu.getKomponen().get(i).getTampil_r());
+            imgSet(hi.get("t" + i), lu.getKomponen().get(i).getTampil_t());
         }
     }
 
-    public ArrayAdapter<String> getAdapterList(String value){
+    public ArrayAdapter<String> getAdapterList(String value) {
         List<String> list = new ArrayList<>();
         list.add(value);
         return getAdapter(list);
     }
 
-    public InsertUnit setInsertUnit(Unit lUnit){
+    public InsertUnit setInsertUnit(UnitMasukKeluar lUnit) {
         InsertUnit insertUnit = new InsertUnit();
-        insertUnit.setIdpemeriksaanitem(lUnit.getId_pemeriksaanitem());
-        if(lUnit.getAuction().getId_auctionitem() != 0){
+        insertUnit.setIdpemeriksaanitem(lUnit.getAuction().getId_pemeriksaanitem());
+        if (lUnit.getAuction().getId_auctionitem() != 0) {
             insertUnit.setIdauctionitem(lUnit.getAuction().getId_auctionitem());
-        }else{
+        } else {
             insertUnit.setIdauctionitem(lUnit.getAuction().getIdauction_item());
         }
         insertUnit.setBataskomponen(size);
         insertUnit.setNopolisi(String.valueOf(nopol.getText()));
-        insertUnit.setMERK(lUnit.getId_merk());
-        insertUnit.setSERI(String.valueOf(lUnit.getTipe().get(0).getId_attrdetail()));
-        insertUnit.setSILINDER(String.valueOf(lUnit.getTipe().get(1).getId_attrdetail()));
-        insertUnit.setGRADE(String.valueOf(lUnit.getTipe().get(2).getId_attrdetail()));
-        insertUnit.setSUB_GRADE(String.valueOf(lUnit.getTipe().get(3).getId_attrdetail()));
+        insertUnit.setMERK(lUnit.getAuctiondetail().getId_merk());
+        insertUnit.setSERI(String.valueOf(lUnit.getAuctiondetail().getTipe().get(0).getId_attrdetail()));
+        insertUnit.setSILINDER(String.valueOf(lUnit.getAuctiondetail().getTipe().get(1).getId_attrdetail()));
+        insertUnit.setGRADE(String.valueOf(lUnit.getAuctiondetail().getTipe().get(2).getId_attrdetail()));
+        insertUnit.setSUB_GRADE(String.valueOf(lUnit.getAuctiondetail().getTipe().get(3).getId_attrdetail()));
         insertUnit.setTRANSMISI(String.valueOf(transmisi.getText()));
         insertUnit.setKM(String.valueOf(km.getText()));
         insertUnit.setFuel(fuel.getSelectedItem().toString());
@@ -268,18 +396,21 @@ public class AddKeluar extends BaseFragment{
         insertUnit.setAlamatpengemudi(String.valueOf(alamat_pengemudi.getText()));
         insertUnit.setKotapengemudi(String.valueOf(kota.getText()));
         insertUnit.setTeleponpengemudi(String.valueOf(telepon.getText()));
+        insertUnit.setExpedition_amount("");
+        insertUnit.setCases(String.valueOf(cases.getText()));
+        insertUnit.setPoolkota(String.valueOf(pool.getText()));
         List<String> lb = new ArrayList<>();
         List<String> lr = new ArrayList<>();
         List<String> lt = new ArrayList<>();
         List<Integer> lidKomponen = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            CheckBox b = h.get("b"+i);
-            CheckBox r = h.get("r"+i);
-            CheckBox t = h.get("t"+i);
+            CheckBox b = h.get("b" + i);
+            CheckBox r = h.get("r" + i);
+            CheckBox t = h.get("t" + i);
             lb.add(isChecked(b));
             lr.add(isChecked(r));
             lt.add(isChecked(t));
-            lidKomponen.add(i+1);
+            lidKomponen.add(i + 1);
         }
         insertUnit.setCektampilkanbaik(lb);
         insertUnit.setCektampilkanrusak(lr);
@@ -289,15 +420,44 @@ public class AddKeluar extends BaseFragment{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         insertUnit.setWEBID_LOGGED_IN(prefs.getInt("userId", 0));
 
+        signature1.buildDrawingCache();
+        bitmap1 = signature1.getDrawingCache();
+        signature2.buildDrawingCache();
+        bitmap2 = signature2.getDrawingCache();
+        insertUnit.setTtdibid(base64Encode(bitmap1));
+        insertUnit.setTtdcustomer(base64Encode(bitmap2));
+
+        if (mRadioSedan.isChecked()) {
+            if (HelperConstant.mTempBitmapSedan != null) {
+                insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapSedan));
+            } else {
+                showToast("Harap melakukan checklist gambar tipe mobil sedan");
+                return null;
+            }
+        } else {
+            if (HelperConstant.mTempBitmapNiaga != null) {
+                insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapNiaga));
+            } else {
+                showToast("Harap melakukan checklist gambar tipe mobil minibus");
+                return null;
+            }
+        }
+
+        if (!mToggleChecklist.isChecked()) {
+            insertUnit.setReasonunchecklist(mEtChecklistNot.getText().toString());
+        } else {
+            insertUnit.setReasonunchecklist("");
+        }
+
         return insertUnit;
     }
 
-    private String isChecked(CheckBox checkBox){
-        if(checkBox.isChecked()) return "true";
+    private String isChecked(CheckBox checkBox) {
+        if (checkBox.isChecked()) return "true";
         else return "false";
     }
 
-    private void setAllDisabled(){
+    private void setAllDisabled() {
         setDisabled(merk);
         setDisabled(seri);
         setDisabled(silinder);
@@ -308,7 +468,7 @@ public class AddKeluar extends BaseFragment{
         setDisabled(nama_pemilik);
     }
 
-    private void setAllCaps(){
+    private void setAllCaps() {
         setCaps(nopol);
         setCaps(alamat_pengemudi);
         setCaps(nama_pengemudi);
@@ -316,35 +476,37 @@ public class AddKeluar extends BaseFragment{
         setCaps(catatan);
     }
 
-    private void getDropdownList(AuctionService auctionService, List<String> ls){
-        if (!nopol.getText().toString().equals("")){
-            auctionService.getAutoUnitk(nopol.getText().toString()).enqueue(new Callback<List<Unit>>() {
+    List<NoPolUnit> listNoPolUnit = new ArrayList<>();
+
+    private void getDropdownList(AuctionService auctionService, List<String> ls) {
+        if (!nopol.getText().toString().equals("")) {
+            auctionService.getNoPolUnitK(nopol.getText().toString()).enqueue(new Callback<List<NoPolUnit>>() {
                 @Override
-                public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
-                    List<Unit> lu = response.body();
-                    StaticUnit.setLu(lu);
-                    ls.clear();
+                public void onResponse(Call<List<NoPolUnit>> call, Response<List<NoPolUnit>> response) {
+                    List<NoPolUnit> lu = response.body();
+
+                    listNoPolUnit.clear();
                     try {
                         for (int i = 0; i < lu.size(); i++) {
-                            ls.add(lu.get(i).getAuction().getValue());
+                            listNoPolUnit.add(lu.get(i));
                         }
-                    }catch (Exception e){}
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                            android.R.layout.simple_dropdown_item_1line, ls);
+                    } catch (Exception e) {
+                    }
+                    ArrayAdapter<NoPolUnit> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, listNoPolUnit);
                     nopol.setAdapter(adapter);
                     nopol.setThreshold(1);
                     nopol.showDropDown();
                 }
 
                 @Override
-                public void onFailure(Call<List<Unit>> call, Throwable t) {
+                public void onFailure(Call<List<NoPolUnit>> call, Throwable t) {
                     errorRetrofit(call, t);
                 }
             });
         }
     }
 
-    private void getTimeSpinner(){
+    private void getTimeSpinner() {
         Calendar c = Calendar.getInstance();
         jam.setAdapter(setDropdown(R.array.jam));
 
@@ -357,22 +519,22 @@ public class AddKeluar extends BaseFragment{
         menit.setSelection(menit_now);
     }
 
-    private void getKomponen(AuctionService auctionService, int position){
-        auctionService.getUnitK().enqueue(new Callback<List<Unit>>() {
+    private void getKomponen(AuctionService auctionService, int position) {
+        auctionService.getUnitK().enqueue(new Callback<List<UnitMasukKeluar>>() {
             @Override
-            public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
-                List<Unit> lu = response.body();
+            public void onResponse(Call<List<UnitMasukKeluar>> call, Response<List<UnitMasukKeluar>> response) {
+                List<UnitMasukKeluar> lu = response.body();
                 getKomponenList(lu, 0);
             }
 
             @Override
-            public void onFailure(Call<List<Unit>> call, Throwable t) {
+            public void onFailure(Call<List<UnitMasukKeluar>> call, Throwable t) {
                 errorRetrofit(call, t);
             }
         });
     }
 
-    private void getKomponenList(List<Unit> lu, int position){
+    private void getKomponenList(List<UnitMasukKeluar> lu, int position) {
         try {
             size = lu.get(position).getKomponen().size();
             for (int i = 0; i < size; i++) {
@@ -415,15 +577,27 @@ public class AddKeluar extends BaseFragment{
             checkAllListener(checkBoxB, "b", size, h);
             checkAllListener(checkBoxR, "r", size, h);
             checkAllListener(checkBoxT, "t", size, h);
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
-    private void signatureClick(ImageView imageView, int id){
+    private void signatureClick(ImageView imageView, int id) {
         imageView.setOnClickListener(v -> signatureDialog(id));
     }
 
-    private void signatureDialog(int id){
-        AlertDialog.Builder alertDialog  = new AlertDialog.Builder(getContext());
+    private void goToPemeriksaanActivity(int curPosition) {
+        Intent intent = new Intent(getActivity(), PemeriksaanActivity.class);
+        if (curPosition == 1) {
+            intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_SEDAN);
+            startActivityForResult(intent, HelperConstant.LAMPIRAN_SEDAN);
+        } else {
+            intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_NIAGA);
+            startActivityForResult(intent, HelperConstant.LAMPIRAN_NIAGA);
+        }
+    }
+
+    private void signatureDialog(int id) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Signature Here");
         alertDialog.setCancelable(true);
 
@@ -439,7 +613,7 @@ public class AddKeluar extends BaseFragment{
         reset.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_style));
         reset.setTextColor(getResources().getColor(R.color.colorPrimary));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(16,16,16,16);
+        params.setMargins(16, 16, 16, 16);
         reset.setLayoutParams(params);
         reset.setOnClickListener(v -> {
             mSignature.clear();
@@ -452,10 +626,10 @@ public class AddKeluar extends BaseFragment{
             Bitmap bitmap = Bitmap.createBitmap(container.getWidth(), container.getHeight(), Bitmap.Config.RGB_565);
             Canvas canvas = new Canvas(bitmap);
             container.draw(canvas);
-            if(id == 1){
+            if (id == 1) {
                 signature1.setImageBitmap(bitmap);
                 bitmap1 = bitmap;
-            }else{
+            } else {
                 signature2.setImageBitmap(bitmap);
                 bitmap2 = bitmap;
             }
@@ -464,7 +638,7 @@ public class AddKeluar extends BaseFragment{
         alertDialog.create().show();
     }
 
-    private void postSignature(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog){
+    private void postSignature(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog) {
         auctionService.postSignKeluar(setSignature(StaticUnit.getUnit(), gs)).enqueue(new Callback<SignValue>() {
             @Override
             public void onResponse(Call<SignValue> call, Response<SignValue> response) {
@@ -481,7 +655,7 @@ public class AddKeluar extends BaseFragment{
         });
     }
 
-    private Sign setSignature(Unit lu, GetStatus gs){
+    private Sign setSignature(Unit lu, GetStatus gs) {
         signature1.buildDrawingCache();
         bitmap1 = signature1.getDrawingCache();
         signature2.buildDrawingCache();
@@ -493,9 +667,9 @@ public class AddKeluar extends BaseFragment{
         sign.setSign_cust_klr(base64Encode(bitmap2));
         sign.setId_pemeriksaanitem(gs.getId_pemeriksaan_item());
 
-        if(lu.getAuction().getId_auctionitem() != 0){
+        if (lu.getAuction().getId_auctionitem() != 0) {
             sign.setId_auctionitem(lu.getAuction().getId_auctionitem());
-        }else{
+        } else {
             sign.setId_auctionitem(lu.getAuction().getIdauction_item());
         }
         return sign;
@@ -507,23 +681,46 @@ public class AddKeluar extends BaseFragment{
         row.addView(imageView);
     }
 
-    public void imgSet(ImageView imageView, String check){
+    public void imgSet(ImageView imageView, String check) {
         Bitmap bmp;
-        if(check.equals("true")){
+        if (check.equals("true")) {
             bmp = BitmapFactory.decodeResource(getResources(), R.drawable.checklist);
-        }else {
+        } else {
             bmp = BitmapFactory.decodeResource(getResources(), R.drawable.delete);
         }
         Bitmap resizedbitmap = Bitmap.createScaledBitmap(bmp, 20, 20, true);
         imageView.setImageBitmap(resizedbitmap);
     }
 
-    private void setRequired(){
+    private void setRequired() {
         String required = "<font color=#FF0000> *</font>";
         nopol_title.setText(Html.fromHtml(nopol_title.getText() + required));
         nama_title.setText(Html.fromHtml(nama_title.getText() + required));
-        alamat_title.setText(Html.fromHtml(alamat_title.getText() + required));
-        kota_title.setText(Html.fromHtml(kota_title.getText() + required));
+//        alamat_title.setText(Html.fromHtml(alamat_title.getText() + required));
+//        kota_title.setText(Html.fromHtml(kota_title.getText() + required));
         telepon_title.setText(Html.fromHtml(telepon_title.getText() + required));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case HelperConstant.LAMPIRAN_SEDAN: {
+                if (resultCode == RESULT_OK) {
+                    if (HelperConstant.mTempBitmapSedan != null) {
+                        ibid_sedan.setImageBitmap(HelperConstant.mTempBitmapSedan);
+                    }
+                }
+                break;
+            }
+            case HelperConstant.LAMPIRAN_NIAGA: {
+                if (resultCode == RESULT_OK) {
+                    if (HelperConstant.mTempBitmapNiaga != null) {
+                        ibid_niaga.setImageBitmap(HelperConstant.mTempBitmapNiaga);
+                    }
+                }
+                break;
+            }
+        }
     }
 }

@@ -11,7 +11,6 @@ public class Auction {
     private String value;
     private int sts_remove;
     private char sold;
-
     private String id_pemeriksaanitem;
     private int idauction_item;
     private int id_auctionitem;
@@ -35,6 +34,61 @@ public class Auction {
     private String poolkota;
     private String catatan_klr;
     private int ekspedisi;
+
+    private String catatan_image;
+    private String ttd_ibid_msk;
+    private String ttd_customer_msk;
+    private String ttd_ibid_klr;
+    private String ttd_customer_klr;
+    private String alasan_tdk_check;
+
+    public String getCatatan_image() {
+        return catatan_image;
+    }
+
+    public void setCatatan_image(String catatan_image) {
+        this.catatan_image = catatan_image;
+    }
+
+    public String getTtd_ibid_msk() {
+        return ttd_ibid_msk;
+    }
+
+    public void setTtd_ibid_msk(String ttd_ibid_msk) {
+        this.ttd_ibid_msk = ttd_ibid_msk;
+    }
+
+    public String getTtd_customer_msk() {
+        return ttd_customer_msk;
+    }
+
+    public void setTtd_customer_msk(String ttd_customer_msk) {
+        this.ttd_customer_msk = ttd_customer_msk;
+    }
+
+    public String getTtd_ibid_klr() {
+        return ttd_ibid_klr;
+    }
+
+    public void setTtd_ibid_klr(String ttd_ibid_klr) {
+        this.ttd_ibid_klr = ttd_ibid_klr;
+    }
+
+    public String getTtd_customer_klr() {
+        return ttd_customer_klr;
+    }
+
+    public void setTtd_customer_klr(String ttd_customer_klr) {
+        this.ttd_customer_klr = ttd_customer_klr;
+    }
+
+    public String getAlasan_tdk_check() {
+        return alasan_tdk_check;
+    }
+
+    public void setAlasan_tdk_check(String alasan_tdk_check) {
+        this.alasan_tdk_check = alasan_tdk_check;
+    }
 
     public int getIdauction_detail() {
         return idauction_detail;

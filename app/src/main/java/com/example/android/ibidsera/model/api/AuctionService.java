@@ -16,6 +16,7 @@ import com.example.android.ibidsera.model.Sign;
 import com.example.android.ibidsera.model.SignPost;
 import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.Unit;
+import com.example.android.ibidsera.model.UnitMasukKeluar;
 
 import java.util.List;
 
@@ -37,16 +38,26 @@ public interface AuctionService {
 //    @GET("index.php/persiapan?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getPersiapan();
     @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/persiapan") Call<List<Unit>> getPersiapan();
 
-    @GET("index.php/unitmasuk?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitM();
-    @GET("index.php/unitkeluar?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitK();
+//    @GET("index.php/unitmasuk?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitM();
+    @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/persiapan") Call<List<UnitMasukKeluar>> getUnitM();
+
+//    @GET("index.php/unitkeluar?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitK();
+    @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/persiapansudahkeluar") Call<List<UnitMasukKeluar>> getUnitK();
+
+
     @GET("index.php/stockmanagement?api_key=" + BuildConfig.API_KEY) Call<List<ReportModel>> getReport();
 
 
 //    @GET("index.php/persiapan/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchPersiapan(@Path("nopol") String nopol);
     @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/search") Call<List<Unit>> getSearchPersiapan(@Query("nopolisi") String nopol);
 
-    @GET("index.php/unitmasuk/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitm(@Path("nopol") String nopol);
-    @GET("index.php/unitkeluar/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitk(@Path("nopol") String nopol);
+//    @GET("index.php/unitmasuk/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitm(@Path("nopol") String nopol);
+    @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/searchmasuk") Call<List<UnitMasukKeluar>> getSearchUnitm(@Query("nopolisi") String nopol);
+
+//    @GET("index.php/unitkeluar/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitk(@Path("nopol") String nopol);
+    @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/searchkeluar") Call<List<UnitMasukKeluar>> getSearchUnitk(@Query("nopolisi") String nopol);
+
+
     @GET("index.php/masteritem/warna/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItemWarna(@Path("key") String key);
     @GET("index.php/masteritem/penitip/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Penitip>> getMasterItemPenitip(@Path("key") String key);
     @GET("index.php/masteritem/get_lampiran/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Lampiran>> getLampiran(@Path("key") String key);
@@ -59,11 +70,18 @@ public interface AuctionService {
     //Get NoPol untuk dropdown list target checklist unit masuk
     @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/search/nopolmasuk") Call<List<NoPolUnit>> getNoPolUnitM(@Query("nopolisi") String noPolkey);
 
+    //Get NoPol untuk dropdown list target checklist unit keluar
+    @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/searchkeluar/nopolisi") Call<List<NoPolUnit>> getNoPolUnitK(@Query("nopolisi") String noPolkey);
+
     //Get detail unit persiapan based on id
     @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/search/masukbyid") Call<List<Unit>> getDetailUnitPersiapan(@Query("AuctionItemId") String auctionItemId);
 
+    //Get detail unit masuk based on id
+    @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/persiapan/keluarbyid") Call<List<UnitMasukKeluar>> getDetailUnitMasuk(@Query("AuctionItemId") String auctionItemId);
+
 
     @GET("index.php/unitkeluar/auto/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getAutoUnitk(@Path("nopol") String nopol);
+
 
 //        @Headers({
 //            "ClientService : frontend-client",
@@ -75,7 +93,9 @@ public interface AuctionService {
     @POST("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/UnitMasuk/insert") Call<GetStatus> insertUnitMasuk(@Body InsertUnit insertUnit);
 
 
-    @POST("index.php/unitkeluar/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnitKeluar(@Body InsertUnit insertUnit);
+//    @POST("index.php/unitkeluar/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnitKeluar(@Body InsertUnit insertUnit);
+    @POST("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/unitkeluar/insert") Call<GetStatus> insertUnitKeluar(@Body InsertUnit insertUnit);
+
     @POST("index.php/persiapan/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnit(@Body PersiapanPost persiapanPost);
     @POST("index.php/masteritem/search?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItem(@Body Attribute item);
 //    @POST("index.php/auth/login?api_key=" + BuildConfig.API_KEY) Call<Login> getLogin(@Body Login login);

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseActivity;
@@ -82,19 +83,19 @@ public class PemeriksaanActivity extends AppCompatActivity {
 
         Resources resources = this.getResources();
         float decreasedBitmapScaleSize;
-        if(lampiranType == HelperConstant.LAMPIRAN_SEDAN){
+        if (lampiranType == HelperConstant.LAMPIRAN_SEDAN) {
             bitmapBackground = BitmapFactory.decodeResource(resources, R.drawable.ibid_sedan);
             decreasedBitmapScaleSize = 0.7f;
-        }else{
+        } else {
             bitmapBackground = BitmapFactory.decodeResource(resources, R.drawable.ibid_niaga);
             decreasedBitmapScaleSize = 1f;
         }
 
         mDrawView = new DrawView(this, bitmapBackground, mLinCanvas, decreasedBitmapScaleSize);
 
-        if(lampiranType == HelperConstant.LAMPIRAN_SEDAN && HelperConstant.sPathSavedSedan != null){
+        if (lampiranType == HelperConstant.LAMPIRAN_SEDAN && HelperConstant.sPathSavedSedan != null) {
             mDrawView.setPathSaved(HelperConstant.sPathSavedSedan);
-        }else if(lampiranType == HelperConstant.LAMPIRAN_NIAGA && HelperConstant.sPathSavedNiaga != null){
+        } else if (lampiranType == HelperConstant.LAMPIRAN_NIAGA && HelperConstant.sPathSavedNiaga != null) {
             mDrawView.setPathSaved(HelperConstant.sPathSavedNiaga);
         }
 
@@ -125,10 +126,10 @@ public class PemeriksaanActivity extends AppCompatActivity {
         ByteArrayOutputStream bs = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bs);
 
-        if(lampiranType == HelperConstant.LAMPIRAN_SEDAN){
+        if (lampiranType == HelperConstant.LAMPIRAN_SEDAN) {
             HelperConstant.mTempBitmapSedan = bitmap;
             HelperConstant.sPathSavedSedan = mDrawView.getPathSaved();
-        }else{
+        } else {
             HelperConstant.mTempBitmapNiaga = bitmap;
             HelperConstant.sPathSavedNiaga = mDrawView.getPathSaved();
         }
@@ -141,33 +142,62 @@ public class PemeriksaanActivity extends AppCompatActivity {
 
     private void changePaint(String paintType, Button btn) {
         resetAllPaintButtonState();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                1
+        );
+        params.setMargins(0, 0, 0, 0);
+//        params.setMargins(getPxFromDp(3), getPxFromDp(3), getPxFromDp(3), getPxFromDp(3));
         btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, TEXT_SIZE_SELECTED);
         btn.setTypeface(btn.getTypeface(), Typeface.BOLD);
         btn.setTextColor(Color.BLACK);
+        btn.setLayoutParams(params);
         mDrawView.changePaintType(paintType);
     }
 
     private void resetAllPaintButtonState() {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                1
+        );
+//        params.setMargins(0, 0, 0, 0);
+        params.setMargins(getPxFromDp(3), getPxFromDp(3), getPxFromDp(3), getPxFromDp(3));
+
         mBtnBaret.setTextSize(TypedValue.COMPLEX_UNIT_SP, TEXT_SIZE_NOT_SELECTED);
         mBtnBaret.setTypeface(mBtnBaret.getTypeface(), Typeface.NORMAL);
         mBtnBaret.setTextColor(Color.WHITE);
+        mBtnBaret.setLayoutParams(params);
 
         mBtnPenyok.setTextSize(TypedValue.COMPLEX_UNIT_SP, TEXT_SIZE_NOT_SELECTED);
         mBtnPenyok.setTypeface(mBtnPenyok.getTypeface(), Typeface.NORMAL);
         mBtnPenyok.setTextColor(Color.WHITE);
+        mBtnPenyok.setLayoutParams(params);
 
         mBtnRetak.setTextSize(TypedValue.COMPLEX_UNIT_SP, TEXT_SIZE_NOT_SELECTED);
         mBtnRetak.setTypeface(mBtnRetak.getTypeface(), Typeface.NORMAL);
         mBtnRetak.setTextColor(Color.WHITE);
+        mBtnRetak.setLayoutParams(params);
 
         mBtnPecah.setTextSize(TypedValue.COMPLEX_UNIT_SP, TEXT_SIZE_NOT_SELECTED);
         mBtnPecah.setTypeface(mBtnPecah.getTypeface(), Typeface.NORMAL);
         mBtnPecah.setTextColor(Color.WHITE);
+        mBtnPecah.setLayoutParams(params);
 
         mBtnEraser.setColorFilter(ContextCompat.getColor(
                 this,
                 android.R.color.white),
                 PorterDuff.Mode.MULTIPLY);
+    }
+
+    private int getPxFromDp(int dp) {
+        int px = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                getResources().getDisplayMetrics()
+        );
+        return px;
     }
 
 

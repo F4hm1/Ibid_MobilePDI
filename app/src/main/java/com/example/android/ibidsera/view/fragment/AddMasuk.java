@@ -319,7 +319,7 @@ public class AddMasuk extends BaseFragment {
                             public void onFailure(Call<GetStatus> call, Throwable t) {
                                 pDialog.hide();
 //                            errorRetrofit(call, t);
-                                alertDialog("Data checklist berhasil disimpan", 1);
+                                alertDialog("Terdapat kesalahan ketika menyimpan data", 1);
                             }
                         });
                     }, 2000);
@@ -504,7 +504,6 @@ public class AddMasuk extends BaseFragment {
             insertUnit.setReasonunchecklist("");
         }
 
-        Log.d("POLO", insertUnit.getExpedition_amount());
         return insertUnit;
     }
 
