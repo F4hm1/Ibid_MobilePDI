@@ -22,8 +22,10 @@ import com.example.android.ibidsera.model.SignPost;
 import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
+import com.example.android.ibidsera.model.UnitMasukKeluar;
 import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.util.RetrofitUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -58,15 +60,15 @@ public class DetailKeluar extends BaseFragment {
     @BindView(R.id.kota) TextView kota;
     @BindView(R.id.telepon) TextView telepon;
     @BindView(R.id.catatan) TextView catatan;
-    @BindView(R.id.imgLampiranMiniBus) ImageView imgMiniBus;
     @BindView(R.id.imgLampiranSedan) ImageView imgSedan;
     @BindView(R.id.imgSignCust) ImageView imgSignCust;
     @BindView(R.id.imgSignIbid) ImageView imgSignIbid;
     @BindView(R.id.close) Button close;
-    private Bitmap bitmap1;
-    private Bitmap bitmap2;
-    private Bitmap bitmap3;
-    private Bitmap bitmap4;
+
+    private String curUrlLampiran = "";
+    private String curUrlTtdIbid = "";
+    private String curUrlTtdCust = "";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,11 +86,10 @@ public class DetailKeluar extends BaseFragment {
         }
 
         if(id!=-1) {
-            getDetailk(StaticUnit.getLu(), id);
+            getDetailk(StaticUnit.getLuMasukKeluar(), id);
         }
 
         imageClick(imgSedan, 1, 1);
-        imageClick(imgMiniBus, 1, 2);
         imageClick(imgSignIbid, 2, 1);
         imageClick(imgSignCust, 2, 2);
 
@@ -97,17 +98,17 @@ public class DetailKeluar extends BaseFragment {
         return myFragment;
     }
 
-    public void getDetailk(List<Unit> lu, int id) {
+    public void getDetailk(List<UnitMasukKeluar> lu, int id) {
         nopol.setText(lu.get(id).getAuction().getNo_polisi());
-        merk.setText(lu.get(id).getNama_merk());
-        seri.setText(lu.get(id).getTipe().get(0).getAttributedetail());
-        silinder.setText(lu.get(id).getTipe().get(1).getAttributedetail());
-        grade.setText(lu.get(id).getTipe().get(2).getAttributedetail());
-        sub_grade.setText(lu.get(id).getTipe().get(3).getAttributedetail());
-        transmisi.setText(lu.get(id).getTransmisi());
-        tahun.setText(lu.get(id).getTahun());
-        km.setText(String.valueOf(lu.get(id).getKm()));
-        nama_pemilik.setText(lu.get(id).getPntp().getName_pntp());
+        merk.setText(lu.get(id).getAuctiondetail().getNama_merk());
+        seri.setText(lu.get(id).getAuctiondetail().getTipe().get(0).getAttributedetail());
+        silinder.setText(lu.get(id).getAuctiondetail().getTipe().get(1).getAttributedetail());
+        grade.setText(lu.get(id).getAuctiondetail().getTipe().get(2).getAttributedetail());
+        sub_grade.setText(lu.get(id).getAuctiondetail().getTipe().get(3).getAttributedetail());
+        transmisi.setText(lu.get(id).getAuctiondetail().getTransmisi());
+        tahun.setText(lu.get(id).getAuctiondetail().getTahun());
+        km.setText(String.valueOf(lu.get(id).getAuctiondetail().getKm()));
+        nama_pemilik.setText(lu.get(id).getAuctiondetail().getPntp().getName_pntp());
         fuel.setText(lu.get(id).getAuction().getFuel());
         cat.setText(lu.get(id).getAuction().getCat_body());
         tgl_pemeriksaan.setText(lu.get(id).getAuction().getTgl_serah_klr().substring(8,10)
@@ -154,57 +155,25 @@ public class DetailKeluar extends BaseFragment {
             row.addView(tl2);
             tl.addView(row);
         }
-        AuctionService auctionService = RetrofitUtil.getAuctionService();
-        auctionService.getLampiran(lu.get(id).getAuction().getId_pemeriksaanitem()).enqueue(new Callback<List<Lampiran>>() {
-            @Override
-            public void onResponse(Call<List<Lampiran>> call, Response<List<Lampiran>> response) {
-                List<Lampiran> ls = response.body();
 
-                try{
-                    if (!ls.isEmpty()) {
-                        for (int i = 0; i < ls.size() && i < 2; i++) {
+        Picasso.with(getContext())
+                .load(lu.get(id).getAuction().getCatatan_image())
+                .error(R.drawable.ibid_logo)
+                .into(imgSedan);
 
-                            if (ls.get(i).getNama_lampiran().equals("SEDAN")) {
-                                bitmap3 = decodeImg(ls.get(i).getBase64img());
-                                imgSedan.setImageBitmap(bitmap3);
-                            } else if (ls.get(i).getNama_lampiran().equals("MINIBUS")) {
-                                bitmap4 = decodeImg(ls.get(i).getBase64img());
-                                imgMiniBus.setImageBitmap(bitmap4);
-                            }
-                        }
-                    }
-                }catch (Exception e){}
-            }
+        Picasso.with(getContext())
+                .load(lu.get(id).getAuction().getTtd_customer_msk())
+                .error(R.drawable.ibid_logo)
+                .into(imgSignCust);
 
-            @Override
-            public void onFailure(Call<List<Lampiran>> call, Throwable t) {
-                errorRetrofit(call, t);
-            }
-        });
+        Picasso.with(getContext())
+                .load(lu.get(id).getAuction().getTtd_ibid_msk())
+                .error(R.drawable.ibid_logo)
+                .into(imgSignIbid);
 
-        SignPost sp = new SignPost();
-        sp.setId_auctionitem(lu.get(id).getAuction().getId_auctionitem());
-        sp.setId_pemeriksaanitem(lu.get(id).getAuction().getId_pemeriksaanitem());
-
-        auctionService.getSignKeluar(sp).enqueue(new Callback<SignValue>() {
-            @Override
-            public void onResponse(Call<SignValue> call, Response<SignValue> response) {
-                SignValue sv = response.body();
-
-                if (sv != null) {
-                    bitmap1 = decodeImg(sv.getSign_ibid_klr());
-                    bitmap2 = decodeImg(sv.getSign_cust_klr());
-                    imgSignCust.setImageBitmap(decodeImg(sv.getSign_cust_klr()));
-                    imgSignIbid.setImageBitmap(decodeImg(sv.getSign_ibid_klr()));
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SignValue> call, Throwable t) {
-                errorRetrofit(call, t);
-            }
-        });
+        curUrlTtdCust = lu.get(id).getAuction().getTtd_customer_msk();
+        curUrlTtdIbid = lu.get(id).getAuction().getTtd_ibid_msk();
+        curUrlLampiran = lu.get(id).getAuction().getCatatan_image();
 
     }
 
@@ -238,18 +207,16 @@ public class DetailKeluar extends BaseFragment {
         FrameLayout container = new FrameLayout(getContext());
         ImageView imageView = new ImageView(getContext());
         if(id == 1){
-            if(bitmap3 == null) {
+            if(curUrlLampiran.equalsIgnoreCase("")) {
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
             }else {
-                imageView.setImageBitmap(bitmap3);
-            }
-        }else {
-            if(bitmap4 == null) {
-                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
-            }else {
-                imageView.setImageBitmap(bitmap4);
+                Picasso.with(getContext())
+                        .load(curUrlLampiran)
+                        .error(R.drawable.ibid_logo)
+                        .into(imageView);
             }
         }
+
         container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, 450);
         alertDialog.setView(container);
 
@@ -266,12 +233,18 @@ public class DetailKeluar extends BaseFragment {
         FrameLayout container = new FrameLayout(getContext());
         ImageView imageView = new ImageView(getContext());
         if(id == 1){
-            if(bitmap1 != null) {
-                imageView.setImageBitmap(bitmap1);
+            if(!curUrlTtdIbid.equalsIgnoreCase("")) {
+                Picasso.with(getContext())
+                        .load(curUrlTtdIbid)
+                        .error(R.drawable.ibid_logo)
+                        .into(imageView);
             }
         }else {
-            if(bitmap2 != null) {
-                imageView.setImageBitmap(bitmap2);
+            if(!curUrlTtdCust.equalsIgnoreCase("")) {
+                Picasso.with(getContext())
+                        .load(curUrlTtdCust)
+                        .error(R.drawable.ibid_logo)
+                        .into(imageView);
             }
         }
         container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, 450);

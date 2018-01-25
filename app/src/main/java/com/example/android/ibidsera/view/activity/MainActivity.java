@@ -68,6 +68,9 @@ public class MainActivity extends BaseActivity
         emailUser.setText(prefs.getString("email", ""));
         namaUser.setText(prefs.getString("nama", ""));
 
+        Menu navReport = navigationView.getMenu();
+        navReport.findItem(R.id.nav_report).setVisible(false);
+
         displaySelectedScreen(R.id.nav_home);
     }
 

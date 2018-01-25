@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:weightSum="10.7">
+        android:weightSum="10">
 
 
         <Button
@@ -67,6 +67,7 @@
             />
 
         <ImageButton
+            android:visibility="gone"
             android:id="@+id/btn_paint_eraser"
             android:layout_width="0dp"
             android:layout_height="50dp"

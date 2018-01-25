@@ -137,6 +137,7 @@
                         android:text="NAMA PEMILIK" />
 
                     <EditText
+                        android:text="-"
                         android:id="@+id/nama_pemilik"
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style" />
@@ -533,6 +534,8 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_expedition_title"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -541,6 +544,8 @@
                 android:textSize="24sp" />
 
             <View
+                android:id="@+id/v_expedition_separator"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="16dp"
@@ -548,6 +553,8 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
+                android:id="@+id/ll_expedition_container"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false">

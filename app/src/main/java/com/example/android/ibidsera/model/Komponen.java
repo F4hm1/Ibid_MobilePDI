@@ -8,12 +8,48 @@ import com.example.android.ibidsera.util.ErrorHandler;
 
 public class Komponen {
     private String nama;
+    private String id_pemeriksaanitemdetail;
+    private String id_pemeriksaanitem;
+    private String id_komponenpemeriksaan;
+    private String id_item;
     private String tampil_b;
     private String tampil_r;
     private String tampil_t;
     private String tampil_b_klr;
     private String tampil_r_klr;
     private String tampil_t_klr;
+
+    public String getId_pemeriksaanitemdetail() {
+        return id_pemeriksaanitemdetail;
+    }
+
+    public void setId_pemeriksaanitemdetail(String id_pemeriksaanitemdetail) {
+        this.id_pemeriksaanitemdetail = id_pemeriksaanitemdetail;
+    }
+
+    public String getId_pemeriksaanitem() {
+        return id_pemeriksaanitem;
+    }
+
+    public void setId_pemeriksaanitem(String id_pemeriksaanitem) {
+        this.id_pemeriksaanitem = id_pemeriksaanitem;
+    }
+
+    public String getId_komponenpemeriksaan() {
+        return id_komponenpemeriksaan;
+    }
+
+    public void setId_komponenpemeriksaan(String id_komponenpemeriksaan) {
+        this.id_komponenpemeriksaan = id_komponenpemeriksaan;
+    }
+
+    public String getId_item() {
+        return id_item;
+    }
+
+    public void setId_item(String id_item) {
+        this.id_item = id_item;
+    }
 
     public String getNama() {
         return nama;

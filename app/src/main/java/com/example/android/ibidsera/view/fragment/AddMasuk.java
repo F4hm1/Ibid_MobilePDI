@@ -4,10 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +22,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -49,6 +45,7 @@ import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.api.AuctionService;
+import com.example.android.ibidsera.util.HelperBridge;
 import com.example.android.ibidsera.util.HelperConstant;
 import com.example.android.ibidsera.util.RetrofitUtil;
 import com.example.android.ibidsera.view.activity.PemeriksaanActivity;
@@ -178,6 +175,15 @@ public class AddMasuk extends BaseFragment {
     @BindView(R.id.radio_addm_sedan)
     RadioButton mRadioSedan;
 
+    @BindView(R.id.tv_expedition_title)
+    TextView tvExpeditionTitle;
+
+    @BindView(R.id.v_expedition_separator)
+    View vExpeditionSeparator;
+
+    @BindView(R.id.ll_expedition_container)
+    LinearLayout llExpeditionContainer;
+
     //End-Enhancement
 
     private static final int KEY_PEMERIKSAAN_ACTIVITY = 1009;
@@ -272,7 +278,6 @@ public class AddMasuk extends BaseFragment {
             cpvStart(cpv, bp);
 //            getAddm(StaticUnit.getLu().get(position), position);
             getDetailUnitById(listNoPolUnit.get(position).getAuctionItemId(), position, auctionService);
-//            cpvStop(cpv, bp);
         });
 
         toolTip(cases, "BUY BACK / WANPRES");
@@ -307,6 +312,8 @@ public class AddMasuk extends BaseFragment {
                                     if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
                                         pDialog.hide();
                                         alertDialog("Proses Penambahan Pemeriksaan Unit Masuk Berhasil", 1);
+                                        HelperConstant.mTempBitmapNiaga = null;
+                                        HelperConstant.mTempBitmapSedan = null;
                                     } else {
                                         pDialog.hide();
                                         alertDialog(getStatus.getMessage(), 1);
@@ -401,15 +408,17 @@ public class AddMasuk extends BaseFragment {
         Log.d("POLO", "lu: " + RetrofitUtil.toJson(lu));
 
         //Start-Enhancement
-        if (lu.getAuction().getEkspedisi() != 0) {
+        if (lu.getExpedition() != null) {
+            toggleExpedition(true);
             expeditionId.setText(lu.getExpedition().getExpeditionOrderId());
             expeditionNotes.setText(
                     lu.getExpedition().getExpeditionType().getDesc() + "\n"
                             + "Origin City: " + lu.getExpedition().getExpeditionType().getOriginCity() + "\n"
                             + "Auction City: " + lu.getExpedition().getExpeditionType().getAuctionCity() + "\n");
         } else {
-            expeditionId.setText("-");
-            expeditionNotes.setText("-");
+//            expeditionId.setText("-");
+//            expeditionNotes.setText("-");
+            toggleExpedition(false);
         }
         //End-Enhancement
 
@@ -423,7 +432,7 @@ public class AddMasuk extends BaseFragment {
 
     public InsertUnit setInsertUnit(Unit lu) {
         InsertUnit insertUnit = new InsertUnit();
-        insertUnit.setIdpemeriksaanitem(lu.getAuction().getId_pemeriksaanitem());
+        insertUnit.setIdpemeriksaanitem(lu.getKomponen().get(0).getId_pemeriksaanitem());
         if (lu.getAuction().getId_auctionitem() != 0) {
             insertUnit.setIdauctionitem(lu.getAuction().getId_auctionitem());
         } else {
@@ -525,6 +534,19 @@ public class AddMasuk extends BaseFragment {
             sign.setId_auctionitem(lu.getAuction().getIdauction_item());
         }
         return sign;
+    }
+
+    public void toggleExpedition(boolean toggle) {
+        if (toggle) {
+            tvExpeditionTitle.setVisibility(View.VISIBLE);
+            vExpeditionSeparator.setVisibility(View.VISIBLE);
+            llExpeditionContainer.setVisibility(View.VISIBLE);
+        } else {
+            expeditionAmount.setText("");
+            tvExpeditionTitle.setVisibility(View.GONE);
+            vExpeditionSeparator.setVisibility(View.GONE);
+            llExpeditionContainer.setVisibility(View.GONE);
+        }
     }
 
     private List<Lampiran> setLampiran(GetStatus gs) {

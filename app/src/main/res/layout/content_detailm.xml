@@ -106,6 +106,7 @@
                         style="@style/FontTextViewFormHead"
                         android:text="NAMA PEMILIK"/>
                     <TextView
+                        android:text="-"
                         android:id="@+id/nama_pemilik"
                         style="@style/FontIsiTextViewForm"/>
                     <TextView

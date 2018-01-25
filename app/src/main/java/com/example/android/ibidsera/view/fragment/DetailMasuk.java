@@ -67,10 +67,10 @@ public class DetailMasuk extends BaseFragment{
     @BindView(R.id.imgSignCust) ImageView imgSignCust;
     @BindView(R.id.imgSignIbid) ImageView imgSignIbid;
     @BindView(R.id.close) Button close;
-    private Bitmap bitmap1;
-    private Bitmap bitmap2;
-    private Bitmap bitmap3;
-    private Bitmap bitmap4;
+
+    private String curUrlLampiran = "";
+    private String curUrlTtdIbid = "";
+    private String curUrlTtdCust = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -172,6 +172,11 @@ public class DetailMasuk extends BaseFragment{
                 .error(R.drawable.ibid_logo)
                 .into(imgSignIbid);
 
+
+        curUrlLampiran = lu.get(id).getAuction().getCatatan_image();
+        curUrlTtdIbid = lu.get(id).getAuction().getTtd_ibid_msk();
+        curUrlTtdCust = lu.get(id).getAuction().getTtd_customer_msk();
+
     }
 
     public void imgStyle(ImageView imageView, TableRow row, TableRow.LayoutParams imgParam, String check) {
@@ -204,16 +209,13 @@ public class DetailMasuk extends BaseFragment{
         FrameLayout container = new FrameLayout(getContext());
         ImageView imageView = new ImageView(getContext());
         if(id == 1){
-            if(bitmap3 == null) {
+            if(curUrlLampiran.equalsIgnoreCase("")) {
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
             }else {
-                imageView.setImageBitmap(bitmap3);
-            }
-        }else {
-            if(bitmap4 == null) {
-                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
-            }else {
-                imageView.setImageBitmap(bitmap4);
+                Picasso.with(getContext())
+                        .load(curUrlLampiran)
+                        .error(R.drawable.ibid_logo)
+                        .into(imageView);
             }
         }
         container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, 450);
@@ -232,12 +234,18 @@ public class DetailMasuk extends BaseFragment{
         FrameLayout container = new FrameLayout(getContext());
         ImageView imageView = new ImageView(getContext());
         if(id == 1){
-            if(bitmap1 != null) {
-                imageView.setImageBitmap(bitmap1);
+            if(!curUrlTtdIbid.equalsIgnoreCase("")) {
+                Picasso.with(getContext())
+                        .load(curUrlTtdIbid)
+                        .error(R.drawable.ibid_logo)
+                        .into(imageView);
             }
         }else {
-            if(bitmap2 != null) {
-                imageView.setImageBitmap(bitmap2);
+            if(!curUrlTtdCust.equalsIgnoreCase("")) {
+                Picasso.with(getContext())
+                        .load(curUrlTtdCust)
+                        .error(R.drawable.ibid_logo)
+                        .into(imageView);
             }
         }
         container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, 450);

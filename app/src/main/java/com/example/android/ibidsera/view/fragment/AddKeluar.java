@@ -275,6 +275,8 @@ public class AddKeluar extends BaseFragment {
                                 if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
                                     pDialog.hide();
                                     alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
+                                    HelperConstant.mTempBitmapNiaga = null;
+                                    HelperConstant.mTempBitmapSedan = null;
                                 } else {
                                     pDialog.hide();
                                     alertDialog(getStatus.getMessage(), 1);
@@ -372,7 +374,7 @@ public class AddKeluar extends BaseFragment {
 
     public InsertUnit setInsertUnit(UnitMasukKeluar lUnit) {
         InsertUnit insertUnit = new InsertUnit();
-        insertUnit.setIdpemeriksaanitem(lUnit.getAuction().getId_pemeriksaanitem());
+        insertUnit.setIdpemeriksaanitem(lUnit.getKomponen().get(0).getId_pemeriksaanitem());
         if (lUnit.getAuction().getId_auctionitem() != 0) {
             insertUnit.setIdauctionitem(lUnit.getAuction().getId_auctionitem());
         } else {

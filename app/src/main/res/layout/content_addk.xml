@@ -139,6 +139,7 @@
                         android:text="NAMA PEMILIK" />
 
                     <EditText
+                        android:text="-"
                         android:id="@+id/nama_pemilik"
                         style="@style/SpinnerEditForm"
                         android:background="@drawable/edittext_style" />

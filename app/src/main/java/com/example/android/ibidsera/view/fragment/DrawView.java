@@ -76,26 +76,24 @@ public class DrawView extends View implements View.OnTouchListener {
     private float decreasedBitmapScaleSize;
 
     private Bitmap mBitmapNumber;
-    private Bitmap mBitmapNumber2;
 
     private Context mContext;
     private String textToDraw;
     private TextPaint mPaintText;
     private List<PointChecklist> listPointCheckList = new ArrayList<>();
     private PointChecklist pointChecklist;
+    private boolean isTouchUp = true;
+    private String currentText = "";
 
     public DrawView(Context context, Bitmap mBitmap, FrameLayout mContainer, float decreasedBitmapScaleSize) {
         super(context);
         mContext = context;
-        mBitmapNumber = BitmapFactory.decodeResource(context.getResources(), R.drawable.one);
-        mBitmapNumber2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.two);
         this.mContainer = mContainer;
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
         setFocusable(true);
         setFocusableInTouchMode(true);
         this.setOnTouchListener(this);
         mPaint = new Paint();
-
         mPaintTransparent = new Paint();
         mPaintTransparent.setAntiAlias(true);
         mPaintTransparent.setDither(true);
@@ -131,7 +129,6 @@ public class DrawView extends View implements View.OnTouchListener {
         pathSaved.add(new PathColored(mPaint, mPath));
 
         pointChecklist = new PointChecklist(mBitmapNumber, "");
-        listPointCheckList.add(pointChecklist);
         this.decreasedBitmapScaleSize = decreasedBitmapScaleSize;
     }
 
@@ -169,6 +166,22 @@ public class DrawView extends View implements View.OnTouchListener {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(tempBitmap, mTransformation, mBitmapPaint);
+
+        if (!isTouchUp) {
+            bgCanvas.drawBitmap(mBitmapNumber, xCurTargetPoint, yCurTargetPoint, pathSaved.get(0).getPaint());
+
+            Rect rect = new Rect();
+            bgCanvas.translate(xCurTargetText + 2, yCurTargetText + mPaintTextBg.getTextSize());
+
+            int textWidth = 150;
+            StaticLayout textLayout = new StaticLayout(currentText, mPaintText, textWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+            mPaintText.getTextBounds("TEXTFORTEST", 0, 7, rect);
+            Rect rectTarget = new Rect(rect.left, rect.top, rect.left + textWidth, rect.top + textLayout.getHeight() + 15);
+            bgCanvas.drawRect(rectTarget, mPaintTextBg);
+            textLayout.draw(bgCanvas);
+            bgCanvas.translate(-(xCurTargetText + 2), -(yCurTargetText + mPaintTextBg.getTextSize()));
+        }
+
         for (PathColored p : pathSaved) {
             bgCanvas.drawPath(p.getPath(), p.getPaint());
         }
@@ -178,21 +191,6 @@ public class DrawView extends View implements View.OnTouchListener {
             isClearing = false;
         }
 
-        for (PointChecklist p : listPointCheckList) {
-            bgCanvas.drawBitmap(p.getTargetBitmap(), xCurTargetPoint, yCurTargetPoint, pathSaved.get(0).getPaint());
-
-            Rect rect = new Rect();
-            bgCanvas.translate(xCurTargetText + 2, yCurTargetText + mPaintTextBg.getTextSize());
-
-            int textWidth = 150;
-            StaticLayout textLayout = new StaticLayout(p.getText(), mPaintText, textWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-            mPaintText.getTextBounds("texttext", 0, 7, rect);
-            Rect rectTarget = new Rect(rect.left, rect.top, rect.left + textWidth, rect.top + textLayout.getHeight() + 15);
-            bgCanvas.drawRect(rectTarget, mPaintTextBg);
-            textLayout.draw(bgCanvas);
-            bgCanvas.translate(-(xCurTargetText + 2), -(yCurTargetText + mPaintTextBg.getTextSize()));
-        }
-
         canvas.drawBitmap(drawableBitmap, 0, 0, mBitmapPaint);
     }
 
@@ -200,6 +198,7 @@ public class DrawView extends View implements View.OnTouchListener {
     private static final float TOUCH_TOLERANCE = 4;
 
     private void touch_start(float x, float y) {
+        isTouchUp = true;
         mPath.reset();
         mPath.moveTo(x, y);
         mX = x;
@@ -218,17 +217,9 @@ public class DrawView extends View implements View.OnTouchListener {
 
     private void touch_up() {
         mPath.lineTo(mX, mY);
-        // commit the path to our offscreen
-//        mCanvas.drawPath(mPath, mPaint);
-
-//        pathSaved.add(new PathColored(mPaint, mPath));
-
         mPath = new Path();
-        pointChecklist = new PointChecklist(mBitmapNumber, "");
-//        paths.add(mPath);
 
         pathSaved.add(new PathColored(mPaint, mPath));
-//        listPointCheckList.add(new PointChecklist(mBitmapNumber, "I tested using single-line drawing and the bitmap"));
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
         alertDialog.setTitle("Masukan catatan kerusakan : ");
@@ -238,17 +229,19 @@ public class DrawView extends View implements View.OnTouchListener {
 
         FrameLayout container = new FrameLayout(mContext);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.leftMargin = 20; // remember to scale correctly
+        params.leftMargin = 20;
         params.rightMargin = 20;
         input.setLayoutParams(params);
         container.addView(input);
         alertDialog.setView(container);
+        input.setText("");
 
-        // Set up the buttons
         alertDialog.setPositiveButton("OK", (dialog, which) -> {
-//            listPointCheckList.add(new PointChecklist(mBitmapNumber, input.getText().toString()));
+            currentText = input.getText().toString();
             pointChecklist.setText(input.getText().toString());
             listPointCheckList.add(pointChecklist);
+            isTouchUp = false;
+            pointChecklist = new PointChecklist(mBitmapNumber, "");
         });
         alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         alertDialog.create().show();
@@ -277,27 +270,32 @@ public class DrawView extends View implements View.OnTouchListener {
     }
 
     public void changePaintType(String colorType) {
+        Bitmap bitmapNumber = bitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.one);
         switch (colorType) {
             case COLOR_BARET: {
                 mPaint = mPaintBaret;
+                bitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.one);
                 mBitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.one);
                 textToDraw = "bagian sini baret";
                 break;
             }
             case COLOR_PENYOK: {
                 mPaint = mPaintPenyok;
+                bitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.two);
                 mBitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.two);
                 textToDraw = "bagian sini penyok";
                 break;
             }
             case COLOR_RETAK: {
                 mPaint = mPaintRetak;
+                bitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.three);
                 mBitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.three);
                 textToDraw = "bagian sini retak";
                 break;
             }
             case COLOR_PECAH: {
                 mPaint = mPaintPecah;
+                bitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.four);
                 mBitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.four);
                 textToDraw = "bagian sini pecah";
                 break;
@@ -308,7 +306,7 @@ public class DrawView extends View implements View.OnTouchListener {
             }
         }
         pathSaved.get(pathSaved.size() - 1).setPaint(mPaint);
-        listPointCheckList.get(listPointCheckList.size() - 1).setTargetBitmap(mBitmapNumber);
+        pointChecklist.setTargetBitmap(bitmapNumber);
 //        mPaint.setColor(Color.parseColor(colorType));
     }
 
