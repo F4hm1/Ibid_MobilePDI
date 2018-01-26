@@ -68,8 +68,6 @@ public class UnitKeluar extends BaseFragment{
 
         getItemList(psearch);
 
-        cpvStop(cpv, bp);
-
         swipeRefresh(refreshLayout, R.id.nav_keluar);
 
         return myFragment;
@@ -92,11 +90,13 @@ public class UnitKeluar extends BaseFragment{
                             showToast("Tidak ada data");
                         }
                     }catch (Exception e){}
+                    cpvStop(cpv, bp);
                 }
 
                 @Override
                 public void onFailure(Call<List<UnitMasukKeluar>> call, Throwable t) {
                     errorRetrofit(call, t);
+                    cpvStop(cpv, bp);
                 }
             });
         }else {
@@ -112,11 +112,13 @@ public class UnitKeluar extends BaseFragment{
                             showToast("Tidak ada data");
                         }
                     }catch (Exception e){}
+                    cpvStop(cpv, bp);
                 }
 
                 @Override
                 public void onFailure(Call<List<UnitMasukKeluar>> call, Throwable t) {
                     errorRetrofit(call, t);
+                    cpvStop(cpv, bp);
                 }
             });
         }

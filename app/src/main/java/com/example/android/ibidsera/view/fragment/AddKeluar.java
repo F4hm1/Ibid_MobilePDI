@@ -359,7 +359,7 @@ public class AddKeluar extends BaseFragment {
         } else if (bitmap2 != null) {
             signature2.setImageBitmap(bitmap2);
         }
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < lu.getKomponen().size(); i++) {
             imgSet(hi.get("b" + i), lu.getKomponen().get(i).getTampil_b());
             imgSet(hi.get("r" + i), lu.getKomponen().get(i).getTampil_r());
             imgSet(hi.get("t" + i), lu.getKomponen().get(i).getTampil_t());
@@ -522,18 +522,19 @@ public class AddKeluar extends BaseFragment {
     }
 
     private void getKomponen(AuctionService auctionService, int position) {
-        auctionService.getUnitK().enqueue(new Callback<List<UnitMasukKeluar>>() {
-            @Override
-            public void onResponse(Call<List<UnitMasukKeluar>> call, Response<List<UnitMasukKeluar>> response) {
-                List<UnitMasukKeluar> lu = response.body();
-                getKomponenList(lu, 0);
-            }
-
-            @Override
-            public void onFailure(Call<List<UnitMasukKeluar>> call, Throwable t) {
-                errorRetrofit(call, t);
-            }
-        });
+//        auctionService.getUnitK().enqueue(new Callback<List<UnitMasukKeluar>>() {
+//            @Override
+//            public void onResponse(Call<List<UnitMasukKeluar>> call, Response<List<UnitMasukKeluar>> response) {
+//                List<UnitMasukKeluar> lu = response.body();
+//                getKomponenList(lu, 0);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<UnitMasukKeluar>> call, Throwable t) {
+//                errorRetrofit(call, t);
+//            }
+//        });
+        getKomponenList(StaticUnit.getLuMasukKeluar(), 0);
     }
 
     private void getKomponenList(List<UnitMasukKeluar> lu, int position) {

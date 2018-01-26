@@ -162,17 +162,17 @@ public class DetailKeluar extends BaseFragment {
                 .into(imgSedan);
 
         Picasso.with(getContext())
-                .load(lu.get(id).getAuction().getTtd_customer_msk())
+                .load(lu.get(id).getAuction().getTtd_customer_klr())
                 .error(R.drawable.ibid_logo)
                 .into(imgSignCust);
 
         Picasso.with(getContext())
-                .load(lu.get(id).getAuction().getTtd_ibid_msk())
+                .load(lu.get(id).getAuction().getTtd_ibid_klr())
                 .error(R.drawable.ibid_logo)
                 .into(imgSignIbid);
 
-        curUrlTtdCust = lu.get(id).getAuction().getTtd_customer_msk();
-        curUrlTtdIbid = lu.get(id).getAuction().getTtd_ibid_msk();
+        curUrlTtdCust = lu.get(id).getAuction().getTtd_customer_klr();
+        curUrlTtdIbid = lu.get(id).getAuction().getTtd_ibid_klr();
         curUrlLampiran = lu.get(id).getAuction().getCatatan_image();
 
     }
