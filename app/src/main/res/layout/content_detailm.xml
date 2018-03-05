@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.android.ibidsera.view.activity.MainActivity">
+
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pemeriksaan Unit Masuk"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height= "1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:baselineAligned="false">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="NO POLISI *"/>
+                    <TextView
+                        android:id="@+id/nopol"
+                        style="@style/FontIsiTextViewForm" />
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="MERK"/>
+                    <TextView
+                        android:id="@+id/merk"
+                        style="@style/FontIsiTextViewForm" />
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="SERI"/>
+                    <TextView
+                        android:id="@+id/seri"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="SILINDER"/>
+                    <TextView
+                        android:id="@+id/silinder"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="GRADE"/>
+                    <TextView
+                        android:id="@+id/grade"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="SUB GRADE"/>
+                    <TextView
+                        android:id="@+id/sub_grade"
+                        style="@style/FontIsiTextViewForm"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="TRANSMISI"/>
+                    <TextView
+                        android:id="@+id/transmisi"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="TAHUN"/>
+                    <TextView
+                        android:id="@+id/tahun"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="KM"/>
+                    <TextView
+                        android:id="@+id/km"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="NAMA PEMILIK"/>
+                    <TextView
+                        android:text="-"
+                        android:id="@+id/nama_pemilik"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="FUEL DIPERIKSA *"/>
+                    <TextView
+                        android:id="@+id/fuel"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="KONDISI CAT BODY"/>
+                    <TextView
+                        android:id="@+id/cat"
+                        style="@style/FontIsiTextViewForm"/>
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bukti Serah Terima"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height= "1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="Tanggal Pemeriksaan"/>
+                    <TextView
+                        android:id="@+id/tgl_pemeriksaan"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="Jam"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/jam"
+                            style="@style/FontIsiTextViewForm"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+                        <TextView
+                            android:id="@+id/menit"
+                            style="@style/FontIsiTextViewForm"/>
+                    </LinearLayout>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="Nama Pengemudi *"/>
+                    <TextView
+                        android:id="@+id/nama_pengemudi"
+                        style="@style/FontIsiTextViewForm"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="Alamat Pengemudi"/>
+                    <TextView
+                        android:id="@+id/alamat_pengemudi"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="Kota"/>
+                    <TextView
+                        android:id="@+id/kota"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="Telepon"/>
+                    <TextView
+                        android:id="@+id/telepon"
+                        style="@style/FontIsiTextViewForm"/>
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kelengkapan Kondisi Komponen"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height= "1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+            <TableLayout
+                android:id="@+id/table_detailm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:stretchColumns="0">
+
+                <TableRow
+                    android:background="@drawable/cell_shape_th"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        style="@style/FontTableHead"
+                        android:text="No" />
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height= "match_parent"
+                        android:background="@color/colorPrimary" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
+                        style="@style/FontTableHead"
+                        android:text="Nama Komponen" />
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height= "match_parent"
+                        android:background="@color/colorPrimary" />
+                    <TableLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="3">
+                        <TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/FontTableHead"
+                                android:layout_span="3"
+                                android:text="Kondisi" />
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height= "2dp"
+                            android:background="@color/colorPrimary" />
+                        <TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/FontTableHead"
+                                android:text="   B    " />
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height= "match_parent"
+                                android:background="@color/colorPrimary" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/FontTableHead"
+                                android:text="   R    " />
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height= "match_parent"
+                                android:background="@color/colorPrimary" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/FontTableHead"
+                                android:text="   T    " />
+                        </TableRow>
+                    </TableLayout>
+                </TableRow>
+            </TableLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Keterangan"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height= "1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="Catatan"/>
+                    <TextView
+                        android:id="@+id/catatan"
+                        style="@style/FontIsiTextViewForm"/>
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="Pool Ibid Cabang"/>
+                    <TextView
+                        android:id="@+id/pool"
+                        style="@style/FontIsiTextViewForm"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/FontTextViewFormHead"
+                        android:text="Case"/>
+                    <TextView
+                        android:id="@+id/cases"
+                        style="@style/FontIsiTextViewForm"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pemeriksaan Kerusakan"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height= "1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="18dp"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/imgLampiranSedan"
+                        android:src="@drawable/ibid_sedan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:clickable="true"/>
+                </LinearLayout>
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:layout_weight="1">-->
+                    <!--<TextView-->
+                        <!--android:text="Minibus"-->
+                        <!--style="@style/FontTextViewForm"/>-->
+                    <!--<ImageView-->
+                        <!--android:id="@+id/imgLampiranMiniBus"-->
+                        <!--android:src="@drawable/ibid_niaga"-->
+                        <!--android:layout_width="250dp"-->
+                        <!--android:layout_height="180dp"-->
+                        <!--android:layout_gravity="center_horizontal"-->
+                        <!--android:clickable="true"/>-->
+                <!--</LinearLayout>-->
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tanda Tangan"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="16dp"
+                android:textSize="24sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height= "1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <TextView
+                        android:text="Pihak Ibid"
+                        style="@style/FontTextViewForm"/>
+                    <ImageView
+                        android:id="@+id/imgSignIbid"
+                        android:layout_width="220dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/canvas_style"
+                        android:clickable="true"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <TextView
+                        android:text="Pihak Customer"
+                        style="@style/FontTextViewForm"/>
+                    <ImageView
+                        android:id="@+id/imgSignCust"
+                        android:layout_width="220dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/canvas_style"
+                        android:clickable="true"/>
+                </LinearLayout>
+            </LinearLayout>
+            <Button
+                android:id="@+id/close"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Close"
+                android:background="@drawable/button_style"
+                android:textColor="@color/colorPrimary"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

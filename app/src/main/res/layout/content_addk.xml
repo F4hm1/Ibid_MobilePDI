@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.android.ibidsera.view.activity.MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Pemeriksaan Unit Keluar"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nopol_title"
+                        style="@style/FontTextViewForm"
+                        android:text="NO POLISI" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/nopol"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style" />
+
+                    <TextView
+
+                        style="@style/FontTextViewForm"
+                        android:text="MERK" />
+
+                    <Spinner
+                        android:id="@+id/merk"
+                        style="@style/SpinnerEditForm" />
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="SERI" />
+
+                    <Spinner
+                        android:id="@+id/seri"
+                        style="@style/SpinnerEditForm" />
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="SILINDER" />
+
+                    <Spinner
+                        android:id="@+id/silinder"
+                        style="@style/SpinnerEditForm" />
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="GRADE" />
+
+                    <Spinner
+                        android:id="@+id/grade"
+                        style="@style/SpinnerEditForm" />
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="SUB GRADE" />
+
+                    <Spinner
+                        android:id="@+id/sub_grade"
+                        style="@style/SpinnerEditForm" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="TRANSMISI" />
+
+                    <EditText
+                        android:id="@+id/transmisi"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style" />
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="TAHUN" />
+
+                    <EditText
+                        android:id="@+id/tahun"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"
+                        android:inputType="number" />
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="KM" />
+
+                    <EditText
+                        android:id="@+id/km"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"
+                        android:inputType="number" />
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="NAMA PEMILIK" />
+
+                    <EditText
+                        android:text="-"
+                        android:id="@+id/nama_pemilik"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style" />
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="FUEL DIPERIKSA" />
+
+                    <Spinner
+                        android:id="@+id/fuel"
+                        style="@style/SpinnerEditForm" />
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="KONDISI CAT BODY" />
+
+                    <Spinner
+                        android:id="@+id/cat"
+                        style="@style/SpinnerEditForm" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Bukti Serah Terima"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Tanggal Pemeriksaan" />
+
+                    <EditText
+                        android:id="@+id/tgl_pemeriksaan"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false" />
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Jam" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Spinner
+                            android:id="@+id/jam"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":" />
+
+                        <Spinner
+                            android:id="@+id/menit"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/nama_title"
+                        style="@style/FontTextViewForm"
+                        android:text="Nama Pengemudi" />
+
+                    <EditText
+                        android:id="@+id/nama_pengemudi"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/alamat_title"
+                        style="@style/FontTextViewForm"
+                        android:text="Alamat Pengemudi" />
+
+                    <EditText
+                        android:id="@+id/alamat_pengemudi"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style" />
+
+                    <TextView
+                        android:id="@+id/kota_title"
+                        style="@style/FontTextViewForm"
+                        android:text="Kota" />
+
+                    <EditText
+                        android:id="@+id/kota"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style" />
+
+                    <TextView
+                        android:id="@+id/telepon_title"
+                        style="@style/FontTextViewForm"
+                        android:text="Telepon" />
+
+                    <EditText
+                        android:id="@+id/telepon"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style"
+                        android:inputType="number" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Kelengkapan Kondisi Komponen"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="16dp"
+                android:text="Dapat dilakukan checklist terhadap komponen?"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <Switch
+                android:id="@+id/toggle_checklistable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:checked="true"
+                android:textOff="Tidak"
+                android:textOn="Ya" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+
+            <TableLayout
+                android:id="@+id/table_addm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:stretchColumns="0">
+
+                <TableRow
+                    android:background="@drawable/cell_shape_th"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/FontTableHead"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="No" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TextView
+                        style="@style/FontTableHead"
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
+                        android:text="Nama Komponen" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary" />
+
+                    <TableLayout>
+
+                        <TableRow>
+
+                            <TextView
+                                style="@style/FontTableHead"
+                                android:layout_width="wrap_content"
+                                android:layout_span="6"
+                                android:text="Kondisi Out" />
+
+                            <TextView
+                                style="@style/FontTableHead"
+                                android:layout_width="wrap_content"
+                                android:layout_span="6"
+                                android:text="Kondisi In" />
+                        </TableRow>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="@color/colorPrimary" />
+
+                        <TableRow>
+
+                            <CheckBox
+                                android:id="@+id/checkboxB"
+                                android:enabled="false"
+                                android:text="B   "
+                                android:textColor="@color/colorPrimary"
+                                android:theme="@style/WhiteCheck" />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/colorPrimary" />
+
+                            <CheckBox
+                                android:id="@+id/checkboxR"
+
+                                android:text="R   "
+                                android:textColor="@color/colorPrimary"
+                                android:theme="@style/WhiteCheck" />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/colorPrimary" />
+
+                            <CheckBox
+                                android:id="@+id/checkboxT"
+                                android:enabled="false"
+                                android:text="T   "
+                                android:textColor="@color/colorPrimary"
+                                android:theme="@style/WhiteCheck" />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/colorPrimary" />
+
+                            <TextView
+                                style="@style/FontTableHead"
+                                android:layout_width="wrap_content"
+                                android:text="   B   " />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/colorPrimary" />
+
+                            <TextView
+                                style="@style/FontTableHead"
+                                android:layout_width="wrap_content"
+                                android:text="   R   " />
+
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/colorPrimary" />
+
+                            <TextView
+                                style="@style/FontTableHead"
+                                android:layout_width="wrap_content"
+                                android:text="   T   " />
+                        </TableRow>
+                    </TableLayout>
+                </TableRow>
+            </TableLayout>
+
+            <EditText
+                android:id="@+id/et_checklist_not"
+                style="@style/MultilineEditTextWithMinimum"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_style"
+                android:hint="Tulis alasan kenapa unit ini tidak dapat di checklist"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Keterangan"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Catatan" />
+
+                    <EditText
+                        android:id="@+id/catatan"
+                        style="@style/MultilineEditTextWithMinimum"
+                        android:background="@drawable/edittext_style"
+                        android:gravity="top" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Case" />
+
+                    <EditText
+                        android:id="@+id/cases"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style" />
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Pool Ibid Cabang" />
+
+                    <EditText
+                        android:id="@+id/pool"
+                        style="@style/SpinnerEditForm"
+                        android:background="@drawable/edittext_style" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Pemeriksaan Kerusakan"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <!--<TextView-->
+                    <!--android:text="Sedan"-->
+                    <!--style="@style/FontTextViewForm"/>-->
+                    <RadioButton
+                        android:id="@+id/radio_addm_sedan"
+                        style="@style/FontTextViewForm"
+                        android:text="Sedan" />
+
+                    <ImageView
+                        android:id="@+id/ibid_sedan"
+                        android:layout_width="250dp"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center_horizontal"
+                        android:clickable="true"
+                        android:src="@drawable/ibid_sedan" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/radio_addm_minibus"
+                        style="@style/FontTextViewForm"
+                        android:text="Minibus" />
+
+                    <ImageView
+                        android:id="@+id/ibid_niaga"
+                        android:layout_width="250dp"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center_horizontal"
+                        android:clickable="true"
+                        android:src="@drawable/ibid_niaga" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Tanda Tangan"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Pihak Ibid" />
+
+                    <ImageView
+                        android:id="@+id/signature1"
+                        android:layout_width="220dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/canvas_style"
+                        android:clickable="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FontTextViewForm"
+                        android:text="Pihak Customer atau Driver bertugas" />
+
+                    <ImageView
+                        android:id="@+id/signature2"
+                        android:layout_width="220dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/canvas_style"
+                        android:clickable="true" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_style"
+                    android:text="Save"
+                    android:textColor="@color/colorPrimary" />
+
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button2_style"
+                    android:text="Cancel" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/background_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent">
+
+        <com.github.rahatarmanahmed.cpv.CircularProgressView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/progress_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            app:cpv_animAutostart="true"
+            app:cpv_indeterminate="true"
+            app:cpv_thickness="10dp" />
+    </RelativeLayout>
+</RelativeLayout>

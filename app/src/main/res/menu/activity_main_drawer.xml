@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_persiapan"
+            android:icon="@drawable/ic_airport_shuttle_black_24dp"
+            android:title="Persiapan" />
+        <item
+            android:id="@+id/nav_masuk"
+            android:icon="@drawable/ic_drive_eta_black_24dp"
+            android:title="Unit Masuk" />
+        <item
+            android:id="@+id/nav_keluar"
+            android:icon="@drawable/ic_local_offer_black_24dp"
+            android:title="Unit Keluar" />
+        <item
+            android:id="@+id/nav_report"
+            android:icon="@drawable/ic_assignment_black_24dp"
+            android:title="Report" />
+        <item
+            android:id="@+id/nav_signout"
+            android:icon="@drawable/ic_lock_black_24dp"
+            android:title="Sign Out" />
+    </group>
+
+</menu>
