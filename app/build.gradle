@@ -12,6 +12,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "URI", "\"http://api.ibid.co.id/checklist/\"")
+        multiDexEnabled true
         buildTypes.each {
             it.buildConfigField 'String', 'API_KEY', IbidImsApiKey
         }
@@ -26,6 +27,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties' // will not include NOTICE file
+    }
+
 }
 
 dependencies {
@@ -46,5 +54,19 @@ dependencies {
     compile 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.douglasjunior:android-simple-tooltip:0.2.1'
+
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    compile 'com.amitshekhar.android:rx2-android-networking:1.0.0'
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    //compile 'com.trello:rxlifecycle:0.6.1'
+    //compile 'com.trello:rxlifecycle-components:0.6.1'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
+
+
+
+    compile 'com.android.support:multidex:1.0.1'
+
     apply plugin: 'realm-android'
 }
