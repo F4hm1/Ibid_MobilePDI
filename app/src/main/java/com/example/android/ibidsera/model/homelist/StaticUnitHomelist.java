@@ -1,30 +1,33 @@
-package com.example.android.ibidsera.model;
+package com.example.android.ibidsera.model.homelist;
 
-import com.example.android.ibidsera.model.homelist.UnitMasukKeluarHomelist;
+import com.example.android.ibidsera.model.StaticUnit;
+import com.example.android.ibidsera.model.Unit;
+import com.example.android.ibidsera.model.UnitMasukKeluar;
 
 import java.util.List;
 
 /**
- * Created by Yosefricaro on 01/08/2017.
+ * Created by Fahmi Hakim on 09/03/2018.
+ * for SERA
  */
 
-public class StaticUnit {
+public class StaticUnitHomelist {
 
     private static List<Unit> lu;
     private static Unit unit;
 
-    private static List<UnitMasukKeluar> luMasukKeluar;
+    private static List<UnitMasukKeluarHomelist> luMasukKeluar;
     private static UnitMasukKeluar unitMasukKeluar;
 
 
-    public static List<UnitMasukKeluar> getLuMasukKeluar() {
+    public static List<UnitMasukKeluarHomelist> getLuMasukKeluar() {
         return luMasukKeluar;
     }
 
 
 
-    public static void setLuMasukKeluar(List<UnitMasukKeluar> luMasukKeluar) {
-        StaticUnit.luMasukKeluar = luMasukKeluar;
+    public static void setLuMasukKeluar(List<UnitMasukKeluarHomelist> luMasukKeluar) {
+        StaticUnitHomelist.luMasukKeluar = luMasukKeluar;
     }
 
     public static List<Unit> getLu() {
@@ -32,7 +35,7 @@ public class StaticUnit {
     }
 
     public static void setLu(List<Unit> lu) {
-        StaticUnit.lu = lu;
+        StaticUnitHomelist.lu = lu;
     }
 
     public static Unit getUnit() {
@@ -41,7 +44,7 @@ public class StaticUnit {
 
     public static void setUnit(Unit unit) {
         if (unit == null) throw new NullPointerException("unit");
-        StaticUnit.unit = unit;
+        StaticUnitHomelist.unit = unit;
     }
 
     public static UnitMasukKeluar getUnitMasukKeluar() {
@@ -50,6 +53,7 @@ public class StaticUnit {
 
     public static void setUnitMasukKeluar(UnitMasukKeluar unitMasukKeluar) {
         if (unitMasukKeluar == null) throw new NullPointerException("unit masuk keluar");
-        StaticUnit.unitMasukKeluar = unitMasukKeluar;
+        StaticUnitHomelist.unitMasukKeluar = unitMasukKeluar;
     }
+
 }

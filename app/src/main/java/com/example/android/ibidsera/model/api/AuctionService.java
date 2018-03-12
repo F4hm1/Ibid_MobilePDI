@@ -107,4 +107,5 @@ public interface AuctionService {
     @POST("index.php/masteritem/post_sign_keluar?api_key=" + BuildConfig.API_KEY) Call<SignValue> postSignKeluar(@Body Sign item);
     @POST("index.php/masteritem/post_lampiran?api_key=" + BuildConfig.API_KEY) Call<GetStatus> postLampiran(@Body List<Lampiran> item);
 
+
 }

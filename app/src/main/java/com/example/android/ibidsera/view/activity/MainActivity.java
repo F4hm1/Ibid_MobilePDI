@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.androidnetworking.AndroidNetworking;
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseActivity;
 import com.example.android.ibidsera.view.fragment.AddKeluar;
@@ -28,6 +29,11 @@ import com.example.android.ibidsera.view.fragment.Persiapan;
 import com.example.android.ibidsera.view.fragment.Report;
 import com.example.android.ibidsera.view.fragment.UnitKeluar;
 import com.example.android.ibidsera.view.fragment.UnitMasuk;
+import com.example.android.ibidsera.view.fragment.migrate.HomeDevFrag;
+import com.example.android.ibidsera.view.fragment.migrate.PersiapanFrag;
+import com.example.android.ibidsera.view.fragment.migrate.UnitKeluarFrag;
+import com.example.android.ibidsera.view.fragment.migrate.UnitMasukFrag;
+import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +58,8 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+
 
         setSupportActionBar(toolbar);
 
@@ -122,16 +130,18 @@ public class MainActivity extends BaseActivity
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.nav_home:
-                fragment = new Home();
+
+                fragment = HomeDevFrag.newInstance();
+                //fragment = new Home();
                 break;
             case R.id.nav_persiapan:
-                fragment = new Persiapan();
+                fragment = PersiapanFrag.newInstance();
                 break;
             case R.id.nav_masuk:
-                fragment = new UnitMasuk();
+                fragment = UnitMasukFrag.newInstance();
                 break;
             case R.id.nav_keluar:
-                fragment = new UnitKeluar();
+                fragment = UnitKeluarFrag.newInstance();
                 break;
             case R.id.nav_report:
                 fragment = new Report();

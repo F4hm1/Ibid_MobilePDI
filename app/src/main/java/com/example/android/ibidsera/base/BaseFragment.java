@@ -1,19 +1,25 @@
 package com.example.android.ibidsera.base;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,6 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+//import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import retrofit2.Call;
 
@@ -48,6 +55,125 @@ import retrofit2.Call;
  */
 
 public class BaseFragment<T> extends Fragment {
+
+
+    ////////////////
+
+/*
+    @Override
+    public int getLayoutResId() {
+        return 0;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
+        return super.onCreateView(inflater, container, state);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void finishCreateView(Bundle state) {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public FragmentActivity getSupportActivity() {
+        return super.getSupportActivity();
+    }
+
+    @Override
+    public ActionBar getSupportActionBar() {
+        return super.getSupportActionBar();
+    }
+
+    @Override
+    public Context getApplicationContext() {
+        return super.getApplicationContext();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    protected void onVisible() {
+        super.onVisible();
+    }
+
+    @Override
+    protected void lazyLoad() {
+        super.lazyLoad();
+    }
+
+    @Override
+    protected void onInvisible() {
+        super.onInvisible();
+    }
+
+    @Override
+    protected void loadData() {
+        super.loadData();
+    }
+
+    @Override
+    protected void showProgressBar() {
+        super.showProgressBar();
+    }
+
+    @Override
+    protected void hideProgressBar() {
+        super.hideProgressBar();
+    }
+
+    @Override
+    protected void initRecyclerView() {
+        super.initRecyclerView();
+    }
+
+    @Override
+    protected void initRefreshLayout() {
+        super.initRefreshLayout();
+    }
+
+    @Override
+    protected void finishTask() {
+        super.finishTask();
+    }
+
+    @Override
+    public <T extends View> T $(int id) {
+        return super.$(id);
+    }
+*/
+
+
+    //////////////////
+
 
     protected void errorRetrofit(Call<T> pv, Throwable t){
         try {
@@ -286,4 +412,9 @@ public class BaseFragment<T> extends Fragment {
     protected TableRow tableRow(){ return new TableRow(getContext()); }
 
     protected TableLayout tableLayout(){ return new TableLayout(getContext()); }
+
+
+
+
+
 }
