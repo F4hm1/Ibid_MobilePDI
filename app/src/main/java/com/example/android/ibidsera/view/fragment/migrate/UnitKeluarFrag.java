@@ -149,7 +149,7 @@ public class UnitKeluarFrag extends RxLazyFragment {
                 paramImg.gravity = Gravity.CENTER;
 
                 rowColor(row, i);
-                imgStyle(id, row, paramImg, i);
+                imgStyle(id, row, paramImg, lu.get(i).getAuction().getIdauction_item());
                 textStyle(no_pol, row, param1, lu.get(i).getAuction().getNo_polisi());
                 //textStyle(tgl_doc, row, param1, lu.get(i).getAuction().getTgl_serah_klr());
                 //textStyle(pengemudi, row, param1, lu.get(i).getAuction().getNama_pengemudi_klr());
