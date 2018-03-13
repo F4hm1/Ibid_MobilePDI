@@ -103,6 +103,9 @@ public class DetailKeluarFrag extends RxLazyFragment {
 
         if(id!=-1) {
             getItemList(id);
+            cpvStop(cpv, bp);
+        } else {
+            cpvStart(cpv, bp);
         }
 
         imageClick(imgSedan, 1, 1);
@@ -138,7 +141,7 @@ public class DetailKeluarFrag extends RxLazyFragment {
         transmisi.setText(lu.getAuctiondetail().getTransmisi());
         tahun.setText(lu.getAuctiondetail().getTahun());
         km.setText(String.valueOf(lu.getAuctiondetail().getKm()));
-        nama_pemilik.setText(lu.getAuctiondetail().getPntp().getName_pntp());
+        //nama_pemilik.setText(lu.getAuctiondetail().getPntp().getName_pntp());
         fuel.setText(lu.getAuction().getFuel());
         cat.setText(lu.getAuction().getCat_body());
         tgl_pemeriksaan.setText(lu.getAuction().getTgl_serah_klr().substring(8,10)

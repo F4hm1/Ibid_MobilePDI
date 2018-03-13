@@ -100,7 +100,6 @@ public class UnitMasukFrag extends RxLazyFragment {
                         try {
                             if (unitMasukKeluarHomelists.size() != 0) {
                                 getUnitm(unitMasukKeluarHomelists);
-
                             } else {
                                 showToast("Tidak ada data");
                             }

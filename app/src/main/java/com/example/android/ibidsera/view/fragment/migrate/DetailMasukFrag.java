@@ -112,11 +112,14 @@ public class DetailMasukFrag extends RxLazyFragment {
             id = bundle.getInt("idAuction");
         }
 
-        cpvStart(cpv, bp);
+
 
         if(id!=-1) {
             //getDetailm(StaticUnit.getLuMasukKeluar(), id);
             getItemList(id);
+            cpvStop(cpv, bp);
+        } else {
+            cpvStart(cpv, bp);
         }
 
         imageClick(imgSedan, 1, 1);
