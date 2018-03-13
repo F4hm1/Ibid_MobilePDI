@@ -5,6 +5,9 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.androidnetworking.AndroidNetworking;
+import com.example.android.ibidsera.di.AppComponent;
+import com.example.android.ibidsera.di.AppModule;
+import com.example.android.ibidsera.di.DaggerAppComponent;
 import com.facebook.stetho.Stetho;
 
 /**
@@ -14,6 +17,7 @@ import com.facebook.stetho.Stetho;
 
 public class AppController extends Application {
     public static AppController mInstance;
+    public AppComponent component;
 
 
     @Override
@@ -27,6 +31,14 @@ public class AppController extends Application {
         super.onCreate();
         mInstance = this;
         init();
+        initDagger();
+    }
+
+    private void initDagger() {
+        component = DaggerAppComponent
+                .builder()
+                .appModule(new AppModule(mInstance))
+                .build();
     }
 
     private void init() {
