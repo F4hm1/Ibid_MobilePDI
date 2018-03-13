@@ -1,5 +1,6 @@
 package com.example.android.ibidsera.view.fragment.migrate;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -10,16 +11,22 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.android.ibidsera.AppController;
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.RxLazyFragment;
 import com.example.android.ibidsera.model.Attribute;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.service.RetrofitHelper;
+import com.example.android.ibidsera.service.eventbus.EventListener;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.google.common.eventbus.EventBus;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -32,6 +39,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class PersiapanFrag extends RxLazyFragment {
 
+    @Inject
+    public String msg;
+
+    @Inject
+    public EventBus evenbus;
 
     @BindView(R.id.table_persiapan)
     TableLayout tl;
@@ -55,6 +67,10 @@ public class PersiapanFrag extends RxLazyFragment {
 
     @Override
     public void finishCreateView(Bundle state) {
+
+
+        evenbus.post(new EventListener.OurTestEvent(msg));
+        Toast.makeText(getActivity(), listener.getLastMessage(), Toast.LENGTH_SHORT).show();
 
         hideKeyboard();
         setCaps(searchPersiapan);
@@ -180,4 +196,19 @@ public class PersiapanFrag extends RxLazyFragment {
     private String intToString(int item){ return String.valueOf(item); }
 
 
+    private EventListener listener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        (AppController.getInstance()).component.inject(this);
+        listener = new EventListener();
+        evenbus.register(listener);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        evenbus.unregister(listener);
+    }
 }
