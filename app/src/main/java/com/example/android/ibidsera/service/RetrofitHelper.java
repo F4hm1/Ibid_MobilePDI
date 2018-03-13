@@ -77,16 +77,12 @@ public class RetrofitHelper {
     }
 
 
-    /**
-     * 初始化OKHttpClient,设置缓存,设置超时时间,设置打印日志,设置UA拦截器
-     */
     private static void initOkHttpClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         if (mOkHttpClient == null) {
             synchronized (RetrofitHelper.class) {
                 if (mOkHttpClient == null) {
-                    //设置Http缓存
                     Cache cache = new Cache(new File(AppController.getInstance().getCacheDir(), "HttpCache"), 1024 * 1024 * 10);
                     mOkHttpClient = new OkHttpClient.Builder()
                             .cache(cache)
@@ -118,22 +114,16 @@ public class RetrofitHelper {
         }
     }
 
-    /**
-     * 为okhttp添加缓存，这里是考虑到服务器不支持缓存时，从而让okhttp支持缓存
-     */
+
     private static class CacheInterceptor implements Interceptor {
         @Override
         public Response intercept(Chain chain) throws IOException {
-            // 有网络时 设置缓存超时时间1个小时
             int maxAge = 60 * 60;
-            // 无网络时，设置超时为1天
             int maxStale = 60 * 60 * 24;
             Request request = chain.request();
             if (CommonUtils.isNetworkAvailable(AppController.getInstance())) {
-                //有网络时只从网络获取
                 request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
             } else {
-                //无网络时只从缓存中读取
                 request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
             }
             Response response = chain.proceed(request);
