@@ -44,8 +44,8 @@ public interface APICall {
     @GET("persiapan") Observable<List<Unit>> getPersiapan(); // API Url from Stock
     @GET("persiapan") Observable<List<UnitMasukKeluarHomelist>> getUnitM(); // API Url from Taksasi
     @GET("persiapansudahkeluar") Observable<List<UnitMasukKeluarHomelist>> getUnitK();
-    @GET("searchmasuk") Observable<List<UnitMasukKeluarHomelist>> getSearchUnitm(@Query("nopolisi") String nopol);
-    @GET("searchkeluar") Observable<List<UnitMasukKeluarHomelist>> getSearchUnitk(@Query("nopolisi") String nopol);
+    @GET("persiapan/search") Observable<List<UnitMasukKeluarHomelist>> getSearchUnitm(@Query("nopolisi") String nopol);
+    @GET("persiapansudahkeluar/search") Observable<List<UnitMasukKeluarHomelist>> getSearchUnitk(@Query("nopolisi") String nopol);
     @GET("masuk/keluarbyid") Observable<UnitMasukKeluar> getUnitMDetailForm(@Query("AuctionItemId") int AuctionItemId); // API Url from Taksasi
     @GET("keluar/keluarbyid") Observable<UnitMasukKeluar> getUnitKDetailForm(@Query("AuctionItemId") int AuctionItemId); // API Url from Taksasi
 
