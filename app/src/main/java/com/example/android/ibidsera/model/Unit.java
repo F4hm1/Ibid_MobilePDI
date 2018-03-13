@@ -4,11 +4,13 @@ import com.example.android.ibidsera.util.ErrorHandler;
 
 import java.util.List;
 
+import io.realm.RealmObject;
+
 /**
  * Created by Yosefricaro on 26/07/2017.
  */
 
-public class Unit {
+public class Unit{
 
     private Auction auction;
     private String id_merk;

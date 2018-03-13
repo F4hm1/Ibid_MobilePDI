@@ -6,6 +6,7 @@ package com.example.android.ibidsera.service;
  */
 
 import com.example.android.ibidsera.AppController;
+import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.util.ApiConstants;
 import com.example.android.ibidsera.util.CommonUtils;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -13,8 +14,10 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -24,6 +27,7 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
 
 
 public class RetrofitHelper {
@@ -141,5 +145,8 @@ public class RetrofitHelper {
             return response;
         }
     }
+
+
+
 }
 

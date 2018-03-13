@@ -34,13 +34,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.android.ibidsera.AppController;
 import com.example.android.ibidsera.R;
+import com.example.android.ibidsera.service.eventbus.EventListener;
 import com.example.android.ibidsera.view.activity.MainActivity;
 import com.example.android.ibidsera.view.fragment.AddMasuk;
 import com.example.android.ibidsera.view.fragment.Persiapan;
 import com.example.android.ibidsera.view.fragment.migrate.PersiapanFrag;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.google.common.eventbus.EventBus;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+
+import javax.inject.Inject;
+import javax.security.auth.PrivateCredentialPermission;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -190,7 +196,6 @@ public abstract class RxLazyFragment extends RxFragment {
     ///
 
 
-
     private View parentView;
     private FragmentActivity activity;
 
@@ -198,6 +203,7 @@ public abstract class RxLazyFragment extends RxFragment {
 
     protected boolean isVisible;
     private Unbinder bind;
+
 
     public abstract
     @LayoutRes
@@ -241,6 +247,7 @@ public abstract class RxLazyFragment extends RxFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = (FragmentActivity) activity;
+
     }
 
 
@@ -279,7 +286,6 @@ public abstract class RxLazyFragment extends RxFragment {
             onInvisible();
         }
     }
-
 
     protected void onVisible() {
         lazyLoad();
