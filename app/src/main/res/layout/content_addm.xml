@@ -696,7 +696,7 @@
         android:id="@+id/background_progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/transparent">
+        android:background="#88000000">
 
         <com.github.rahatarmanahmed.cpv.CircularProgressView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/progress_view"
