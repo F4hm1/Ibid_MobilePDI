@@ -11,8 +11,11 @@ public class Expedition {
 
     private String ExpeditionOrderId;
     private String ExpeditionOrderCode;
-    private String UserId;
     private String ExpeditionTypeId;
+    private ExpeditionType ExpeditionType;
+
+
+    /*private String UserId;
     private String Amount;
     private String ExpeditionDate;
     private String AssignmentUserId;
@@ -27,8 +30,7 @@ public class Expedition {
     private String WorkOrderId;
     private String AuctionItemId;
     private String IsPickUp;
-    private String StsDelete;
-    private ExpeditionType ExpeditionType;
+    private String StsDelete;*/
 
     public String getExpeditionOrderId() {
         return ErrorHandler.nullString(ExpeditionOrderId);
@@ -46,20 +48,20 @@ public class Expedition {
         this.ExpeditionOrderCode = expeditionOrderCode;
     }
 
-    public String getUserId() {
-        return ErrorHandler.nullString(UserId);
-    }
-
-    public void setUserId(String userId) {
-        this.UserId = userId;
-    }
-
     public String getExpeditionTypeId() {
         return ErrorHandler.nullString(ExpeditionTypeId);
     }
 
     public void setExpeditionTypeId(String expeditionTypeId) {
         this.ExpeditionTypeId = expeditionTypeId;
+    }
+
+/*    public String getUserId() {
+        return ErrorHandler.nullString(UserId);
+    }
+
+    public void setUserId(String userId) {
+        this.UserId = userId;
     }
 
     public String getAmount() {
@@ -180,7 +182,7 @@ public class Expedition {
 
     public void setStsDelete(String stsDelete) {
         this.StsDelete = stsDelete;
-    }
+    }*/
 
     public ExpeditionType getExpeditionType() {
         return ExpeditionType;

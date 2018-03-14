@@ -41,23 +41,25 @@ import retrofit2.http.Query;
 public interface APICall {
 
     @GET("index.php/home?api_key=" + BuildConfig.API_KEY) Observable<HomeModel> getHomeAuction();
-    @GET("persiapan") Observable<List<Unit>> getPersiapan(); // API Url from Stock
-    @GET("persiapan") Observable<List<UnitMasukKeluarHomelist>> getUnitM(); // API Url from Taksasi
-    @GET("persiapansudahkeluar") Observable<List<UnitMasukKeluarHomelist>> getUnitK();
-    @GET("persiapan/search") Observable<List<UnitMasukKeluarHomelist>> getSearchUnitm(@Query("nopolisi") String nopol);
-    @GET("persiapansudahkeluar/search") Observable<List<UnitMasukKeluarHomelist>> getSearchUnitk(@Query("nopolisi") String nopol);
-    @GET("masuk/keluarbyid") Observable<UnitMasukKeluar> getUnitMDetailForm(@Query("AuctionItemId") int AuctionItemId); // API Url from Taksasi
-    @GET("keluar/keluarbyid") Observable<UnitMasukKeluar> getUnitKDetailForm(@Query("AuctionItemId") int AuctionItemId); // API Url from Taksasi
+    @GET("pdi/persiapan") Observable<List<Unit>> getPersiapan(); // API Url from Stock
+    @GET("pdi/search") Observable<List<Unit>> getSearchPersiapan(@Query("nopolisi") String nopol);
+
+    @GET("pdi/persiapan") Observable<List<UnitMasukKeluarHomelist>> getUnitM(); // API Url from Taksasi
+    @GET("pdi/persiapan/search") Observable<List<UnitMasukKeluarHomelist>> getSearchUnitm(@Query("nopolisi") String nopol);
+    @GET("pdi/search/nopolmasuk") Observable<List<NoPolUnit>> getNoPolUnitM(@Query("nopolisi") String noPolkey);
+    @GET("pdi/search/masukbyid") Observable<List<Unit>> getDetailUnitPersiapan(@Query("AuctionItemId") String auctionItemId);
+
+    @GET("pdi/masuk/keluarbyid") Observable<UnitMasukKeluar> getUnitMDetailForm(@Query("AuctionItemId") int AuctionItemId); // API Url from Taksasi
+    @GET("pdi/persiapansudahkeluar") Observable<List<UnitMasukKeluarHomelist>> getUnitK();
+    @GET("pdi/persiapansudahkeluar/search") Observable<List<UnitMasukKeluarHomelist>> getSearchUnitk(@Query("nopolisi") String nopol);
+    @GET("pdi/keluar/keluarbyid") Observable<UnitMasukKeluar> getUnitKDetailForm(@Query("AuctionItemId") int AuctionItemId); // API Url from Taksasi
 
 
 
     @GET("index.php/stockmanagement?api_key=" + BuildConfig.API_KEY) Observable<List<ReportModel>> getReport();
-    @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/search") Observable<List<Unit>> getSearchPersiapan(@Query("nopolisi") String nopol);
     @GET("index.php/masteritem/warna/{key}?api_key=" + BuildConfig.API_KEY) Observable<List<Attribute>> getMasterItemWarna(@Path("key") String key);
     @GET("index.php/masteritem/penitip/{key}?api_key=" + BuildConfig.API_KEY) Observable<List<Penitip>> getMasterItemPenitip(@Path("key") String key);
-    @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/search/nopolmasuk") Observable<List<NoPolUnit>> getNoPolUnitM(@Query("nopolisi") String noPolkey);
     @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/searchkeluar/nopolisi") Observable<List<NoPolUnit>> getNoPolUnitK(@Query("nopolisi") String noPolkey);
-    @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/search/masukbyid") Observable<List<Unit>> getDetailUnitPersiapan(@Query("AuctionItemId") String auctionItemId);
     @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/persiapan/keluarbyid") Observable<List<UnitMasukKeluar>> getDetailUnitMasuk(@Query("AuctionItemId") String auctionItemId);
     @POST("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/UnitMasuk/insert") Observable<GetStatus> insertUnitMasuk(@Body InsertUnit insertUnit);
     @POST("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/unitkeluar/insert") Observable<GetStatus> insertUnitKeluar(@Body InsertUnit insertUnit);

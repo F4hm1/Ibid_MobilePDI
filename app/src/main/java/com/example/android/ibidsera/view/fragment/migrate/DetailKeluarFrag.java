@@ -103,7 +103,6 @@ public class DetailKeluarFrag extends RxLazyFragment {
 
         if(id!=-1) {
             getItemList(id);
-            cpvStop(cpv, bp);
         } else {
             cpvStart(cpv, bp);
         }

@@ -1,6 +1,7 @@
 package com.example.android.ibidsera.model;
 
 import com.example.android.ibidsera.util.ErrorHandler;
+import com.facebook.stetho.inspector.protocol.module.Database;
 
 /**
  * Created by Randi Dwi Nandra on 08/11/2017.
@@ -20,14 +21,42 @@ public class ExpeditionType {
     private String TruckFee;
     private String CraneFeeSixTire;
     private String CarryingFeeSixTire;
-    private String Desc;
+    private int OriginCityId;
+    private String Corporate;
+    private String CorporateName;
+    /*private String Desc;
     private String CreateDate;
     private String CreateUser;
     private String ModifyDate;
     private String ModifyUser;
     private String DeleteDate;
     private String DeleteUser;
-    private String StsDeleted;
+    private String StsDeleted;*/
+
+
+    public int getOriginCityId() {
+        return OriginCityId;
+    }
+
+    public void setOriginCityId(int originCityId) {
+        OriginCityId = originCityId;
+    }
+
+    public String getCorporate() {
+        return ErrorHandler.nullString(Corporate);
+    }
+
+    public void setCorporate(String corporate) {
+        Corporate = corporate;
+    }
+
+    public String getCorporateName() {
+        return ErrorHandler.nullString(CorporateName);
+    }
+
+    public void setCorporateName(String corporateName) {
+        CorporateName = corporateName;
+    }
 
     public String getExpeditionTypeId() {
         return ErrorHandler.nullString(ExpeditionTypeId);
@@ -117,7 +146,7 @@ public class ExpeditionType {
         this.CarryingFeeSixTire = carryingFeeSixTire;
     }
 
-    public String getDesc() {
+   /* public String getDesc() {
         return ErrorHandler.nullString(Desc);
     }
 
@@ -179,6 +208,6 @@ public class ExpeditionType {
 
     public void setStsDeleted(String stsDeleted) {
         this.StsDeleted = stsDeleted;
-    }
+    }*/
 
 }

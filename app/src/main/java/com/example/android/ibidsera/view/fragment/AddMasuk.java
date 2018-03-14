@@ -36,6 +36,7 @@ import android.widget.TextView;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
+import com.example.android.ibidsera.base.RxLazyFragment;
 import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.InsertUnit;
 import com.example.android.ibidsera.model.Lampiran;
@@ -45,6 +46,8 @@ import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.api.AuctionService;
+import com.example.android.ibidsera.service.APICall;
+import com.example.android.ibidsera.service.RetrofitHelper;
 import com.example.android.ibidsera.util.HelperBridge;
 import com.example.android.ibidsera.util.HelperConstant;
 import com.example.android.ibidsera.util.RetrofitUtil;
@@ -58,13 +61,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
-public class AddMasuk extends BaseFragment {
+public class AddMasuk extends RxLazyFragment {
 
     @BindView(R.id.nopol_title)
     TextView nopol_title;
@@ -190,11 +195,22 @@ public class AddMasuk extends BaseFragment {
 
 
     @Override
+    public int getLayoutResId() {
+        return R.layout.content_addm;
+    }
+
+    /*@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View myFragment = inflater.inflate(R.layout.content_addm, container, false);
-        ButterKnife.bind(this, myFragment);
+        *//*View myFragment = inflater.inflate(R.layout.content_addm, container, false);
+        ButterKnife.bind(this, myFragment);*//*
 
+
+        return myFragment;
+    }*/
+
+    @Override
+    public void finishCreateView(Bundle state) {
         mToggleChecklist.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 tl.setVisibility(View.VISIBLE);
@@ -230,7 +246,9 @@ public class AddMasuk extends BaseFragment {
 
         cpvStart(cpv, bp);
 
-        AuctionService auctionService = RetrofitUtil.getAuctionService();
+        //AuctionService auctionService = RetrofitUtil.getAuctionService();
+        APICall apiCall = RetrofitHelper.getUnitMasukSearchByNopolStokServiceALPHA();
+
         List<String> ls = new ArrayList<>();
         ProgressDialog pDialog = new ProgressDialog(getContext());
 
@@ -251,7 +269,7 @@ public class AddMasuk extends BaseFragment {
 
         datePicker(tgl_pemeriksaan, 0);
         getTimeSpinner();
-        getKomponen(auctionService);
+        //getKomponen(apiCall);
         cpvStop(cpv, bp);
 
         nopol.addTextChangedListener(new TextWatcher() {
@@ -268,7 +286,7 @@ public class AddMasuk extends BaseFragment {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!onClickSpinner) {
-                    getDropdownList(auctionService, ls);
+                    getDropdownList(apiCall, ls);
                 }
             }
         });
@@ -277,7 +295,7 @@ public class AddMasuk extends BaseFragment {
             hideKeyboard();
             cpvStart(cpv, bp);
 //            getAddm(StaticUnit.getLu().get(position), position);
-            getDetailUnitById(listNoPolUnit.get(position).getAuctionItemId(), position, auctionService);
+            getDetailUnitById(listNoPolUnit.get(position).getAuctionItemId(), position, apiCall);
         });
 
         toolTip(cases, "BUY BACK / WANPRES");
@@ -303,7 +321,7 @@ public class AddMasuk extends BaseFragment {
                 if (ls2.size() <= 0) {
                     final Handler handler = new Handler();
                     handler.postDelayed(() -> {
-                        auctionService.insertUnitMasuk(requestUnit).enqueue(new Callback<GetStatus>() {
+                      /*  auctionService.insertUnitMasuk(requestUnit).enqueue(new Callback<GetStatus>() {
                             @Override
                             public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                                 GetStatus getStatus = response.body();
@@ -328,7 +346,7 @@ public class AddMasuk extends BaseFragment {
 //                            errorRetrofit(call, t);
                                 alertDialog("Terdapat kesalahan ketika menyimpan data", 1);
                             }
-                        });
+                        });*/
                     }, 2000);
                 } else {
                     pDialog.hide();
@@ -346,11 +364,24 @@ public class AddMasuk extends BaseFragment {
 
         cancelListener(cancel);
 
-        return myFragment;
     }
 
-    private void getDetailUnitById(int auctionItemId, int position, AuctionService auctionService) {
-        auctionService.getDetailUnitPersiapan(auctionItemId + "").enqueue(new Callback<List<Unit>>() {
+    private void getDetailUnitById(int auctionItemId, int position, APICall auctionService) {
+
+        auctionService.getDetailUnitPersiapan(auctionItemId + "")
+                .compose(bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(units -> {
+                    StaticUnit.setLu(units);
+                    getAddm(units.get(0), position);
+                    getKomponenList(units);
+                    cpvStop(cpv, bp);
+                }, throwable -> {
+                    Log.e("Error", throwable.getMessage());
+                });
+
+        /*auctionService.getDetailUnitPersiapan(auctionItemId + "").enqueue(new Callback<List<Unit>>() {
             @Override
             public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                 List<Unit> lu = response.body();
@@ -363,7 +394,7 @@ public class AddMasuk extends BaseFragment {
             public void onFailure(Call<List<Unit>> call, Throwable t) {
                 errorRetrofit(call, t);
             }
-        });
+        });*/
     }
 
     public void getAddm(Unit lu, int pos) {
@@ -408,17 +439,20 @@ public class AddMasuk extends BaseFragment {
         Log.d("POLO", "lu: " + RetrofitUtil.toJson(lu));
 
         //Start-Enhancement
-        if (lu.getExpedition() != null) {
-            toggleExpedition(true);
-            expeditionId.setText(lu.getExpedition().getExpeditionOrderId());
-            expeditionNotes.setText(
-                    lu.getExpedition().getExpeditionType().getDesc() + "\n"
-                            + "Origin City: " + lu.getExpedition().getExpeditionType().getOriginCity() + "\n"
-                            + "Auction City: " + lu.getExpedition().getExpeditionType().getAuctionCity() + "\n");
-        } else {
-//            expeditionId.setText("-");
-//            expeditionNotes.setText("-");
-            toggleExpedition(false);
+        try {
+            if (lu.getExpedition() != null) {
+                toggleExpedition(true);
+                expeditionId.setText(lu.getExpedition().getExpeditionOrderId());
+                expeditionNotes.setText(
+                                "Origin City: " + lu.getExpedition().getExpeditionType().getOriginCity() + "\n"
+                                + "Auction City: " + lu.getExpedition().getExpeditionType().getAuctionCity() + "\n");
+            } else {
+    //            expeditionId.setText("-");
+    //            expeditionNotes.setText("-");
+                toggleExpedition(false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         //End-Enhancement
 
@@ -608,14 +642,34 @@ public class AddMasuk extends BaseFragment {
 
     List<NoPolUnit> listNoPolUnit = new ArrayList<>();
 
-    private void getDropdownList(AuctionService auctionService, List<String> ls) {
+    private void getDropdownList(APICall auctionService, List<String> ls) {
         if (!nopol.getText().toString().equals("")) {
-            auctionService.getNoPolUnitM(nopol.getText().toString()).enqueue(new Callback<List<NoPolUnit>>() {
+
+           auctionService.getNoPolUnitM(nopol.getText().toString())
+                   .compose(bindToLifecycle())
+                   .subscribeOn(Schedulers.io())
+                   .observeOn(AndroidSchedulers.mainThread())
+                   .subscribe(noPolUnits -> {
+                       listNoPolUnit.clear();
+                       try {
+                           for (int i = 0; i < noPolUnits.size(); i++) {
+                               listNoPolUnit.add(noPolUnits.get(i));
+                           }
+                       } catch (Exception e) {
+
+                       }
+                       ArrayAdapter<NoPolUnit> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, listNoPolUnit);
+                       nopol.setAdapter(adapter);
+                       nopol.setThreshold(1);
+                       nopol.showDropDown();
+                   }, throwable -> {
+                       Log.e("Error", throwable.getMessage());
+                   });
+
+           /* auctionService.getNoPolUnitM(nopol.getText().toString()).enqueue(new Callback<List<NoPolUnit>>() {
                 @Override
                 public void onResponse(Call<List<NoPolUnit>> call, Response<List<NoPolUnit>> response) {
                     List<NoPolUnit> lu = response.body();
-//                    StaticUnit.setLu(lu);
-//                    listNoPolUnit = lu;
                     listNoPolUnit.clear();
                     try {
                         for (int i = 0; i < lu.size(); i++) {
@@ -634,7 +688,7 @@ public class AddMasuk extends BaseFragment {
                 public void onFailure(Call<List<NoPolUnit>> call, Throwable t) {
                     errorRetrofit(call, t);
                 }
-            });
+            });*/
         }
     }
 
@@ -651,7 +705,7 @@ public class AddMasuk extends BaseFragment {
         menit.setSelection(menit_now);
     }
 
-    private void getKomponen(AuctionService auctionService) {
+    private void getKomponen(APICall auctionService) {
 //        auctionService.getPersiapan().enqueue(new Callback<List<Unit>>() {
 //            @Override
 //            public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {

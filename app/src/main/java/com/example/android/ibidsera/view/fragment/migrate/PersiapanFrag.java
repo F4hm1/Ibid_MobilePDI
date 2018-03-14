@@ -68,9 +68,8 @@ public class PersiapanFrag extends RxLazyFragment {
     @Override
     public void finishCreateView(Bundle state) {
 
-
-        evenbus.post(new EventListener.OurTestEvent(msg));
-        Toast.makeText(getActivity(), listener.getLastMessage(), Toast.LENGTH_SHORT).show();
+        /*evenbus.post(new EventListener.OurTestEvent(msg));
+        Toast.makeText(getActivity(), listener.getLastMessage(), Toast.LENGTH_SHORT).show();*/
 
         hideKeyboard();
         setCaps(searchPersiapan);

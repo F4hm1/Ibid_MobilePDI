@@ -10,5 +10,6 @@ public class ApiConstants { // http://alpha.ibid.astra.co.id/backend/service/tak
     public static final String AZURE_STOCK_URL = "http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/";
     public static final String AZURE_TAKSASI_URL = "http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/";
 
-    public static final String ALPHA_TAKSASI_URL = "http://alpha.ibid.astra.co.id/backend/service/taksasi/pdi/";
+    public static final String ALPHA_TAKSASI_URL = "http://alpha.ibid.astra.co.id/backend/service/taksasi/";
+    public static final String ALPHA_STOK_URL = "http://alpha.ibid.astra.co.id/backend/service/stok/";
 }

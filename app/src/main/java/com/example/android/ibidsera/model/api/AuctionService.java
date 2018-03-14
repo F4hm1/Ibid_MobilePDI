@@ -37,6 +37,7 @@ public interface AuctionService {
     @GET("index.php/persiapan/add_data?api_key=" + BuildConfig.API_KEY) Call<PersiapanValue> getAddPersiapan();
 //    @GET("index.php/persiapan?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getPersiapan();
     @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/persiapan") Call<List<Unit>> getPersiapan();
+    @GET("persiapan") Call<List<Unit>> getPersiapanUnit();
 
 //    @GET("index.php/unitmasuk?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getUnitM();
     @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/persiapan") Call<List<UnitMasukKeluar>> getUnitM();

@@ -1,8 +1,10 @@
 package com.example.android.ibidsera.base;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,14 +16,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.method.LinkMovementMethod;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -45,11 +50,20 @@ import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.google.common.eventbus.EventBus;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 import javax.inject.Inject;
 import javax.security.auth.PrivateCredentialPermission;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Call;
 
@@ -193,7 +207,124 @@ public abstract class RxLazyFragment extends RxFragment {
         });
     }
 
-    ///
+    /// USE by Add Masuk Fragment
+
+    protected void datePicker(EditText editText, int temp){
+        Calendar myCalendar = Calendar.getInstance();
+        if(temp != 1){
+            updateLabel(myCalendar, editText);
+        }
+        DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel(myCalendar, editText);
+        };
+
+        editText.setOnClickListener(v -> {
+            new DatePickerDialog(getContext(), date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+        });
+    }
+
+    private void updateLabel(Calendar myCalendar, EditText editText) {
+        String myFormat = "MM/dd/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        editText.setText(sdf.format(myCalendar.getTime()));
+
+    }
+
+    protected void toolTip(EditText editText, String text){
+        editText.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus){
+                new SimpleTooltip.Builder(getContext())
+                        .anchorView(editText)
+                        .text(text)
+                        .gravity(Gravity.END)
+                        .animated(true)
+                        .build()
+                        .show();
+            }
+        });
+    }
+
+    protected List<String> required(HashMap<String, EditText> map){
+        List<String> ls = new ArrayList<>();
+
+        for (String key : map.keySet()) {
+            if (map.get(key).getText().toString().equals("") ){
+                map.get(key).setError(key+" is required!");
+                ls.add(key);
+            }
+        }
+        return ls;
+    }
+
+    protected ArrayAdapter<CharSequence> setDropdown(int array){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
+    }
+
+    protected ArrayAdapter<String> getAdapter(List<String> list){
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
+    }
+
+    protected String base64Encode(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream2);
+        byte[] byteArray = byteArrayOutputStream2.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+
+    protected void setDisabled(View v){
+        v.setEnabled(false);
+    }
+
+    protected void setVisible(View view){
+        view.setVisibility(View.VISIBLE);
+    }
+
+    protected void checkboxStyle(CheckBox checkBox, TableRow row, TableRow.LayoutParams param, int i, String id, HashMap<String, CheckBox> h){
+        h.put(id+i, checkBox);
+        int style = Resources.getSystem().getIdentifier("btn_check_holo_light", "drawable", "android");
+
+        checkBox.setButtonDrawable(style);
+        checkBox.setLayoutParams(param);
+        row.addView(checkBox);
+    }
+
+    protected void checkAllListener(CheckBox checkBox, String s, int size, HashMap<String, CheckBox> h){
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if ( isChecked )
+            {
+                for (int i = 0; i < size; i++) {
+                    h.get(s+i).setChecked(true);
+                }
+            }else {
+                for (int i = 0; i < size; i++) {
+                    h.get(s+i).setChecked(false);
+                }
+            }
+        });
+    }
+
+    protected void alertDialog(String title, int id){
+        AlertDialog.Builder alertDialog  = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle(title);
+        alertDialog.setCancelable(false);
+        if(id == 1){
+            alertDialog.setPositiveButton("OK", (dialog, which) ->
+                    getActivity().getSupportFragmentManager().popBackStack()).show();
+        }else {
+            alertDialog.setPositiveButton("OK", (dialog, which) -> {}).show();
+        }
+    }
 
 
     private View parentView;

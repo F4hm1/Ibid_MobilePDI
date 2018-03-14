@@ -1,5 +1,9 @@
 package com.example.android.ibidsera.model;
 
+import android.databinding.BaseObservable;
+
+import io.reactivex.Observable;
+
 /**
  * Created by randidwinandra on 15/01/18.
  */

@@ -9,6 +9,7 @@ import com.example.android.ibidsera.AppController;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.util.ApiConstants;
 import com.example.android.ibidsera.util.CommonUtils;
+import com.example.android.ibidsera.util.RetrofitUtil;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -46,6 +47,10 @@ public class RetrofitHelper {
         return createApi(APICall.class, ApiConstants.ALPHA_TAKSASI_URL);
     }
 
+    public static APICall getUnitMasukSearchByNopolStokServiceALPHA() {
+        return createApiAddMasuk(APICall.class, ApiConstants.ALPHA_STOK_URL);
+    }
+
 
     public static APICall getUnitKeluarApiTaksasiServiceALPHA() {
         return createApi(APICall.class, ApiConstants.ALPHA_TAKSASI_URL);
@@ -76,6 +81,27 @@ public class RetrofitHelper {
                 .client(mOkHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(clazz);
+    }
+
+    private static <T> T createApiAddMasuk(Class<T> clazz, String baseUrl) {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+        httpClient.connectTimeout(120, TimeUnit.SECONDS);
+        httpClient.readTimeout(120, TimeUnit.SECONDS);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiConstants.ALPHA_STOK_URL) //BuildConfig.URI
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(RetrofitUtil.getGson()))
+                .client(httpClient.build())
                 .build();
         return retrofit.create(clazz);
     }

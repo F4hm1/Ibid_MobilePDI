@@ -34,7 +34,7 @@ public class RetrofitUtil {
         httpClient.readTimeout(120, TimeUnit.SECONDS);
 
         return new Retrofit.Builder()
-                .baseUrl(BuildConfig.URI)
+                .baseUrl(ApiConstants.ALPHA_STOK_URL) //BuildConfig.URI
                 .addConverterFactory(GsonConverterFactory.create(RetrofitUtil.getGson()))
                 .client(httpClient.build())
                 .build();
@@ -44,7 +44,7 @@ public class RetrofitUtil {
         return RetrofitUtil.getRetrofit().create(AuctionService.class);
     }
 
-    private static Gson getGson(){
+    public static Gson getGson(){
         return new GsonBuilder()
                 .setLenient()
                 .create();
