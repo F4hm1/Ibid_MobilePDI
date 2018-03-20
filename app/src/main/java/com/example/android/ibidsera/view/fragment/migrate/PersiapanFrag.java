@@ -85,8 +85,8 @@ public class PersiapanFrag extends RxLazyFragment {
 
         getItemList(psearch);
 
-//        cpvStop(cpv, bp);
-        swipeRefresh(refreshLayout, R.id.nav_persiapan);
+
+        //swipeRefresh(refreshLayout, R.id.nav_persiapan);
 
     }
 

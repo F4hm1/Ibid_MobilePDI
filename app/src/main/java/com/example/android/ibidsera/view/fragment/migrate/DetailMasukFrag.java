@@ -3,6 +3,7 @@ package com.example.android.ibidsera.view.fragment.migrate;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
@@ -53,6 +54,9 @@ public class DetailMasukFrag extends RxLazyFragment {
     CircularProgressView cpv;
     @BindView(R.id.background_progress)
     RelativeLayout bp;
+    @BindView(R.id.refreshContainer)
+    SwipeRefreshLayout refreshLayout;
+
 
     @BindView(R.id.table_detailm)
     TableLayout tl;
@@ -117,9 +121,6 @@ public class DetailMasukFrag extends RxLazyFragment {
         if(id!=-1) {
             //getDetailm(StaticUnit.getLuMasukKeluar(), id);
             getItemList(id);
-            cpvStop(cpv, bp);
-        } else {
-            cpvStart(cpv, bp);
         }
 
         imageClick(imgSedan, 1, 1);
@@ -128,6 +129,8 @@ public class DetailMasukFrag extends RxLazyFragment {
         imageClick(imgSignCust, 2, 2);
 
         cancelListener(close);
+
+        swipeRefresh(refreshLayout, R.id.nav_masuk);
     }
 
     public void getItemList(int idAuction) {
