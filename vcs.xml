@@ -6,8 +6,16 @@
           <option name="url" value="https://github.com/developerserasiautoraya/Ibid_MobilePDI.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/developerserasiautoraya/SERA_DMSMobile_SelogTransporter.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/developerserasiautoraya/SERA_DMSMobile_TDSProper.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="D:\16. SERA\PDI" />
+    <option name="cloneParentDir" value="D:\16. SERA\" />
   </component>
 </application>
