@@ -6,7 +6,6 @@ package com.example.android.ibidsera.service;
  */
 
 import com.example.android.ibidsera.AppController;
-import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.util.ApiConstants;
 import com.example.android.ibidsera.util.CommonUtils;
 import com.example.android.ibidsera.util.RetrofitUtil;
@@ -15,10 +14,8 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -28,7 +25,7 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
+
 
 
 public class RetrofitHelper {
@@ -48,18 +45,36 @@ public class RetrofitHelper {
     }
 
     public static APICall getUnitMasukSearchByNopolStokServiceALPHA() {
-        return createApiAddMasuk(APICall.class, ApiConstants.ALPHA_STOK_URL);
+        return createApiStokMasuk(APICall.class, ApiConstants.ALPHA_STOK_URL);
     }
 
+    public static APICall postGambarAddKeluarTaksasiServiceALPHA() {
+        return createApiTaksasiKeluar(APICall.class, ApiConstants.ALPHA_TAKSASI_URL);
+    }
+
+    public static APICall postGambarAddMasukTaksasiServiceALPHA() {
+        return createApiTaksasiKeluar(APICall.class, ApiConstants.ALPHA_TAKSASI_URL);
+    }
+
+    public static APICall postUnitKeluarApiStokServiceALPHA() {
+        return createApiPostAddKeluar(APICall.class, ApiConstants.ALPHA_STOK_URL);
+    }
 
     public static APICall getUnitKeluarApiTaksasiServiceALPHA() {
-        return createApi(APICall.class, ApiConstants.ALPHA_TAKSASI_URL);
+        return createApiTaksasiKeluar(APICall.class, ApiConstants.ALPHA_TAKSASI_URL);
     }
 
     public static APICall getUnitKeluarDetailApiTaksasiServiceALPHA() {
         return createApi(APICall.class, ApiConstants.ALPHA_TAKSASI_URL);
     }
 
+    public static APICall getUnitKeluarSearchByNopolTaksasiServiceALPHA() {
+        return createApiTaksasiKeluar(APICall.class, ApiConstants.ALPHA_TAKSASI_URL);
+    }
+
+    /*public static APICall getUnitKeluarSearchByNopolTaksasiServiceALPHA() {
+        return createApiTaksasiKeluar(APICall.class, ApiConstants.ALPHA_TAKSASI_URL);
+    }*/
 
 
     public static APICall getAuctionDevService() {
@@ -85,7 +100,49 @@ public class RetrofitHelper {
         return retrofit.create(clazz);
     }
 
-    private static <T> T createApiAddMasuk(Class<T> clazz, String baseUrl) {
+    private static <T> T createApiStokMasuk(Class<T> clazz, String baseUrl) {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+        httpClient.connectTimeout(120, TimeUnit.SECONDS);
+        httpClient.readTimeout(120, TimeUnit.SECONDS);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiConstants.ALPHA_STOK_URL) //BuildConfig.URI
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(RetrofitUtil.getGson()))
+                .client(httpClient.build())
+                .build();
+        return retrofit.create(clazz);
+    }
+
+    private static <T> T createApiTaksasiKeluar(Class<T> clazz, String baseUrl) {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+        httpClient.connectTimeout(120, TimeUnit.SECONDS);
+        httpClient.readTimeout(120, TimeUnit.SECONDS);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiConstants.ALPHA_TAKSASI_URL) //BuildConfig.URI
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(RetrofitUtil.getGson()))
+                .client(httpClient.build())
+                .build();
+        return retrofit.create(clazz);
+    }
+
+    private static <T> T createApiPostAddKeluar(Class<T> clazz, String baseUrl) {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -113,12 +170,12 @@ public class RetrofitHelper {
         if (mOkHttpClient == null) {
             synchronized (RetrofitHelper.class) {
                 if (mOkHttpClient == null) {
-                    Cache cache = new Cache(new File(AppController.getInstance().getCacheDir(), "HttpCache"), 1024 * 1024 * 10);
+                    //Cache cache = new Cache(new File(AppController.getInstance().getCacheDir(), "HttpCache"), 1024 * 1024 * 10);
                     mOkHttpClient = new OkHttpClient.Builder()
-                            .cache(cache)
+                            //.cache(cache)
                             .addInterceptor(interceptor)
-                            .addNetworkInterceptor(new CacheInterceptor())
-                            .addNetworkInterceptor(new StethoInterceptor())
+                            /*.addNetworkInterceptor(new CacheInterceptor())
+                            .addNetworkInterceptor(new StethoInterceptor())*/
                             .retryOnConnectionFailure(true)
                             .connectTimeout(120, TimeUnit.SECONDS)
                             .writeTimeout(20, TimeUnit.SECONDS)
@@ -151,10 +208,16 @@ public class RetrofitHelper {
             int maxAge = 60 * 60;
             int maxStale = 60 * 60 * 24;
             Request request = chain.request();
-            if (CommonUtils.isNetworkAvailable(AppController.getInstance())) {
+            request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
+            Response response = chain.proceed(request);
+            response = response.newBuilder()
+                    .removeHeader("Pragma")
+                    .header("Cache-Control", "public, max-age=" + maxAge)
+                    .build();
+            /*if (CommonUtils.isNetworkAvailable(AppController.getInstance())) {
                 request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
             } else {
-                request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
+                request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
             }
             Response response = chain.proceed(request);
             if (CommonUtils.isNetworkAvailable(AppController.getInstance())) {
@@ -167,7 +230,7 @@ public class RetrofitHelper {
                         .removeHeader("Pragma")
                         .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
                         .build();
-            }
+            }*/
             return response;
         }
     }

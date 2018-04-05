@@ -44,6 +44,7 @@ public class StaticUnit {
         StaticUnit.unit = unit;
     }
 
+
     public static UnitMasukKeluar getUnitMasukKeluar() {
         return unitMasukKeluar;
     }

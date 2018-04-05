@@ -7,40 +7,85 @@ import java.util.List;
  */
 
 public class InsertUnit {
-    private String idpemeriksaanitem;
     private int idauctionitem;
-    private int bataskomponen;
-    private String fuel;
-    private String catbody;
-    private String catatan;
-    private String cases;
+    private String idpemeriksaanitem;
     private String poolkota;
-    private int WEBID_LOGGED_IN;
     private String tglpemeriksaan;
     private String jampemeriksaan;
     private String menitpemeriksaan;
     private String nopolisi;
+    private String GRADE;
+    private String KM;
     private String MERK;
     private String SERI;
+
     private String SILINDER;
-    private String GRADE;
     private String SUB_GRADE;
     private String TRANSMISI;
-    private String KM;
-    private String namapengemudi;
+    private int WEBID_LOGGED_IN;
     private String alamatpengemudi;
-    private String kotapengemudi;
-    private String teleponpengemudi;
-    private String expedition_amount;
-    private int iduser;
+
+    private int bataskomponen;
+    private String namapengemudi;
+    private String cases;
+
+    private String catatan;
+    private String catbody;
     private List<String> cektampilkanbaik;
+
     private List<String> cektampilkanrusak;
     private List<String> cektampilkantidakada;
+    private String fuel;
+
+    private String expedition_amount;
+
+    private String kotapengemudi;
+
+    private String teleponpengemudi;
+    private String expeditionvarianname;
+    private String expeditiontypeid;
+
+    private String expeditionprice;
+    private int iduser;
     private List<Integer> idkomponenpemeriksaan;
     private String gambarchecklist;
     private String ttdibid;
     private String ttdcustomer;
     private String reasonunchecklist;
+
+    private int statuspdiout;
+
+    public int getStatuspdiout() {
+        return statuspdiout;
+    }
+
+    public void setStatuspdiout(int statuspdiout) {
+        this.statuspdiout = statuspdiout;
+    }
+
+    public String getExpeditionvarianname() {
+        return expeditionvarianname;
+    }
+
+    public void setExpeditionvarianname(String expeditionvarianname) {
+        this.expeditionvarianname = expeditionvarianname == null ? "" : expeditionvarianname;
+    }
+
+    public String getExpeditiontypeid() {
+        return expeditiontypeid;
+    }
+
+    public void setExpeditiontypeid(String expeditiontypeid) {
+        this.expeditiontypeid = expeditiontypeid == null ? "" : expeditiontypeid;
+    }
+
+    public String getExpeditionprice() {
+        return expeditionprice;
+    }
+
+    public void setExpeditionprice(String expeditionprice) {
+        this.expeditionprice = expeditionprice == null ? "" : expeditionprice;
+    }
 
     public String getIdpemeriksaanitem() {
         return idpemeriksaanitem;

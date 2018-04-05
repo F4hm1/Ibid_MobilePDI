@@ -40,8 +40,36 @@ public class RetrofitUtil {
                 .build();
     }
 
+    private static Retrofit getRetrofitTaksasi(){
+
+
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+        httpClient.connectTimeout(120, TimeUnit.SECONDS);
+        httpClient.readTimeout(120, TimeUnit.SECONDS);
+
+        return new Retrofit.Builder()
+                .baseUrl(ApiConstants.ALPHA_TAKSASI_URL) //BuildConfig.URI
+                .addConverterFactory(GsonConverterFactory.create(RetrofitUtil.getGson()))
+                .client(httpClient.build())
+                .build();
+    }
+
     public static AuctionService getAuctionService(){
         return RetrofitUtil.getRetrofit().create(AuctionService.class);
+    }
+
+
+    public static AuctionService postGambarAuctionService(){
+        return RetrofitUtil.getRetrofitTaksasi().create(AuctionService.class);
     }
 
     public static Gson getGson(){

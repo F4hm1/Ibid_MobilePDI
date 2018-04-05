@@ -1,12 +1,17 @@
 package com.example.android.ibidsera.view.fragment.migrate;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -107,14 +112,56 @@ public class UnitMasukFrag extends RxLazyFragment {
                             }
                         } catch (Exception e) {
                         }
+
                         cpvStop(cpv, bp);
 
-                    }, throwable -> cpvStop(cpv, bp)
+                    }, throwable ->
+                            cpvStop(cpv, bp)
                     );
 
         } else {
 
             RetrofitHelper.getUnitMasukApiTaksasiServiceALPHA()
+                    .getUnitM()
+                    .compose(bindToLifecycle())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<List<UnitMasukKeluarHomelist>>() {
+                                   @Override
+                                   public void onSubscribe(@NonNull Disposable d) {
+
+                                   }
+
+                                   @Override
+                                   public void onNext(@NonNull List<UnitMasukKeluarHomelist> unitMasukKeluarHomelists) {
+                                       StaticUnitHomelist.setLuMasukKeluar(unitMasukKeluarHomelists);
+                                       try {
+                                           if (unitMasukKeluarHomelists.size() != 0) {
+                                               getUnitm(unitMasukKeluarHomelists);
+
+                                           } else {
+                                               showToast("Tidak ada data");
+                                           }
+                                       } catch (Exception e) {
+                                       }
+                                       cpvStop(cpv, bp);
+                                   }
+
+                                   @Override
+                                   public void onError(@NonNull Throwable e) {
+                                       showToast(String.valueOf(e));
+                                       cpvStop(cpv, bp);
+                                   }
+
+                                   @Override
+                                   public void onComplete() {
+                                       Log.e("Err", "Error");
+                                       cpvStop(cpv, bp);
+                                   }
+                               }
+                    );
+
+            /*RetrofitHelper.getUnitMasukApiTaksasiServiceALPHA()
                     .getUnitM()
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.io())
@@ -133,7 +180,7 @@ public class UnitMasukFrag extends RxLazyFragment {
                         cpvStop(cpv, bp);
 
                     }, throwable -> cpvStop(cpv, bp)
-                    );
+                    );*/
         }
     }
 
@@ -142,6 +189,7 @@ public class UnitMasukFrag extends RxLazyFragment {
             for (int i = 0; i < lu.size(); i++) {
                 TableRow row = tableRow();
                 ImageButton id = imageButton();
+                ImageButton printBtn = imageButton();
                 TextView no_pol = textView();
                 TextView tgl_doc = textView();
                 TextView pengemudi = textView();
@@ -170,6 +218,7 @@ public class UnitMasukFrag extends RxLazyFragment {
                     }
                 }
                 textStyle(type, row, param2, tipe.concat(" " + lu.get(i).getAuctiondetail().getModel()).concat(" " + lu.get(i).getAuctiondetail().getTransmisi()).concat(" " + lu.get(i).getAuctiondetail().getTahun()));
+                imgPrint(printBtn, row, paramImg, lu.get(i).getAuction().getIdauction_item());
                 tl.addView(row);
             }
         } catch (Exception e) {
@@ -194,6 +243,50 @@ public class UnitMasukFrag extends RxLazyFragment {
                 ft.replace(R.id.content_frame, fragment);
                 ft.commit();
             }
+        });
+        row.addView(imageButton);
+    }
+
+    public void imgPrint(ImageButton imageButton, TableRow row, TableRow.LayoutParams imgParam, int idUnitMasuk){
+        imageButton.setLayoutParams(imgParam);
+        Bitmap bmp= BitmapFactory.decodeResource(getResources(), R.drawable.ic_print);
+        Bitmap resizedbitmap=Bitmap.createScaledBitmap(bmp, 30, imgParam.height, true);
+        imageButton.setImageBitmap(resizedbitmap);
+        imageButton.setBackgroundDrawable(null);
+        imageButton.setOnClickListener(v -> {
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+            WebView wv = new WebView(getActivity());
+            wv.loadUrl("http:\\alpha.ibid.astra.co.id/backend/adms/pdi/prints/index/6/" + idUnitMasuk );
+            wv.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    view.loadUrl(url);
+
+                    return true;
+                }
+            });
+
+            alert.setView(wv);
+            alert.setCancelable(false);
+            alert.setNegativeButton("Tutup", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+            alert.show();
+            /*Fragment fragment = DetailKeluarFrag.newInstance();
+            Bundle bundle = new Bundle();
+            bundle.putInt("idUnitKeluar", idUnit);
+            fragment.setArguments(bundle);
+            FragmentTransaction ft = this.getActivity().getSupportFragmentManager().beginTransaction();
+            ft.addToBackStack("1");
+
+            if (fragment != null) {
+                ft.replace(R.id.content_frame, fragment);
+                ft.commit();
+            }*/
         });
         row.addView(imageButton);
     }

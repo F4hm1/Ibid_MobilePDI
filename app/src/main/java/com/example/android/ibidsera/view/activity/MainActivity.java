@@ -134,9 +134,9 @@ public class MainActivity extends BaseActivity
                 fragment = HomeDevFrag.newInstance();
                 //fragment = new Home();
                 break;
-            case R.id.nav_persiapan:
+            /*case R.id.nav_persiapan:
                 fragment = PersiapanFrag.newInstance();
-                break;
+                break;*/
             case R.id.nav_masuk:
                 fragment = UnitMasukFrag.newInstance();
                 break;
@@ -179,10 +179,10 @@ public class MainActivity extends BaseActivity
                 fragment = new AddMasuk();
                 ft.addToBackStack("1");
                 break;
-            case Addp_button:
+            /*case Addp_button:
                 fragment = new AddPersiapan();
                 ft.addToBackStack("1");
-                break;
+                break;*/
             case view_detail:
                 fragment = new DetailReport();
                 ft.addToBackStack("1");

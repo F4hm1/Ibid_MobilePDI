@@ -528,16 +528,28 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/txtMenangLelang"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:layout_marginLeft="16dp"
-                        android:text="YA Laku(Menang Lelang)  / TIDAK Laku "
+                        android:text="Alasan unit keluar : Menang Lelang"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/txtTidakLaku"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="16dp"
+                        android:visibility="gone"
+                        android:text="Alasan unit keluar : Tidak Laku"
                         android:textColor="@color/colorAccent"
                         android:textSize="16sp" />
 
                     <Switch
-                        android:id="@+id/toggle_checklistable1"
+                        android:id="@+id/toggle_reasonout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"

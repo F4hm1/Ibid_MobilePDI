@@ -106,7 +106,7 @@ public class DrawViewPDI extends View implements View.OnTouchListener {
         mPath = new Path();
         paths.add(mPath);
 
-        mPathColored = new PathColored(mPaint, mPath);
+        //mPathColored = new PathColored(mPaint, mPath);
         pathSaved.add(mPathColored);
     }
 
@@ -176,7 +176,7 @@ public class DrawViewPDI extends View implements View.OnTouchListener {
         // commit the path to our offscreen
         mCanvas.drawPath(mPath, mPaint);
 
-        pathSaved.add(new PathColored(mPaint, mPath));
+        //pathSaved.add(new PathColored(mPaint, mPath));
 
         mPath = new Path();
 //        paths.add(mPath);

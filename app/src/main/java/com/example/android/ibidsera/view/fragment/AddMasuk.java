@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -33,14 +34,19 @@ import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.base.RxLazyFragment;
+import com.example.android.ibidsera.model.ExpeditionVarian;
 import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.InsertUnit;
 import com.example.android.ibidsera.model.Lampiran;
 import com.example.android.ibidsera.model.NoPolUnit;
+import com.example.android.ibidsera.model.PhotoChecklist;
+import com.example.android.ibidsera.model.PhotoTtdCustomer;
+import com.example.android.ibidsera.model.PhotoTtdIbid;
 import com.example.android.ibidsera.model.Sign;
 import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
@@ -69,7 +75,11 @@ import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
-public class AddMasuk extends RxLazyFragment {
+public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelectedListener {
+
+
+    @BindView(R.id.spinnerEkspedisi)
+    Spinner spinnerEkspedisi;
 
     @BindView(R.id.nopol_title)
     TextView nopol_title;
@@ -158,7 +168,7 @@ public class AddMasuk extends RxLazyFragment {
     private Bitmap bitmap4;
     private boolean onClickSpinner = false;
 
-    //Start-Enhancement
+    /*//Start-Enhancement
     @BindView(R.id.expedition_id)
     EditText expeditionId;
     @BindView(R.id.expedition_notes)
@@ -166,7 +176,7 @@ public class AddMasuk extends RxLazyFragment {
     @BindView(R.id.expedition_amount)
     EditText expeditionAmount;
     @BindView(R.id.expedition_amount_title)
-    TextView expeditionAmountTitle;
+    TextView expeditionAmountTitle;*/
 
     @BindView(R.id.toggle_checklistable)
     Switch mToggleChecklist;
@@ -193,6 +203,7 @@ public class AddMasuk extends RxLazyFragment {
 
     private static final int KEY_PEMERIKSAAN_ACTIVITY = 1009;
 
+    private InsertUnit requestUnit;
 
     @Override
     public int getLayoutResId() {
@@ -244,10 +255,17 @@ public class AddMasuk extends RxLazyFragment {
 
         mRadioSedan.setChecked(true);
 
-        cpvStart(cpv, bp);
 
-        //AuctionService auctionService = RetrofitUtil.getAuctionService();
+
+        cpvStop(cpv, bp);
+
+        AuctionService auctionService = RetrofitUtil.getAuctionService();
+        AuctionService postGambarService = RetrofitUtil.postGambarAuctionService();
         APICall apiCall = RetrofitHelper.getUnitMasukSearchByNopolStokServiceALPHA();
+        APICall apiServicePostGbr = RetrofitHelper.postGambarAddMasukTaksasiServiceALPHA();
+
+
+
 
         List<String> ls = new ArrayList<>();
         ProgressDialog pDialog = new ProgressDialog(getContext());
@@ -257,20 +275,23 @@ public class AddMasuk extends RxLazyFragment {
         setAllDisabled();
         setRequired();
 
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             position = bundle.getInt("id");
         }
 
-        cpvStart(cpv, bp);
+
         if (position != -1) {
+            cpvStart(cpv, bp);
             getAddm(StaticUnit.getLu().get(position), position);
+            cpvStop(cpv, bp);
         }
 
         datePicker(tgl_pemeriksaan, 0);
         getTimeSpinner();
         //getKomponen(apiCall);
-        cpvStop(cpv, bp);
+        //cpvStop(cpv, bp);
 
         nopol.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -293,16 +314,19 @@ public class AddMasuk extends RxLazyFragment {
 
         nopol.setOnItemClickListener((parent, view, position, id1) -> {
             hideKeyboard();
-            cpvStart(cpv, bp);
+
 //            getAddm(StaticUnit.getLu().get(position), position);
             getDetailUnitById(listNoPolUnit.get(position).getAuctionItemId(), position, apiCall);
         });
+
+
 
         toolTip(cases, "BUY BACK / WANPRES");
         imageClick(ibid_sedan, 1, 1);
         imageClick(ibid_niaga, 1, 2);
         imageClick(signature1, 2, 1);
         imageClick(signature2, 2, 2);
+
 
         save.setOnClickListener(v -> {
             pDialog.setMessage("Sending Data..");
@@ -315,29 +339,106 @@ public class AddMasuk extends RxLazyFragment {
             h.put("Telp", telepon);
 
             List<String> ls2 = required(h);
-            InsertUnit requestUnit = setInsertUnit(StaticUnit.getUnit());
+            requestUnit = setInsertUnit(StaticUnit.getUnit());
 
             if (requestUnit != null) {
                 if (ls2.size() <= 0) {
                     final Handler handler = new Handler();
                     handler.postDelayed(() -> {
-                      /*  auctionService.insertUnitMasuk(requestUnit).enqueue(new Callback<GetStatus>() {
+
+                        apiCall.insertUnitMasuk(requestUnit)
+                                .compose(bindToLifecycle())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(getStatus -> {
+
+                                    Log.i("info", "post submitted to API." + getStatus);
+                                    try {
+                                            pDialog.hide();
+                                            alertDialog("Proses Penambahan Pemeriksaan Unit Masuk Berhasil", 1);
+                                            HelperConstant.mTempBitmapNiaga = null;
+                                            HelperConstant.mTempBitmapSedan = null;
+                                    } catch (Exception e) {
+                                    }
+                                }, throwable -> {
+                                    pDialog.hide();
+//                            errorRetrofit(call, t);
+                                    alertDialog("Terdapat kesalahan ketika menyimpan data", 2);
+                                });
+
+
+                        /*auctionService.insertUnitMasuk(requestUnit).enqueue(new Callback<GetStatus>() {
                             @Override
                             public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                                 GetStatus getStatus = response.body();
+
+
+
+                                try{
+                                    postGambarService.postRawJsonChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
+                                        @Override
+                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                            try {
+                                                Toast.makeText(getActivity(), response.body().getMessage() + "Ceklist", Toast.LENGTH_SHORT).show();
+                                            } catch (Exception e) {
+
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<GetStatus> call, Throwable t) {
+                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                    postGambarService.postRawJsonTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid())).enqueue(new Callback<GetStatus>() {
+                                        @Override
+                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                            try {
+                                                Toast.makeText(getActivity(), response.body().getMessage() + "Ibid", Toast.LENGTH_SHORT).show();
+                                            } catch (Exception e) {
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<GetStatus> call, Throwable t) {
+                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                    postGambarService.postRawJsonTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
+                                        @Override
+                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                            try {
+                                                Toast.makeText(getActivity(), response.body().getMessage() + "Customer", Toast.LENGTH_SHORT).show();
+                                            } catch (Exception e) {
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<GetStatus> call, Throwable t) {
+                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                } catch (Exception e){
+
+                                }
+
+
                                 Log.i("info", "post submitted to API." + response.body());
                                 try {
-                                    if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
-                                        pDialog.hide();
-                                        alertDialog("Proses Penambahan Pemeriksaan Unit Masuk Berhasil", 1);
-                                        HelperConstant.mTempBitmapNiaga = null;
-                                        HelperConstant.mTempBitmapSedan = null;
-                                    } else {
-                                        pDialog.hide();
-                                        alertDialog(getStatus.getMessage(), 1);
-                                    }
+                                    pDialog.hide();
+                                    alertDialog("Proses Penambahan Pemeriksaan Unit Masuk Berhasil", 1);
+                                    HelperConstant.mTempBitmapNiaga = null;
+                                    HelperConstant.mTempBitmapSedan = null;
+
                                 } catch (Exception e) {
                                 }
+
+
                             }
 
                             @Override
@@ -347,6 +448,8 @@ public class AddMasuk extends RxLazyFragment {
                                 alertDialog("Terdapat kesalahan ketika menyimpan data", 1);
                             }
                         });*/
+
+
                     }, 2000);
                 } else {
                     pDialog.hide();
@@ -366,35 +469,136 @@ public class AddMasuk extends RxLazyFragment {
 
     }
 
-    private void getDetailUnitById(int auctionItemId, int position, APICall auctionService) {
+    /*private void uploadGbr(AuctionService postGbrService, InsertUnit iu) {
+        postGbrService.postRawJsonChecklist(new PhotoChecklist(String.valueOf(iu.getIdauctionitem()), iu.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
+            @Override
+            public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                try {
+                    if (response.body().getStatus() == 200 && response.body().getId_pemeriksaan_item() != 0) {
+                        Toast.makeText(getActivity(), response.body().getMessage() + "Ceklist", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), response.body().getMessage() + "Gagal upload Ceklist", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), String.valueOf(e), Toast.LENGTH_SHORT).show();
+                }
 
+            }
+
+            @Override
+            public void onFailure(Call<GetStatus> call, Throwable t) {
+                Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        postGbrService.postRawJsonTtdIbid(new PhotoTtdIbid(String.valueOf(iu.getIdauctionitem()), iu.getTtdibid())).enqueue(new Callback<GetStatus>() {
+            @Override
+            public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                try {
+                    if (response.body().getStatus() == 200 && response.body().getId_pemeriksaan_item() != 0) {
+                        Toast.makeText(getActivity(), response.body().getMessage() + "Ibid", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), response.body().getMessage() + "Gagal upload Ibid", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), String.valueOf(e), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetStatus> call, Throwable t) {
+                Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        postGbrService.postRawJsonTtdCust(new PhotoTtdCustomer(String.valueOf(iu.getIdauctionitem()), iu.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
+            @Override
+            public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                try {
+                    if (response.body().getStatus() == 200 && response.body().getId_pemeriksaan_item() != 0) {
+                        Toast.makeText(getActivity(), response.body().getMessage() + "Customer", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), response.body().getMessage() + "Gagal upload Customer", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), String.valueOf(e), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetStatus> call, Throwable t) {
+                Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }*/
+
+
+    private void getDetailUnitById(int auctionItemId, int position, APICall auctionService) throws NumberFormatException {
+        cpvStart(cpv, bp);
         auctionService.getDetailUnitPersiapan(auctionItemId + "")
                 .compose(bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(units -> {
-                    StaticUnit.setLu(units);
-                    getAddm(units.get(0), position);
-                    getKomponenList(units);
-                    cpvStop(cpv, bp);
+                .subscribe(unit -> {
+                    //StaticUnit.setLu(units);
+                    getKomponenList(unit);
+                    getAddm(unit, position);
+                    try {
+                        if (unit.getExpedition().getExpeditionType() != null) {
+                            toggleExpedition(true);
+                            List<ExpeditionVarian> listVarian = unit.getExpedition().getExpeditionType().getExpeditionVarien();
+                            List<String> arrayDataSpinner =  new ArrayList<String>();
+                            for (int i = 0; i < listVarian.size() ; i++) {
+                                arrayDataSpinner.add(listVarian.get(i).getVarian() + " - Harga " +  (listVarian.get(i).getHarga()).split("\\.")[0]);
+                            }
+                            ArrayAdapter<String> adp = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, arrayDataSpinner);
+                            spinnerEkspedisi.setAdapter(adp);
+                        } else {
+                            toggleExpedition(false);
+                        }
+                        cpvStop(cpv, bp);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
                 }, throwable -> {
                     Log.e("Error", throwable.getMessage());
+                    cpvStop(cpv, bp);
+                    errorRetrofit(null, throwable);
                 });
 
-        /*auctionService.getDetailUnitPersiapan(auctionItemId + "").enqueue(new Callback<List<Unit>>() {
+        /*RetrofitUtil.getAuctionService().getDetailUnitPersiapan(auctionItemId + "").enqueue(new Callback<Unit>() {
             @Override
-            public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
-                List<Unit> lu = response.body();
-                StaticUnit.setLu(lu);
-                getAddm(lu.get(0), position);
+            public void onResponse(Call<Unit> call, Response<Unit> response) {
+                //List<Unit> lu = response.body();
+                //StaticUnit.setLu(lu);
+                getAddm(response.body(), position);
                 cpvStop(cpv, bp);
+                try {
+                    if (response.body().getExpedition().getExpeditionType() != null) {
+                        toggleExpedition(true);
+                        List<ExpeditionVarian> listVarian = response.body().getExpedition().getExpeditionType().getExpeditionVarien();
+                        List<String> arrayDataSpinner =  new ArrayList<String>();
+                        for (int i = 0; i < listVarian.size() ; i++) {
+                            arrayDataSpinner.add(listVarian.get(i).getVarian() + " - Harga " +  (listVarian.get(i).getHarga()).split("\\.")[0]);
+                        }
+                        ArrayAdapter<String> adp = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, arrayDataSpinner);
+                        spinnerEkspedisi.setAdapter(adp);
+                    } else {
+                        toggleExpedition(false);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
-            public void onFailure(Call<List<Unit>> call, Throwable t) {
+            public void onFailure(Call<Unit> call, Throwable t) {
                 errorRetrofit(call, t);
             }
         });*/
+
     }
 
     public void getAddm(Unit lu, int pos) {
@@ -405,6 +609,7 @@ public class AddMasuk extends RxLazyFragment {
         } else {
             nopol.setText(lu.getAuction().getNo_polisi());
         }
+
         merk.setAdapter(getAdapterList(lu.getNama_merk()));
         seri.setAdapter(getAdapterList(lu.getTipe().get(0).getAttributedetail()));
         silinder.setAdapter(getAdapterList(lu.getTipe().get(1).getAttributedetail()));
@@ -439,13 +644,13 @@ public class AddMasuk extends RxLazyFragment {
         Log.d("POLO", "lu: " + RetrofitUtil.toJson(lu));
 
         //Start-Enhancement
-        try {
+        /*try {
             if (lu.getExpedition() != null) {
                 toggleExpedition(true);
-                expeditionId.setText(lu.getExpedition().getExpeditionOrderId());
+                *//*expeditionId.setText(lu.getExpedition().getExpeditionOrderId());
                 expeditionNotes.setText(
                                 "Origin City: " + lu.getExpedition().getExpeditionType().getOriginCity() + "\n"
-                                + "Auction City: " + lu.getExpedition().getExpeditionType().getAuctionCity() + "\n");
+                                + "Auction City: " + lu.getExpedition().getExpeditionType().getAuctionCity() + "\n");*//*
             } else {
     //            expeditionId.setText("-");
     //            expeditionNotes.setText("-");
@@ -453,8 +658,9 @@ public class AddMasuk extends RxLazyFragment {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         //End-Enhancement
+
 
     }
 
@@ -489,7 +695,7 @@ public class AddMasuk extends RxLazyFragment {
         insertUnit.setNamapengemudi(String.valueOf(nama_pengemudi.getText()));
         insertUnit.setAlamatpengemudi(String.valueOf(alamat_pengemudi.getText()));
         //Enhancement
-        insertUnit.setExpedition_amount(String.valueOf(expeditionAmount.getText()));
+        //insertUnit.setExpedition_amount(String.valueOf(expeditionAmount.getText()));
         insertUnit.setKotapengemudi(String.valueOf(kota.getText()));
         insertUnit.setTeleponpengemudi(String.valueOf(telepon.getText()));
         List<String> lb = new ArrayList<>();
@@ -547,6 +753,18 @@ public class AddMasuk extends RxLazyFragment {
             insertUnit.setReasonunchecklist("");
         }
 
+        try {
+            if (lu.getExpedition().getExpeditionType() != null) {
+                int pos = spinnerEkspedisi.getSelectedItemPosition();
+                insertUnit.setExpeditionvarianname(lu.getExpedition().getExpeditionType().getExpeditionVarien().get(pos).getVarian());
+                insertUnit.setExpeditionprice(lu.getExpedition().getExpeditionType().getExpeditionVarien().get(pos).getHarga());
+                insertUnit.setExpeditiontypeid(lu.getExpedition().getExpeditionTypeId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         return insertUnit;
     }
 
@@ -576,7 +794,7 @@ public class AddMasuk extends RxLazyFragment {
             vExpeditionSeparator.setVisibility(View.VISIBLE);
             llExpeditionContainer.setVisibility(View.VISIBLE);
         } else {
-            expeditionAmount.setText("");
+            //expeditionAmount.setText("");
             tvExpeditionTitle.setVisibility(View.GONE);
             vExpeditionSeparator.setVisibility(View.GONE);
             llExpeditionContainer.setVisibility(View.GONE);
@@ -622,8 +840,8 @@ public class AddMasuk extends RxLazyFragment {
         setDisabled(nama_pemilik);
 
         //Start-Enhancement
-        setDisabled(expeditionId);
-        setDisabled(expeditionNotes);
+        //setDisabled(expeditionId);
+        //setDisabled(expeditionNotes);
         //End-Enhancement
     }
 
@@ -636,20 +854,22 @@ public class AddMasuk extends RxLazyFragment {
         setCaps(pool);
         setCaps(cases);
         //Start-Enhancement
-        setCaps(expeditionId);
+       // setCaps(expeditionId);
         //End-Enhancement
     }
 
     List<NoPolUnit> listNoPolUnit = new ArrayList<>();
 
     private void getDropdownList(APICall auctionService, List<String> ls) {
-        if (!nopol.getText().toString().equals("")) {
+        if (!nopol.getText().toString().equals("") && nopol.getText().toString().length() > 1 ) {
 
+            cpvStart(cpv, bp);
            auctionService.getNoPolUnitM(nopol.getText().toString())
                    .compose(bindToLifecycle())
                    .subscribeOn(Schedulers.io())
                    .observeOn(AndroidSchedulers.mainThread())
                    .subscribe(noPolUnits -> {
+                       cpvStop(cpv, bp);
                        listNoPolUnit.clear();
                        try {
                            for (int i = 0; i < noPolUnits.size(); i++) {
@@ -663,6 +883,8 @@ public class AddMasuk extends RxLazyFragment {
                        nopol.setThreshold(1);
                        nopol.showDropDown();
                    }, throwable -> {
+                       cpvStop(cpv, bp);
+                       alertDialog(String.valueOf(throwable), 2);
                        Log.e("Error", throwable.getMessage());
                    });
 
@@ -718,12 +940,12 @@ public class AddMasuk extends RxLazyFragment {
 //                errorRetrofit(call, t);
 //            }
 //        });
-        getKomponenList(StaticUnit.getLu());
+        //getKomponenList(StaticUnit.getLu());
     }
 
-    private void getKomponenList(List<Unit> lu) {
+    private void getKomponenList(Unit lu) {
         try {
-            size = lu.get(0).getKomponen().size();
+            size = lu.getKomponen().size();
             for (int i = 0; i < size; i++) {
                 TableRow row = tableRow();
                 TableLayout tl2 = tableLayout();
@@ -741,7 +963,7 @@ public class AddMasuk extends RxLazyFragment {
 
                 rowColor(row, i);
                 textStyle(no, row, param_25, String.valueOf(i + 1));
-                textStyle(nama, row2, param7, lu.get(0).getKomponen().get(i).getNama());
+                textStyle(nama, row2, param7, lu.getKomponen().get(i).getNama());
                 checkboxStyle(b, row2, param1, i, "b", h);
                 checkboxStyle(r, row2, param1, i, "r", h);
                 checkboxStyle(t, row2, param1, i, "t", h);
@@ -928,6 +1150,7 @@ public class AddMasuk extends RxLazyFragment {
         });
     }
 
+
     private void postSignature(GetStatus gs, AuctionService auctionService, ProgressDialog pDialog) {
         auctionService.postSignMasuk(setSignature(StaticUnit.getUnit(), gs)).enqueue(new Callback<SignValue>() {
             @Override
@@ -968,7 +1191,7 @@ public class AddMasuk extends RxLazyFragment {
 //        kota_title.setText(Html.fromHtml(kota_title.getText() + required));
         telepon_title.setText(Html.fromHtml(telepon_title.getText() + required));
         //Start-Enhancement
-        expeditionAmountTitle.setText(Html.fromHtml(expeditionAmountTitle.getText() + required));
+      //  expeditionAmountTitle.setText(Html.fromHtml(expeditionAmountTitle.getText() + required));
         //End-Enhancement
     }
 
@@ -1001,5 +1224,15 @@ public class AddMasuk extends RxLazyFragment {
                 break;
             }
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

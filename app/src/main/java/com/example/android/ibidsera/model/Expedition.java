@@ -37,6 +37,7 @@ public class Expedition {
     }
 
     public void setExpeditionOrderId(String expeditionOrderId) {
+        if (expeditionOrderId == null) throw new NullPointerException("expeditionOrderId");
         this.ExpeditionOrderId = expeditionOrderId;
     }
 
@@ -45,6 +46,7 @@ public class Expedition {
     }
 
     public void setExpeditionOrderCode(String expeditionOrderCode) {
+        if (expeditionOrderCode == null) throw new NullPointerException("expeditionOrderCode");
         this.ExpeditionOrderCode = expeditionOrderCode;
     }
 
@@ -53,6 +55,7 @@ public class Expedition {
     }
 
     public void setExpeditionTypeId(String expeditionTypeId) {
+        if (expeditionTypeId == null) throw new NullPointerException("expeditionTypeId");
         this.ExpeditionTypeId = expeditionTypeId;
     }
 
@@ -189,6 +192,7 @@ public class Expedition {
     }
 
     public void setExpeditionType(ExpeditionType expeditionType) {
+        if (expeditionType == null) throw new NullPointerException("expedition");
         this.ExpeditionType = expeditionType;
     }
 

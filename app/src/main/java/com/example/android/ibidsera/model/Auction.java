@@ -6,13 +6,13 @@ package com.example.android.ibidsera.model;
 
 public class Auction {
 
+    private int idauction_item;
     private int idauction_detail;
     private int id_attribute;
     private String value;
     private int sts_remove;
     private char sold;
     private String id_pemeriksaanitem;
-    private int idauction_item;
     private int id_auctionitem;
     private String no_polisi;
     private String tgl_serah_msk;
@@ -33,7 +33,7 @@ public class Auction {
     private String cases;
     private String poolkota;
     private String catatan_klr;
-    private int ekspedisi;
+    private int ekspedisis;
 
     private String catatan_image;
     private String ttd_ibid_msk;
@@ -311,11 +311,11 @@ public class Auction {
         this.idauction_item = idauction_item;
     }
 
-    public int getEkspedisi() {
-        return ekspedisi;
+    public int getEkspedisis() {
+        return ekspedisis;
     }
 
-    public void setEkspedisi(int ekspedisi) {
-        this.ekspedisi = ekspedisi;
+    public void setEkspedisis(int ekspedisis) {
+        this.ekspedisis = ekspedisis;
     }
 }

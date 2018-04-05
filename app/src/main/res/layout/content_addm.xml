@@ -82,7 +82,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="GRADE" />
+                        android:text="TIPE" />
 
                     <Spinner
                         android:id="@+id/grade"
@@ -90,7 +90,7 @@
 
                     <TextView
                         style="@style/FontTextViewForm"
-                        android:text="SUB GRADE" />
+                        android:text="SUB TIPE" />
 
                     <Spinner
                         android:id="@+id/sub_grade"
@@ -408,6 +408,7 @@
                 android:visibility="gone" />
 
             <TextView
+                android:id="@+id/ketBtnTxtview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -560,51 +561,49 @@
                 android:baselineAligned="false">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
-                    android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
-                        style="@style/FontTextViewForm"
-                        android:text="NO EXPEDISI" />
 
-                    <EditText
-                        android:id="@+id/expedition_id"
-                        style="@style/SpinnerEditForm"
-                        android:background="@drawable/edittext_style"
-                        android:text="Ini nomor expedisi" />
 
                     <TextView
-                        android:id="@+id/expedition_amount_title"
                         style="@style/FontTextViewForm"
-                        android:text="AMOUNT" />
+                        android:text="PILIHAN EXPEDISI" />
 
-                    <EditText
-                        android:id="@+id/expedition_amount"
-                        style="@style/SpinnerEditForm"
-                        android:background="@drawable/edittext_style"
-                        android:inputType="number" />
+                    <Spinner
+                        android:id="@+id/spinnerEkspedisi"
+                        style="@style/SpinnerEditForm" />
+
+                    <!--<Spinner
+                        android:id="@+id/spinnerEkspedisi"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:prompt="@string/ekspedisi_prompt"
+                        />-->
+
+                    <!--<LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/FontTextViewForm"
+                            android:text="Harga   :   " />
+
+                        <TextView
+                            android:id="@+id/info_harga"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimaryDark" />
+
+
+                    </LinearLayout>-->
+
+
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/FontTextViewForm"
-                        android:text="CATATAN" />
-
-                    <EditText
-                        android:id="@+id/expedition_notes"
-                        style="@style/MultilineEditText"
-                        android:background="@drawable/edittext_style"
-                        android:text="Ini catatan expedisi Ini catatan expedisi Ini catatan expedisi Ini catatan expedisi Ini catatan expedisi" />
-                </LinearLayout>
             </LinearLayout>
 
             <TextView

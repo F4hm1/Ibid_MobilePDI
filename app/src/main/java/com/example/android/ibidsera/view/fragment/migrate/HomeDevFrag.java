@@ -1,47 +1,20 @@
 package com.example.android.ibidsera.view.fragment.migrate;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.ibidsera.R;
-import com.example.android.ibidsera.base.BaseFragment;
-import com.example.android.ibidsera.base.RxBaseActivity;
 import com.example.android.ibidsera.base.RxLazyFragment;
 import com.example.android.ibidsera.model.HomeModel;
-import com.example.android.ibidsera.model.Unit;
-import com.example.android.ibidsera.model.api.AuctionService;
-import com.example.android.ibidsera.model.migrate.MyModel;
-import com.example.android.ibidsera.service.APICall;
 import com.example.android.ibidsera.service.RetrofitHelper;
-import com.example.android.ibidsera.util.RetrofitUtil;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Fahmi Hakim on 06/03/2018.

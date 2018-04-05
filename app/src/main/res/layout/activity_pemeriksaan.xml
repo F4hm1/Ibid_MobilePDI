@@ -10,19 +10,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:weightSum="10">
+        android:weightSum="9">
 
+
+        <Button
+            android:id="@+id/notes"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:text="Tambah Catatan"
+            android:textColor="@android:color/white"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/clear"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginRight="8dp"
-            android:layout_weight="3"
-            android:background="@color/colorAccent"
+            android:layout_weight="1"
+            android:background="@color/red"
             android:text="Reset/Ulangi"
             android:textColor="@android:color/white"
             tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/undo"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:text="Undo"
+            android:textColor="@android:color/white"
+            tools:ignore="ButtonStyle" />
+
 
         <Button
             android:id="@+id/btn_paint_baret"
@@ -82,13 +105,14 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginLeft="8dp"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:background="@color/colorAccent"
             android:text="Simpan"
             android:textColor="@android:color/white"
             tools:ignore="ButtonStyle" />
 
     </LinearLayout>
+
 
     <FrameLayout
         android:id="@+id/linear_forcanvas"
@@ -98,9 +122,20 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/txtMessage"
+            android:background="@android:color/holo_red_dark"
+            android:width="250dip"
+            android:layout_width="match_parent"
+            android:textColor="@android:color/white"
+            android:text="Catatan :"
+            android:layout_height="30dp"
+            android:maxLength="500"
+            android:lines="1" />
 
 
         <LinearLayout
+            android:layout_marginTop="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
@@ -114,12 +149,13 @@
                 android:layout_marginBottom="6dp"
                 android:orientation="horizontal">
 
-                <ImageView
+                <TextView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginRight="8dp"
-                    android:background="@color/transparent"
-                    android:src="@drawable/one"></ImageView>
+                    android:textSize="17sp"
+                    android:text="1"
+                    android:textColor="@color/blue"></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,12 +170,19 @@
                 android:layout_marginBottom="6dp"
                 android:orientation="horizontal">
 
-                <ImageView
+                <!--<ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginRight="8dp"
                     android:background="@color/transparent"
-                    android:src="@drawable/two"></ImageView>
+                    android:src="@drawable/two"></ImageView>-->
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="8dp"
+                    android:textSize="17sp"
+                    android:text="2"
+                    android:textColor="@color/green"></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -154,12 +197,19 @@
                 android:layout_marginBottom="6dp"
                 android:orientation="horizontal">
 
-                <ImageView
+                <!--<ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginRight="8dp"
                     android:background="@color/transparent"
-                    android:src="@drawable/three"></ImageView>
+                    android:src="@drawable/three"></ImageView>-->
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="8dp"
+                    android:textSize="17sp"
+                    android:text="3"
+                    android:textColor="@color/yellow"></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -174,12 +224,19 @@
                 android:layout_marginBottom="6dp"
                 android:orientation="horizontal">
 
-                <ImageView
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="8dp"
+                    android:textSize="17sp"
+                    android:text="4"
+                    android:textColor="@color/red"></TextView>
+                <!--<ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginRight="8dp"
                     android:background="@color/transparent"
-                    android:src="@drawable/four"></ImageView>
+                    android:src="@drawable/four"></ImageView>-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -191,6 +248,11 @@
         </LinearLayout>
 
 
-    </FrameLayout>
+
+
+
+</FrameLayout>
+
+
 
 </LinearLayout>

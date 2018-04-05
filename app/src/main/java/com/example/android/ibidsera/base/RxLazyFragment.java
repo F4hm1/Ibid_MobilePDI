@@ -96,7 +96,7 @@ public abstract class RxLazyFragment extends RxFragment {
 
     protected void errorRetrofit(Call pv, Throwable t){
         try {
-            showToast("Tidak Ada Internet");
+            showToast(t.getMessage());
             Log.e("error", t.getMessage());
         }catch (Exception e){}
     }
@@ -229,7 +229,7 @@ public abstract class RxLazyFragment extends RxFragment {
     }
 
     private void updateLabel(Calendar myCalendar, EditText editText) {
-        String myFormat = "MM/dd/yyyy"; //In which you need put here
+        String myFormat = "yyyy-MM-dd hh:mm:ss"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         editText.setText(sdf.format(myCalendar.getTime()));

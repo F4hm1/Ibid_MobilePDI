@@ -15,9 +15,9 @@ import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -33,20 +33,26 @@ import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.ibidsera.R;
-import com.example.android.ibidsera.base.BaseFragment;
+import com.example.android.ibidsera.base.RxLazyFragment;
 import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.InsertUnit;
 import com.example.android.ibidsera.model.NoPolUnit;
+import com.example.android.ibidsera.model.PhotoChecklist;
+import com.example.android.ibidsera.model.PhotoTtdCustomer;
+import com.example.android.ibidsera.model.PhotoTtdIbid;
 import com.example.android.ibidsera.model.Sign;
 import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
-import com.example.android.ibidsera.model.UnitMasukKeluar;
 import com.example.android.ibidsera.model.api.AuctionService;
+import com.example.android.ibidsera.service.APICall;
+import com.example.android.ibidsera.service.RetrofitHelper;
 import com.example.android.ibidsera.util.HelperConstant;
 import com.example.android.ibidsera.util.RetrofitUtil;
+import com.example.android.ibidsera.view.activity.GambarActivity;
 import com.example.android.ibidsera.view.activity.PemeriksaanActivity;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
@@ -56,7 +62,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,7 +74,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by Yosefricaro on 24/07/2017.
  */
 
-public class AddKeluar extends BaseFragment {
+public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelectedListener {
     @BindView(R.id.nopol_title)
     TextView nopol_title;
     @BindView(R.id.nama_title)
@@ -149,6 +156,9 @@ public class AddKeluar extends BaseFragment {
     @BindView(R.id.toggle_checklistable)
     Switch mToggleChecklist;
 
+    @BindView(R.id.toggle_reasonout)
+    Switch mToggleReasonOut;
+
     @BindView(R.id.et_checklist_not)
     EditText mEtChecklistNot;
 
@@ -167,10 +177,396 @@ public class AddKeluar extends BaseFragment {
     @BindView(R.id.cases)
     EditText cases;
 
+    @BindView(R.id.txtMenangLelang)
+    TextView txtMenangLelang;
+
+    @BindView(R.id.txtTidakLaku)
+    TextView txtTidakLaku;
+
     @BindView(R.id.pool)
     EditText pool;
 
+
     @Override
+    public int getLayoutResId() {
+        return R.layout.content_addk;
+    }
+
+    @Override
+    public void finishCreateView(Bundle state) {
+
+        mToggleChecklist.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                tl.setVisibility(View.VISIBLE);
+                mEtChecklistNot.setVisibility(View.GONE);
+            } else {
+                tl.setVisibility(View.GONE);
+                mEtChecklistNot.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mRadioSedan.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                ibid_sedan.setEnabled(true);
+                ibid_niaga.setEnabled(false);
+                ibid_sedan.setAlpha(1f);
+                ibid_niaga.setAlpha(0.2f);
+
+                mRadioMinibus.setChecked(false);
+            }
+        });
+
+        mRadioMinibus.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                ibid_sedan.setEnabled(false);
+                ibid_niaga.setEnabled(true);
+                ibid_sedan.setAlpha(0.2f);
+                ibid_niaga.setAlpha(1f);
+                mRadioSedan.setChecked(false);
+            }
+        });
+
+        mToggleReasonOut.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                txtTidakLaku.setVisibility(View.GONE);
+                txtMenangLelang.setVisibility(View.VISIBLE);
+            } else {
+                txtMenangLelang.setVisibility(View.GONE);
+                txtTidakLaku.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mRadioSedan.setChecked(true);
+
+        cpvStart(cpv, bp);
+        APICall auctionServicePOST = RetrofitHelper.postUnitKeluarApiStokServiceALPHA();
+        APICall auctionService = RetrofitHelper.getUnitKeluarApiTaksasiServiceALPHA();
+
+        AuctionService auctionServiceOld = RetrofitUtil.getAuctionService();
+
+
+        List<String> ls = new ArrayList<>();
+        ProgressDialog pDialog = new ProgressDialog(getContext());
+
+        hideKeyboard();
+        setAllCaps();
+        setAllDisabled();
+        setRequired();
+
+        nama_title.setOnClickListener(view -> startActivity(new Intent(getActivity(), GambarActivity.class)));
+
+        datePicker(tgl_pemeriksaan, 0);
+        getTimeSpinner();
+        //getKomponen(auctionService, -1);
+        cpvStop(cpv, bp);
+
+        nopol.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                nopol.dismissDropDown();
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                getDropdownList(auctionService, ls);
+            }
+        });
+
+        nopol.setOnItemClickListener((parent, view, position, id1) -> {
+            hideKeyboard();
+            cpvStart(cpv, bp);
+//            getAddk(StaticUnit.getLu().get(position), position);
+//            cpvStop(cpv, bp);
+            getDetailUnitById(listNoPolUnit.get(position).getAuctionItemId(), position, auctionService);
+        });
+
+        signatureClick(signature1, 1);
+        signatureClick(signature2, 2);
+        ibid_sedan.setOnClickListener(view -> goToPemeriksaanActivity(1));
+        ibid_niaga.setOnClickListener(view -> goToPemeriksaanActivity(2));
+
+        save.setOnClickListener(v -> {
+            pDialog.setMessage("Sending Data..");
+            pDialog.show();
+            HashMap<String, EditText> h = new HashMap<>();
+            h.put("NO POLISI", nopol);
+            h.put("Nama Pengemudi", nama_pengemudi);
+            h.put("Alamat Pengemudi", alamat_pengemudi);
+            h.put("Kota", kota);
+            h.put("Telp", telepon);
+
+            List<String> ls2 = required(h);
+            InsertUnit requestUnit = setInsertUnit(StaticUnit.getUnit());
+            if (ls2.size() <= 0) {
+                final Handler handler = new Handler();
+                handler.postDelayed(() -> {
+
+                    auctionServicePOST.insertUnitKeluar(requestUnit)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(getStatus -> {
+
+
+                                /*try{
+                                    auctionService.postRawJsonChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
+                                        @Override
+                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                            try {
+                                                Toast.makeText(getActivity(), response.body().getMessage() + "Ceklist", Toast.LENGTH_SHORT).show();
+                                            } catch (Exception e) {
+                                                Toast.makeText(getActivity(), String.valueOf(e), Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<GetStatus> call, Throwable t) {
+                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+
+
+                                    auctionService.postRawJsonTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid())).enqueue(new Callback<GetStatus>() {
+                                        @Override
+                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                            try {
+                                                Toast.makeText(getActivity(), response.body().getMessage() + "Ibid", Toast.LENGTH_SHORT).show();
+                                            } catch (Exception e) {
+                                                Toast.makeText(getActivity(), String.valueOf(e), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<GetStatus> call, Throwable t) {
+                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                    auctionService.postRawJsonTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
+                                        @Override
+                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                            try {
+                                                Toast.makeText(getActivity(), response.body().getMessage() + "Customer", Toast.LENGTH_SHORT).show();
+                                            } catch (Exception e) {
+                                                Toast.makeText(getActivity(), String.valueOf(e), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<GetStatus> call, Throwable t) {
+                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                } catch (Exception e){
+
+                                }*/
+
+
+
+                                try {
+                                    pDialog.hide();
+                                    alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
+                                    HelperConstant.mTempBitmapNiaga = null;
+                                    HelperConstant.mTempBitmapSedan = null;
+                                } catch (Exception e) {
+                                }
+
+                            }, throwable -> {
+                                pDialog.hide();
+                            errorRetrofit(null, throwable);
+                                alertDialog("Terdapat kesalahan ketika menyimpan data", 1);
+                            });
+
+                    //////////---------------------------
+
+/*                    auctionServiceOld.insertUnitMasuk(requestUnit).enqueue(new Callback<GetStatus>() {
+                        @Override
+                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                            GetStatus getStatus = response.body();
+                            Log.i("info", "post submitted to API." + response.body());
+
+*//*
+                            try{
+                                auctionService.postRawJsonChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
+                                    @Override
+                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                        try {
+                                            Toast.makeText(getActivity(), response.body().getMessage() + "Ceklist", Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<GetStatus> call, Throwable t) {
+                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+
+                                auctionService.postRawJsonTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid())).enqueue(new Callback<GetStatus>() {
+                                    @Override
+                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                        try {
+                                            Toast.makeText(getActivity(), response.body().getMessage() + "Ibid", Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<GetStatus> call, Throwable t) {
+                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                auctionService.postRawJsonTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
+                                    @Override
+                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                        try {
+                                            Toast.makeText(getActivity(), response.body().getMessage() + "Customer", Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<GetStatus> call, Throwable t) {
+                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } catch (Exception e){
+
+                            }
+*//*
+
+
+                            try {
+                                pDialog.hide();
+                                alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
+                                HelperConstant.mTempBitmapNiaga = null;
+                                HelperConstant.mTempBitmapSedan = null;
+                            } catch (Exception e) {
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<GetStatus> call, Throwable t) {
+                            pDialog.hide();
+//                            errorRetrofit(call, t);
+                            alertDialog("Terdapat kesalahan ketika menyimpan data", 1);
+
+                        }
+                    });*/
+
+
+
+
+                    ///////////------------------
+
+
+
+
+                    /*auctionService.insertUnitKeluarFix(requestUnit).enqueue(new Callback<GetStatus>() {
+                        @Override
+                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                            GetStatus getStatus = response.body();
+                            Log.i("info", "post submitted to API." + response.body());
+
+                            try{
+                                auctionService.postRawJsonChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
+                                    @Override
+                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                        try {
+                                            Toast.makeText(getActivity(), response.body().getMessage() + "Ceklist", Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<GetStatus> call, Throwable t) {
+                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+
+                                auctionService.postRawJsonTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid())).enqueue(new Callback<GetStatus>() {
+                                    @Override
+                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                        try {
+                                            Toast.makeText(getActivity(), response.body().getMessage() + "Ibid", Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<GetStatus> call, Throwable t) {
+                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                auctionService.postRawJsonTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
+                                    @Override
+                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                        try {
+                                            Toast.makeText(getActivity(), response.body().getMessage() + "Customer", Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<GetStatus> call, Throwable t) {
+                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } catch (Exception e){
+
+                            }
+
+
+                            try {
+                                    pDialog.hide();
+                                    alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
+                                    HelperConstant.mTempBitmapNiaga = null;
+                                    HelperConstant.mTempBitmapSedan = null;
+                            } catch (Exception e) {
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<GetStatus> call, Throwable t) {
+                            pDialog.hide();
+//                            errorRetrofit(call, t);
+                            alertDialog("Terdapat kesalahan ketika menyimpan data", 1);
+
+                        }
+                    });*/
+                }, 2000);
+            } else {
+                pDialog.hide();
+                String required = "";
+                for (int i = ls2.size() - 1; i >= 0; i--) {
+                    if (i == 0) {
+                        required = required + ls2.get(i);
+                    } else
+                        required = required + ls2.get(i) + ", ";
+                }
+                alertDialog("Maaf " + required + " belum anda masukan !!", 2);
+            }
+        });
+        cancelListener(cancel);
+
+
+    }
+
+    /*@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myFragment = inflater.inflate(R.layout.content_addk, container, false);
@@ -211,7 +607,7 @@ public class AddKeluar extends BaseFragment {
 
         cpvStart(cpv, bp);
 
-        AuctionService auctionService = RetrofitUtil.getAuctionService();
+        APICall auctionService = RetrofitHelper.getUnitKeluarApiTaksasiServiceALPHA();
         List<String> ls = new ArrayList<>();
         ProgressDialog pDialog = new ProgressDialog(getContext());
 
@@ -222,7 +618,7 @@ public class AddKeluar extends BaseFragment {
 
         datePicker(tgl_pemeriksaan, 0);
         getTimeSpinner();
-        getKomponen(auctionService, -1);
+        //getKomponen(auctionService, -1);
         cpvStop(cpv, bp);
 
         nopol.addTextChangedListener(new TextWatcher() {
@@ -262,11 +658,35 @@ public class AddKeluar extends BaseFragment {
             h.put("Telp", telepon);
 
             List<String> ls2 = required(h);
-            InsertUnit requestUnit = setInsertUnit(StaticUnit.getUnitMasukKeluar());
+            InsertUnit requestUnit = setInsertUnit(StaticUnit.getUnit());
             if (ls2.size() <= 0) {
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {
-                    auctionService.insertUnitKeluar(requestUnit).enqueue(new Callback<GetStatus>() {
+
+                    auctionService.insertUnitKeluar(requestUnit)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(getStatus -> {
+                                try {
+                                    if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
+                                        pDialog.hide();
+                                        alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
+                                        HelperConstant.mTempBitmapNiaga = null;
+                                        HelperConstant.mTempBitmapSedan = null;
+                                    } else {
+                                        pDialog.hide();
+                                        alertDialog(getStatus.getMessage(), 1);
+                                    }
+                                } catch (Exception e) {
+                                }
+
+                            }, throwable -> {
+                                pDialog.hide();
+//                            errorRetrofit(call, t);
+                                alertDialog("Terdapat kesalahan ketika menyimpan data", 1);
+                            });
+
+                    *//*auctionService.insertUnitKeluar(requestUnit).enqueue(new Callback<GetStatus>() {
                         @Override
                         public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                             GetStatus getStatus = response.body();
@@ -292,7 +712,7 @@ public class AddKeluar extends BaseFragment {
                             alertDialog("Terdapat kesalahan ketika menyimpan data", 1);
 
                         }
-                    });
+                    });*//*
                 }, 2000);
             } else {
                 pDialog.hide();
@@ -309,42 +729,60 @@ public class AddKeluar extends BaseFragment {
         cancelListener(cancel);
 
         return myFragment;
-    }
+    }*/
 
-    private void getDetailUnitById(int auctionItemId, int position, AuctionService auctionService) {
-        auctionService.getDetailUnitMasuk(auctionItemId + "").enqueue(new Callback<List<UnitMasukKeluar>>() {
+
+
+    private void getDetailUnitById(int auctionItemId, int position, APICall auctionService) {
+
+        auctionService.getDetailUnitKeluar(auctionItemId + "")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(unit -> {
+                    //StaticUnit.setLuMasukKeluar(unit);
+                    getKomponenList(unit);
+                    getAddk(unit, position);
+                    cpvStop(cpv, bp);
+                }, throwable -> {
+                    Log.e("Error", throwable.getMessage());
+                    cpvStop(cpv, bp);
+                    errorRetrofit(null, throwable);
+                });
+
+        /*auctionService.getDetailUnitMasuk(auctionItemId + "").enqueue(new Callback<UnitMasukKeluar>() {
             @Override
-            public void onResponse(Call<List<UnitMasukKeluar>> call, Response<List<UnitMasukKeluar>> response) {
-                List<UnitMasukKeluar> lu = response.body();
-                StaticUnit.setLuMasukKeluar(lu);
-                getAddk(lu.get(0), position);
+            public void onResponse(Call<UnitMasukKeluar> call, Response<UnitMasukKeluar> response) {
+                UnitMasukKeluar lu = response.body();
+                StaticUnit.setUnitMasukKeluar(lu);
+                getKomponenList(lu);
+                getAddk(lu, position);
                 cpvStop(cpv, bp);
             }
 
             @Override
-            public void onFailure(Call<List<UnitMasukKeluar>> call, Throwable t) {
+            public void onFailure(Call<UnitMasukKeluar> call, Throwable t) {
                 errorRetrofit(call, t);
             }
-        });
+        });*/
     }
 
-    public void getAddk(UnitMasukKeluar lu, int id) {
+    public void getAddk(Unit lu, int id) {
         position = id;
-        StaticUnit.setUnitMasukKeluar(lu);
+        StaticUnit.setUnit(lu);
         if (lu.getAuction().getValue() != null) {
             nopol.setText(lu.getAuction().getValue());
         } else {
             nopol.setText(lu.getAuction().getNo_polisi());
         }
-        merk.setAdapter(getAdapterList(lu.getAuctiondetail().getNama_merk()));
+        merk.setAdapter(getAdapterList(lu.getNama_merk()));
         seri.setAdapter(getAdapterList(lu.getAuctiondetail().getTipe().get(0).getAttributedetail()));
         silinder.setAdapter(getAdapterList(lu.getAuctiondetail().getTipe().get(1).getAttributedetail()));
         grade.setAdapter(getAdapterList(lu.getAuctiondetail().getTipe().get(2).getAttributedetail()));
         sub_grade.setAdapter(getAdapterList(lu.getAuctiondetail().getTipe().get(3).getAttributedetail()));
-        transmisi.setText(lu.getAuctiondetail().getTransmisi());
-        tahun.setText(lu.getAuctiondetail().getTahun());
-        km.setText(String.valueOf(lu.getAuctiondetail().getKm()));
-        nama_pemilik.setText(lu.getAuctiondetail().getPntp().getName_pntp());
+        transmisi.setText(lu.getTransmisi());
+        tahun.setText(lu.getTahun());
+        km.setText(String.valueOf(lu.getKm()));
+        nama_pemilik.setText(lu.getAuction().getNama_pengemudi_msk());
 
         fuel.setAdapter(setDropdown(R.array.fuel));
         cat.setAdapter(setDropdown(R.array.cat));
@@ -372,7 +810,8 @@ public class AddKeluar extends BaseFragment {
         return getAdapter(list);
     }
 
-    public InsertUnit setInsertUnit(UnitMasukKeluar lUnit) {
+
+    public InsertUnit setInsertUnit(Unit lUnit) {
         InsertUnit insertUnit = new InsertUnit();
         insertUnit.setIdpemeriksaanitem(lUnit.getKomponen().get(0).getId_pemeriksaanitem());
         if (lUnit.getAuction().getId_auctionitem() != 0) {
@@ -451,6 +890,12 @@ public class AddKeluar extends BaseFragment {
             insertUnit.setReasonunchecklist("");
         }
 
+        if (mToggleReasonOut.isChecked()) {
+            insertUnit.setStatuspdiout(1);
+        } else {
+            insertUnit.setStatuspdiout(0);
+        }
+
         return insertUnit;
     }
 
@@ -480,9 +925,31 @@ public class AddKeluar extends BaseFragment {
 
     List<NoPolUnit> listNoPolUnit = new ArrayList<>();
 
-    private void getDropdownList(AuctionService auctionService, List<String> ls) {
-        if (!nopol.getText().toString().equals("")) {
-            auctionService.getNoPolUnitK(nopol.getText().toString()).enqueue(new Callback<List<NoPolUnit>>() {
+    private void getDropdownList(APICall auctionService, List<String> ls) {
+        if (!nopol.getText().toString().equals("") && nopol.getText().toString().length() > 1) {
+
+            cpvStart(cpv, bp);
+            auctionService.getNoPolUnitK(nopol.getText().toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(noPolUnits -> {
+                        cpvStop(cpv, bp);
+                        listNoPolUnit.clear();
+                        try {
+                            for (int i = 0; i < noPolUnits.size(); i++) {
+                                listNoPolUnit.add(noPolUnits.get(i));
+                            }
+                        } catch (Exception e) {
+                        }
+                        ArrayAdapter<NoPolUnit> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, listNoPolUnit);
+                        nopol.setAdapter(adapter);
+                        nopol.setThreshold(1);
+                        nopol.showDropDown();
+                    }, throwable -> {
+                        Log.e("Error", throwable.getMessage());
+                    });
+
+            /*auctionService.getNoPolUnitK(nopol.getText().toString()).enqueue(new Callback<List<NoPolUnit>>() {
                 @Override
                 public void onResponse(Call<List<NoPolUnit>> call, Response<List<NoPolUnit>> response) {
                     List<NoPolUnit> lu = response.body();
@@ -504,7 +971,7 @@ public class AddKeluar extends BaseFragment {
                 public void onFailure(Call<List<NoPolUnit>> call, Throwable t) {
                     errorRetrofit(call, t);
                 }
-            });
+            });*/
         }
     }
 
@@ -534,12 +1001,12 @@ public class AddKeluar extends BaseFragment {
 //                errorRetrofit(call, t);
 //            }
 //        });
-        getKomponenList(StaticUnit.getLuMasukKeluar(), 0);
+        //getKomponenList(StaticUnit.getLuMasukKeluar(), 0);
     }
 
-    private void getKomponenList(List<UnitMasukKeluar> lu, int position) {
+    private void getKomponenList(Unit lu) {
         try {
-            size = lu.get(position).getKomponen().size();
+            size = lu.getKomponen().size();
             for (int i = 0; i < size; i++) {
                 TableRow row = tableRow();
                 TableLayout tl2 = tableLayout();
@@ -565,7 +1032,7 @@ public class AddKeluar extends BaseFragment {
 
                 rowColor(row, i);
                 textStyle(no, row, param_25, String.valueOf(i + 1));
-                textStyle(nama, row2, param5, lu.get(position).getKomponen().get(i).getNama());
+                textStyle(nama, row2, param5, lu.getKomponen().get(i).getNama());
                 checkboxStyle(b, row2, param1, i, "b", h);
                 checkboxStyle(r, row2, param1, i, "r", h);
                 checkboxStyle(t, row2, param1, i, "t", h);
@@ -684,6 +1151,8 @@ public class AddKeluar extends BaseFragment {
         row.addView(imageView);
     }
 
+
+
     public void imgSet(ImageView imageView, String check) {
         Bitmap bmp;
         if (check.equals("true")) {
@@ -725,5 +1194,15 @@ public class AddKeluar extends BaseFragment {
                 break;
             }
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

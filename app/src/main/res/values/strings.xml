@@ -23,4 +23,14 @@
     <string name="title_activity_unitm">UnitmActivity</string>
     <string name="title_activity_persiapan">UnitmActivity</string>
     <string name="field_required">*</string>
+
+    <string name="ekspedisi_prompt">Pilih Ekspedisi</string>
+    <string-array name="spinner_title">
+        <item>CarFee</item>
+        <item>CraneFeeFourTire</item>
+        <item>CarryingFeeFourTire</item>
+        <item>TruckFee</item>
+        <item>CraneFeeSixTire</item>
+        <item>CarryingFeeSixTire</item>
+    </string-array>
 </resources>
