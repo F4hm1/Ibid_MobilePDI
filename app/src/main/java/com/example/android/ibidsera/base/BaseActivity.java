@@ -3,6 +3,7 @@ package com.example.android.ibidsera.base;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -19,6 +20,28 @@ import com.example.android.ibidsera.view.activity.LoginActivity;
  */
 
 public class BaseActivity extends AppCompatActivity{
+
+    //////////
+
+    /*@Override
+    public int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    public void initViews(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void initToolBar() {
+
+    }*/
+
+
+    ////////////////////
+
+
 
     public static final long DISCONNECT_TIMEOUT = 900000; // 5 min = 5 * 60 * 1000 ms
 

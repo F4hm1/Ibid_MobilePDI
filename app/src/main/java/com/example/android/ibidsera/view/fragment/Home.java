@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.android.ibidsera.AppController;
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseFragment;
 import com.example.android.ibidsera.model.HomeModel;
@@ -68,6 +69,8 @@ public class Home extends BaseFragment{
                 errorRetrofit(call, t);
             }
         });
+
+
     }
 
     private void getHome(HomeModel lh) {
@@ -80,5 +83,6 @@ public class Home extends BaseFragment{
     }
 
     private String intToString(int item){ return String.valueOf(item); }
+
 
 }

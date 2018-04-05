@@ -1,5 +1,7 @@
 package com.example.android.ibidsera.model;
 
+import com.example.android.ibidsera.model.homelist.UnitMasukKeluarHomelist;
+
 import java.util.List;
 
 /**
@@ -18,6 +20,8 @@ public class StaticUnit {
     public static List<UnitMasukKeluar> getLuMasukKeluar() {
         return luMasukKeluar;
     }
+
+
 
     public static void setLuMasukKeluar(List<UnitMasukKeluar> luMasukKeluar) {
         StaticUnit.luMasukKeluar = luMasukKeluar;
@@ -39,6 +43,7 @@ public class StaticUnit {
         if (unit == null) throw new NullPointerException("unit");
         StaticUnit.unit = unit;
     }
+
 
     public static UnitMasukKeluar getUnitMasukKeluar() {
         return unitMasukKeluar;

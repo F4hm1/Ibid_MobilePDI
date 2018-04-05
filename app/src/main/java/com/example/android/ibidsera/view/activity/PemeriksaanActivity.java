@@ -10,19 +10,25 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseActivity;
+import com.example.android.ibidsera.misc.GbrActivity;
 import com.example.android.ibidsera.util.HelperConstant;
 import com.example.android.ibidsera.view.fragment.DrawView;
+import com.example.android.ibidsera.view.fragment.migrate.BackupDrawView;
 
 import java.io.ByteArrayOutputStream;
 
@@ -57,8 +63,18 @@ public class PemeriksaanActivity extends AppCompatActivity {
     @BindView(R.id.clear)
     Button mBtnClear;
 
+    @BindView(R.id.undo)
+    Button mBtnUndo;
+
+    @BindView(R.id.notes)
+    Button mBtnNotes;
+
     @BindView(R.id.btn_paint_eraser)
     ImageButton mBtnEraser;
+
+
+    @BindView(R.id.txtMessage)
+    TextView mNotes;
 
     DrawView mDrawView;
     private Bitmap bitmapBackground;
@@ -101,6 +117,8 @@ public class PemeriksaanActivity extends AppCompatActivity {
 
         mLinCanvas.addView(mDrawView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
+        mBtnNotes.setOnClickListener(view -> getAlertNotes());
+        mBtnUndo.setOnClickListener(view -> mDrawView.onClickUndo());
         mBtnClear.setOnClickListener(view -> mDrawView.clearAll());
         mBtnSave.setOnClickListener(view -> saveBitmap(mDrawView.getBitmap()));
         mBtnBaret.setOnClickListener(view -> changePaint(DrawView.COLOR_BARET, mBtnBaret));
@@ -118,9 +136,36 @@ public class PemeriksaanActivity extends AppCompatActivity {
         changePaint(DrawView.COLOR_BARET, mBtnBaret);
     }
 
+    public void getAlertNotes(){
+        mNotes.setTextSize(14f);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Masukan catatan kerusakan : ");
+        alertDialog.setCancelable(true);
+
+        final EditText input = new EditText(this);
+
+        FrameLayout container = new FrameLayout(this);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = 20;
+        params.rightMargin = 20;
+        input.setLayoutParams(params);
+        container.addView(input);
+        alertDialog.setView(container);
+        input.setText("");
+        final String[] currentText = {""};
+        alertDialog.setPositiveButton("OK", (dialog, which) -> {
+            currentText[0] = input.getText().toString();
+            mNotes.setText("Catatan : " + currentText[0]);
+
+        });
+        alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        alertDialog.create().show();
+    }
+
+
     private void saveBitmap(Bitmap bitmap) {
-        Canvas canvas = new Canvas(bitmap);
-        mLinCanvas.draw(canvas);
+        /*Canvas canvas = new Canvas(bitmap);
+        mLinCanvas.draw(canvas);*/
 
         Intent i = new Intent();
         ByteArrayOutputStream bs = new ByteArrayOutputStream();

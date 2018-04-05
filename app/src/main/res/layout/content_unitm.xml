@@ -92,7 +92,9 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_weight="0.5"
-                            style="@style/FontTableHead" />
+                            style="@style/FontTableHead"
+                            android:text="Info"/>
+
 
                         <TextView
                             android:layout_width="0dp"
@@ -124,6 +126,12 @@
                             style="@style/FontTableHead"
                             android:text="Type" />
 
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            style="@style/FontTableHead"
+                            android:text="Print"/>
+
                     </TableRow>
                 </TableLayout>
             </LinearLayout>
@@ -133,7 +141,7 @@
         android:id="@+id/background_progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background ="@color/transparent">
+        android:background ="#33000000">
         <com.github.rahatarmanahmed.cpv.CircularProgressView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/progress_view"

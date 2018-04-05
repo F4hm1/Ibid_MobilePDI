@@ -19,6 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitUtil {
     private static Retrofit getRetrofit(){
 
+
+
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -32,7 +34,30 @@ public class RetrofitUtil {
         httpClient.readTimeout(120, TimeUnit.SECONDS);
 
         return new Retrofit.Builder()
-                .baseUrl(BuildConfig.URI)
+                .baseUrl(ApiConstants.ALPHA_STOK_URL) //BuildConfig.URI
+                .addConverterFactory(GsonConverterFactory.create(RetrofitUtil.getGson()))
+                .client(httpClient.build())
+                .build();
+    }
+
+    private static Retrofit getRetrofitTaksasi(){
+
+
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+        httpClient.connectTimeout(120, TimeUnit.SECONDS);
+        httpClient.readTimeout(120, TimeUnit.SECONDS);
+
+        return new Retrofit.Builder()
+                .baseUrl(ApiConstants.ALPHA_TAKSASI_URL) //BuildConfig.URI
                 .addConverterFactory(GsonConverterFactory.create(RetrofitUtil.getGson()))
                 .client(httpClient.build())
                 .build();
@@ -42,7 +67,12 @@ public class RetrofitUtil {
         return RetrofitUtil.getRetrofit().create(AuctionService.class);
     }
 
-    private static Gson getGson(){
+
+    public static AuctionService postGambarAuctionService(){
+        return RetrofitUtil.getRetrofitTaksasi().create(AuctionService.class);
+    }
+
+    public static Gson getGson(){
         return new GsonBuilder()
                 .setLenient()
                 .create();

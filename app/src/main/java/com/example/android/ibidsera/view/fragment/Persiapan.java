@@ -76,8 +76,8 @@ public class Persiapan extends BaseFragment {
 
         getItemList(psearch);
 
-//        cpvStop(cpv, bp);
-        swipeRefresh(refreshLayout, R.id.nav_persiapan);
+
+        //swipeRefresh(refreshLayout, R.id.nav_persiapan);
 
         return myFragment;
     }
@@ -112,7 +112,7 @@ public class Persiapan extends BaseFragment {
             });
         } else {
 //            cpvStart(cpv, bp);
-            auctionService.getPersiapan().enqueue(new Callback<List<Unit>>() {
+            auctionService.getPersiapanUnit().enqueue(new Callback<List<Unit>>() {
                 @Override
                 public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                     Log.d("POLO", "LIST1: " + RetrofitUtil.toJson(response.body()));

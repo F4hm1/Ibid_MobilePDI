@@ -19,7 +19,7 @@ public class Attribute {
     }
 
     public String getAttributedetail() {
-        return ErrorHandler.nullString(attributedetail);
+        return attributedetail;
     }
 
     public void setAttributedetail(String attributedetail) {

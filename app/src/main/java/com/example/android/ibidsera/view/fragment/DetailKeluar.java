@@ -108,7 +108,7 @@ public class DetailKeluar extends BaseFragment {
         transmisi.setText(lu.get(id).getAuctiondetail().getTransmisi());
         tahun.setText(lu.get(id).getAuctiondetail().getTahun());
         km.setText(String.valueOf(lu.get(id).getAuctiondetail().getKm()));
-        nama_pemilik.setText(lu.get(id).getAuctiondetail().getPntp().getName_pntp());
+        //nama_pemilik.setText(lu.get(id).getAuctiondetail().getPntp().getName_pntp());
         fuel.setText(lu.get(id).getAuction().getFuel());
         cat.setText(lu.get(id).getAuction().getCat_body());
         tgl_pemeriksaan.setText(lu.get(id).getAuction().getTgl_serah_klr().substring(8,10)

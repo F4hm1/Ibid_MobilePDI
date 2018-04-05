@@ -4,11 +4,13 @@ import com.example.android.ibidsera.util.ErrorHandler;
 
 import java.util.List;
 
+import io.realm.RealmObject;
+
 /**
  * Created by Yosefricaro on 26/07/2017.
  */
 
-public class Unit {
+public class Unit{
 
     private Auction auction;
     private String id_merk;
@@ -24,6 +26,17 @@ public class Unit {
     private List<Komponen> komponen;
     private int count_checklist;
     private Expedition expedition;
+    private AuctionDetail auctiondetail;
+
+
+    public AuctionDetail getAuctiondetail() {
+        return auctiondetail;
+    }
+
+    public void setAuctiondetail(AuctionDetail auctiondetail) {
+        this.auctiondetail = auctiondetail;
+    }
+
 
     public Auction getAuction() {
         return auction;
@@ -48,6 +61,7 @@ public class Unit {
     }
 
     public void setId_pemeriksaanitem(String id_pemeriksaanitem) {
+        if (pntp == null) throw new NullPointerException("idpemeriksaan");
         this.id_pemeriksaanitem = id_pemeriksaanitem;
     }
 

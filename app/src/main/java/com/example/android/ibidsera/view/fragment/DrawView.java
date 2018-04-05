@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.util.PathColored;
@@ -37,6 +38,7 @@ import java.util.List;
  */
 
 public class DrawView extends View implements View.OnTouchListener {
+
     private Paint mBitmapPaint;
     private Canvas mCanvas;
     private Canvas bgCanvas;
@@ -52,7 +54,7 @@ public class DrawView extends View implements View.OnTouchListener {
     private Paint mPaintTextBg;
 
     private ArrayList<Path> paths = new ArrayList<Path>();
-    private ArrayList<Path> undonePaths = new ArrayList<Path>();
+    private ArrayList<PathColored> undonePaths = new ArrayList<PathColored>();
     private ArrayList<PathColored> pathSaved = new ArrayList<PathColored>();
 
     private Bitmap mBitmap;
@@ -76,6 +78,7 @@ public class DrawView extends View implements View.OnTouchListener {
     private float decreasedBitmapScaleSize;
 
     private Bitmap mBitmapNumber;
+    private String numberText;
 
     private Context mContext;
     private String textToDraw;
@@ -89,12 +92,10 @@ public class DrawView extends View implements View.OnTouchListener {
         super(context);
         mContext = context;
         this.mContainer = mContainer;
-        mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-        setFocusable(true);
-        setFocusableInTouchMode(true);
-        this.setOnTouchListener(this);
-        mPaint = new Paint();
-        mPaintTransparent = new Paint();
+
+
+
+        /*mPaintTransparent = new Paint();
         mPaintTransparent.setAntiAlias(true);
         mPaintTransparent.setDither(true);
         mPaintTransparent.setColor(getResources().getColor(android.R.color.transparent));
@@ -102,34 +103,55 @@ public class DrawView extends View implements View.OnTouchListener {
         mPaintTransparent.setStrokeJoin(Paint.Join.ROUND);
         mPaintTransparent.setStrokeCap(Paint.Cap.ROUND);
         mPaintTransparent.setStrokeWidth(15);
-        mPaintTransparent.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        mPaintTransparent.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));*/
 
 
-        mPaintBaret = getColorPaint(COLOR_BARET, 4);
-        mPaintPenyok = getColorPaint(COLOR_PENYOK, 4);
-        mPaintRetak = getColorPaint(COLOR_RETAK, 4);
-        mPaintPecah = getColorPaint(COLOR_PECAH, 4);
-        mPaintTextBg = getColorPaint(COLOR_TEXT_BACKGROUND, 1);
+
+        /*mPaintTextBg = getColorPaint(COLOR_TEXT_BACKGROUND, 1);
         mPaintTextBg.setStyle(Paint.Style.FILL);
         mPaintTextBg.setTextSize(15);
+
         mPaintText = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mPaintText.setColor(Color.rgb(61, 61, 61));
         mPaintText.setTextSize(15);
-        mPaintText.setStyle(Paint.Style.FILL);
+        mPaintText.setStyle(Paint.Style.FILL);*/
+
 
         this.mBitmap = mBitmap.copy(Bitmap.Config.ARGB_8888, true);
         this.tempBitmap = mBitmap.copy(Bitmap.Config.ARGB_8888, true);
         mCanvas = new Canvas(this.mBitmap);
         bgCanvas = new Canvas(this.mBitmap);
 
+        this.decreasedBitmapScaleSize = decreasedBitmapScaleSize;
+
+        initPaint();
+
+    }
+
+
+    private void initPaint(){
+        mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+        setFocusable(true);
+        setFocusableInTouchMode(true);
+        this.setOnTouchListener(this);
+        mPaint = new Paint();
+        mPaintBaret = getColorPaint(COLOR_BARET, 4);
+        mPaintPenyok = getColorPaint(COLOR_PENYOK, 4);
+        mPaintRetak = getColorPaint(COLOR_RETAK, 4);
+        mPaintPecah = getColorPaint(COLOR_PECAH, 4);
+
+
+        if (mPaint == null) {
+            mPaint = mPaintBaret;
+            numberText = "1";
+        }
+
         mPath = new Path();
         paths.add(mPath);
-
-        mPaint = mPaintBaret;
         pathSaved.add(new PathColored(mPaint, mPath));
 
         pointChecklist = new PointChecklist(mBitmapNumber, "");
-        this.decreasedBitmapScaleSize = decreasedBitmapScaleSize;
+
     }
 
     @Override
@@ -141,7 +163,7 @@ public class DrawView extends View implements View.OnTouchListener {
         float originalWidth = mBitmap.getWidth();
         float originalHeight = mBitmap.getHeight();
 
-        mCanvas = new Canvas(dest);
+        bgCanvas = new Canvas(dest);
 
         float xScale = (float) w / originalWidth;
         float yScale = (float) h / originalHeight;
@@ -160,34 +182,44 @@ public class DrawView extends View implements View.OnTouchListener {
         mBitmapPaint.setFilterBitmap(true);
 
         drawableBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        bgCanvas = new Canvas(drawableBitmap);
+        mCanvas = new Canvas(drawableBitmap);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(tempBitmap, mTransformation, mBitmapPaint);
 
-        if (!isTouchUp) {
-            bgCanvas.drawBitmap(mBitmapNumber, xCurTargetPoint, yCurTargetPoint, pathSaved.get(0).getPaint());
+        /*if (!isTouchUp) {
+            //bgCanvas.drawBitmap(mBitmapNumber, xCurTargetPoint, yCurTargetPoint, pathSaved.get(0).getPaint());
+            //mCanvas.drawText(numberText, xCurTargetPoint, yCurTargetPoint, pathSaved.get(0).getPaint());
 
-            Rect rect = new Rect();
-            bgCanvas.translate(xCurTargetText + 2, yCurTargetText + mPaintTextBg.getTextSize());
+            //Rect rect = new Rect();
+            //bgCanvas.translate(xCurTargetText + 2, yCurTargetText + mPaintTextBg.getTextSize());
 
-            int textWidth = 150;
-            StaticLayout textLayout = new StaticLayout(currentText, mPaintText, textWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-            mPaintText.getTextBounds("TEXTFORTEST", 0, 7, rect);
-            Rect rectTarget = new Rect(rect.left, rect.top, rect.left + textWidth, rect.top + textLayout.getHeight() + 15);
-            bgCanvas.drawRect(rectTarget, mPaintTextBg);
-            textLayout.draw(bgCanvas);
-            bgCanvas.translate(-(xCurTargetText + 2), -(yCurTargetText + mPaintTextBg.getTextSize()));
-        }
+            //int textWidth = 150;
+            //StaticLayout textLayout = new StaticLayout(currentText, mPaintText, textWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+            //mPaintText.getTextBounds("TEXTFORTEST", 0, 7, rect);
+            //Rect rectTarget = new Rect(rect.left, rect.top, rect.left + textWidth, rect.top + textLayout.getHeight() + 15);
+            //bgCanvas.drawRect(rectTarget, mPaintTextBg);
+            //textLayout.draw(bgCanvas);
+            //bgCanvas.translate(-(xCurTargetText + 2), -(yCurTargetText + mPaintTextBg.getTextSize()));
+        }*/
 
         for (PathColored p : pathSaved) {
-            bgCanvas.drawPath(p.getPath(), p.getPaint());
+            mCanvas.drawPath(p.getPath(), p.getPaint());
+            if (!p.isPrint()) {
+
+                if (p.getTextNumber() == null) {
+                    mCanvas.drawText(numberText, p.getxNum(), p.getyNum(), p.getPaint());
+                } else {
+                    mCanvas.drawText(p.getTextNumber(), p.getxNum(), p.getyNum(), p.getPaint());
+                }
+                p.setPrint(true);
+            }
         }
 
         if (isClearing) {
-            bgCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             isClearing = false;
         }
 
@@ -199,6 +231,11 @@ public class DrawView extends View implements View.OnTouchListener {
 
     private void touch_start(float x, float y) {
         isTouchUp = true;
+        if (pathSaved.size() == 0) {
+            mPath = new Path();
+            paths.add(mPath);
+            pathSaved.add(new PathColored(mPaint, mPath));
+        }
         mPath.reset();
         mPath.moveTo(x, y);
         mX = x;
@@ -217,11 +254,21 @@ public class DrawView extends View implements View.OnTouchListener {
 
     private void touch_up() {
         mPath.lineTo(mX, mY);
+
+        if (pathSaved.size() > 0) {
+            pathSaved.get(pathSaved.size() - 1).setxNum(mX);
+            pathSaved.get(pathSaved.size() - 1).setyNum(mY);
+            pathSaved.get(pathSaved.size() - 1).setTextNumber(numberText);
+            pathSaved.get(pathSaved.size() - 1).setPrint(false);
+        }
+
         mPath = new Path();
-
         pathSaved.add(new PathColored(mPaint, mPath));
+        listPointCheckList.add(pointChecklist);
+        isTouchUp = false;
+        pointChecklist = new PointChecklist(mBitmapNumber, "");
 
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+        /*AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
         alertDialog.setTitle("Masukan catatan kerusakan : ");
         alertDialog.setCancelable(true);
 
@@ -244,30 +291,40 @@ public class DrawView extends View implements View.OnTouchListener {
             pointChecklist = new PointChecklist(mBitmapNumber, "");
         });
         alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-        alertDialog.create().show();
+        alertDialog.create().show();*/
 
 //        mPathColored = new PathColored(mPaint, mPath);
     }
 
     public void onClickUndo() {
-        if (paths.size() > 0) {
-            undonePaths.add(paths.remove(paths.size() - 1));
+        if (pathSaved.size() > 0) {
+            if (pathSaved.get(0).getxNum() != 0f){
+                undonePaths.add(pathSaved.remove(pathSaved.size() - 2));
+            } else {
+                Toast.makeText(getContext(), "Tidak ada coretan tersisa.." , Toast.LENGTH_SHORT).show();
+                undonePaths.add(pathSaved.remove(pathSaved.size() - 1));
+            }
+            for (PathColored p : pathSaved) p.setPrint(false);
+            mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             invalidate();
         } else {
-
+            Toast.makeText(getContext(), "Tidak ada coretan tersisa.." , Toast.LENGTH_SHORT).show();
+            //initPaint();
         }
         // toast the user
     }
 
     public void onClickRedo() {
         if (undonePaths.size() > 0) {
-            paths.add(undonePaths.remove(undonePaths.size() - 1));
+            pathSaved.add(undonePaths.remove(undonePaths.size() - 1));
             invalidate();
         } else {
 
         }
         // toast the user
     }
+
+
 
     public void changePaintType(String colorType) {
         Bitmap bitmapNumber = bitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.one);
@@ -277,6 +334,7 @@ public class DrawView extends View implements View.OnTouchListener {
                 bitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.one);
                 mBitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.one);
                 textToDraw = "bagian sini baret";
+                numberText = "1";
                 break;
             }
             case COLOR_PENYOK: {
@@ -284,6 +342,7 @@ public class DrawView extends View implements View.OnTouchListener {
                 bitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.two);
                 mBitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.two);
                 textToDraw = "bagian sini penyok";
+                numberText = "2";
                 break;
             }
             case COLOR_RETAK: {
@@ -291,6 +350,7 @@ public class DrawView extends View implements View.OnTouchListener {
                 bitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.three);
                 mBitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.three);
                 textToDraw = "bagian sini retak";
+                numberText = "3";
                 break;
             }
             case COLOR_PECAH: {
@@ -298,6 +358,7 @@ public class DrawView extends View implements View.OnTouchListener {
                 bitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.four);
                 mBitmapNumber = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.four);
                 textToDraw = "bagian sini pecah";
+                numberText = "4";
                 break;
             }
             case COLOR_ERASER: {
@@ -305,7 +366,11 @@ public class DrawView extends View implements View.OnTouchListener {
                 break;
             }
         }
-        pathSaved.get(pathSaved.size() - 1).setPaint(mPaint);
+        if (pathSaved.size() > 0){
+            pathSaved.get(pathSaved.size() - 1).setPaint(mPaint);
+        } else {
+            initPaint();
+        }
         pointChecklist.setTargetBitmap(bitmapNumber);
 //        mPaint.setColor(Color.parseColor(colorType));
     }
@@ -351,6 +416,8 @@ public class DrawView extends View implements View.OnTouchListener {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setDither(true);
+        paint.setTextSize(80f);
+        paint.setTypeface(Typeface.DEFAULT_BOLD);
         paint.setColor(Color.parseColor(color));
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
@@ -372,12 +439,21 @@ public class DrawView extends View implements View.OnTouchListener {
 
     public Bitmap getBitmap() {
         if (targetSaveBitmap == null) {
+            /*mContainer.setDrawingCacheEnabled(true);
+            mContainer.buildDrawingCache();
+            //targetSaveBitmap = Bitmap.createBitmap(mContainer.getWidth(), mContainer.getHeight(), Bitmap.Config.RGB_565);
+            targetSaveBitmap = Bitmap.createBitmap(mContainer.getDrawingCache());
+            mContainer.setDrawingCacheEnabled(false);*/
             targetSaveBitmap = Bitmap.createBitmap(mContainer.getWidth(), mContainer.getHeight(), Bitmap.Config.RGB_565);
+
         }
         return targetSaveBitmap;
     }
 
     public ArrayList<PathColored> getPathSaved() {
+        for (PathColored p : pathSaved) {
+            p.setPrint(false);
+        }
         return pathSaved;
     }
 
@@ -386,4 +462,8 @@ public class DrawView extends View implements View.OnTouchListener {
         pathSaved.get(pathSaved.size() - 1).setPaint(mPaint);
         pathSaved.get(pathSaved.size() - 1).setPath(mPath);
     }
+
+
 }
+
+
