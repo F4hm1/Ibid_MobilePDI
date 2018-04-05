@@ -119,7 +119,7 @@
                     android:layout_height="20dp"
                     android:layout_marginRight="8dp"
                     android:background="@color/transparent"
-                    android:src="@drawable/one"></ImageView>
+                    android:src="@drawable/blue_style"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,7 +139,7 @@
                     android:layout_height="20dp"
                     android:layout_marginRight="8dp"
                     android:background="@color/transparent"
-                    android:src="@drawable/two"></ImageView>
+                    android:src="@drawable/banner_ibid"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -159,7 +159,7 @@
                     android:layout_height="20dp"
                     android:layout_marginRight="8dp"
                     android:background="@color/transparent"
-                    android:src="@drawable/three"></ImageView>
+                    android:src="@drawable/blue_style"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -179,7 +179,7 @@
                     android:layout_height="20dp"
                     android:layout_marginRight="8dp"
                     android:background="@color/transparent"
-                    android:src="@drawable/four"></ImageView>
+                    android:src="@drawable/banner_ibid"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
