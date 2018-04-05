@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:weightSum="10">
+
+
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="2"
+            android:background="@color/red"
+            android:text="Reset/Ulangi"
+            android:textColor="@android:color/white"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/undo"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="2"
+            android:background="@color/colorAccent"
+            android:text="Undo"
+            android:textColor="@android:color/white"
+            tools:ignore="ButtonStyle" />
+
+
+
+        <Button
+            android:id="@+id/btn_paint_penyok"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/paintPenyok"
+            android:text="(2)\nPENYOK"
+            android:textColor="@android:color/black"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/btn_paint_retak"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/paintRetak"
+            android:text="(3)\nRETAK"
+            android:textColor="@android:color/black"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/btn_paint_pecah"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/paintPecah"
+            android:text="(4)\nPECAH"
+            android:textColor="@android:color/black"
+            tools:ignore="ButtonStyle"
+            />
+
+        <ImageButton
+            android:visibility="gone"
+            android:id="@+id/btn_paint_eraser"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.7"
+            android:src="@drawable/eraser_variant"
+            tools:ignore="ButtonStyle"
+            android:textColor="@android:color/black"
+            android:background="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="2.5"
+            android:background="@color/colorAccent"
+            android:text="Simpan"
+            android:textColor="@android:color/white"
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/linear_forcanvas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+
+        <com.example.android.ibidsera.util.CanvasView
+        android:id="@+id/canvas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal" />
+
+
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:hint="Type here..."
+            android:layout_gravity="center|center_horizontal"
+            android:id="@+id/notes" />
+
+
+        <Button
+            android:id="@+id/btn_paint_baret"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/paintBaret"
+            android:text="(1)\nBARET"
+            android:layout_gravity="bottom|center_horizontal"
+            android:textColor="@android:color/black"
+            tools:ignore="ButtonStyle" />
+
+
+
+        <ImageView
+            android:id="@+id/resultGbr"
+            android:layout_width="150dp"
+            android:layout_height="250dp"
+            android:layout_gravity="bottom|right"/>
+
+    </FrameLayout>
+
+
+</LinearLayout>
