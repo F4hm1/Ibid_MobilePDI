@@ -352,6 +352,60 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(getStatus -> {
 
+                                    try{
+                                        apiServicePostGbr.postRawJsonChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
+                                            @Override
+                                            public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                                try {
+                                                    Toast.makeText(getActivity(), response.body().getMessage() + "Ceklist", Toast.LENGTH_SHORT).show();
+                                                } catch (Exception e) {
+
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<GetStatus> call, Throwable t) {
+                                                Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                        apiServicePostGbr.postRawJsonTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid())).enqueue(new Callback<GetStatus>() {
+                                            @Override
+                                            public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                                try {
+                                                    Toast.makeText(getActivity(), response.body().getMessage() + "Ibid", Toast.LENGTH_SHORT).show();
+                                                } catch (Exception e) {
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<GetStatus> call, Throwable t) {
+                                                Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                        apiServicePostGbr.postRawJsonTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
+                                            @Override
+                                            public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
+                                                try {
+                                                    Toast.makeText(getActivity(), response.body().getMessage() + "Customer", Toast.LENGTH_SHORT).show();
+                                                } catch (Exception e) {
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<GetStatus> call, Throwable t) {
+                                                Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    } catch (Exception e){
+
+                                    }
+
+
                                     Log.i("info", "post submitted to API." + getStatus);
                                     try {
                                             pDialog.hide();
@@ -374,58 +428,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
 
 
 
-                                try{
-                                    postGambarService.postRawJsonChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
-                                        @Override
-                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                            try {
-                                                Toast.makeText(getActivity(), response.body().getMessage() + "Ceklist", Toast.LENGTH_SHORT).show();
-                                            } catch (Exception e) {
 
-                                            }
-
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<GetStatus> call, Throwable t) {
-                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-                                    postGambarService.postRawJsonTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid())).enqueue(new Callback<GetStatus>() {
-                                        @Override
-                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                            try {
-                                                Toast.makeText(getActivity(), response.body().getMessage() + "Ibid", Toast.LENGTH_SHORT).show();
-                                            } catch (Exception e) {
-
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<GetStatus> call, Throwable t) {
-                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-                                    postGambarService.postRawJsonTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
-                                        @Override
-                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                            try {
-                                                Toast.makeText(getActivity(), response.body().getMessage() + "Customer", Toast.LENGTH_SHORT).show();
-                                            } catch (Exception e) {
-
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<GetStatus> call, Throwable t) {
-                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                } catch (Exception e){
-
-                                }
 
 
                                 Log.i("info", "post submitted to API." + response.body());
