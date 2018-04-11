@@ -1,9 +1,18 @@
 package com.example.android.ibidsera.view.fragment.migrate;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.print.PdfPrint;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintJob;
+import android.print.PrintManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.RxLazyFragment;
@@ -27,11 +37,14 @@ import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.model.homelist.StaticUnitHomelist;
 import com.example.android.ibidsera.model.homelist.UnitMasukKeluarHomelist;
 import com.example.android.ibidsera.service.RetrofitHelper;
+import com.example.android.ibidsera.util.ApiConstants;
+import com.example.android.ibidsera.util.PermissionUtils;
 import com.example.android.ibidsera.util.RetrofitUtil;
 import com.example.android.ibidsera.view.fragment.DetailKeluar;
 import com.example.android.ibidsera.view.fragment.UnitKeluar;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -170,7 +183,7 @@ public class UnitKeluarFrag extends RxLazyFragment {
                     }
                 }
                 textStyle(type, row, param2, tipe.concat(" " + lu.get(i).getAuctiondetail().getModel()).concat(" " + lu.get(i).getAuctiondetail().getTransmisi()).concat(" " + lu.get(i).getAuctiondetail().getTahun()));
-                imgPrint(printBtn, row, paramImg, lu.get(i).getAuction().getIdauction_item());
+                imgPrint(printBtn, row, paramImg, lu.get(i).getAuction().getIdauction_item(),lu.get(i).getAuction().getNo_polisi());
                 tl.addView(row);
             }
         }catch (Exception e){}
@@ -198,7 +211,7 @@ public class UnitKeluarFrag extends RxLazyFragment {
         row.addView(imageButton);
     }
 
-    public void imgPrint(ImageButton imageButton, TableRow row, TableRow.LayoutParams imgParam, int idUnitKeluar){
+    public void imgPrint(ImageButton imageButton, TableRow row, TableRow.LayoutParams imgParam, int idUnitKeluar, String nopol){
         imageButton.setLayoutParams(imgParam);
         Bitmap bmp= BitmapFactory.decodeResource(getResources(), R.drawable.ic_print);
         Bitmap resizedbitmap=Bitmap.createScaledBitmap(bmp, 30, imgParam.height, true);
@@ -207,7 +220,7 @@ public class UnitKeluarFrag extends RxLazyFragment {
         imageButton.setOnClickListener(v -> {
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             WebView wv = new WebView(getActivity());
-            wv.loadUrl("http:\\alpha.ibid.astra.co.id/backend/adms/pdi/printout/index/6/" + idUnitKeluar );
+            wv.loadUrl(ApiConstants.PRINT_HOST + idUnitKeluar );
             wv.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -219,15 +232,59 @@ public class UnitKeluarFrag extends RxLazyFragment {
 
             alert.setView(wv);
             alert.setCancelable(false);
-            alert.setNegativeButton("Tutup", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
+            alert.setNegativeButton("Tutup", ((dialogInterface, i) -> {
+                dialogInterface.dismiss();
+                createWebPrintJob(wv, nopol);
+                }));
             alert.show();
         });
         row.addView(imageButton);
     }
+
+
+    private void createWebPrintJob(WebView webView, String nopol) {
+        int MyVersion = Build.VERSION.SDK_INT;
+        if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
+            if (!PermissionUtils.checkIfAlreadyhavePermission(getActivity())) {
+                PermissionUtils.verifyStoragePermissions(getActivity());
+            } else {
+                String jobName = getString(R.string.app_name) + " Document";
+                PrintAttributes attributes = new PrintAttributes.Builder()
+                        .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+                        .setResolution(new PrintAttributes.Resolution("pdf", "pdf", 600, 600))
+                        .setMinMargins(PrintAttributes.Margins.NO_MARGINS).build();
+                File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS + "/IBID/Unit_Masuk/");
+                PdfPrint pdfPrint = new PdfPrint(attributes);
+                pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, "UnitMasuk_" + nopol + "_" + System.currentTimeMillis() + ".pdf");
+            }
+        } else {
+            String jobName = getString(R.string.app_name) + " Document";
+            PrintAttributes attributes = new PrintAttributes.Builder()
+                    .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+                    .setResolution(new PrintAttributes.Resolution("pdf", "pdf", 600, 600))
+                    .setMinMargins(PrintAttributes.Margins.NO_MARGINS).build();
+            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS + "/IBID/Unit_Masuk/");
+            PdfPrint pdfPrint = new PdfPrint(attributes);
+            pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, "UnitMasuk_" + nopol + "_" + System.currentTimeMillis() + ".pdf");
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PermissionUtils.REQUEST_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //granted
+                } else {
+                    //not granted
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
 
 }
