@@ -60,6 +60,14 @@ public interface APICall {
     @POST("pdi/UnitMasuk/gambarttdcust") Call<GetStatus> postRawJsonGbrMasukTtdCust(@Body PhotoTtdCustomer base64);
 
 
+    @POST("pdi/UnitMasuk/gambarceklis") Observable<GetStatus> postObsRawJsonGbrMasukChecklist(@Body PhotoChecklist base64);
+    @POST("pdi/UnitMasuk/gambarttdibid") Observable<GetStatus> postObsRawJsonGbrMasukTtdIbid(@Body PhotoTtdIbid base64);
+    @POST("pdi/UnitMasuk/gambarttdcust") Observable<GetStatus> postObsRawJsonGbrMasukTtdCust(@Body PhotoTtdCustomer base64);
+
+    @POST("pdi/unitkeluar/gambarceklis") Observable<GetStatus> postObsRawGbrKeluarJsonChecklist(@Body PhotoChecklist base64);
+    @POST("pdi/unitkeluar/gambarttdibid") Observable<GetStatus> postObsRawGbrKeluarJsonTtdIbid(@Body PhotoTtdIbid base64);
+    @POST("pdi/unitkeluar/gambarttdcust") Observable<GetStatus> postObsRawGbrKeluarJsonTtdCust(@Body PhotoTtdCustomer base64);
+
     @POST("pdi/unitkeluar/gambarceklis") Call<GetStatus> postRawJsonChecklist(@Body PhotoChecklist base64);
     @POST("pdi/unitkeluar/gambarttdibid") Call<GetStatus> postRawJsonTtdIbid(@Body PhotoTtdIbid base64);
     @POST("pdi/unitkeluar/gambarttdcust") Call<GetStatus> postRawJsonTtdCust(@Body PhotoTtdCustomer base64);
