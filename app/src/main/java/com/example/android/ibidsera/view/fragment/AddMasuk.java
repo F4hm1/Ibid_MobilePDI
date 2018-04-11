@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.Html;
@@ -59,15 +60,30 @@ import com.example.android.ibidsera.util.HelperConstant;
 import com.example.android.ibidsera.util.RetrofitUtil;
 import com.example.android.ibidsera.view.activity.PemeriksaanActivity;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.trello.rxlifecycle2.RxLifecycle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -204,6 +220,8 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
     private static final int KEY_PEMERIKSAAN_ACTIVITY = 1009;
 
     private InsertUnit requestUnit;
+    private String tempString= "";
+    private String selectedString= "";
 
     @Override
     public int getLayoutResId() {
@@ -293,6 +311,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
         //getKomponen(apiCall);
         //cpvStop(cpv, bp);
 
+
         nopol.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 if (onClickSpinner) {
@@ -352,8 +371,42 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(getStatus -> {
 
-                                    try{
-                                        apiServicePostGbr.postRawJsonChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
+                                    Observable<GetStatus> uploadChecklist =  apiServicePostGbr.postObsRawJsonGbrMasukChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist()));
+                                    Observable<GetStatus> uploadTtdIbid =  apiServicePostGbr.postObsRawJsonGbrMasukTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid()));
+                                    Observable<GetStatus> uploadTtdCustomer =  apiServicePostGbr.postObsRawJsonGbrMasukTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer()));
+
+                                    Observable.concat(uploadChecklist, uploadTtdIbid, uploadTtdCustomer)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new Observer<GetStatus>() {
+                                                @Override
+                                                public void onSubscribe(@NonNull Disposable d) {
+
+                                                }
+
+                                                @Override
+                                                public void onNext(@NonNull GetStatus getStatus) {
+
+                                                }
+
+                                                @Override
+                                                public void onError(@NonNull Throwable e) {
+
+                                                }
+
+                                                @Override
+                                                public void onComplete() {
+                                                    HelperConstant.mTempBitmapNiaga = null;
+                                                    HelperConstant.mTempBitmapSedan = null;
+                                                    pDialog.hide();
+                                                    alertDialog("Proses Penambahan Pemeriksaan Unit Masuk Berhasil", 1);
+                                                }
+                                            });
+
+
+
+                                    /*try{
+                                        apiServicePostGbr.postRawJsonGbrMasukChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
                                             @Override
                                             public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                                                 try {
@@ -370,7 +423,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                                             }
                                         });
 
-                                        apiServicePostGbr.postRawJsonTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid())).enqueue(new Callback<GetStatus>() {
+                                        apiServicePostGbr.postRawJsonGbrMasukTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid())).enqueue(new Callback<GetStatus>() {
                                             @Override
                                             public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                                                 try {
@@ -386,7 +439,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                                             }
                                         });
 
-                                        apiServicePostGbr.postRawJsonTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
+                                        apiServicePostGbr.postRawJsonGbrMasukTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
                                             @Override
                                             public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                                                 try {
@@ -403,17 +456,19 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                                         });
                                     } catch (Exception e){
 
-                                    }
+                                    }*/
 
 
-                                    Log.i("info", "post submitted to API." + getStatus);
+
+
+                                    /*Log.i("info", "post submitted to API." + getStatus);
                                     try {
                                             pDialog.hide();
                                             alertDialog("Proses Penambahan Pemeriksaan Unit Masuk Berhasil", 1);
                                             HelperConstant.mTempBitmapNiaga = null;
                                             HelperConstant.mTempBitmapSedan = null;
                                     } catch (Exception e) {
-                                    }
+                                    }*/
                                 }, throwable -> {
                                     pDialog.hide();
 //                            errorRetrofit(call, t);
@@ -534,6 +589,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
             }
         });
     }*/
+
 
 
     private void getDetailUnitById(int auctionItemId, int position, APICall auctionService) throws NumberFormatException {
@@ -883,8 +939,8 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                        }
                        ArrayAdapter<NoPolUnit> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, listNoPolUnit);
                        nopol.setAdapter(adapter);
-                       nopol.setThreshold(1);
-                       nopol.showDropDown();
+                       nopol.setThreshold(3);
+                       if(listNoPolUnit.size() != 1) nopol.showDropDown();
                    }, throwable -> {
                        cpvStop(cpv, bp);
                        alertDialog(String.valueOf(throwable), 2);
