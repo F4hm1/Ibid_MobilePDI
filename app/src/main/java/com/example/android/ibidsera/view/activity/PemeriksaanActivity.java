@@ -28,7 +28,6 @@ import com.example.android.ibidsera.base.BaseActivity;
 import com.example.android.ibidsera.misc.GbrActivity;
 import com.example.android.ibidsera.util.HelperConstant;
 import com.example.android.ibidsera.view.fragment.DrawView;
-import com.example.android.ibidsera.view.fragment.migrate.BackupDrawView;
 
 import java.io.ByteArrayOutputStream;
 
@@ -137,7 +136,7 @@ public class PemeriksaanActivity extends AppCompatActivity {
     }
 
     public void getAlertNotes(){
-        mNotes.setTextSize(14f);
+        mNotes.setTextSize(18f);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Masukan catatan kerusakan : ");
         alertDialog.setCancelable(true);
@@ -164,8 +163,8 @@ public class PemeriksaanActivity extends AppCompatActivity {
 
 
     private void saveBitmap(Bitmap bitmap) {
-        /*Canvas canvas = new Canvas(bitmap);
-        mLinCanvas.draw(canvas);*/
+        Canvas canvas = new Canvas(bitmap);
+        mLinCanvas.draw(canvas);
 
         Intent i = new Intent();
         ByteArrayOutputStream bs = new ByteArrayOutputStream();
