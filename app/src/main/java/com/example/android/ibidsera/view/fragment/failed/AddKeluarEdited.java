@@ -1,4 +1,4 @@
-package com.example.android.ibidsera.view.fragment;
+package com.example.android.ibidsera.view.fragment.failed;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -33,27 +33,23 @@ import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.RxLazyFragment;
 import com.example.android.ibidsera.model.GetStatus;
 import com.example.android.ibidsera.model.InsertUnit;
 import com.example.android.ibidsera.model.NoPolUnit;
-import com.example.android.ibidsera.model.PhotoChecklist;
-import com.example.android.ibidsera.model.PhotoTtdCustomer;
-import com.example.android.ibidsera.model.PhotoTtdIbid;
 import com.example.android.ibidsera.model.Sign;
 import com.example.android.ibidsera.model.SignValue;
 import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
+import com.example.android.ibidsera.model.UnitMasukKeluar;
 import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.service.APICall;
 import com.example.android.ibidsera.service.RetrofitHelper;
 import com.example.android.ibidsera.util.HelperConstant;
-import com.example.android.ibidsera.util.RetrofitUtil;
-import com.example.android.ibidsera.view.activity.GambarActivity;
 import com.example.android.ibidsera.view.activity.PemeriksaanActivity;
+import com.example.android.ibidsera.view.fragment.Signature;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.ArrayList;
@@ -62,11 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,10 +67,11 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * Created by Yosefricaro on 24/07/2017.
+ * Created by Fahmi Hakim on 22/03/2018.
+ * for SERA
  */
 
-public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelectedListener {
+public class AddKeluarEdited extends RxLazyFragment implements AdapterView.OnItemSelectedListener {
     @BindView(R.id.nopol_title)
     TextView nopol_title;
     @BindView(R.id.nama_title)
@@ -160,9 +153,6 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
     @BindView(R.id.toggle_checklistable)
     Switch mToggleChecklist;
 
-    @BindView(R.id.toggle_reasonout)
-    Switch mToggleReasonOut;
-
     @BindView(R.id.et_checklist_not)
     EditText mEtChecklistNot;
 
@@ -180,12 +170,6 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
 
     @BindView(R.id.cases)
     EditText cases;
-
-    @BindView(R.id.txtMenangLelang)
-    TextView txtMenangLelang;
-
-    @BindView(R.id.txtTidakLaku)
-    TextView txtTidakLaku;
 
     @BindView(R.id.pool)
     EditText pool;
@@ -230,25 +214,11 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
             }
         });
 
-        mToggleReasonOut.setOnCheckedChangeListener((compoundButton, b) -> {
-            if (b) {
-                txtTidakLaku.setVisibility(View.GONE);
-                txtMenangLelang.setVisibility(View.VISIBLE);
-            } else {
-                txtMenangLelang.setVisibility(View.GONE);
-                txtTidakLaku.setVisibility(View.VISIBLE);
-            }
-        });
-
         mRadioSedan.setChecked(true);
 
         cpvStart(cpv, bp);
-        APICall auctionServicePOST = RetrofitHelper.postUnitKeluarApiStokServiceALPHA();
+
         APICall auctionService = RetrofitHelper.getUnitKeluarApiTaksasiServiceALPHA();
-
-        //AuctionService auctionServiceOld = RetrofitUtil.getAuctionService();
-
-
         List<String> ls = new ArrayList<>();
         ProgressDialog pDialog = new ProgressDialog(getContext());
 
@@ -256,7 +226,6 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
         setAllCaps();
         setAllDisabled();
         setRequired();
-
 
         datePicker(tgl_pemeriksaan, 0);
         getTimeSpinner();
@@ -305,271 +274,44 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
                 final Handler handler = new Handler();
                 handler.postDelayed(() -> {
 
-                    auctionServicePOST.insertUnitKeluar(requestUnit)
+                    auctionService.insertUnitKeluar(requestUnit)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(getStatus -> {
-
-                                Observable<GetStatus> uploadChecklist =  auctionService.postObsRawGbrKeluarJsonChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist()));
-                                Observable<GetStatus> uploadTtdIbid =  auctionService.postObsRawGbrKeluarJsonTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid()));
-                                Observable<GetStatus> uploadTtdCustomer =  auctionService.postObsRawGbrKeluarJsonTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer()));
-
-                                Observable.concat(uploadChecklist, uploadTtdIbid, uploadTtdCustomer)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Observer<GetStatus>() {
-                                            @Override
-                                            public void onSubscribe(@NonNull Disposable d) {
-
-                                            }
-
-                                            @Override
-                                            public void onNext(@NonNull GetStatus getStatus) {
-
-                                            }
-
-                                            @Override
-                                            public void onError(@NonNull Throwable e) {
-
-                                            }
-
-                                            @Override
-                                            public void onComplete() {
-                                                HelperConstant.mTempBitmapNiaga = null;
-                                                HelperConstant.mTempBitmapSedan = null;
-                                                pDialog.hide();
-                                                alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
-                                            }
-                                        });
-
-                               /* try{
-                                    auctionService.postRawJsonChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
-                                        @Override
-                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                            try {
-                                                Toast.makeText(getActivity(), response.body().getMessage() + "Ceklist", Toast.LENGTH_SHORT).show();
-                                            } catch (Exception e) {
-                                                Toast.makeText(getActivity(), String.valueOf(e), Toast.LENGTH_SHORT).show();
-                                            }
-
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<GetStatus> call, Throwable t) {
-                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-
-
-                                    auctionService.postRawJsonTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid())).enqueue(new Callback<GetStatus>() {
-                                        @Override
-                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                            try {
-                                                Toast.makeText(getActivity(), response.body().getMessage() + "Ibid", Toast.LENGTH_SHORT).show();
-                                            } catch (Exception e) {
-                                                Toast.makeText(getActivity(), String.valueOf(e), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<GetStatus> call, Throwable t) {
-                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-                                    auctionService.postRawJsonTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
-                                        @Override
-                                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                            try {
-                                                Toast.makeText(getActivity(), response.body().getMessage() + "Customer", Toast.LENGTH_SHORT).show();
-                                            } catch (Exception e) {
-                                                Toast.makeText(getActivity(), String.valueOf(e), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<GetStatus> call, Throwable t) {
-                                            Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                } catch (Exception e){
-
-                                }*/
-
-
-
-                                /*try {
-                                    pDialog.hide();
-                                    alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
-                                    HelperConstant.mTempBitmapNiaga = null;
-                                    HelperConstant.mTempBitmapSedan = null;
+                                try {
+                                    if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
+                                        pDialog.hide();
+                                        alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
+                                        HelperConstant.mTempBitmapNiaga = null;
+                                        HelperConstant.mTempBitmapSedan = null;
+                                    } else {
+                                        pDialog.hide();
+                                        alertDialog(getStatus.getMessage(), 1);
+                                    }
                                 } catch (Exception e) {
-                                }*/
+                                }
 
                             }, throwable -> {
                                 pDialog.hide();
-                            errorRetrofit(null, throwable);
+//                            errorRetrofit(call, t);
                                 alertDialog("Terdapat kesalahan ketika menyimpan data", 1);
                             });
 
-                    //////////---------------------------
-
-/*                    auctionServiceOld.insertUnitMasuk(requestUnit).enqueue(new Callback<GetStatus>() {
+                    /*auctionService.insertUnitKeluar(requestUnit).enqueue(new Callback<GetStatus>() {
                         @Override
                         public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
                             GetStatus getStatus = response.body();
                             Log.i("info", "post submitted to API." + response.body());
-
-*//*
-                            try{
-                                auctionService.postRawJsonChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
-                                    @Override
-                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                        try {
-                                            Toast.makeText(getActivity(), response.body().getMessage() + "Ceklist", Toast.LENGTH_SHORT).show();
-                                        } catch (Exception e) {
-
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<GetStatus> call, Throwable t) {
-                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-
-
-                                auctionService.postRawJsonTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid())).enqueue(new Callback<GetStatus>() {
-                                    @Override
-                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                        try {
-                                            Toast.makeText(getActivity(), response.body().getMessage() + "Ibid", Toast.LENGTH_SHORT).show();
-                                        } catch (Exception e) {
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<GetStatus> call, Throwable t) {
-                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-                                auctionService.postRawJsonTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
-                                    @Override
-                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                        try {
-                                            Toast.makeText(getActivity(), response.body().getMessage() + "Customer", Toast.LENGTH_SHORT).show();
-                                        } catch (Exception e) {
-
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<GetStatus> call, Throwable t) {
-                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            } catch (Exception e){
-
-                            }
-*//*
-
-
                             try {
-                                pDialog.hide();
-                                alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
-                                HelperConstant.mTempBitmapNiaga = null;
-                                HelperConstant.mTempBitmapSedan = null;
-                            } catch (Exception e) {
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<GetStatus> call, Throwable t) {
-                            pDialog.hide();
-//                            errorRetrofit(call, t);
-                            alertDialog("Terdapat kesalahan ketika menyimpan data", 1);
-
-                        }
-                    });*/
-
-
-
-
-                    ///////////------------------
-
-
-
-
-                    /*auctionService.insertUnitKeluarFix(requestUnit).enqueue(new Callback<GetStatus>() {
-                        @Override
-                        public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                            GetStatus getStatus = response.body();
-                            Log.i("info", "post submitted to API." + response.body());
-
-                            try{
-                                auctionService.postRawJsonChecklist(new PhotoChecklist(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getGambarchecklist())).enqueue(new Callback<GetStatus>() {
-                                    @Override
-                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                        try {
-                                            Toast.makeText(getActivity(), response.body().getMessage() + "Ceklist", Toast.LENGTH_SHORT).show();
-                                        } catch (Exception e) {
-
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<GetStatus> call, Throwable t) {
-                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-
-
-                                auctionService.postRawJsonTtdIbid(new PhotoTtdIbid(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdibid())).enqueue(new Callback<GetStatus>() {
-                                    @Override
-                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                        try {
-                                            Toast.makeText(getActivity(), response.body().getMessage() + "Ibid", Toast.LENGTH_SHORT).show();
-                                        } catch (Exception e) {
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<GetStatus> call, Throwable t) {
-                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-                                auctionService.postRawJsonTtdCust(new PhotoTtdCustomer(String.valueOf(requestUnit.getIdauctionitem()), requestUnit.getTtdcustomer())).enqueue(new Callback<GetStatus>() {
-                                    @Override
-                                    public void onResponse(Call<GetStatus> call, Response<GetStatus> response) {
-                                        try {
-                                            Toast.makeText(getActivity(), response.body().getMessage() + "Customer", Toast.LENGTH_SHORT).show();
-                                        } catch (Exception e) {
-
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<GetStatus> call, Throwable t) {
-                                        Toast.makeText(getActivity(), String.valueOf(t), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            } catch (Exception e){
-
-                            }
-
-
-                            try {
+                                if (getStatus.getStatus() == 200 && getStatus.getId_pemeriksaan_item() != 0) {
                                     pDialog.hide();
                                     alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
                                     HelperConstant.mTempBitmapNiaga = null;
                                     HelperConstant.mTempBitmapSedan = null;
+                                } else {
+                                    pDialog.hide();
+                                    alertDialog(getStatus.getMessage(), 1);
+                                }
                             } catch (Exception e) {
                             }
                         }
@@ -844,7 +586,6 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
         return getAdapter(list);
     }
 
-
     public InsertUnit setInsertUnit(Unit lUnit) {
         InsertUnit insertUnit = new InsertUnit();
         insertUnit.setIdpemeriksaanitem(lUnit.getKomponen().get(0).getId_pemeriksaanitem());
@@ -924,12 +665,6 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
             insertUnit.setReasonunchecklist("");
         }
 
-        if (mToggleReasonOut.isChecked()) {
-            insertUnit.setStatuspdiout(1);
-        } else {
-            insertUnit.setStatuspdiout(0);
-        }
-
         return insertUnit;
     }
 
@@ -960,14 +695,13 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
     List<NoPolUnit> listNoPolUnit = new ArrayList<>();
 
     private void getDropdownList(APICall auctionService, List<String> ls) {
-        if (!nopol.getText().toString().equals("") && nopol.getText().toString().length() > 1) {
+        if (!nopol.getText().toString().equals("")) {
 
-            cpvStart(cpv, bp);
             auctionService.getNoPolUnitK(nopol.getText().toString())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(noPolUnits -> {
-                        cpvStop(cpv, bp);
+
                         listNoPolUnit.clear();
                         try {
                             for (int i = 0; i < noPolUnits.size(); i++) {

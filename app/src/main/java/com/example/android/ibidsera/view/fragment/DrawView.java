@@ -416,7 +416,7 @@ public class DrawView extends View implements View.OnTouchListener {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setDither(true);
-        paint.setTextSize(80f);
+        paint.setTextSize(50f);
         paint.setTypeface(Typeface.DEFAULT_BOLD);
         paint.setColor(Color.parseColor(color));
         paint.setStyle(Paint.Style.STROKE);
