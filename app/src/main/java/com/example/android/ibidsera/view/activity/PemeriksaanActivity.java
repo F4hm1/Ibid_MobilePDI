@@ -101,8 +101,11 @@ public class PemeriksaanActivity extends AppCompatActivity {
         if (lampiranType == HelperConstant.LAMPIRAN_SEDAN) {
             bitmapBackground = BitmapFactory.decodeResource(resources, R.drawable.ibid_sedan);
             decreasedBitmapScaleSize = 0.7f;
-        } else {
+        } else if (lampiranType == HelperConstant.LAMPIRAN_NIAGA) {
             bitmapBackground = BitmapFactory.decodeResource(resources, R.drawable.ibid_niaga);
+            decreasedBitmapScaleSize = 1f;
+        } else {
+            bitmapBackground = BitmapFactory.decodeResource(resources, R.drawable.ibid_pickup);
             decreasedBitmapScaleSize = 1f;
         }
 
@@ -112,6 +115,8 @@ public class PemeriksaanActivity extends AppCompatActivity {
             mDrawView.setPathSaved(HelperConstant.sPathSavedSedan);
         } else if (lampiranType == HelperConstant.LAMPIRAN_NIAGA && HelperConstant.sPathSavedNiaga != null) {
             mDrawView.setPathSaved(HelperConstant.sPathSavedNiaga);
+        } else if (lampiranType == HelperConstant.LAMPIRAN_PICKUP && HelperConstant.sPathSavedPickup != null) {
+            mDrawView.setPathSaved(HelperConstant.sPathSavedPickup);
         }
 
         mLinCanvas.addView(mDrawView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -173,9 +178,12 @@ public class PemeriksaanActivity extends AppCompatActivity {
         if (lampiranType == HelperConstant.LAMPIRAN_SEDAN) {
             HelperConstant.mTempBitmapSedan = bitmap;
             HelperConstant.sPathSavedSedan = mDrawView.getPathSaved();
-        } else {
+        } else if (lampiranType == HelperConstant.LAMPIRAN_NIAGA) {
             HelperConstant.mTempBitmapNiaga = bitmap;
             HelperConstant.sPathSavedNiaga = mDrawView.getPathSaved();
+        } else {
+            HelperConstant.mTempBitmapPickup = bitmap;
+            HelperConstant.sPathSavedPickup = mDrawView.getPathSaved();
         }
 
 //        i.putExtra("bitmapArray", bs.toByteArray());

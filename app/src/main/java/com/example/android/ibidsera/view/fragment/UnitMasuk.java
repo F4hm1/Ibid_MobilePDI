@@ -24,6 +24,8 @@ import com.example.android.ibidsera.model.StaticUnit;
 import com.example.android.ibidsera.model.Unit;
 import com.example.android.ibidsera.model.UnitMasukKeluar;
 import com.example.android.ibidsera.model.api.AuctionService;
+import com.example.android.ibidsera.service.APICall;
+import com.example.android.ibidsera.service.RetrofitHelper;
 import com.example.android.ibidsera.util.RetrofitUtil;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
@@ -85,6 +87,8 @@ public class UnitMasuk extends BaseFragment {
         AuctionService auctionService = RetrofitUtil.getAuctionService();
 
         if (nopol != null && !nopol.isEmpty()) {
+
+
             auctionService.getSearchUnitm(nopol).enqueue(new Callback<List<UnitMasukKeluar>>() {
                 @Override
                 public void onResponse(Call<List<UnitMasukKeluar>> call, Response<List<UnitMasukKeluar>> response) {

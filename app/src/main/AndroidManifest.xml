@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -18,6 +20,10 @@
         android:roundIcon="@drawable/mchecklist"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="c80f2d88395b147095134af3abfac5e4ff22886b"
+            />
         <activity
             android:name=".view.activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -57,7 +63,6 @@
             <!-- </intent-filter> -->
 
         </activity>
-        <activity android:name=".misc.GbrActivity" />
         <activity android:name=".view.fragment.migrate.BackupPemeriksaanActivity" />
         <activity android:name=".view.activity.GambarActivity">
             <!--<intent-filter>

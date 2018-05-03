@@ -1,7 +1,5 @@
 package com.example.android.ibidsera.view.fragment.migrate;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,9 +8,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.print.PdfPrint;
 import android.print.PrintAttributes;
-import android.print.PrintDocumentAdapter;
-import android.print.PrintJob;
-import android.print.PrintManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,22 +21,15 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.RxLazyFragment;
 import com.example.android.ibidsera.model.Attribute;
-import com.example.android.ibidsera.model.StaticUnit;
-import com.example.android.ibidsera.model.UnitMasukKeluar;
-import com.example.android.ibidsera.model.api.AuctionService;
 import com.example.android.ibidsera.model.homelist.StaticUnitHomelist;
 import com.example.android.ibidsera.model.homelist.UnitMasukKeluarHomelist;
 import com.example.android.ibidsera.service.RetrofitHelper;
 import com.example.android.ibidsera.util.ApiConstants;
 import com.example.android.ibidsera.util.PermissionUtils;
-import com.example.android.ibidsera.util.RetrofitUtil;
-import com.example.android.ibidsera.view.fragment.DetailKeluar;
-import com.example.android.ibidsera.view.fragment.UnitKeluar;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.io.File;
@@ -50,9 +38,6 @@ import java.util.List;
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Fahmi Hakim on 08/03/2018.
@@ -220,7 +205,7 @@ public class UnitKeluarFrag extends RxLazyFragment {
         imageButton.setOnClickListener(v -> {
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             WebView wv = new WebView(getActivity());
-            wv.loadUrl(ApiConstants.PRINT_HOST + idUnitKeluar );
+            wv.loadUrl(ApiConstants.PRINT_OUT_HOST + idUnitKeluar );
             wv.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -253,9 +238,9 @@ public class UnitKeluarFrag extends RxLazyFragment {
                         .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
                         .setResolution(new PrintAttributes.Resolution("pdf", "pdf", 600, 600))
                         .setMinMargins(PrintAttributes.Margins.NO_MARGINS).build();
-                File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS + "/IBID/Unit_Masuk/");
+                File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS + "/IBID/Unit_Keluar/");
                 PdfPrint pdfPrint = new PdfPrint(attributes);
-                pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, "UnitMasuk_" + nopol + "_" + System.currentTimeMillis() + ".pdf");
+                pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, "UnitKeluar_" + nopol + "_" + System.currentTimeMillis() + ".pdf");
             }
         } else {
             String jobName = getString(R.string.app_name) + " Document";
@@ -263,9 +248,9 @@ public class UnitKeluarFrag extends RxLazyFragment {
                     .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
                     .setResolution(new PrintAttributes.Resolution("pdf", "pdf", 600, 600))
                     .setMinMargins(PrintAttributes.Margins.NO_MARGINS).build();
-            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS + "/IBID/Unit_Masuk/");
+            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS + "/IBID/Unit_Keluar/");
             PdfPrint pdfPrint = new PdfPrint(attributes);
-            pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, "UnitMasuk_" + nopol + "_" + System.currentTimeMillis() + ".pdf");
+            pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, "UnitKeluar_" + nopol + "_" + System.currentTimeMillis() + ".pdf");
         }
 
     }

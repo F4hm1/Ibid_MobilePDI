@@ -60,10 +60,10 @@ public interface AuctionService {
     @GET("http://ibidadmsdevservicestock.azurewebsites.net/index.php/pdi/search") Call<List<Unit>> getSearchPersiapan(@Query("nopolisi") String nopol);
 
 //    @GET("index.php/unitmasuk/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitm(@Path("nopol") String nopol);
-    @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/searchmasuk") Call<List<UnitMasukKeluar>> getSearchUnitm(@Query("nopolisi") String nopol);
+    @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/persiapan/search/") Call<List<UnitMasukKeluar>> getSearchUnitm(@Query("nopolisi") String nopol);
 
 //    @GET("index.php/unitkeluar/search/{nopol}?api_key=" + BuildConfig.API_KEY) Call<List<Unit>> getSearchUnitk(@Path("nopol") String nopol);
-    @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/searchkeluar") Call<List<UnitMasukKeluar>> getSearchUnitk(@Query("nopolisi") String nopol);
+    @GET("http://ibidadmsdevservicetaksasi.azurewebsites.net/index.php/pdi/persiapansudahkeluar/search") Call<List<UnitMasukKeluar>> getSearchUnitk(@Query("nopolisi") String nopol);
 
 
     @GET("index.php/masteritem/warna/{key}?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItemWarna(@Path("key") String key);

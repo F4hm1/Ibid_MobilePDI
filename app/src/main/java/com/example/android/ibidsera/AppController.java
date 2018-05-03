@@ -5,10 +5,13 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.androidnetworking.AndroidNetworking;
+import com.crashlytics.android.Crashlytics;
 import com.example.android.ibidsera.di.AppComponent;
 import com.example.android.ibidsera.di.AppModule;
 import com.example.android.ibidsera.di.DaggerAppComponent;
 import com.facebook.stetho.Stetho;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by Fahmi Hakim on 06/03/2018.
@@ -29,9 +32,12 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         mInstance = this;
         init();
         initDagger();
+
+
     }
 
     private void initDagger() {

@@ -13,5 +13,6 @@ public class ApiConstants { // http://alpha.ibid.astra.co.id/backend/service/tak
     public static final String ALPHA_TAKSASI_URL = "http://alpha.ibid.astra.co.id/backend/service/taksasi/";
     public static final String ALPHA_STOK_URL = "http://alpha.ibid.astra.co.id/backend/service/stok/";
 
-    public static final String PRINT_HOST = "http://alpha.ibid.astra.co.id/backend/adms/pdi/prints/index/6/";
+    public static final String PRINT_IN_HOST = "http://alpha.ibid.astra.co.id/backend/adms/pdi/prints/index/6/";
+    public static final String PRINT_OUT_HOST = "http://alpha.ibid.astra.co.id/backend/adms/pdi/printout/index/6/";
 }

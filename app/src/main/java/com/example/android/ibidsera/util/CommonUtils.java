@@ -16,7 +16,7 @@ import java.io.File;
 public class CommonUtils {
 
     /**
-     * 检查是否有网络
+     * Network Check
      */
     public static boolean isNetworkAvailable(Context context) {
         NetworkInfo info = getNetworkInfo(context);
@@ -25,7 +25,7 @@ public class CommonUtils {
 
 
     /**
-     * 检查是否是WIFI
+     * WIFI
      */
     public static boolean isWifi(Context context) {
         NetworkInfo info = getNetworkInfo(context);
@@ -39,7 +39,7 @@ public class CommonUtils {
 
 
     /**
-     * 检查是否是移动网络
+     * Conect by Mobile
      */
     public static boolean isMobile(Context context) {
         NetworkInfo info = getNetworkInfo(context);
@@ -58,7 +58,7 @@ public class CommonUtils {
 
 
     /**
-     * 检查SD卡是否存在
+     * SD Card Available
      */
     private static boolean checkSdCard() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
@@ -66,7 +66,7 @@ public class CommonUtils {
 
 
     /**
-     * 获取手机SD卡总空间
+     * SDCARD Size
      */
     private static long getSDcardTotalSize() {
         if (checkSdCard()) {
@@ -82,7 +82,7 @@ public class CommonUtils {
 
 
     /**
-     * 获取SDka可用空间
+     * SDCARD AVAILABLE
      */
     private static long getSDcardAvailableSize() {
         if (checkSdCard()) {
@@ -98,7 +98,7 @@ public class CommonUtils {
 
 
     /**
-     * 获取手机内部存储总空间
+     * Phone Size
      */
     public static long getPhoneTotalSize() {
         if (!checkSdCard()) {
@@ -114,7 +114,7 @@ public class CommonUtils {
 
 
     /**
-     * 获取手机内存存储可用空间
+     * Phone Size
      */
     public static long getPhoneAvailableSize() {
         if (!checkSdCard()) {

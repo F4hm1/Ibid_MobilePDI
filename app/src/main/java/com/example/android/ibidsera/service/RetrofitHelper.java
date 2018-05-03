@@ -32,7 +32,8 @@ public class RetrofitHelper {
     private static OkHttpClient mOkHttpClient;
 
     static {
-        initOkHttpClient();
+        //initOkHttpClient();
+        initOkHttpClientCache();
     }
 
 
@@ -101,7 +102,7 @@ public class RetrofitHelper {
     }
 
     private static <T> T createApiStokMasuk(Class<T> clazz, String baseUrl) {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        /*HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -111,18 +112,18 @@ public class RetrofitHelper {
         // add logging as last interceptor
         httpClient.addInterceptor(logging);  // <-- this is the important line!
         httpClient.connectTimeout(120, TimeUnit.SECONDS);
-        httpClient.readTimeout(120, TimeUnit.SECONDS);
+        httpClient.readTimeout(120, TimeUnit.SECONDS);*/
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiConstants.ALPHA_STOK_URL) //BuildConfig.URI
+                .client(mOkHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(RetrofitUtil.getGson()))
-                .client(httpClient.build())
                 .build();
         return retrofit.create(clazz);
     }
 
     private static <T> T createApiTaksasiKeluar(Class<T> clazz, String baseUrl) {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        /*HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -132,18 +133,18 @@ public class RetrofitHelper {
         // add logging as last interceptor
         httpClient.addInterceptor(logging);  // <-- this is the important line!
         httpClient.connectTimeout(120, TimeUnit.SECONDS);
-        httpClient.readTimeout(120, TimeUnit.SECONDS);
+        httpClient.readTimeout(120, TimeUnit.SECONDS);*/
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiConstants.ALPHA_TAKSASI_URL) //BuildConfig.URI
+                .client(mOkHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(RetrofitUtil.getGson()))
-                .client(httpClient.build())
                 .build();
         return retrofit.create(clazz);
     }
 
     private static <T> T createApiPostAddKeluar(Class<T> clazz, String baseUrl) {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        /*HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -153,12 +154,12 @@ public class RetrofitHelper {
         // add logging as last interceptor
         httpClient.addInterceptor(logging);  // <-- this is the important line!
         httpClient.connectTimeout(120, TimeUnit.SECONDS);
-        httpClient.readTimeout(120, TimeUnit.SECONDS);
+        httpClient.readTimeout(120, TimeUnit.SECONDS);*/
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiConstants.ALPHA_STOK_URL) //BuildConfig.URI
+                .client(mOkHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(RetrofitUtil.getGson()))
-                .client(httpClient.build())
                 .build();
         return retrofit.create(clazz);
     }
@@ -188,7 +189,6 @@ public class RetrofitHelper {
     }
 
 
-
     private static class UserAgentInterceptor implements Interceptor {
         @Override
         public Response intercept(Chain chain) throws IOException {
@@ -202,22 +202,40 @@ public class RetrofitHelper {
     }
 
 
+    private static void initOkHttpClientCache() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        if (mOkHttpClient == null) {
+            synchronized (RetrofitHelper.class) {
+                if (mOkHttpClient == null) {
+                    Cache cache = new Cache(new File(AppController.getInstance().getCacheDir(), "HttpCache"), 1024 * 1024 * 10);
+                    mOkHttpClient = new OkHttpClient.Builder()
+                            .cache(cache)
+                            .addInterceptor(interceptor)
+                            .addNetworkInterceptor(new CacheInterceptor())
+                            .addNetworkInterceptor(new StethoInterceptor())
+                            .retryOnConnectionFailure(true)
+                            .connectTimeout(120, TimeUnit.SECONDS)
+                            .writeTimeout(80, TimeUnit.SECONDS)
+                            .readTimeout(100, TimeUnit.SECONDS)
+                            .addInterceptor(new UserAgentInterceptor())
+                            .build();
+                }
+            }
+        }
+    }
+
+
     private static class CacheInterceptor implements Interceptor {
         @Override
         public Response intercept(Chain chain) throws IOException {
-            int maxAge = 60 * 60;
+            int maxAge = 0;
             int maxStale = 60 * 60 * 24;
             Request request = chain.request();
-            request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
-            Response response = chain.proceed(request);
-            response = response.newBuilder()
-                    .removeHeader("Pragma")
-                    .header("Cache-Control", "public, max-age=" + maxAge)
-                    .build();
-            /*if (CommonUtils.isNetworkAvailable(AppController.getInstance())) {
+            if (CommonUtils.isNetworkAvailable(AppController.getInstance())) {
                 request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
             } else {
-                request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
+                request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
             }
             Response response = chain.proceed(request);
             if (CommonUtils.isNetworkAvailable(AppController.getInstance())) {
@@ -230,12 +248,10 @@ public class RetrofitHelper {
                         .removeHeader("Pragma")
                         .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
                         .build();
-            }*/
+            }
             return response;
         }
     }
-
-
 
 }
 

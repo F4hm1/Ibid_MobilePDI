@@ -16,9 +16,10 @@
         <Button
             android:id="@+id/notes"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="8dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
+            android:textSize="12sp"
             android:background="@color/colorAccent"
             android:text="Tambah Catatan"
             android:textColor="@android:color/white"
@@ -27,7 +28,7 @@
         <Button
             android:id="@+id/clear"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:background="@color/red"
@@ -38,7 +39,7 @@
         <Button
             android:id="@+id/undo"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:background="@color/colorAccent"
@@ -53,7 +54,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/paintBaret"
-            android:layout_margin="3dp"
             android:text="(1)\nBARET"
             android:textColor="@android:color/black"
             tools:ignore="ButtonStyle" />
@@ -126,16 +126,18 @@
             android:id="@+id/txtMessage"
             android:background="@android:color/holo_red_dark"
             android:width="250dip"
+            android:paddingTop="5dp"
             android:layout_width="match_parent"
             android:textColor="@android:color/white"
             android:text="Catatan :"
-            android:layout_height="30dp"
+            android:textStyle="bold"
+            android:layout_height="40dp"
             android:maxLength="500"
             android:lines="1" />
 
 
         <LinearLayout
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"

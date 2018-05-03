@@ -188,14 +188,14 @@ public class MainActivity extends BaseActivity
                 ft.addToBackStack("1");
                 break;
             case Unitk_search:
-                fragment = new UnitKeluar();
+                fragment = UnitKeluarFrag.newInstance();
                 editText = (EditText)findViewById(R.id.et_unitk);
                 bundle = new Bundle();
                 bundle.putString("search", editText.getText().toString());
                 fragment.setArguments(bundle);
                 break;
             case Unitm_search:
-                fragment = new UnitMasuk();
+                fragment = UnitMasukFrag.newInstance();
                 editText = (EditText)findViewById(R.id.et_unitm);
                 bundle = new Bundle();
                 bundle.putString("search", editText.getText().toString());

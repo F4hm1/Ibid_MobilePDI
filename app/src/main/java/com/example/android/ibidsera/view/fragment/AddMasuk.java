@@ -175,6 +175,9 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
     ImageView ibid_sedan;
     @BindView(R.id.ibid_niaga)
     ImageView ibid_niaga;
+
+    /*@BindView(R.id.ibid_pickup)
+    ImageView ibid_pickup;*/
     private int size = 0;
     private int position = -1;
     private HashMap<String, CheckBox> h = new HashMap<>();
@@ -200,6 +203,9 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
     @BindView(R.id.et_checklist_not)
     EditText mEtChecklistNot;
 
+    /*@BindView(R.id.radio_addm_pickup)
+    RadioButton mRadioPickup;*/
+
     @BindView(R.id.radio_addm_minibus)
     RadioButton mRadioMinibus;
 
@@ -220,8 +226,8 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
     private static final int KEY_PEMERIKSAAN_ACTIVITY = 1009;
 
     private InsertUnit requestUnit;
-    private String tempString= "";
-    private String selectedString= "";
+    private String selectedString = "";
+    private String tempString = "";
 
     @Override
     public int getLayoutResId() {
@@ -326,7 +332,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!onClickSpinner) {
-                    getDropdownList(apiCall, ls);
+                    if (!selectedString.equals(s)) getDropdownList(apiCall, ls);
                 }
             }
         });
@@ -334,6 +340,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
         nopol.setOnItemClickListener((parent, view, position, id1) -> {
             hideKeyboard();
 
+            selectedString = listNoPolUnit.get(position).getNopolisi();
 //            getAddm(StaticUnit.getLu().get(position), position);
             getDetailUnitById(listNoPolUnit.get(position).getAuctionItemId(), position, apiCall);
         });
@@ -797,7 +804,9 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                 showToast("Harap melakukan checklist gambar tipe mobil sedan");
                 return null;
             }
-        } else {
+        }
+
+        if (mRadioMinibus.isChecked()) {
             if (HelperConstant.mTempBitmapNiaga != null) {
                 insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapNiaga));
             } else {
@@ -805,6 +814,25 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                 return null;
             }
         }
+
+
+        /*if (mRadioPickup.isChecked()) {
+            if (HelperConstant.mTempBitmapPickup != null) {
+                insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapPickup));
+            } else {
+                showToast("Harap melakukan checklist gambar tipe mobil pickup");
+                return null;
+            }
+        }*/
+
+        /*else {
+            if (HelperConstant.mTempBitmapNiaga != null) {
+                insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapNiaga));
+            } else {
+                showToast("Harap melakukan checklist gambar tipe mobil minibus");
+                return null;
+            }
+        }*/
 
         if (!mToggleChecklist.isChecked()) {
             insertUnit.setReasonunchecklist(mEtChecklistNot.getText().toString());
@@ -1004,6 +1032,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
 
     private void getKomponenList(Unit lu) {
         try {
+            if (tl.getChildCount() > 1) tl.removeViews(1, tl.getChildCount() - 1);
             size = lu.getKomponen().size();
             for (int i = 0; i < size; i++) {
                 TableRow row = tableRow();
@@ -1050,13 +1079,27 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
 
     private void goToPemeriksaanActivity(int curPosition) {
         Intent intent = new Intent(getActivity(), PemeriksaanActivity.class);
-        if (curPosition == 1) {
+        switch (curPosition){
+            case 1:
+                intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_SEDAN);
+                startActivityForResult(intent, HelperConstant.LAMPIRAN_SEDAN);
+                break;
+            case 2:
+                intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_NIAGA);
+                startActivityForResult(intent, HelperConstant.LAMPIRAN_NIAGA);
+                break;
+            case 3:
+                intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_PICKUP);
+                startActivityForResult(intent, HelperConstant.LAMPIRAN_PICKUP);
+                break;
+        }
+        /*if (curPosition == 1) {
             intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_SEDAN);
             startActivityForResult(intent, HelperConstant.LAMPIRAN_SEDAN);
         } else {
             intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_NIAGA);
             startActivityForResult(intent, HelperConstant.LAMPIRAN_NIAGA);
-        }
+        }*/
     }
 
     private void lampiranDialog(int id) {
@@ -1282,6 +1325,18 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                 }
                 break;
             }
+            /*case HelperConstant.LAMPIRAN_PICKUP: {
+                if (resultCode == RESULT_OK) {
+//                    Bitmap bitmap = BitmapFactory.decodeByteArray(
+//                            data.getByteArrayExtra("bitmapArray"), 0,
+//                            data.getByteArrayExtra("bitmapArray").length);
+                    if (HelperConstant.mTempBitmapPickup != null) {
+                        ibid_pickup.setImageBitmap(HelperConstant.mTempBitmapPickup);
+                    }
+//                    ibid_sedan.setImageBitmap(bitmap);
+                }
+                break;
+            }*/
         }
     }
 

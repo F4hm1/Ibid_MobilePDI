@@ -1040,6 +1040,7 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
 
     private void getKomponenList(Unit lu) {
         try {
+            if (tl.getChildCount() > 1) tl.removeViews(1, tl.getChildCount() - 1);
             size = lu.getKomponen().size();
             for (int i = 0; i < size; i++) {
                 TableRow row = tableRow();

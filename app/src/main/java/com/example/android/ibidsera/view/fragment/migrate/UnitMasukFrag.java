@@ -1,6 +1,5 @@
 package com.example.android.ibidsera.view.fragment.migrate;
 
-import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,11 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.print.PrintAttributes;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -34,7 +30,6 @@ import com.example.android.ibidsera.model.homelist.UnitMasukKeluarHomelist;
 import com.example.android.ibidsera.service.RetrofitHelper;
 import com.example.android.ibidsera.util.ApiConstants;
 import android.print.PdfPrint;
-import android.widget.Toast;
 
 import com.example.android.ibidsera.util.PermissionUtils;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
@@ -65,8 +60,6 @@ public class UnitMasukFrag extends RxLazyFragment {
     SwipeRefreshLayout refreshLayout;
     @BindView(R.id.et_unitm)
     EditText searchUnitm;
-
-    private String printInfo;
 
     public static UnitMasukFrag newInstance() {
         return new UnitMasukFrag();
@@ -266,7 +259,7 @@ public class UnitMasukFrag extends RxLazyFragment {
 
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             WebView wv = new WebView(getActivity());
-            wv.loadUrl(ApiConstants.PRINT_HOST + idUnitMasuk );
+            wv.loadUrl(ApiConstants.PRINT_IN_HOST + idUnitMasuk );
             wv.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
