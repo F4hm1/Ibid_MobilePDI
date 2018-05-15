@@ -140,22 +140,23 @@ public class UnitKeluarFrag extends RxLazyFragment {
                 TableRow row = tableRow();
                 ImageButton id = imageButton();
                 ImageButton printBtn = imageButton();
+                ImageButton suratjalanBtn = imageButton();
                 TextView no_pol = textView();
-                TextView tgl_doc = textView();
-                TextView pengemudi = textView();
+                /*TextView tgl_doc = textView();
+                TextView pengemudi = textView();*/
                 TextView merk = textView();
                 TextView type = textView();
-
-                TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-                TableRow.LayoutParams param2 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
+                TableRow.LayoutParams param1 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f);
+                TableRow.LayoutParams param2 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+                TableRow.LayoutParams param3 = tableRowLP(0, TableRow.LayoutParams.WRAP_CONTENT, 2f);
                 TableRow.LayoutParams paramImg = tableRowLP(0, 30, .5f);
                 paramImg.gravity = Gravity.CENTER;
 
                 rowColor(row, i);
                 imgStyle(id, row, paramImg, lu.get(i).getAuction().getIdauction_item());
-                textStyle(no_pol, row, param1, lu.get(i).getAuction().getNo_polisi());
-                //textStyle(tgl_doc, row, param1, lu.get(i).getAuction().getTgl_serah_klr());
-                //textStyle(pengemudi, row, param1, lu.get(i).getAuction().getNama_pengemudi_klr());
+                textStyle(no_pol, row, param2, lu.get(i).getAuction().getNo_polisi());
+                //textStyle(tgl_doc, row, param2, lu.get(i).getAuction().getTgl_serah_klr());
+                //textStyle(pengemudi, row, param2, lu.get(i).getAuction().getNama_pengemudi_klr());
                 textStyle(merk, row, param1, lu.get(i).getAuctiondetail().getNama_merk());
                 String tipe = "";
                 for (Attribute t : lu.get(i).getAuctiondetail().getTipe()) {
@@ -167,8 +168,9 @@ public class UnitKeluarFrag extends RxLazyFragment {
                         }
                     }
                 }
-                textStyle(type, row, param2, tipe.concat(" " + lu.get(i).getAuctiondetail().getModel()).concat(" " + lu.get(i).getAuctiondetail().getTransmisi()).concat(" " + lu.get(i).getAuctiondetail().getTahun()));
+                textStyle(type, row, param3, tipe.concat(" " + lu.get(i).getAuctiondetail().getModel()).concat(" " + lu.get(i).getAuctiondetail().getTransmisi()).concat(" " + lu.get(i).getAuctiondetail().getTahun()));
                 imgPrint(printBtn, row, paramImg, lu.get(i).getAuction().getIdauction_item(),lu.get(i).getAuction().getNo_polisi());
+                imgSuratJalan(suratjalanBtn, row, paramImg, lu.get(i).getAuction().getIdauction_item(),lu.get(i).getAuction().getNo_polisi());
                 tl.addView(row);
             }
         }catch (Exception e){}
@@ -221,6 +223,36 @@ public class UnitKeluarFrag extends RxLazyFragment {
                 dialogInterface.dismiss();
                 createWebPrintJob(wv, nopol);
                 }));
+            alert.show();
+        });
+        row.addView(imageButton);
+    }
+
+    public void imgSuratJalan(ImageButton imageButton, TableRow row, TableRow.LayoutParams imgParam, int idUnitKeluar, String nopol){
+        imageButton.setLayoutParams(imgParam);
+        Bitmap bmp= BitmapFactory.decodeResource(getResources(), R.drawable.ic_drive_eta_black_24dp);
+        Bitmap resizedbitmap=Bitmap.createScaledBitmap(bmp, 30, imgParam.height, true);
+        imageButton.setImageBitmap(resizedbitmap);
+        imageButton.setBackgroundDrawable(null);
+        imageButton.setOnClickListener(v -> {
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+            WebView wv = new WebView(getActivity());
+            wv.loadUrl(ApiConstants.PRINT_OUT_HOST + idUnitKeluar );
+            wv.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    view.loadUrl(url);
+
+                    return true;
+                }
+            });
+
+            alert.setView(wv);
+            alert.setCancelable(false);
+            alert.setNegativeButton("Tutup", ((dialogInterface, i) -> {
+                dialogInterface.dismiss();
+                createWebPrintJob(wv, nopol);
+            }));
             alert.show();
         });
         row.addView(imageButton);

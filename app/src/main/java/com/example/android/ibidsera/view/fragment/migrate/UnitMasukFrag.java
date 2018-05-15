@@ -1,5 +1,6 @@
 package com.example.android.ibidsera.view.fragment.migrate;
 
+import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,10 +14,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -257,6 +262,23 @@ public class UnitMasukFrag extends RxLazyFragment {
         imageButton.setBackgroundDrawable(null);
         imageButton.setOnClickListener(v -> {
 
+            /*Dialog dialog = new Dialog(RegestrationActivity.this);
+            dialog.setContentView(R.layout.dialog_qulification);
+            dialog.setTitle("State");
+            dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT);
+            ListViewQualification = (ListView)dialog.findViewById(R.id.ListViewQualification);
+
+            ProgressBarStateQuali = (ProgressBar)dialog.findViewById(R.id.ProgressBarStateQuali);
+
+
+            ProgressBarStateQuali.setVisibility(View.VISIBLE);
+            ListViewQualification.setVisibility(View.GONE);
+            ProgressBarStateQuali.setVisibility(View.GONE);
+            ListViewQualification.setAdapter(adapterState);
+            ListViewQualification.setVisibility(View.VISIBLE);
+            dialog.show();*/
+
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             WebView wv = new WebView(getActivity());
             wv.loadUrl(ApiConstants.PRINT_IN_HOST + idUnitMasuk );
@@ -275,17 +297,6 @@ public class UnitMasukFrag extends RxLazyFragment {
                 createWebPrintJob(wv, nopol);
             });
             alert.show();
-            /*Fragment fragment = DetailKeluarFrag.newInstance();
-            Bundle bundle = new Bundle();
-            bundle.putInt("idUnitKeluar", idUnit);
-            fragment.setArguments(bundle);
-            FragmentTransaction ft = this.getActivity().getSupportFragmentManager().beginTransaction();
-            ft.addToBackStack("1");
-
-            if (fragment != null) {
-                ft.replace(R.id.content_frame, fragment);
-                ft.commit();
-            }*/
         });
 
 
