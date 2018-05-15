@@ -181,7 +181,7 @@ public class PemeriksaanActivity extends AppCompatActivity {
         } else if (lampiranType == HelperConstant.LAMPIRAN_NIAGA) {
             HelperConstant.mTempBitmapNiaga = bitmap;
             HelperConstant.sPathSavedNiaga = mDrawView.getPathSaved();
-        } else {
+        } else if (lampiranType == HelperConstant.LAMPIRAN_PICKUP) {
             HelperConstant.mTempBitmapPickup = bitmap;
             HelperConstant.sPathSavedPickup = mDrawView.getPathSaved();
         }

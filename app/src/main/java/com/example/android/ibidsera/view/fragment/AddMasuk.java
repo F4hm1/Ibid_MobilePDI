@@ -175,6 +175,8 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
     ImageView ibid_sedan;
     @BindView(R.id.ibid_niaga)
     ImageView ibid_niaga;
+    @BindView(R.id.ibid_pickup)
+    ImageView ibid_pickup;
 
     /*@BindView(R.id.ibid_pickup)
     ImageView ibid_pickup;*/
@@ -185,6 +187,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
     private Bitmap bitmap2;
     private Bitmap bitmap3;
     private Bitmap bitmap4;
+    private Bitmap bitmapPickup;
     private boolean onClickSpinner = false;
 
     /*//Start-Enhancement
@@ -203,14 +206,14 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
     @BindView(R.id.et_checklist_not)
     EditText mEtChecklistNot;
 
-    /*@BindView(R.id.radio_addm_pickup)
-    RadioButton mRadioPickup;*/
-
     @BindView(R.id.radio_addm_minibus)
     RadioButton mRadioMinibus;
 
     @BindView(R.id.radio_addm_sedan)
     RadioButton mRadioSedan;
+
+    @BindView(R.id.radio_addm_pickup)
+    RadioButton mRadioPickup;
 
     @BindView(R.id.tv_expedition_title)
     TextView tvExpeditionTitle;
@@ -260,10 +263,13 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
             if (b) {
                 ibid_sedan.setEnabled(true);
                 ibid_niaga.setEnabled(false);
+                ibid_pickup.setEnabled(false);
                 ibid_sedan.setAlpha(1f);
                 ibid_niaga.setAlpha(0.2f);
+                ibid_pickup.setAlpha(0.2f);
 
                 mRadioMinibus.setChecked(false);
+                mRadioPickup.setChecked(false);
             }
         });
 
@@ -271,11 +277,28 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
             if (b) {
                 ibid_sedan.setEnabled(false);
                 ibid_niaga.setEnabled(true);
+                ibid_pickup.setEnabled(false);
                 ibid_sedan.setAlpha(0.2f);
                 ibid_niaga.setAlpha(1f);
+                ibid_pickup.setAlpha(0.2f);
                 mRadioSedan.setChecked(false);
+                mRadioPickup.setChecked(false);
             }
         });
+
+        mRadioPickup.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                ibid_sedan.setEnabled(false);
+                ibid_niaga.setEnabled(false);
+                ibid_pickup.setEnabled(true);
+                ibid_sedan.setAlpha(0.2f);
+                ibid_niaga.setAlpha(0.2f);
+                ibid_pickup.setAlpha(1f);
+                mRadioSedan.setChecked(false);
+                mRadioMinibus.setChecked(false);
+            }
+        });
+
 
         mRadioSedan.setChecked(true);
 
@@ -350,6 +373,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
         toolTip(cases, "BUY BACK / WANPRES");
         imageClick(ibid_sedan, 1, 1);
         imageClick(ibid_niaga, 1, 2);
+        imageClick(ibid_pickup, 1, 3);
         imageClick(signature1, 2, 1);
         imageClick(signature2, 2, 2);
 
@@ -405,6 +429,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                                                 public void onComplete() {
                                                     HelperConstant.mTempBitmapNiaga = null;
                                                     HelperConstant.mTempBitmapSedan = null;
+                                                    HelperConstant.mTempBitmapPickup = null;
                                                     pDialog.hide();
                                                     alertDialog("Proses Penambahan Pemeriksaan Unit Masuk Berhasil", 1);
                                                 }
@@ -700,6 +725,8 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
             ibid_sedan.setImageBitmap(bitmap3);
         } else if (bitmap4 != null) {
             ibid_niaga.setImageBitmap(bitmap4);
+        } else if (bitmapPickup != null){
+            ibid_pickup.setImageBitmap(bitmapPickup);
         }
         if (bitmap1 != null) {
             signature1.setImageBitmap(bitmap1);
@@ -797,6 +824,8 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
         bitmap3 = ibid_sedan.getDrawingCache();
         ibid_niaga.buildDrawingCache();
         bitmap4 = ibid_niaga.getDrawingCache();
+        ibid_pickup.buildDrawingCache();
+        bitmapPickup = ibid_pickup.getDrawingCache();
         if (mRadioSedan.isChecked()) {
             if (HelperConstant.mTempBitmapSedan != null) {
                 insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapSedan));
@@ -811,6 +840,15 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                 insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapNiaga));
             } else {
                 showToast("Harap melakukan checklist gambar tipe mobil minibus");
+                return null;
+            }
+        }
+
+        if (mRadioPickup.isChecked()) {
+            if (HelperConstant.mTempBitmapPickup != null) {
+                insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapPickup));
+            } else {
+                showToast("Harap melakukan checklist gambar tipe mobil pickup");
                 return null;
             }
         }
@@ -893,6 +931,8 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
         bitmap3 = ibid_sedan.getDrawingCache();
         ibid_niaga.buildDrawingCache();
         bitmap4 = ibid_niaga.getDrawingCache();
+        ibid_pickup.buildDrawingCache();
+        bitmapPickup = ibid_pickup.getDrawingCache();
 
         List<Lampiran> ll = new ArrayList<>();
 
@@ -907,6 +947,12 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
         lampiran2.setNama_lampiran("mobil2");
         lampiran2.setBase64img(base64Encode(bitmap4));
         ll.add(lampiran2);
+
+        Lampiran lampiran3 = new Lampiran();
+        lampiran2.setIdpemeriksaan_item(gs.getId_pemeriksaan_item());
+        lampiran2.setNama_lampiran("mobil3");
+        lampiran2.setBase64img(base64Encode(bitmapPickup));
+        ll.add(lampiran3);
 
         return ll;
     }
@@ -1118,11 +1164,17 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
             } else {
                 imageView.setImageBitmap(bitmap3);
             }
-        } else {
+        } else if (id == 2){
             if (bitmap4 == null) {
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
             } else {
                 imageView.setImageBitmap(bitmap4);
+            }
+        } else {
+            if (bitmapPickup == null) {
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_pickup));
+            } else {
+                imageView.setImageBitmap(bitmapPickup);
             }
         }
         container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, 450);
@@ -1139,8 +1191,10 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
             container.removeAllViews();
             if (id == 1) {
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_sedan));
-            } else {
+            } else if (id == 2) {
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_niaga));
+            } else if (id == 3) {
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ibid_pickup));
             }
             container.addView(imageView);
         });
@@ -1156,9 +1210,12 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
             if (id == 1) {
                 ibid_sedan.setImageBitmap(bitmap);
                 bitmap3 = bitmap;
-            } else {
+            } else if (id == 2) {
                 ibid_niaga.setImageBitmap(bitmap);
                 bitmap4 = bitmap;
+            } else if (id == 3) {
+                ibid_pickup.setImageBitmap(bitmap);
+                bitmapPickup = bitmap;
             }
         });
         alertDialog.setNegativeButton("Cancel", (dialog, which) -> {
@@ -1325,7 +1382,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
                 }
                 break;
             }
-            /*case HelperConstant.LAMPIRAN_PICKUP: {
+            case HelperConstant.LAMPIRAN_PICKUP: {
                 if (resultCode == RESULT_OK) {
 //                    Bitmap bitmap = BitmapFactory.decodeByteArray(
 //                            data.getByteArrayExtra("bitmapArray"), 0,
@@ -1336,7 +1393,7 @@ public class AddMasuk extends RxLazyFragment implements AdapterView.OnItemSelect
 //                    ibid_sedan.setImageBitmap(bitmap);
                 }
                 break;
-            }*/
+            }
         }
     }
 

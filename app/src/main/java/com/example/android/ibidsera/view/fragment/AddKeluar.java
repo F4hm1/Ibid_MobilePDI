@@ -172,11 +172,18 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
     @BindView(R.id.radio_addm_sedan)
     RadioButton mRadioSedan;
 
+    @BindView(R.id.radio_addm_pickup)
+    RadioButton mRadioPickup;
+
     @BindView(R.id.ibid_sedan)
     ImageView ibid_sedan;
 
     @BindView(R.id.ibid_niaga)
     ImageView ibid_niaga;
+
+    @BindView(R.id.ibid_pickup)
+    ImageView ibid_pickup;
+
 
     @BindView(R.id.cases)
     EditText cases;
@@ -213,10 +220,13 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
             if (b) {
                 ibid_sedan.setEnabled(true);
                 ibid_niaga.setEnabled(false);
+                ibid_pickup.setEnabled(false);
                 ibid_sedan.setAlpha(1f);
                 ibid_niaga.setAlpha(0.2f);
+                ibid_pickup.setAlpha(0.2f);
 
                 mRadioMinibus.setChecked(false);
+                mRadioPickup.setChecked(false);
             }
         });
 
@@ -224,11 +234,29 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
             if (b) {
                 ibid_sedan.setEnabled(false);
                 ibid_niaga.setEnabled(true);
+                ibid_pickup.setEnabled(false);
                 ibid_sedan.setAlpha(0.2f);
                 ibid_niaga.setAlpha(1f);
+                ibid_pickup.setAlpha(0.2f);
                 mRadioSedan.setChecked(false);
+                mRadioPickup.setChecked(false);
             }
         });
+
+
+        mRadioPickup.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                ibid_sedan.setEnabled(false);
+                ibid_niaga.setEnabled(false);
+                ibid_pickup.setEnabled(true);
+                ibid_sedan.setAlpha(0.2f);
+                ibid_niaga.setAlpha(0.2f);
+                ibid_pickup.setAlpha(1f);
+                mRadioSedan.setChecked(false);
+                mRadioMinibus.setChecked(false);
+            }
+        });
+
 
         mToggleReasonOut.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
@@ -288,6 +316,7 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
         signatureClick(signature2, 2);
         ibid_sedan.setOnClickListener(view -> goToPemeriksaanActivity(1));
         ibid_niaga.setOnClickListener(view -> goToPemeriksaanActivity(2));
+        ibid_pickup.setOnClickListener(view -> goToPemeriksaanActivity(3));
 
         save.setOnClickListener(v -> {
             pDialog.setMessage("Sending Data..");
@@ -337,6 +366,7 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
                                             public void onComplete() {
                                                 HelperConstant.mTempBitmapNiaga = null;
                                                 HelperConstant.mTempBitmapSedan = null;
+                                                HelperConstant.mTempBitmapPickup = null;
                                                 pDialog.hide();
                                                 alertDialog("Proses Penambahan Pemeriksaan Unit Keluar Berhasil", 1);
                                             }
@@ -909,11 +939,18 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
                 showToast("Harap melakukan checklist gambar tipe mobil sedan");
                 return null;
             }
-        } else {
+        } else if (mRadioMinibus.isChecked()) {
             if (HelperConstant.mTempBitmapNiaga != null) {
                 insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapNiaga));
             } else {
                 showToast("Harap melakukan checklist gambar tipe mobil minibus");
+                return null;
+            }
+        } else if (mRadioPickup.isChecked()) {
+            if (HelperConstant.mTempBitmapPickup != null) {
+                insertUnit.setGambarchecklist(base64Encode(HelperConstant.mTempBitmapPickup));
+            } else {
+                showToast("Harap melakukan checklist gambar tipe mobil pickup");
                 return null;
             }
         }
@@ -1095,9 +1132,12 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
         if (curPosition == 1) {
             intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_SEDAN);
             startActivityForResult(intent, HelperConstant.LAMPIRAN_SEDAN);
-        } else {
+        } else if (curPosition == 2) {
             intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_NIAGA);
             startActivityForResult(intent, HelperConstant.LAMPIRAN_NIAGA);
+        } else if (curPosition == 3) {
+            intent.putExtra(HelperConstant.LAMPIRAN_KEY, HelperConstant.LAMPIRAN_PICKUP);
+            startActivityForResult(intent, HelperConstant.LAMPIRAN_PICKUP);
         }
     }
 
@@ -1224,6 +1264,14 @@ public class AddKeluar extends RxLazyFragment implements AdapterView.OnItemSelec
                 if (resultCode == RESULT_OK) {
                     if (HelperConstant.mTempBitmapNiaga != null) {
                         ibid_niaga.setImageBitmap(HelperConstant.mTempBitmapNiaga);
+                    }
+                }
+                break;
+            }
+            case HelperConstant.LAMPIRAN_PICKUP: {
+                if (resultCode == RESULT_OK) {
+                    if (HelperConstant.mTempBitmapPickup != null) {
+                        ibid_pickup.setImageBitmap(HelperConstant.mTempBitmapPickup);
                     }
                 }
                 break;
