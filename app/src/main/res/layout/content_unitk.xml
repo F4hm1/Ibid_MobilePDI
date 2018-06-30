@@ -100,17 +100,17 @@
                             style="@style/FontTableHead"
                             android:text="No Polisi" />
 
-                        <TextView
+                        <!--<TextView
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             style="@style/FontTableHead"
-                            android:text="Tgl Doc" />
+                            android:text="Tgl Doc" />-->
 
-                        <TextView
+                        <!--<TextView
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             style="@style/FontTableHead"
-                            android:text="Pengemudi" />
+                            android:text="Pengemudi" />-->
 
                         <TextView
                             android:layout_width="0dp"
@@ -129,6 +129,12 @@
                             android:layout_weight="0.5"
                             style="@style/FontTableHead"
                             android:text="Print"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            style="@style/FontTableHead"
+                            android:text="Surat Jalan"/>
 
                     </TableRow>
                 </TableLayout>

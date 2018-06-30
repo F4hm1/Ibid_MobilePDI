@@ -532,15 +532,11 @@
                         android:src="@drawable/ibid_niaga" />
                 </LinearLayout>
 
-<!--
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
-                    &lt;!&ndash;<TextView&ndash;&gt;
-                    &lt;!&ndash;android:text="Sedan"&ndash;&gt;
-                    &lt;!&ndash;style="@style/FontTextViewForm"/>&ndash;&gt;
                     <RadioButton
                         android:id="@+id/radio_addm_pickup"
                         style="@style/FontTextViewForm"
@@ -554,7 +550,6 @@
                         android:clickable="true"
                         android:src="@drawable/ibid_pickup" />
                 </LinearLayout>
--->
 
             </LinearLayout>
 
