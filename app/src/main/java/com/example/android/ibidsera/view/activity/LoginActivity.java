@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.android.ibidsera.R;
 import com.example.android.ibidsera.base.BaseActivity;
@@ -43,6 +44,8 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         hideKeyboard();
+
+
 
         AuctionService auctionService = RetrofitUtil.getAuctionService();
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();

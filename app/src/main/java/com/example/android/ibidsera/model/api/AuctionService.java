@@ -130,7 +130,7 @@ public interface AuctionService {
     @POST("index.php/persiapan/insert?api_key=" + BuildConfig.API_KEY) Call<GetStatus> insertUnit(@Body PersiapanPost persiapanPost);
     @POST("index.php/masteritem/search?api_key=" + BuildConfig.API_KEY) Call<List<Attribute>> getMasterItem(@Body Attribute item);
 //    @POST("index.php/auth/login?api_key=" + BuildConfig.API_KEY) Call<Login> getLogin(@Body Login login);
-    @POST("http://alpha.ibid.astra.co.id/backend/service/akun/pdi/auth") Call<Login> getLogin(@Body Login login);
+    @POST("https://ibid.astra.co.id/backend/service/akun/pdi/auth") Call<Login> getLogin(@Body Login login);
 
     @POST("index.php/masteritem/get_sign_masuk?api_key=" + BuildConfig.API_KEY) Call<SignValue> getSignMasuk(@Body SignPost item);
     @POST("index.php/masteritem/get_sign_keluar?api_key=" + BuildConfig.API_KEY) Call<SignValue> getSignKeluar(@Body SignPost item);
